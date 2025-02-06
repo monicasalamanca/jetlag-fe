@@ -1,0 +1,50 @@
+.burgerMenu {
+  position: relative;
+
+  .burgerButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 24px;
+    width: 30px;
+    padding: 0;
+    z-index: 10;
+  }
+
+  .burgerIcon {
+    width: 30px;
+    height: 3px;
+    background-color: #333;
+    border-radius: 2px;
+    transition: all 0.3s linear;
+  }
+
+  .menu {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 9;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        padding: 10px 20px;
+
+        a {
+          text-decoration: none;
+          color: #333;
+        }
+      }
+    }
+  }
+}
