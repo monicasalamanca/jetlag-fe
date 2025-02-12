@@ -8,13 +8,13 @@ const MeetUs = () => {
       <h1>Meet Us</h1>
       <UsCard
         name="Monica Salamanca"
-        role="Head of Innovation"
-        desc="Programmer and Photographer"
+        role="IT & Innovation Lead"
+        desc="Programmer & Photographer"
       />
       <UsCard
         name="Justin Dunlop"
-        role="Head of Content & Marketing"
-        desc="Writer and Marketer"
+        role="Content & Marketing Lead"
+        desc="Writer & Marketer"
       />
     </section>
   );
