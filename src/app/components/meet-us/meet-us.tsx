@@ -13,7 +13,7 @@ const MeetUs = () => {
       />
       <UsCard
         name="Justin Dunlop"
-        role="Head of Content and Marketing"
+        role="Head of Content & Marketing"
         desc="Writer and Marketer"
       />
     </section>
