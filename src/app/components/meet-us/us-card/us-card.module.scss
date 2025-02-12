@@ -1,0 +1,40 @@
+.container {
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: start;
+  gap: 16px;
+
+  .image {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background-color: rgb(188, 188, 188);
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 16px;
+
+    h3 {
+      font-weight: 700;
+    }
+
+    .role,
+    .desc {
+      font-weight: 500;
+    }
+
+    .role {
+      color: #3a78fc;
+    }
+
+    .desc {
+      font-size: 14px;
+    }
+  }
+}
