@@ -1,30 +1,32 @@
+@use "@/styles/variables.scss" as *;
+
 .footer {
-  background-color: #111827;
-  padding: 24px 8px 12px;
+  background-color: var(--black);
+  padding: 24px 16px 16px;
   gap: 6px;
   display: flex;
   flex-direction: column;
 
   h3 {
-    color: #fff;
+    color: var(--white);
     font-weight: 700;
-    font-size: 18px;
+    font-size: 24px;
     margin-bottom: 4px;
   }
 
   .followUsLinks {
     display: flex;
-    gap: 10px;
+    gap: 16px;
     margin: 12px 0;
 
     .followLink {
-      width: 16px;
+      width: 24px;
       display: flex;
     }
   }
 
   .footerLinks {
-    color: #9ba3af;
+    color: var(--font-gray);
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -39,7 +41,7 @@
 
   .privacyPolicy,
   .termsOfService {
-    color: #9ba3af;
+    color: var(--font-gray);
     display: flex;
     gap: 12px;
   }

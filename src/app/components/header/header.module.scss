@@ -1,8 +1,8 @@
+@use "@/styles/variables.scss" as *;
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
-  border: 1px solid red;
-  // position: relative;
+  padding: 16px;
 }

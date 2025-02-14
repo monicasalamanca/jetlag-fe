@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
   faInstagram,
+  faPinterest,
   faXTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
@@ -21,6 +22,13 @@ const Footer = () => {
           >
             <FontAwesomeIcon icon={faXTwitter} size={"10x"} />
           </Link>
+          <Link
+            className={s.followLink}
+            href="https://twitter.com/jetlagchronicle"
+          >
+            <FontAwesomeIcon icon={faPinterest} />
+          </Link>
+
           <Link
             className={s.followLink}
             href="https://twitter.com/jetlagchronicle"

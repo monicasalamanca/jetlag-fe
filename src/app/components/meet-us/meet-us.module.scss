@@ -1,12 +1,14 @@
+@use "@/styles/variables.scss" as *;
+
 .container {
-  background-color: #f9fafb;
+  background-color: var(--light-gray-bg);
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
-  color: #374151;
-  padding: 32px 24px;
+  padding: 32px 16px;
   gap: 16px;
+  color: var(--primary-font-dark);
 
   h1 {
     font-size: 24px;
