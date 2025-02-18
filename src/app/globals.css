@@ -1,14 +1,27 @@
 :root {
-  --background: #ffffff;
-  --foreground: #ffffff;
+  /* --background: #ffffff;
+  --foreground: #ffffff; */
+  --light-gray-bg: #f9fafb;
+  --white: #ffffff;
+  --black: #111827;
+  --text-color: #333;
+  --color-blue: #3a78fc;
+
+  /* Fonts */
+  --font-primary: "Roboto", "Helvetica Neue", "Helvetica", arial, sans-serif;
+  --font-secondary: "Open Sans", sans-serif;
+
+  /* Font Colors */
+  --primary-font-dark: #374151;
+  --font-gray: #9ba3af;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #ffffff;
     --foreground: #ededed;
   }
-}
+} */
 
 html,
 body {
