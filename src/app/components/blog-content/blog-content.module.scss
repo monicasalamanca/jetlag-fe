@@ -1,3 +1,40 @@
 .container {
+  padding: 32px 16px;
   color: var(--primary-font-dark);
+
+  h1 {
+    margin: 12px 0;
+    font-size: 36px;
+    text-transform: capitalize;
+  }
+
+  .blogInfo {
+    display: flex;
+
+    .blogDetail {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-right: 12px;
+
+      &:last-child {
+        justify-content: flex-end;
+      }
+    }
+
+    .icon {
+      width: 16px;
+      margin-right: 6px;
+    }
+  }
+
+  .socialMedia {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .icon {
+      width: 18px;
+    }
+  }
 }

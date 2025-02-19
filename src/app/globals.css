@@ -34,8 +34,7 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  background-color: var(--white);
   font-family: "Roboto", "Helvetica Neue", "Helvetica", arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
