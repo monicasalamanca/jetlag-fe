@@ -32,7 +32,7 @@ const BlogContent = async () => {
   const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
-      month: "long",
+      month: "short",
       day: "2-digit",
     };
     const date = new Date(dateString);
