@@ -8,7 +8,7 @@ const HomeContent = () => {
     <main className={s.container}>
       <Hero
         srcImage={
-          "https://res.cloudinary.com/jetlagchronicles/image/upload/v1739143592/home-hero_apo3zo.jpg"
+          "https://res.cloudinary.com/jetlagchronicles/image/upload/v1739143592/blog-assets/home-hero_apo3zo.jpg"
         }
         headline={"Find Your Perfect City for Your Nomadic Lifestyle!"}
         description={

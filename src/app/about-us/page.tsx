@@ -11,7 +11,7 @@ export default function About() {
     <>
       <Header />
       <Hero
-        srcImage="https://res.cloudinary.com/jetlagchronicles/image/upload/v1739321851/aboutus-hero_vpxp49.jpg"
+        srcImage="https://res.cloudinary.com/jetlagchronicles/image/upload/v1739321851/blog-assets/aboutus-hero_vpxp49.jpg"
         headline="About Jet Lag Chronicles"
         description="Empowering Expats and Digital Nomads to Find Their Perfect Destination"
       />

@@ -65,7 +65,9 @@ const BlogContent = async () => {
         <FontAwesomeIcon icon={faLinkedin} className={s.icon} />
         <FontAwesomeIcon icon={faHeart} className={s.icon} />
       </div>
-      <ReactMarkdown>{post.content}</ReactMarkdown>
+      <section className={s.postContent}>
+        <ReactMarkdown>{post.content}</ReactMarkdown>
+      </section>
     </div>
   );
 };
