@@ -6,6 +6,9 @@
   --black: #111827;
   --text-color: #333;
   --color-blue: #3a78fc;
+  --color-blue-medium: #0c90e9;
+  --color-blue-light: #1bc4f3;
+  --color-bright-green: #acf877;
 
   /* Fonts */
   --font-primary: "Roboto", "Helvetica Neue", "Helvetica", arial, sans-serif;

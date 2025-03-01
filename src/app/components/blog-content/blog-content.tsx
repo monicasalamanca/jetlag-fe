@@ -1,34 +1,24 @@
 "use client";
 
-import { notFound, useParams } from "next/navigation";
-import { fetchBlogPost } from "@/api/client";
+import { FC } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendar,
   faClock,
   faHeart,
 } from "@fortawesome/free-regular-svg-icons";
-import ReactMarkdown from "react-markdown";
-
-import s from "./blog-content.module.scss";
 import {
   faFacebook,
   faInstagram,
   faLinkedin,
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import ReactMarkdown from "react-markdown";
 
-// eslint-disable-next-line @next/next/no-async-client-component
-const BlogContent = async () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { category, slug } = useParams<{
-    category: string;
-    slug: string;
-  }>();
-  const post = await fetchBlogPost(category, slug);
+import s from "./blog-content.module.scss";
 
-  if (!post) return notFound();
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const BlogContent: FC<{ post: any }> = ({ post }) => {
   const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",

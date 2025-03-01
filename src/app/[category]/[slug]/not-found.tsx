@@ -1,3 +1,13 @@
-export default function NotFound() {
-  return <h1>404 – Post Not Found</h1>;
+import Footer from "@/components/footer/footer";
+import Header from "@/components/header/header";
+import NotFound from "@/components/not-found/not-found";
+
+export default function NotFoundPage() {
+  return (
+    <>
+      <Header />
+      <NotFound />
+      <Footer />
+    </>
+  );
 }
