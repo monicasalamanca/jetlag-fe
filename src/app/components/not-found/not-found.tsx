@@ -16,6 +16,7 @@ const NotFound = () => {
         alt="image of a lost man"
         width={640}
         height={427}
+        priority
       />
       <h1>404</h1>
       <p className={s.semiHeadline}>
