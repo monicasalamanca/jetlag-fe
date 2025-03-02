@@ -18,7 +18,7 @@ const BlogPostPage = async ({ params }: { params: Params }) => {
   return (
     <>
       <Header />
-      <BlogContent post={post} />
+      <BlogContent post={post[0]} />
       <Footer />
     </>
   );

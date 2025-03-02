@@ -14,11 +14,11 @@ import {
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import ReactMarkdown from "react-markdown";
+import { BlogPost } from "@/api/types";
 
 import s from "./blog-content.module.scss";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const BlogContent: FC<{ post: any }> = ({ post }) => {
+const BlogContent: FC<{ post: BlogPost }> = ({ post }) => {
   const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
@@ -26,6 +26,11 @@ const BlogContent: FC<{ post: any }> = ({ post }) => {
       day: "2-digit",
     };
     const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+      // Handle invalid date string
+      return "Invalid date";
+    }
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };
 

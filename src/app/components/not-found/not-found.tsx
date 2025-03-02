@@ -10,9 +10,7 @@ const NotFound = () => {
     <div className={s.container}>
       <Image
         className={s.image}
-        src={
-          "https://res.cloudinary.com/jetlagchronicles/image/upload/v1740796290/blog-assets/404-not-found_xkffvl.jpg"
-        }
+        src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1740796290/blog-assets/404-not-found_xkffvl.jpg`}
         alt="image of a lost man"
         width={640}
         height={427}

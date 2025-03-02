@@ -18,8 +18,12 @@
     margin: 12px 0;
 
     .followLink {
-      width: 24px;
       display: flex;
+
+      .icon {
+        width: 24px;
+        height: 24px;
+      }
     }
   }
 

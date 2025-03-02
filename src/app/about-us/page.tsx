@@ -5,13 +5,14 @@ import OurMission from "@/components/our-mission/our-mission";
 import MeetUs from "@/components/meet-us/meet-us";
 import OurValues from "@/components/our-values/our-values";
 import Footer from "@/components/footer/footer";
+// import {NEXT_PUBLIC_CLOUDINARY_URL} from
 
 export default function About() {
   return (
     <>
       <Header />
       <Hero
-        srcImage="https://res.cloudinary.com/jetlagchronicles/image/upload/v1739321851/blog-assets/aboutus-hero_vpxp49.jpg"
+        srcImage={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1739321851/blog-assets/aboutus-hero_vpxp49.jpg`}
         headline="About Jet Lag Chronicles"
         description="Empowering Expats and Digital Nomads to Find Their Perfect Destination"
       />

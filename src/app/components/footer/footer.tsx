@@ -20,32 +20,32 @@ const Footer = () => {
             className={s.followLink}
             href="https://twitter.com/jetlagchronicle"
           >
-            <FontAwesomeIcon icon={faXTwitter} size={"10x"} />
+            <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
           </Link>
           <Link
             className={s.followLink}
             href="https://twitter.com/jetlagchronicle"
           >
-            <FontAwesomeIcon icon={faPinterest} />
+            <FontAwesomeIcon icon={faPinterest} className={s.icon} />
           </Link>
 
           <Link
             className={s.followLink}
             href="https://twitter.com/jetlagchronicle"
           >
-            <FontAwesomeIcon icon={faInstagram} size={"10x"} />
+            <FontAwesomeIcon icon={faInstagram} className={s.icon} />
           </Link>
           <Link
             className={s.followLink}
             href="https://twitter.com/jetlagchronicle"
           >
-            <FontAwesomeIcon icon={faYoutube} size={"10x"} />
+            <FontAwesomeIcon icon={faYoutube} className={s.icon} />
           </Link>
           <Link
             className={s.followLink}
             href="https://twitter.com/jetlagchronicle"
           >
-            <FontAwesomeIcon icon={faFacebook} size={"10x"} />
+            <FontAwesomeIcon icon={faFacebook} className={s.icon} />
           </Link>
         </div>
       </div>
