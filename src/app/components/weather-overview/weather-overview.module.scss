@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 32px 16px;
+  gap: 16px;
+  color: var(--primary-font-dark);
+
+  .wrapper {
+    background-image: linear-gradient(to bottom, #fde2e1, #dae9fe);
+    border-radius: 12px;
+    padding: 12px 6px;
+  }
+}

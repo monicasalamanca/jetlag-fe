@@ -13,7 +13,7 @@ const BlogPostPage = async ({ params }: { params: Params }) => {
   const { category, slug } = await params;
   const post = await fetchBlogPost(category, slug);
 
-  if (!post) return notFound();
+  if (!post || !post.length) return notFound();
 
   return (
     <>

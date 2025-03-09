@@ -2,7 +2,7 @@ import { BASE_URL } from "app/urls";
 import { BlogPost, BlogPostResponse } from "./types";
 
 export async function fetchBlogPost(category: string, slug: string) {
-  const url = `${BASE_URL}/api/blogs?filters[category][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=categories`;
+  const url = `${BASE_URL}/api/blogs?filters[category][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
 
   const res = await fetch(url, { cache: "no-store" });
 
