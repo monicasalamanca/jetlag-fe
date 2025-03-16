@@ -22,7 +22,7 @@
 
   .menu {
     width: 100vw;
-    height: 100dvh;
+    height: calc(100% + 64px);
     position: absolute;
     left: 0;
     background-color: var(--light-gray-bg);
