@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <header className={s.header}>
       <Image
-        src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1738804265/JLCLogo_cxqt6p.png`}
+        src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1738804265/blog-assets/JLCLogo_cxqt6p.png`}
         width={268}
         height={46}
         alt="Logo"

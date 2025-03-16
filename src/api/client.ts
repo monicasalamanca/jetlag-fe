@@ -42,10 +42,6 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
 
   const data = await res.json();
 
-  console.log(
-    data.data[0].attributes.images.data[0].attributes.formats.thumbnail.url
-  );
-
   return data.data.map((item: BlogPostResponse) => ({
     id: item.id,
     title: item.attributes.title,

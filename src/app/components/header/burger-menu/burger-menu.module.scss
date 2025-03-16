@@ -1,6 +1,4 @@
 .burgerMenu {
-  // position: relative;
-
   .burgerButton {
     background: none;
     border: none;
@@ -25,33 +23,99 @@
   .menu {
     width: 100vw;
     height: 100vh;
-    color: #333;
     position: absolute;
     left: 0;
-    background-color: aliceblue;
+    background-color: var(--light-gray-bg);
+    color: var(--primary-font-dark);
     top: 64px;
-    // position: absolute;
-    // top: 40px;
-    // right: 0;
-    // background-color: white;
-    // border: 1px solid #ddd;
-    // border-radius: 4px;
-    // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    // z-index: 9;
+    z-index: 1;
 
-    // ul {
-    //   list-style: none;
-    //   margin: 0;
-    //   padding: 0;
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0 auto;
+      padding: 32px 16px;
+      gap: 20px;
 
-    //   li {
-    //     padding: 10px 20px;
+      li {
+        display: flex;
+        width: 100%;
 
-    //     a {
-    //       text-decoration: none;
-    //       color: #333;
-    //     }
-    //   }
-    // }
+        &.destinationSection {
+          flex-direction: column;
+
+          .destinationsWrapper {
+            display: flex;
+            flex-direction: row;
+          }
+        }
+
+        svg {
+          margin-right: 8px;
+        }
+
+        a,
+        h2 {
+          font-size: 16px;
+          line-height: 18px;
+          font-weight: 400;
+        }
+
+        .continent {
+          margin-left: 24px;
+          padding-top: 16px;
+
+          &:not(:last-child) {
+            margin-bottom: 24px;
+          }
+
+          .wrapper {
+            padding-left: 16px;
+            border-left: 3px solid var(--color-blue);
+
+            h3 {
+              font-size: 18px;
+              line-height: 18px;
+              font-weight: 600;
+              color: var(--color-blue);
+            }
+
+            ul {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              grid-template-rows: repeat(2, 1fr);
+              gap: 16px;
+              padding: 24px 0;
+            }
+
+            a.viewMore {
+              color: var(--color-blue);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  footer {
+    .followUsLinks {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding-top: 16px;
+
+      a {
+        color: var(--color-blue-light);
+
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
   }
 }

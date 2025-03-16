@@ -11,18 +11,31 @@
 
   .link {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    // flex-direction: column;
     gap: 10px;
 
-    .icon {
-      width: 24px;
-      height: 24px;
-      margin: 0 auto;
+    .leftWrapper {
+      display: flex;
+      gap: 10px;
+
+      .icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      h2 {
+        font-weight: 500;
+        font-size: 16px;
+        align-items: center;
+        display: flex;
+      }
     }
 
-    h2 {
-      font-weight: 500;
-      font-size: 16px;
+    .icon {
+      width: 20px;
+      height: 20px;
+      color: #a2a2a2;
     }
   }
 
