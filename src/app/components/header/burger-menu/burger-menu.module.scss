@@ -1,5 +1,5 @@
 .noScroll {
-  height: calc(100vh + 64px);
+  height: calc(100vh);
 }
 
 .burgerMenu {
@@ -26,12 +26,12 @@
 
   .menu {
     width: 100vw;
-    height: calc(100vh + 64px);
+    height: 100vh;
     position: absolute;
     left: 0;
     background-color: var(--light-gray-bg);
     color: var(--primary-font-dark);
-    top: 64px;
+    top: 78px;
     z-index: 1;
     overflow-y: auto;
 
@@ -107,12 +107,11 @@
   }
 
   footer {
-    border: 2px solid lightpink;
     .followUsLinks {
       display: flex;
       justify-content: center;
       gap: 20px;
-      padding-top: 16px;
+      padding: 16px 0;
 
       a {
         color: var(--color-blue-light);
