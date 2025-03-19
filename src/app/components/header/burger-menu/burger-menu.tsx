@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -25,6 +25,16 @@ const BurgerMenu = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add(s.noScroll);
+      console.log("add noScroll");
+    } else {
+      document.body.classList.remove(s.noScroll);
+      console.log("remove noScroll");
+    }
+  }, [isOpen]);
 
   return (
     <div className={s.burgerMenu}>

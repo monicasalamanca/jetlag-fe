@@ -1,3 +1,7 @@
+.noScroll {
+  height: calc(100vh + 64px);
+}
+
 .burgerMenu {
   .burgerButton {
     background: none;
@@ -22,7 +26,7 @@
 
   .menu {
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh + 64px);
     position: absolute;
     left: 0;
     background-color: var(--light-gray-bg);
