@@ -10,7 +10,7 @@ export default function About() {
       <Hero
         srcImage={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1739321851/blog-assets/aboutus-hero_vpxp49.jpg`}
         headline="About Jet Lag Chronicles"
-        description="Empowering Expats and Digital Nomads to Find Their Perfect Destination"
+        shortDescription="Empowering Expats and Digital Nomads to Find Their Perfect Destination"
       />
       <AboutUsContent />
       <OurMission />

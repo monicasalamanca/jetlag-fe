@@ -21,7 +21,7 @@ const HomeContent = ({ latestBlogPosts }: { latestBlogPosts: BlogPost[] }) => {
       <Hero
         srcImage={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1739143592/blog-assets/home-hero_apo3zo.jpg`}
         headline={"Find Your Perfect City for Your Nomadic Lifestyle!"}
-        description={
+        shortDescription={
           "Discover your next destination with our curated guides for digital nomads and expats"
         }
       />
