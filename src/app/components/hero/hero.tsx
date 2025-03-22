@@ -6,8 +6,8 @@ import s from "./hero.module.scss";
 const Hero: FC<{
   srcImage: string;
   headline: string;
-  description: string;
-}> = ({ srcImage, headline, description }) => {
+  shortDescription: string;
+}> = ({ srcImage, headline, shortDescription }) => {
   return (
     <section className={s.hero}>
       <Image
@@ -20,7 +20,7 @@ const Hero: FC<{
       />
       <div className={s.heroContent}>
         <h1>{headline}</h1>
-        <p>{description}</p>
+        <p>{shortDescription}</p>
       </div>
     </section>
   );

@@ -1,5 +1,10 @@
 import { BASE_URL } from "app/urls";
-import { BlogPost, BlogPostResponse } from "./types";
+import {
+  BlogPost,
+  BlogPostResponse,
+  CountriesResponse,
+  Country,
+} from "./types";
 
 export async function fetchBlogPost(category: string, slug: string) {
   const url = `${BASE_URL}/api/blogs?filters[category][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
@@ -52,5 +57,85 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
     imageUrl:
       item.attributes.images?.data[0]?.attributes?.formats?.thumbnail?.url,
     category: item.attributes.category?.data.attributes.name,
+  }));
+};
+
+export const fetchAllCountries = async (): Promise<Country[] | null> => {
+  const url = `${BASE_URL}/api/countries`;
+
+  const res = await fetch(url, { cache: "no-store" });
+
+  if (!res.ok) return null;
+
+  const data = await res.json();
+
+  return data.data.map((item: CountriesResponse) => ({
+    id: item.id,
+    name: item.attributes.name,
+    continent: item.attributes.continent,
+    headline: item.attributes.headline,
+    description: item.attributes.description,
+    mapLink: item.attributes.mapLink,
+    language: item.attributes.language,
+    power: item.attributes.power,
+    currency: item.attributes.currency,
+    timeZone: item.attributes.timeZone,
+    summerTemp: item.attributes.summerTemp,
+    winterTemp: item.attributes.winterTemp,
+    springTemp: item.attributes.springTemp,
+    automnTemp: item.attributes.automnTemp,
+    springBestTimeToTravel: item.attributes.springBestTimeToTravel,
+    summerBestTimeToTravel: item.attributes.summerBestTimeToTravel,
+    autonmBestTimeToTravel: item.attributes.automnBestTimeToTravel,
+    winterBestTimeToTravel: item.attributes.winterBestTimeToTravel,
+    foodDishes: item.attributes.foodDishes,
+    foodDescription: item.attributes.foodDescription,
+    religions: item.attributes.religions,
+    religionDescription: item.attributes.religionDescription,
+    cultureItems: item.attributes.cultureItems,
+    cultureDescription: item.attributes.cultureDescription,
+    crimeAndSafetyIndex: item.attributes.crimeAndSafetyIndex,
+    crimeAndSafetyDescription: item.attributes.crimeAndSafetyDescription,
+  }));
+};
+
+// gets one country from params
+export const fetchCountry = async (
+  countryName: string
+): Promise<Country[] | null> => {
+  const url = `${BASE_URL}/api/countries?filters[name][$eq]=${countryName}`;
+
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) return null;
+
+  const data = await res.json();
+
+  return data.data.map((item: CountriesResponse) => ({
+    id: item.id,
+    name: item.attributes.name,
+    continent: item.attributes.continent,
+    headline: item.attributes.headline,
+    description: item.attributes.description,
+    mapLink: item.attributes.mapLink,
+    language: item.attributes.language,
+    power: item.attributes.power,
+    currency: item.attributes.currency,
+    timeZone: item.attributes.timeZone,
+    summerTemp: item.attributes.summerTemp,
+    winterTemp: item.attributes.winterTemp,
+    springTemp: item.attributes.springTemp,
+    automnTemp: item.attributes.automnTemp,
+    springBestTimeToTravel: item.attributes.springBestTimeToTravel,
+    summerBestTimeToTravel: item.attributes.summerBestTimeToTravel,
+    automnBestTimeToTravel: item.attributes.automnBestTimeToTravel,
+    winterBestTimeToTravel: item.attributes.winterBestTimeToTravel,
+    foodDishes: item.attributes.foodDishes,
+    foodDescription: item.attributes.foodDescription,
+    religions: item.attributes.religions,
+    religionDescription: item.attributes.religionDescription,
+    cultureItems: item.attributes.cultureItems,
+    cultureDescription: item.attributes.cultureDescription,
+    crimeAndSafetyIndex: item.attributes.crimeAndSafetyIndex,
+    crimeAndSafetyDescription: item.attributes.crimeAndSafetyDescription,
   }));
 };

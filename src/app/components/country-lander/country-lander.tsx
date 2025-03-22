@@ -1,3 +1,4 @@
+import { FC } from "react";
 import BestTimes from "../best-times/best-times";
 import CountryInfo from "../country-info/country-info";
 import Hero from "../hero/hero";
@@ -5,32 +6,77 @@ import Location from "../location/location";
 import QuickFacts from "../quick-facts/quick-facts";
 import TravelResources from "../travel-resources/travel-resources";
 import WeatherOverview from "../weather-overview/weather-overview";
+import { Country } from "@/api/types";
 
 import s from "./country-lander.module.scss";
 
-const CountryLander = () => {
+const CountryLander: FC<{ country: Country }> = ({ country }) => {
+  const {
+    name,
+    headline,
+    description,
+    mapLink,
+    language,
+    power,
+    currency,
+    timeZone,
+    summerTemp,
+    automnTemp,
+    springTemp,
+    winterTemp,
+    springBestTimeToTravel,
+    summerBestTimeToTravel,
+    automnBestTimeToTravel,
+    winterBestTimeToTravel,
+    foodDishes,
+    foodDescription,
+    religions,
+    religionDescription,
+    cultureItems,
+    cultureDescription,
+    crimeAndSafetyIndex,
+    crimeAndSafetyDescription,
+  } = country;
   return (
     <main className={s.container}>
       <Hero
         srcImage={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1740958385/blog-assets/japan-hero_iedol6.jpg`}
-        headline={"Japan Travel & Living Guide"}
-        description={
-          "Your complete guide to exploring the Land of the Rising Sun"
-        }
+        headline={`${name} Travel & Living Guide`}
+        shortDescription={headline}
       />
       <section className={s.countryIntro}>
-        <p>
-          Experience the perfect blend of ancient traditions and cutting-edge
-          technology in Japan. From serene templates to bustling metropolises,
-          discover why Japan is a top destination for digital nomads and expats.
-        </p>
+        <p>{description}</p>
       </section>
-      <Location />
-      <QuickFacts />
-      <WeatherOverview />
-      <BestTimes />
+      <Location mapLink={mapLink} />
+      <QuickFacts
+        language={language}
+        power={power}
+        currency={currency}
+        timeZone={timeZone}
+      />
+      <WeatherOverview
+        summerTemp={summerTemp}
+        automnTemp={automnTemp}
+        springTemp={springTemp}
+        winterTemp={winterTemp}
+      />
+      <BestTimes
+        springBestTimeTotravel={springBestTimeToTravel}
+        summerBestTimeToTravel={summerBestTimeToTravel}
+        automnBestTimeToTravel={automnBestTimeToTravel}
+        winterBestTimeToTravel={winterBestTimeToTravel}
+      />
       <TravelResources />
-      <CountryInfo />
+      <CountryInfo
+        foodDishes={foodDishes}
+        foodDescription={foodDescription}
+        religions={religions}
+        religionDescription={religionDescription}
+        cultureItems={cultureItems}
+        cultureDescription={cultureDescription}
+        crimeAndSafetyIndex={crimeAndSafetyIndex}
+        crimeAndSafetyDescription={crimeAndSafetyDescription}
+      />
     </main>
   );
 };

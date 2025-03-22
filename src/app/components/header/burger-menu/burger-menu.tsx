@@ -29,10 +29,8 @@ const BurgerMenu = () => {
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add(s.noScroll);
-      console.log("add noScroll");
     } else {
       document.body.classList.remove(s.noScroll);
-      console.log("remove noScroll");
     }
   }, [isOpen]);
 

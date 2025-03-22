@@ -7,8 +7,19 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import s from "./best-times.module.scss";
+import { FC } from "react";
 
-const BestTimes = () => {
+const BestTimes: FC<{
+  springBestTimeTotravel: string;
+  summerBestTimeToTravel: string;
+  automnBestTimeToTravel: string;
+  winterBestTimeToTravel: string;
+}> = ({
+  springBestTimeTotravel,
+  summerBestTimeToTravel,
+  automnBestTimeToTravel,
+  winterBestTimeToTravel,
+}) => {
   return (
     <section className={s.container}>
       <h1>Best Times to Travel</h1>
@@ -17,25 +28,25 @@ const BestTimes = () => {
           icon={faSun}
           color="#EC4899"
           title="Spring"
-          description="Mar-May: Cherry Blossoms, mild weather"
+          description={springBestTimeTotravel}
         />
         <BestTimesCard
           icon={faUmbrellaBeach}
           color="#F59E0B"
           title="Summer"
-          description="Jun-Aug: Festivals, warm & humid"
+          description={summerBestTimeToTravel}
         />
         <BestTimesCard
           icon={faLeaf}
           color="#F87315"
           title="Autumn"
-          description="Sep-Nov: Fall colors, pleasant"
+          description={automnBestTimeToTravel}
         />
         <BestTimesCard
           icon={faSnowflake}
           color="#3B81F6"
           title="Winter"
-          description="Dec-Feb: Skiing, hot springs"
+          description={winterBestTimeToTravel}
         />
       </div>
     </section>

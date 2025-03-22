@@ -70,3 +70,63 @@ export type BlogPost = {
   imageUrl: string;
   category: string;
 };
+
+export type CountriesResponse = {
+  id: number;
+  attributes: {
+    name: string;
+    continent: string;
+    headline: string;
+    description: string;
+    mapLink: string;
+    language: string;
+    power: string;
+    currency: string;
+    timeZone: string;
+    summerTemp: string;
+    winterTemp: string;
+    springTemp: string;
+    automnTemp: string;
+    springBestTimeToTravel: string;
+    summerBestTimeToTravel: string;
+    automnBestTimeToTravel: string;
+    winterBestTimeToTravel: string;
+    foodDishes: string;
+    foodDescription: string;
+    religions: string;
+    religionDescription: string;
+    cultureItems: string;
+    cultureDescription: string;
+    crimeAndSafetyIndex: number;
+    crimeAndSafetyDescription: string;
+  };
+};
+
+export type Country = {
+  id: number;
+  name: string;
+  continent: string;
+  headline: string;
+  description: string;
+  mapLink: string;
+  language: string;
+  power: string;
+  currency: string;
+  timeZone: string;
+  summerTemp: string;
+  winterTemp: string;
+  springTemp: string;
+  automnTemp: string;
+  springBestTimeToTravel: string;
+  summerBestTimeToTravel: string;
+  automnBestTimeToTravel: string;
+  winterBestTimeToTravel: string;
+  foodDishes: string;
+  foodDescription: string;
+  religions: string;
+  religionDescription: string;
+  cultureItems: string;
+  cultureDescription: string;
+  crimeAndSafetyIndex: number;
+  crimeAndSafetyDescription: string;
+};

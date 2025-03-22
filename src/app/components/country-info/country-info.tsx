@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHandsPraying,
@@ -9,7 +10,30 @@ import InfoCard from "./info-card/info-card";
 
 import s from "./country-info.module.scss";
 
-const CountryInfo = () => {
+const CountryInfo: FC<{
+  foodDishes: string;
+  foodDescription: string;
+  religions: string;
+  religionDescription: string;
+  cultureItems: string;
+  cultureDescription: string;
+  crimeAndSafetyIndex: number;
+  crimeAndSafetyDescription: string;
+}> = ({
+  foodDishes,
+  foodDescription,
+  religions,
+  religionDescription,
+  cultureItems,
+  cultureDescription,
+  crimeAndSafetyIndex,
+  crimeAndSafetyDescription,
+}) => {
+  const foodDishesArray = foodDishes.split(",").map((dish) => dish.trim());
+  const religionsArray = religions
+    .split(",")
+    .map((religion) => religion.trim());
+  const cultureItemsArray = cultureItems.split(",").map((item) => item.trim());
   return (
     <section className={s.container}>
       <h1>Country Information</h1>
@@ -19,30 +43,30 @@ const CountryInfo = () => {
           iconColor="#3A78FC"
           contrastColor="#EEF6FF"
           title="Food"
-          list={["Sushi", "Ramen", "Tempura", "Takoyaki"]}
+          list={foodDishesArray}
           imageSrc="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741477967/blog-assets/japanese-food_wkydzj.jpg"
           imageAltText="Japanese Food Image"
-          description="Japanese cuisine is a masterpiece of tradition and innovation. From world-famous sushi and ramen to regional specialties like Osaka's takoyaki and Hokkaido's seafood, every city offers unique culinary experiences. Street food markets and Michelin-starred restaurants coexist, making Japan a food lover's paradise."
+          description={foodDescription}
         />
         <InfoCard
           icon={faHandsPraying}
           iconColor="#1BC4F3"
           contrastColor="#EEF6FF"
           title="Religion"
-          list={["Shinto", "Buddhism"]}
+          list={religionsArray}
           imageSrc="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481408/blog-assets/japanese-religion_g03h0b.jpg"
           imageAltText="Japanese religion Image"
-          description="Shinto and Buddhism harmoniously shape Japan's spiritual landscape. Ancient temples and serene shrines dot both cities and countryside, offering peaceful retreats. Religious customs influence daily life through festivals, ceremonies, and architectural marvels that attract millions of visitors annually."
+          description={religionDescription}
         />
         <InfoCard
           icon={faMasksTheater}
           iconColor="#ACF877"
           contrastColor="#ECFCF4"
           title="Culture"
-          list={["Anime", "J-Pop", "Arts", "Tech"]}
+          list={cultureItemsArray}
           imageSrc="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481814/blog-assets/japanese-culture_clexsv.jpg"
           imageAltText="Japanese culture Image"
-          description="Japan seamlessly blends ancient traditions with modern innovation. Experience centuries-old tea ceremonies and traditional arts alongside vibrant anime culture and cutting-edge technology. From peaceful zen gardens to electric Akihabara, Japan's cultural diversity offers something for everyone."
+          description={cultureDescription}
         />
         <div className={s.safety}>
           <div className={s.title}>
@@ -56,19 +80,16 @@ const CountryInfo = () => {
           <div className={s.progressBarWrapper}>
             <div className={s.top}>
               <h2>Safety Index</h2>
-              <p>98/100</p>
+              <p>{crimeAndSafetyIndex}/100</p>
             </div>
             <div className={s.progressBar}>
-              <div className={s.fill} style={{ width: "95%" }}></div>
+              <div
+                className={s.fill}
+                style={{ width: `${crimeAndSafetyIndex}%` }}
+              ></div>
             </div>
           </div>
-          <p>
-            Japan ranks among the world&apos;s safest countries, with
-            exceptionally low crime rates and a culture of respect and order.
-            While normal precautions apply, travelers can feel secure exploring
-            any time of day. Lost items are commonly returned, and public
-            transportation is reliable and safe.
-          </p>
+          <p>{crimeAndSafetyDescription}</p>
         </div>
       </div>
     </section>

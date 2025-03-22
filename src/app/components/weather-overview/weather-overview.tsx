@@ -1,3 +1,4 @@
+import { FC } from "react";
 import {
   faLeaf,
   faSnowflake,
@@ -8,7 +9,12 @@ import WeatherOverviewCard from "./weather-overview-card/weather-overview-card";
 
 import s from "./weather-overview.module.scss";
 
-const WeatherOverview = () => {
+const WeatherOverview: FC<{
+  summerTemp: string;
+  automnTemp: string;
+  springTemp: string;
+  winterTemp: string;
+}> = ({ summerTemp, automnTemp, springTemp, winterTemp }) => {
   return (
     <section className={s.container}>
       <h1>Weather Overview</h1>
@@ -17,25 +23,25 @@ const WeatherOverview = () => {
           icon={faUmbrellaBeach}
           color="#F59E0B"
           season="Summer (Jun-Aug)"
-          temperature="19-31 C"
+          temperature={`${summerTemp} C`}
         />
         <WeatherOverviewCard
           icon={faLeaf}
           color="#F87315"
           season="Autumn (Sep-Nov)"
-          temperature="9-27 C"
+          temperature={`${automnTemp} C`}
         />
         <WeatherOverviewCard
           icon={faSun}
           color="#EC4899"
           season="Spring (May-May)"
-          temperature="10-20 C"
+          temperature={`${springTemp} C`}
         />
         <WeatherOverviewCard
           icon={faSnowflake}
           color="#3B81F6"
           season="Winter (Dec-Feb)"
-          temperature="2-12 C"
+          temperature={`${winterTemp} C`}
         />
       </div>
     </section>
