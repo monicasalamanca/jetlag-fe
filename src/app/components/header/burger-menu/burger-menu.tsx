@@ -37,6 +37,10 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
     }
   }, [isOpen]);
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className={s.burgerMenu}>
       <button className={s.burgerButton} onClick={toggleMenu}>
@@ -49,7 +53,9 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
           <ul>
             <li>
               <FontAwesomeIcon icon={faHouse} className={s.icon} />
-              <Link href="/">Home</Link>
+              <Link href="/" onClick={closeMenu}>
+                Home
+              </Link>
             </li>
             <li className={s.destinationSection}>
               <div className={s.destinationsWrapper}>
@@ -67,8 +73,11 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                             <FontAwesomeIcon
                               icon={faLocationDot}
                               className={s.icon}
+                              onClick={closeMenu}
                             />
-                            <Link href="/thailand">{country}</Link>
+                            <Link href={`/${country}`} onClick={closeMenu}>
+                              {country}
+                            </Link>
                           </li>
                         ))}
                       </ul>
@@ -83,15 +92,21 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
             </li>
             <li>
               <FontAwesomeIcon icon={faUsers} className={s.icon} />
-              <Link href="/about-us">About Us</Link>
+              <Link href="/about-us" onClick={closeMenu}>
+                About Us
+              </Link>
             </li>
             <li>
               <FontAwesomeIcon icon={faNewspaper} className={s.icon} />
-              <Link href="/about-us">Blogs and Articles</Link>
+              <Link href="/about-us" onClick={closeMenu}>
+                Blogs and Articles
+              </Link>
             </li>
             <li>
               <FontAwesomeIcon icon={faEnvelope} className={s.icon} />
-              <Link href="/about-us">Contact Us</Link>
+              <Link href="/about-us" onClick={closeMenu}>
+                Contact Us
+              </Link>
             </li>
           </ul>
           <footer>
@@ -99,12 +114,14 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
               <Link
                 className={s.followLink}
                 href="https://twitter.com/jetlagchronicle"
+                onClick={closeMenu}
               >
                 <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
               </Link>
               <Link
                 className={s.followLink}
                 href="https://twitter.com/jetlagchronicle"
+                onClick={closeMenu}
               >
                 <FontAwesomeIcon icon={faPinterest} className={s.icon} />
               </Link>
@@ -112,18 +129,21 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
               <Link
                 className={s.followLink}
                 href="https://twitter.com/jetlagchronicle"
+                onClick={closeMenu}
               >
                 <FontAwesomeIcon icon={faInstagram} className={s.icon} />
               </Link>
               <Link
                 className={s.followLink}
                 href="https://twitter.com/jetlagchronicle"
+                onClick={closeMenu}
               >
                 <FontAwesomeIcon icon={faYoutube} className={s.icon} />
               </Link>
               <Link
                 className={s.followLink}
                 href="https://twitter.com/jetlagchronicle"
+                onClick={closeMenu}
               >
                 <FontAwesomeIcon icon={faFacebook} className={s.icon} />
               </Link>
