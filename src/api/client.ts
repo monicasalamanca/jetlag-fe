@@ -15,7 +15,7 @@ export const fetchBlogPost = async (
 ): Promise<Post[] | null> => {
   const url = `${BASE_URL}/api/blogs?filters[category][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
   try {
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
 
     if (!res.ok) {
       console.error("Failed to fetch a blog post: ", res.statusText);
@@ -40,6 +40,7 @@ export const fetchBlogPost = async (
 
 // gets all the blogs from only one category
 // TODO: to use on category country page
+// THIS IS NOT USED
 export const fetchBlogPostsFromCategory = async (
   category: string
 ): Promise<null> => {
@@ -87,6 +88,7 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
 };
 
 // fetchs all the countries
+// THIS IS NOT USED
 export const fetchAllCountries = async (): Promise<Country[] | null> => {
   const url = `${BASE_URL}/api/countries`;
 
@@ -141,7 +143,7 @@ export const fetchCountry = async (
   const url = `${BASE_URL}/api/countries?filters[name][$eq]=${countryName}&pogination[limit]=1`;
 
   try {
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetch(url, { next: { revalidate: 604800 } }); // its cached for a week
 
     if (!res.ok) {
       console.error("Failed fetching to fetch one country: ", res.statusText);
