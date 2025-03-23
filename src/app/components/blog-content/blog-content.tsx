@@ -14,11 +14,11 @@ import {
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import ReactMarkdown from "react-markdown";
-import { BlogPost } from "@/api/types";
+import { Post } from "@/api/types";
 
 import s from "./blog-content.module.scss";
 
-const BlogContent: FC<{ post: BlogPost }> = ({ post }) => {
+const BlogContent: FC<{ post: Post }> = ({ post }) => {
   const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",

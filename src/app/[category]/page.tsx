@@ -1,6 +1,7 @@
+import { notFound } from "next/navigation";
 import { fetchCountry } from "@/api/client";
-import CountryLander from "@/components/country-lander/country-lander";
-import NotFoundPage from "./[slug]/not-found";
+// import CountryLander from "@/components/country-lander/country-lander";
+// import NotFoundPage from "./[slug]/not-found";
 
 type Params = Promise<{
   category: string;
@@ -8,9 +9,10 @@ type Params = Promise<{
 
 const BlogPostPage = async ({ params }: { params: Params }) => {
   const { category } = await params;
-  const country = await fetchCountry(category.toLowerCase());
-  if (!country) return <NotFoundPage />;
-  return <CountryLander country={country[0] ?? {}} />;
+  const country = await fetchCountry(category);
+  if (!country) return notFound();
+  // return <CountryLander country={country ? [country] : []} />;
+  return <div>Test</div>;
 };
 
 export default BlogPostPage;

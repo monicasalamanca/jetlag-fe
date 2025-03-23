@@ -1,8 +1,10 @@
+export const revalidate = 86400; // 👈 Ensures ISR is enabled for the entire page
+
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import { Roboto } from "next/font/google";
-import Header from "./components/header/header";
-import Footer from "./components/footer/footer";
+import HeaderWrapper from "@/components/headerWrapper/headerWrapper";
+import Footer from "@/components/footer/footer";
 
 import "./globals.css";
 // import { Head } from "next/document";
@@ -39,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <Header />
+        <HeaderWrapper />
         {children}
         <Footer />
       </body>

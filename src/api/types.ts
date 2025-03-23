@@ -60,6 +60,7 @@ export type BlogPostResponse = {
     category?: Category;
   };
 };
+
 export type BlogPost = {
   id: number;
   title: string;
@@ -69,6 +70,15 @@ export type BlogPost = {
   publishedAt: string;
   imageUrl: string;
   category: string;
+};
+
+export type Post = {
+  id: number;
+  title: string;
+  description: string;
+  content: string;
+  publishedAt: string;
+  likes: number;
 };
 
 export type CountriesResponse = {
@@ -129,4 +139,14 @@ export type Country = {
   cultureDescription: string;
   crimeAndSafetyIndex: number;
   crimeAndSafetyDescription: string;
+};
+
+export type Destination = {
+  id: number;
+  name: string;
+  continent: string;
+};
+
+export type GroupedCountries = {
+  [continent: string]: string[];
 };

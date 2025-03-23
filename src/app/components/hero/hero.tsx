@@ -14,9 +14,9 @@ const Hero: FC<{
         className={s.heroImage}
         src={srcImage}
         alt="Hero Image"
-        layout="responsive"
         width={1920}
         height={1080}
+        // style={{ width: "100%", height: "auto" }}
       />
       <div className={s.heroContent}>
         <h1>{headline}</h1>

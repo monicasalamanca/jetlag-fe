@@ -39,4 +39,79 @@
       }
     }
   }
+  .notWorking {
+    padding: 16px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px #0000001a;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0 auto;
+    text-align: center;
+
+    .icon {
+      width: 32px;
+      height: 32px;
+      margin: 0 auto;
+    }
+
+    h3 {
+      color: var(--text-color);
+    }
+
+    p {
+      color: var(--font-dark-gray);
+    }
+
+    button {
+      background-color: #1bc4f3;
+      display: flex;
+      border-radius: 90px;
+      border: none;
+      padding: 8px 16px;
+      width: fit-content;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      cursor: pointer;
+      pointer-events: all;
+
+      .btnIcon {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+      }
+    }
+
+    .bottomLinks {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-top: 1px solid var(--super-light-gray);
+      padding-top: 24px;
+      margin: 0 auto;
+      display: none; // TODO: remove once the links for guides are ready
+
+      .links {
+        display: flex;
+        gap: 16px;
+
+        .otherLinks {
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--color-blue);
+          display: flex;
+          align-items: center;
+
+          .icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+  }
 }
