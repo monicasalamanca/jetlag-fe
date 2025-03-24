@@ -50,7 +50,6 @@ const InfoCard: FC<{
         className={s.cardImage}
         src={imageSrc}
         alt={imageAltText}
-        layout="responsive"
         width={640}
         height={427}
       />

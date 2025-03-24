@@ -1,11 +1,20 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { FC } from "react";
 import Image from "next/image";
-import BurgerMenu from "./burger-menu/burger-menu";
 import { Destination, GroupedCountries } from "@/api/types";
 
 import s from "./header.module.scss";
+
+// Dynamically import BurgerMenu (only loaded when needed, on mobile)
+const BurgerMenu = dynamic(() => import("./burger-menu/burger-menu"), {
+  ssr: false,
+});
+// Dynamically import Menu (only loaded when needed, on desktop)
+const Menu = dynamic(() => import("./menu/menu"), {
+  ssr: false,
+});
 
 const Header: FC<{ destinations: Destination[] | null }> = ({
   destinations,
@@ -30,6 +39,7 @@ const Header: FC<{ destinations: Destination[] | null }> = ({
         alt="Logo"
       />
       <BurgerMenu destinations={groupedByContinent} />
+      <Menu destinations={groupedByContinent} />
     </header>
   );
 };
