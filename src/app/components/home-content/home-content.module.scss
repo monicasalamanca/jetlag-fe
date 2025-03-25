@@ -1,12 +1,60 @@
+.container {
+  .latestBlogPosts {
+    .readMore {
+      display: none;
+    }
+
+    @media only screen and (min-width: 768px) {
+      width: 768px;
+      margin: 0 auto;
+      pointer-events: none;
+
+      .readMore {
+        display: block;
+        pointer-events: auto;
+        text-align: end;
+        font-weight: 500;
+        font-size: 16px;
+        color: var(--color-blue);
+        padding-right: 16px;
+        cursor: pointer;
+
+        .icon {
+          margin-left: 8px;
+        }
+      }
+
+      .wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+      }
+    }
+  }
+}
+
 .latestBlogPosts {
   padding: 32px 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
   h2 {
     color: var(--text-color);
     font-size: 24px;
+
+    @media only screen and (min-width: 768px) {
+      font-size: 28px;
+      text-align: center;
+      padding-top: 24px;
+      padding-bottom: 32px;
+    }
   }
 
   .latestBlogPost {
@@ -19,6 +67,11 @@
       width: 120px;
       object-fit: cover;
       border-radius: 8px;
+
+      @media only screen and (min-width: 768px) {
+        height: 100px;
+        width: 100px;
+      }
     }
 
     .contentWrapper {
