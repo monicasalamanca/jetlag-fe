@@ -52,8 +52,17 @@
     }
   }
 
-  .cardImage {
-    border-radius: 12px;
+  .imageContainer {
+    width: 100%;
+    height: 100%;
+
+    .cardImage {
+      border-radius: 12px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
   }
 
   p {

@@ -54,18 +54,20 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
         currency={currency}
         timeZone={timeZone}
       />
-      <WeatherOverview
-        summerTemp={summerTemp}
-        automnTemp={automnTemp}
-        springTemp={springTemp}
-        winterTemp={winterTemp}
-      />
-      <BestTimes
-        springBestTimeTotravel={springBestTimeToTravel}
-        summerBestTimeToTravel={summerBestTimeToTravel}
-        automnBestTimeToTravel={automnBestTimeToTravel}
-        winterBestTimeToTravel={winterBestTimeToTravel}
-      />
+      <div className={s.weatherWrapper}>
+        <WeatherOverview
+          summerTemp={summerTemp}
+          automnTemp={automnTemp}
+          springTemp={springTemp}
+          winterTemp={winterTemp}
+        />
+        <BestTimes
+          springBestTimeTotravel={springBestTimeToTravel}
+          summerBestTimeToTravel={summerBestTimeToTravel}
+          automnBestTimeToTravel={automnBestTimeToTravel}
+          winterBestTimeToTravel={winterBestTimeToTravel}
+        />
+      </div>
       <TravelResources />
       <CountryInfo
         foodDishes={foodDishes}

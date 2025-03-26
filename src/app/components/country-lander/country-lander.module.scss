@@ -1,4 +1,6 @@
 .container {
+  background-color: var(--light-gray-bg);
+
   .countryIntro {
     background-color: var(--white);
     padding: 32px 16px;
@@ -11,6 +13,21 @@
       font-size: 16px;
       line-height: 24px;
       font-weight: 400;
+
+      @media only screen and (min-width: 768px) {
+        width: 768px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .weatherWrapper {
+    @media only screen and (min-width: 768px) {
+      width: 768px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
     }
   }
 }

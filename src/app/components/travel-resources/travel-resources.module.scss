@@ -8,13 +8,22 @@
   background-color: var(--light-gray-bg);
   color: var(--primary-font-dark);
 
+  @media only screen and (min-width: 768px) {
+    width: 768px;
+    margin: 0 auto;
+  }
+
   .wrapper {
-    // display: grid;
-    // grid-template-columns: repeat(2, 1fr);
-    // grid-template-rows: repeat(2, 1fr);
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    @media only screen and (min-width: 768px) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 16px;
+    }
   }
 
   h1 {

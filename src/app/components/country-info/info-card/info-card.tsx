@@ -46,13 +46,15 @@ const InfoCard: FC<{
           <li key={index}>{item}</li>
         ))}
       </ol>
-      <Image
-        className={s.cardImage}
-        src={imageSrc}
-        alt={imageAltText}
-        width={640}
-        height={427}
-      />
+      <div className={s.imageContainer}>
+        <Image
+          className={s.cardImage}
+          src={imageSrc}
+          alt={imageAltText}
+          width={640}
+          height={427}
+        />
+      </div>
       <p>{description}</p>
     </div>
   );
