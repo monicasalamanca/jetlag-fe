@@ -2,6 +2,8 @@
 
 import { useEffect, useState, FC, ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import s from "./modal.module.scss";
 
@@ -28,7 +30,7 @@ const Modal: FC<{
     <div className={s.backdrop}>
       <div className={s.modalContent}>
         <button onClick={onClose} className={s.closeButton}>
-          ✕
+          <FontAwesomeIcon icon={faXmark} className={s.closeIcon} />
         </button>
         {children}
       </div>

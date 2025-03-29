@@ -5,15 +5,15 @@ import {
   faGlobe,
   faHouse,
   faLocationDot,
-  faNewspaper,
+  // faNewspaper,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import {
-  faFacebook,
-  faInstagram,
-  faPinterest,
+  // faFacebook,
+  // faInstagram,
+  // faPinterest,
   faXTwitter,
-  faYoutube,
+  // faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { GroupedCountries } from "@/api/types";
 
@@ -89,12 +89,12 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                   </div>
                 ))}
             </li>
-            <li>
+            {/* <li>
               <FontAwesomeIcon icon={faNewspaper} className={s.icon} />
-              <Link href="/about-us" onClick={closeMenu}>
+              <Link href="/blogs" onClick={closeMenu}>
                 Blogs
               </Link>
-            </li>
+            </li> */}
             <li>
               <FontAwesomeIcon icon={faUsers} className={s.icon} />
               <Link href="/about-us" onClick={closeMenu}>
@@ -106,12 +106,12 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
             <div className={s.followUsLinks}>
               <Link
                 className={s.followLink}
-                href="https://twitter.com/jetlagchronicle"
+                href="https://twitter.com/the_jetlaggers"
                 onClick={closeMenu}
               >
                 <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
               </Link>
-              <Link
+              {/* <Link
                 className={s.followLink}
                 href="https://twitter.com/jetlagchronicle"
                 onClick={closeMenu}
@@ -139,7 +139,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                 onClick={closeMenu}
               >
                 <FontAwesomeIcon icon={faFacebook} className={s.icon} />
-              </Link>
+              </Link> */}
             </div>
           </footer>
         </nav>

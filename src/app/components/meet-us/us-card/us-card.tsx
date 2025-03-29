@@ -1,5 +1,6 @@
 import { FC } from "react";
 import s from "./us-card.module.scss";
+import Image from "next/image";
 
 const UsCard: FC<{ name: string; role: string; desc: string }> = ({
   name,
@@ -8,7 +9,23 @@ const UsCard: FC<{ name: string; role: string; desc: string }> = ({
 }) => {
   return (
     <div className={s.container}>
-      <div className={s.image}></div>
+      <div className={s.imageWrapper}>
+        {name.includes("Monica") ? (
+          <Image
+            src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1743283362/blog-assets/monica_jscnvj.jpg`}
+            alt="Monica Salamanca"
+            width={65}
+            height={65}
+          />
+        ) : (
+          <Image
+            src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1743283362/blog-assets/justin_fledos.jpg`}
+            alt="Justin Dunlop"
+            width={65}
+            height={65}
+          />
+        )}
+      </div>
       <div className={s.wrapper}>
         <h3>{name}</h3>
         <p className={s.role}>{role}</p>

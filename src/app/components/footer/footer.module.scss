@@ -107,16 +107,12 @@
           gap: 4px;
 
           li {
-            // cursor: pointer;
-
             &:last-child {
               margin-top: 16px;
               color: var(--color-white);
-              // cursor: pointer;
             }
 
             a {
-              // color: var(--font-gray);
               font-size: 14px;
               color: var(--font-gray);
               text-decoration: none;

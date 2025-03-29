@@ -1,9 +1,9 @@
 import { FC } from "react";
+import Link from "next/link";
 import NavLink from "./nav-link/nav-link";
 import { GroupedCountries } from "@/api/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faEarthAsia } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
+import { faEarthAsia } from "@fortawesome/free-solid-svg-icons";
 
 import s from "./menu.module.scss";
 
@@ -49,18 +49,18 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
                     </div>
                   ))}
               </div>
-              <div className={s.popularDestinations}>
+              {/* <div className={s.popularDestinations}>
                 <Link href="/" className={s.viewAll}>
                   View All Destinations
                   <FontAwesomeIcon icon={faArrowRight} className={s.icon} />
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </li>
-        <li>
+        {/* <li>
           <NavLink href="/blogs">Blogs</NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink href="/about-us">About Us</NavLink>
         </li>

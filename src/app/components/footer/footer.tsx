@@ -27,7 +27,9 @@ const Footer = () => {
             <h3>Quick Links</h3>
             <ul>
               <li>
-                <Link href="/about-us">About Us</Link>
+                <Link className={s.quickLink} href="/about-us">
+                  About Us
+                </Link>
               </li>
               <li>
                 <Link href="/privacy-policy">Privacy Policy</Link>
@@ -45,7 +47,7 @@ const Footer = () => {
             <div className={s.followUsLinks}>
               <Link
                 className={s.followLink}
-                href="https://twitter.com/jetlagchronicle"
+                href="https://twitter.com/the_jetlaggers"
               >
                 <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
               </Link>
@@ -87,7 +89,7 @@ const Footer = () => {
           <div className={s.followUsLinks}>
             <Link
               className={s.followLink}
-              href="https://twitter.com/jetlagchronicle"
+              href="https://twitter.com/the_jetlaggers"
             >
               <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
             </Link>
