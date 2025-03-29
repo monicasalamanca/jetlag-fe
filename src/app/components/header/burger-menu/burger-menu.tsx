@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faEnvelope,
   faGlobe,
   faHouse,
   faLocationDot,
@@ -91,21 +90,15 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                 ))}
             </li>
             <li>
+              <FontAwesomeIcon icon={faNewspaper} className={s.icon} />
+              <Link href="/about-us" onClick={closeMenu}>
+                Blogs
+              </Link>
+            </li>
+            <li>
               <FontAwesomeIcon icon={faUsers} className={s.icon} />
               <Link href="/about-us" onClick={closeMenu}>
                 About Us
-              </Link>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faNewspaper} className={s.icon} />
-              <Link href="/about-us" onClick={closeMenu}>
-                Blogs and Articles
-              </Link>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faEnvelope} className={s.icon} />
-              <Link href="/about-us" onClick={closeMenu}>
-                Contact Us
               </Link>
             </li>
           </ul>

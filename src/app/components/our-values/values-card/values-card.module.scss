@@ -7,6 +7,10 @@
   justify-content: flex-start;
   gap: 16px;
 
+  @media only screen and (min-width: 768px) {
+    width: 32%;
+  }
+
   .icon {
     width: 24px;
   }

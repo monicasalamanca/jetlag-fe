@@ -1,3 +1,4 @@
+import { FC } from "react";
 import BestTimesCard from "./best-time-card/best-time-card";
 import {
   faSnowflake,
@@ -7,7 +8,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import s from "./best-times.module.scss";
-import { FC } from "react";
 
 const BestTimes: FC<{
   springBestTimeTotravel: string;

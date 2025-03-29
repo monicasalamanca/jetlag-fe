@@ -9,6 +9,11 @@
   background-color: var(--white);
   color: var(--primary-font-dark);
 
+  @media only screen and (min-width: 768px) {
+    width: 768px;
+    margin: 0 auto;
+  }
+
   .compassIcon {
     width: 32px;
     margin-bottom: 8px;

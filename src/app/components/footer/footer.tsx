@@ -1,14 +1,15 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFacebook,
-  faInstagram,
-  faPinterest,
+  // faFacebook,
+  // faInstagram,
+  // faPinterest,
   faXTwitter,
-  faYoutube,
+  // faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 
 import s from "./footer.module.scss";
+import ContactForm from "../contact-form/contact-form";
 
 const Footer = () => {
   return (
@@ -26,16 +27,16 @@ const Footer = () => {
             <h3>Quick Links</h3>
             <ul>
               <li>
-                <Link href="/">About Us</Link>
+                <Link href="/about-us">About Us</Link>
               </li>
               <li>
-                <Link href="/">Contact Us</Link>
+                <Link href="/privacy-policy">Privacy Policy</Link>
               </li>
               <li>
-                <Link href="/">Privacy Policy</Link>
+                <Link href="/terms-of-service">Terms of Service</Link>
               </li>
               <li>
-                <Link href="/">Terms of Service</Link>
+                <ContactForm buttonName="Contact Us" showIcon />
               </li>
             </ul>
           </div>
@@ -48,7 +49,7 @@ const Footer = () => {
               >
                 <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
               </Link>
-              <Link
+              {/* <Link
                 className={s.followLink}
                 href="https://twitter.com/jetlagchronicle"
               >
@@ -72,7 +73,7 @@ const Footer = () => {
                 href="https://twitter.com/jetlagchronicle"
               >
                 <FontAwesomeIcon icon={faFacebook} className={s.icon} />
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -90,7 +91,7 @@ const Footer = () => {
             >
               <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
             </Link>
-            <Link
+            {/* <Link
               className={s.followLink}
               href="https://twitter.com/jetlagchronicle"
             >
@@ -114,14 +115,14 @@ const Footer = () => {
               href="https://twitter.com/jetlagchronicle"
             >
               <FontAwesomeIcon icon={faFacebook} className={s.icon} />
-            </Link>
+            </Link> */}
           </div>
         </div>
         <div className={s.footerLinks}>
           <div className={s.year}>© 2025 The Jet Lag Chronicles</div>
           <div className={s.links}>
-            <a>Privacy Policy</a>
-            <a>Terms of Service</a>
+            <Link href="/privacy-policy">Privacy Policy</Link>
+            <Link href="/terms-of-service">Terms of Service</Link>
           </div>
         </div>
       </div>

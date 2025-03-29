@@ -61,7 +61,7 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
   const url = `${BASE_URL}/api/blogs?sort=publishedAt:desc&pagination[page]=1&pagination[pageSize]=3&populate[images]=*&populate[category]=*`;
 
   try {
-    const res = await fetch(url, { next: { revalidate: 604800 } }); // it lasts for a week
+    const res = await fetch(url, { next: { revalidate: 604800 } }); // it caches for a week
 
     if (!res.ok) {
       console.error("Failed to fetch the latest blog posts: ", res.statusText);

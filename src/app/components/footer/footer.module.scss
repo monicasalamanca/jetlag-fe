@@ -70,7 +70,21 @@
       padding: 32px 24px;
 
       .itemList {
-        flex: 1;
+        &:first-child {
+          flex: 0 0 250px;
+
+          p {
+            color: var(--color-blue-light);
+            opacity: 0.7;
+          }
+        }
+        &:last-child {
+          flex: 0 0 100px;
+        }
+
+        &:nth-child(2) {
+          flex: 1 1 auto;
+        }
 
         h3 {
           color: var(--white);
@@ -93,9 +107,21 @@
           gap: 4px;
 
           li {
-            color: var(--font-gray);
-            font-size: 14px;
-            cursor: pointer;
+            // cursor: pointer;
+
+            &:last-child {
+              margin-top: 16px;
+              color: var(--color-white);
+              // cursor: pointer;
+            }
+
+            a {
+              // color: var(--font-gray);
+              font-size: 14px;
+              color: var(--font-gray);
+              text-decoration: none;
+              cursor: pointer;
+            }
           }
         }
 

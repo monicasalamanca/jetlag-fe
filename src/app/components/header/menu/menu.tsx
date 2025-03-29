@@ -59,13 +59,10 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
           </div>
         </li>
         <li>
-          <NavLink href="/about-us">About Us</NavLink>
-        </li>
-        <li>
           <NavLink href="/blogs">Blogs</NavLink>
         </li>
         <li>
-          <NavLink href="/contact-us">Contact Us</NavLink>
+          <NavLink href="/about-us">About Us</NavLink>
         </li>
       </ul>
     </nav>

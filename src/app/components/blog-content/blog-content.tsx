@@ -1,11 +1,10 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock } from "@fortawesome/free-regular-svg-icons";
 import {
   faFacebook,
-  faInstagram,
   faLinkedin,
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
@@ -13,8 +12,24 @@ import ReactMarkdown from "react-markdown";
 import { Post } from "@/api/types";
 
 import s from "./blog-content.module.scss";
+import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 const BlogContent: FC<{ post: Post }> = ({ post }) => {
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
+  const [shareUrl, setShareUrl] = useState("");
+  const [shareText, setShareText] = useState("");
+
+  useEffect(() => {
+    // check if the code is running in the browser
+    if (typeof window !== "undefined") {
+      // Detect mobile device
+      setIsMobileDevice(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent));
+      setShareUrl(encodeURIComponent(window.location.href));
+      setShareText(encodeURIComponent(post.title));
+    }
+  }, [post.title]);
+
   const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
@@ -28,6 +43,22 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
       return "Invalid date";
     }
     return new Intl.DateTimeFormat("en-US", options).format(date);
+  };
+
+  const handleShare = async () => {
+    if (typeof window !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          text: "Check out this article!",
+          url: window.location.href,
+        });
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
+      console.log("Web Share API not supported.");
+    }
   };
 
   return (
@@ -50,11 +81,31 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
       </div>
       <h1>{post.title}</h1>
       <div className={s.socialMedia}>
-        <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
-        <FontAwesomeIcon icon={faFacebook} className={s.icon} />
-        <FontAwesomeIcon icon={faInstagram} className={s.icon} />
-        <FontAwesomeIcon icon={faLinkedin} className={s.icon} />
-        {/* <FontAwesomeIcon icon={faHeart} className={s.icon} /> */}
+        {isMobileDevice ? (
+          <button onClick={handleShare}>
+            <FontAwesomeIcon icon={faShareNodes} className={s.icon} />
+          </button>
+        ) : (
+          <>
+            <Link
+              href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`}
+            >
+              <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
+            </Link>
+            <Link
+              href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
+            >
+              <FontAwesomeIcon icon={faFacebook} className={s.icon} />
+            </Link>
+            <Link
+              href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}`}
+            >
+              <FontAwesomeIcon icon={faLinkedin} className={s.icon} />
+            </Link>
+
+            {/* <FontAwesomeIcon icon={faHeart} className={s.icon} /> */}
+          </>
+        )}
       </div>
       <section className={s.postContent}>
         <ReactMarkdown>{post.content}</ReactMarkdown>

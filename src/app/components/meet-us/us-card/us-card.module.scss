@@ -7,6 +7,10 @@
   justify-content: flex-start;
   gap: 16px;
 
+  @media only screen and (min-width: 768px) {
+    width: 48%;
+  }
+
   .image {
     width: 65px;
     height: 65px;
