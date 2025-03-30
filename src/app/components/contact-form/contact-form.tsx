@@ -14,11 +14,6 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
-import {
-  faGlobe,
-  faHandshakeSimple,
-  faLaptop,
-} from "@fortawesome/free-solid-svg-icons";
 
 const ContactForm: FC<{ buttonName: string; showIcon: boolean }> = ({
   buttonName,
@@ -56,7 +51,7 @@ const ContactForm: FC<{ buttonName: string; showIcon: boolean }> = ({
           you faster than you can say
         </p>
         <form onSubmit={handleSubmit} className={s.formContainer}>
-          <div className={s.header}>
+          {/* <div className={s.header}>
             <div className={s.headerItem}>
               <div className={`${s.imgWrapper} ${s.worldIconWrapper}`}>
                 <FontAwesomeIcon
@@ -84,7 +79,7 @@ const ContactForm: FC<{ buttonName: string; showIcon: boolean }> = ({
               </div>
               <h3>Colaborate</h3>
             </div>
-          </div>
+          </div> */}
           <div className={s.inputWrapper}>
             <input
               type="text"
