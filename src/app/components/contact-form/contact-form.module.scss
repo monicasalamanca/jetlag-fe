@@ -6,6 +6,7 @@
   opacity: 0.8;
   transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out;
   cursor: pointer;
+  text-align: left;
 
   &:hover {
     color: var(--color-blue-light);

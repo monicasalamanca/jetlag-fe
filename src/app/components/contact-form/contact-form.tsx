@@ -15,8 +15,6 @@ import Link from "next/link";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { postContactUs } from "@/api/client";
 
-import s from "./contact-form.module.scss";
-
 const Success = dynamic(() => import("./success/success"), {
   loading: () => <p>Loading...</p>,
 });
@@ -25,10 +23,12 @@ const Error = dynamic(() => import("./error/error"), {
   loading: () => <p>Loading...</p>,
 });
 
-const ContactForm: FC<{ buttonName: string; showIcon: boolean }> = ({
-  buttonName,
-  showIcon,
-}) => {
+import s from "./contact-form.module.scss";
+
+const ContactForm: FC<{
+  buttonName: string;
+  showIcon: boolean;
+}> = ({ buttonName, showIcon }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [isFormOpen, setIsFormOpen] = useState(true);

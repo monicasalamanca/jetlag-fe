@@ -18,6 +18,7 @@ import {
 import { GroupedCountries } from "@/api/types";
 
 import s from "./burger-menu.module.scss";
+import ContactForm from "@/components/contact-form/contact-form";
 
 const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
   destinations,
@@ -100,6 +101,9 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
               <Link href="/about-us" onClick={closeMenu}>
                 About Us
               </Link>
+            </li>
+            <li>
+              <ContactForm buttonName="Contact Us" showIcon={false} />
             </li>
           </ul>
           <footer>

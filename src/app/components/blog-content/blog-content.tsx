@@ -82,7 +82,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
       <h1>{post.title}</h1>
       <div className={s.socialMedia}>
         {isMobileDevice ? (
-          <button onClick={handleShare}>
+          <button onClick={handleShare} className={s.mobileShareButton}>
             <FontAwesomeIcon icon={faShareNodes} className={s.icon} />
           </button>
         ) : (

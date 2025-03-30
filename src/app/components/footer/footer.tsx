@@ -121,6 +121,7 @@ const Footer = () => {
           </div>
         </div>
         <div className={s.footerLinks}>
+          <ContactForm buttonName="Contact Us" showIcon />
           <div className={s.year}>© 2025 The Jet Lag Chronicles</div>
           <div className={s.links}>
             <Link href="/privacy-policy">Privacy Policy</Link>

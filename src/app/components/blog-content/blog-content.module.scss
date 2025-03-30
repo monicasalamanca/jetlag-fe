@@ -67,6 +67,17 @@
     gap: 12px;
     margin-bottom: 32px;
 
+    .mobileShareButton {
+      background-color: transparent;
+      border: none;
+
+      .icon {
+        width: 20px;
+        height: 20px;
+        color: var(--color-blue-medium);
+      }
+    }
+
     .icon {
       width: 18px;
     }
