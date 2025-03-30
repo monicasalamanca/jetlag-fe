@@ -150,3 +150,9 @@ export type Destination = {
 export type GroupedCountries = {
   [continent: string]: string[];
 };
+
+export type ContactUsInfo = {
+  name: string;
+  email: string;
+  message: string;
+};

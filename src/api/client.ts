@@ -2,6 +2,7 @@ import { BASE_URL } from "app/urls";
 import {
   BlogPost,
   BlogPostResponse,
+  ContactUsInfo,
   CountriesResponse,
   Country,
   Destination,
@@ -205,5 +206,30 @@ export const fetchCountriesWithContinents = async (): Promise<
   } catch (error) {
     console.error("Error fetching countries: ", error);
     return null;
+  }
+};
+
+// post a contact us message
+export const postContactUs = async (data: ContactUsInfo): Promise<boolean> => {
+  const url = `${BASE_URL}/api/contact-messages`;
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data }),
+    });
+
+    if (!res.ok) {
+      console.error("Failed to post contact us message: ", res.statusText);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error posting contact us message: ", error);
+    return false;
   }
 };
