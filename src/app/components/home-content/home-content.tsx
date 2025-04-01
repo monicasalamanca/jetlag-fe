@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,7 +19,6 @@ const HomeContent = ({
 }: {
   latestBlogPosts: BlogPost[] | null;
 }) => {
-  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
 
   const formatDate = (dateString: string): string => {
@@ -41,20 +39,9 @@ const HomeContent = ({
     return url.replace(/\s+/g, "-").toLowerCase();
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    // Run once on mount
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   // Handle click manually on mobile
   const handleClick = (url: string) => {
-    if (isMobile) router.push(url);
+    router.push(url);
   };
 
   return (
@@ -87,8 +74,6 @@ const HomeContent = ({
                   loading="lazy"
                   width={234}
                   height={156}
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,..." // Generate this using Cloudinary or BlurHash
                 />
                 <div className={s.contentWrapper}>
                   <small>{formatDate(blogPost.publishedAt)}</small>

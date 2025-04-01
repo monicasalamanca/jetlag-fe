@@ -16,6 +16,7 @@ const UsCard: FC<{ name: string; role: string; desc: string }> = ({
             alt="Monica Salamanca"
             width={65}
             height={65}
+            loading="lazy"
           />
         ) : (
           <Image
@@ -23,6 +24,7 @@ const UsCard: FC<{ name: string; role: string; desc: string }> = ({
             alt="Justin Dunlop"
             width={65}
             height={65}
+            loading="lazy"
           />
         )}
       </div>

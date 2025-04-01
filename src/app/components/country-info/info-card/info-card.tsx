@@ -53,6 +53,7 @@ const InfoCard: FC<{
           alt={imageAltText}
           width={640}
           height={427}
+          loading="lazy"
         />
       </div>
       <p>{description}</p>

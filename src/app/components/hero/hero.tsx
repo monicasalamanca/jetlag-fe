@@ -11,6 +11,7 @@ const Hero: FC<{
   shortDescription: string;
 }> = ({ srcImage, headline, shortDescription }) => {
   const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -21,6 +22,7 @@ const Hero: FC<{
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   return (
     <section className={s.hero}>
       <Image

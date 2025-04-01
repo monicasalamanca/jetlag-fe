@@ -36,7 +36,8 @@ const Header: FC<{ destinations: Destination[] | null }> = ({
         src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1738804265/blog-assets/JLCLogo_cxqt6p.png`}
         width={268}
         height={46}
-        alt="Logo"
+        alt="The Jet Lag Chronicles Logo"
+        loading="lazy"
       />
       <BurgerMenu destinations={groupedByContinent} />
       <Menu destinations={groupedByContinent} />
