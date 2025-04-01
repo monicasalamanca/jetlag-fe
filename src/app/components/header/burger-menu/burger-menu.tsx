@@ -43,7 +43,12 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
 
   return (
     <div className={s.burgerMenu}>
-      <button className={s.burgerButton} onClick={toggleMenu}>
+      <button
+        type="button"
+        arial-label="burger menu"
+        className={s.burgerButton}
+        onClick={toggleMenu}
+      >
         <span className={s.burgerIcon}></span>
         <span className={s.burgerIcon}></span>
         <span className={s.burgerIcon}></span>
@@ -53,7 +58,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
           <ul>
             <li>
               <FontAwesomeIcon icon={faHouse} className={s.icon} />
-              <Link href="/" onClick={closeMenu}>
+              <Link aria-label="Go to home page" href="/" onClick={closeMenu}>
                 Home
               </Link>
             </li>
@@ -75,14 +80,22 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                               className={s.icon}
                               onClick={closeMenu}
                             />
-                            <Link href={`/${country}`} onClick={closeMenu}>
+                            <Link
+                              aria-label={`Go to ${country} page`}
+                              href={`/${country}`}
+                              onClick={closeMenu}
+                            >
                               {country}
                             </Link>
                           </li>
                         ))}
                       </ul>
                       {countries.length > 4 && (
-                        <Link href="/" className={s.viewMore}>
+                        <Link
+                          aria-label="view all countries"
+                          href="/"
+                          className={s.viewMore}
+                        >
                           View all 20 countries
                         </Link>
                       )}
@@ -90,15 +103,13 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                   </div>
                 ))}
             </li>
-            {/* <li>
-              <FontAwesomeIcon icon={faNewspaper} className={s.icon} />
-              <Link href="/blogs" onClick={closeMenu}>
-                Blogs
-              </Link>
-            </li> */}
             <li>
               <FontAwesomeIcon icon={faUsers} className={s.icon} />
-              <Link href="/about-us" onClick={closeMenu}>
+              <Link
+                aria-label="Read more about us"
+                href="/about-us"
+                onClick={closeMenu}
+              >
                 About Us
               </Link>
             </li>
@@ -108,42 +119,16 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
           </ul>
           <footer>
             <div className={s.followUsLinks}>
-              <Link
+              <a
+                aria-label="Follow us on x"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={s.followLink}
                 href="https://twitter.com/the_jetlaggers"
                 onClick={closeMenu}
               >
                 <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
-              </Link>
-              {/* <Link
-                className={s.followLink}
-                href="https://twitter.com/jetlagchronicle"
-                onClick={closeMenu}
-              >
-                <FontAwesomeIcon icon={faPinterest} className={s.icon} />
-              </Link>
-
-              <Link
-                className={s.followLink}
-                href="https://twitter.com/jetlagchronicle"
-                onClick={closeMenu}
-              >
-                <FontAwesomeIcon icon={faInstagram} className={s.icon} />
-              </Link>
-              <Link
-                className={s.followLink}
-                href="https://twitter.com/jetlagchronicle"
-                onClick={closeMenu}
-              >
-                <FontAwesomeIcon icon={faYoutube} className={s.icon} />
-              </Link>
-              <Link
-                className={s.followLink}
-                href="https://twitter.com/jetlagchronicle"
-                onClick={closeMenu}
-              >
-                <FontAwesomeIcon icon={faFacebook} className={s.icon} />
-              </Link> */}
+              </a>
             </div>
           </footer>
         </nav>

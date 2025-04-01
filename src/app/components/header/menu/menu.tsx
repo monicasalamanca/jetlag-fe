@@ -39,7 +39,10 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
                         <ul>
                           {countries.map((country) => (
                             <li key={country}>
-                              <Link href={`/${country.replace(" ", "-")}`}>
+                              <Link
+                                aria-label={`Read more about ${country}`}
+                                href={`/${country.replace(" ", "-")}`}
+                              >
                                 {capitalize(country)}
                               </Link>
                             </li>

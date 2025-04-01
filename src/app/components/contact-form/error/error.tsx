@@ -24,7 +24,12 @@ const Error = ({ tryAgain }: { tryAgain: () => void }) => {
       <p className={s.description}>
         Don&apos;t worry, even the best messages stumble sometimes!
       </p>
-      <button type="submit" className={s.closeNowButton} onClick={tryAgain}>
+      <button
+        aria-label="try again"
+        type="button"
+        className={s.closeNowButton}
+        onClick={tryAgain}
+      >
         Let&apos;s Try Again
         <FontAwesomeIcon icon={faRotateRight} className={s.icon} />
       </button>

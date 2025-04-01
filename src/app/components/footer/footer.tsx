@@ -1,15 +1,9 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  // faFacebook,
-  // faInstagram,
-  // faPinterest,
-  faXTwitter,
-  // faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import ContactForm from "../contact-form/contact-form";
 
 import s from "./footer.module.scss";
-import ContactForm from "../contact-form/contact-form";
 
 const Footer = () => {
   return (
@@ -27,15 +21,29 @@ const Footer = () => {
             <h3>Quick Links</h3>
             <ul>
               <li>
-                <Link className={s.quickLink} href="/about-us">
+                <Link
+                  aria-label="Read more about us"
+                  className={s.quickLink}
+                  href="/about-us"
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy">Privacy Policy</Link>
+                <Link
+                  aria-label="Read our privacy policy"
+                  href="/privacy-policy"
+                >
+                  Privacy Policy
+                </Link>
               </li>
               <li>
-                <Link href="/terms-of-service">Terms of Service</Link>
+                <Link
+                  aria-label="Read our terms of service"
+                  href="/terms-of-service"
+                >
+                  Terms of Service
+                </Link>
               </li>
               <li>
                 <ContactForm buttonName="Contact Us" showIcon />
@@ -45,37 +53,14 @@ const Footer = () => {
           <div className={s.itemList}>
             <h3>Follow Us</h3>
             <div className={s.followUsLinks}>
-              <Link
+              <a
                 className={s.followLink}
+                target="_blank"
+                rel="noopener noreferrer"
                 href="https://twitter.com/the_jetlaggers"
               >
                 <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
-              </Link>
-              {/* <Link
-                className={s.followLink}
-                href="https://twitter.com/jetlagchronicle"
-              >
-                <FontAwesomeIcon icon={faPinterest} className={s.icon} />
-              </Link>
-
-              <Link
-                className={s.followLink}
-                href="https://twitter.com/jetlagchronicle"
-              >
-                <FontAwesomeIcon icon={faInstagram} className={s.icon} />
-              </Link>
-              <Link
-                className={s.followLink}
-                href="https://twitter.com/jetlagchronicle"
-              >
-                <FontAwesomeIcon icon={faYoutube} className={s.icon} />
-              </Link>
-              <Link
-                className={s.followLink}
-                href="https://twitter.com/jetlagchronicle"
-              >
-                <FontAwesomeIcon icon={faFacebook} className={s.icon} />
-              </Link> */}
+              </a>
             </div>
           </div>
         </div>
@@ -87,45 +72,30 @@ const Footer = () => {
         <div className={s.footerContent}>
           <h3>Follow Us</h3>
           <div className={s.followUsLinks}>
-            <Link
+            <a
+              aria-label="Follow us on x"
+              target="_blank"
+              rel="noopener noreferrer"
               className={s.followLink}
               href="https://twitter.com/the_jetlaggers"
             >
               <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
-            </Link>
-            {/* <Link
-              className={s.followLink}
-              href="https://twitter.com/jetlagchronicle"
-            >
-              <FontAwesomeIcon icon={faPinterest} className={s.icon} />
-            </Link>
-
-            <Link
-              className={s.followLink}
-              href="https://twitter.com/jetlagchronicle"
-            >
-              <FontAwesomeIcon icon={faInstagram} className={s.icon} />
-            </Link>
-            <Link
-              className={s.followLink}
-              href="https://twitter.com/jetlagchronicle"
-            >
-              <FontAwesomeIcon icon={faYoutube} className={s.icon} />
-            </Link>
-            <Link
-              className={s.followLink}
-              href="https://twitter.com/jetlagchronicle"
-            >
-              <FontAwesomeIcon icon={faFacebook} className={s.icon} />
-            </Link> */}
+            </a>
           </div>
         </div>
         <div className={s.footerLinks}>
           <ContactForm buttonName="Contact Us" showIcon />
           <div className={s.year}>© 2025 The Jet Lag Chronicles</div>
           <div className={s.links}>
-            <Link href="/privacy-policy">Privacy Policy</Link>
-            <Link href="/terms-of-service">Terms of Service</Link>
+            <Link aria-label="Read our privacy policy" href="/privacy-policy">
+              Privacy Policy
+            </Link>
+            <Link
+              aria-label="Read our terms of service"
+              href="/terms-of-service"
+            >
+              Terms of Service
+            </Link>
           </div>
         </div>
       </div>

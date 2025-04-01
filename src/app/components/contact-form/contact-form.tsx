@@ -77,7 +77,11 @@ const ContactForm: FC<{
 
   return (
     <>
-      <button onClick={() => setIsOpen(true)} className={s.contactUsButton}>
+      <button
+        aria-label="contact us"
+        onClick={() => setIsOpen(true)}
+        className={s.contactUsButton}
+      >
         {buttonName}
         {showIcon && <FontAwesomeIcon icon={faMessage} className={s.icon} />}
       </button>
@@ -161,7 +165,11 @@ const ContactForm: FC<{
                 />
                 <FontAwesomeIcon icon={faComment} className={s.icon} />
               </div>
-              <button type="submit" className={s.submitButton}>
+              <button
+                arial-label="submit"
+                type="submit"
+                className={s.submitButton}
+              >
                 Send Message
                 <FontAwesomeIcon icon={faPaperPlane} className={s.icon} />
               </button>
@@ -169,6 +177,9 @@ const ContactForm: FC<{
                 <p>Or reach us on social media</p>
                 <div className={s.socialMediaWrapper}>
                   <Link
+                    aria-label="Go to the jet lag chronicles twitter account"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     href="https://twitter.com/the_jetlaggers"
                     className={s.link}
                   >

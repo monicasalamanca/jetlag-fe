@@ -39,6 +39,20 @@ body {
   /* height: 100vh;
   height: 100dvh; */
   overflow-x: hidden;
+  /* animation: meshAnimation 20s ease-in-out infinite alternate; */
+}
+
+/* styles/meshGradient.css */
+@keyframes meshAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
 }
 
 body,

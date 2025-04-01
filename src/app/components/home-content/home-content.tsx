@@ -8,8 +8,6 @@ import { BlogPost } from "@/api/types";
 import Hero from "../hero/hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBookOpen,
-  faCompass,
   faNewspaper,
   faRightLong,
   faRotateRight,
@@ -62,7 +60,7 @@ const HomeContent = ({
   return (
     <main className={s.container}>
       <Hero
-        srcImage={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1739143592/blog-assets/home-hero_apo3zo.jpg`}
+        srcImage="/home-hero_apo3zo.jpg"
         headline={"Find Your Perfect City for Your Nomadic Lifestyle!"}
         shortDescription={
           "Discover your next destination with our curated guides for digital nomads and expats"
@@ -86,14 +84,18 @@ const HomeContent = ({
                   className={s.thumbnail}
                   src={blogPost.imageUrl}
                   alt="Blog Post Thumbnail"
+                  loading="lazy"
                   width={234}
                   height={156}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,..." // Generate this using Cloudinary or BlurHash
                 />
                 <div className={s.contentWrapper}>
                   <small>{formatDate(blogPost.publishedAt)}</small>
                   <h3>{blogPost.title}</h3>
                   <p>{blogPost.description}</p>
                   <Link
+                    aria-label={`Click here to Read more about ${blogPost.title}`}
                     href={`/${formatUrl(
                       `${blogPost.category}/${blogPost.title}`
                     )}`}
@@ -120,20 +122,25 @@ const HomeContent = ({
             <p>
               We&apos;re having trouble loading the latest articles right now.
             </p>
-            <button onClick={() => handleReload()}>
+            <button
+              type="button"
+              aria-label="try again"
+              onClick={() => handleReload()}
+            >
               <FontAwesomeIcon icon={faRotateRight} className={s.btnIcon} /> Try
               Again
             </button>
-            <div className={s.bottomLinks}>
+            {/* <div className={s.bottomLinks}>
               <p>Meanwhile, checkout our</p>
               <div className={s.links}>
-                <Link
+                <a
+                  aria-label=""
                   className={s.otherLinks}
                   href="https://twitter.com/jetlagchronicle"
                 >
                   <FontAwesomeIcon icon={faBookOpen} className={s.icon} />{" "}
                   Featured Guides
-                </Link>
+                </a>
                 <Link
                   className={s.otherLinks}
                   href="https://twitter.com/jetlagchronicle"
@@ -142,7 +149,7 @@ const HomeContent = ({
                   Quiz
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
       )}

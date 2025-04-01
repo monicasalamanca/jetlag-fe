@@ -29,7 +29,12 @@ const Modal: FC<{
   return createPortal(
     <div className={s.backdrop}>
       <div className={s.modalContent}>
-        <button onClick={onClose} className={s.closeButton}>
+        <button
+          type="button"
+          aria-label="close modal"
+          onClick={onClose}
+          className={s.closeButton}
+        >
           <FontAwesomeIcon icon={faXmark} className={s.closeIcon} />
         </button>
         {children}

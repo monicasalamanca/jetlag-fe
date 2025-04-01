@@ -27,7 +27,12 @@ const Success = ({ closeModal }: { closeModal: () => void }) => {
         This modal will disappear in a few seconds, unless you&apos;re too
         attached, in which case, you can manualy break it up with it:
       </p>
-      <button type="submit" className={s.closeNowButton} onClick={closeModal}>
+      <button
+        aria-label="close now"
+        type="button"
+        className={s.closeNowButton}
+        onClick={closeModal}
+      >
         Close Now
         <FontAwesomeIcon icon={faHeartCrack} className={s.icon} />
       </button>

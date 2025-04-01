@@ -25,11 +25,15 @@ const NotFound = () => {
         got plenty more to explore!
       </p>
       <section className={s.buttonsSection}>
-        <Link className={s.goHomeBtn} href="/">
+        <Link aria-label="Go to Home page" className={s.goHomeBtn} href="/">
           <FontAwesomeIcon icon={faHouse} className={s.icon} />
           <span>Go to Homepage</span>
         </Link>
-        <Link className={s.readLatestArticles} href="/">
+        <Link
+          aria-label="Read our latest blogs"
+          className={s.readLatestArticles}
+          href="/"
+        >
           <FontAwesomeIcon icon={faCompass} className={s.icon} />
           <span>Read Latest Articles</span>
         </Link>

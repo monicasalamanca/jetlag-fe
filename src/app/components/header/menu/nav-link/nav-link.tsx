@@ -20,7 +20,11 @@ const NavLink: FC<NavLinkProps> = ({
   const isActive = pathname === href;
 
   return (
-    <Link href={href} className={`${isActive ? s.activeLink : s.defaultLink}`}>
+    <Link
+      aria-label={`Navigate to `}
+      href={href}
+      className={`${isActive ? s.activeLink : s.defaultLink}`}
+    >
       {children}
     </Link>
   );

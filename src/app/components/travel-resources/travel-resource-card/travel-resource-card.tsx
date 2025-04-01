@@ -1,5 +1,4 @@
 import { FC } from "react";
-import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { faUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +12,13 @@ const TravelResourceCard: FC<{
 }> = ({ icon, color, title }) => {
   return (
     <div className={s.container}>
-      <Link href="https://www.google.com" className={s.link}>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`External Link to ${title}`}
+        href="https://www.google.com"
+        className={s.link}
+      >
         <div className={s.leftWrapper}>
           <FontAwesomeIcon
             icon={icon}
@@ -28,7 +33,7 @@ const TravelResourceCard: FC<{
           className={s.icon}
           style={{ color: color }}
         /> */}
-      </Link>
+      </a>
     </div>
   );
 };

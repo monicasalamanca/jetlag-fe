@@ -10,10 +10,9 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import ReactMarkdown from "react-markdown";
 import { Post } from "@/api/types";
+import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 
 import s from "./blog-content.module.scss";
-import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
 
 const BlogContent: FC<{ post: Post }> = ({ post }) => {
   const [isMobileDevice, setIsMobileDevice] = useState(false);
@@ -82,26 +81,39 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
       <h1>{post.title}</h1>
       <div className={s.socialMedia}>
         {isMobileDevice ? (
-          <button onClick={handleShare} className={s.mobileShareButton}>
+          <button
+            aria-label="share"
+            onClick={handleShare}
+            className={s.mobileShareButton}
+          >
             <FontAwesomeIcon icon={faShareNodes} className={s.icon} />
           </button>
         ) : (
           <>
-            <Link
+            <a
+              aria-label="Go to the jet lag chronicles twitter account"
+              target="_blank"
+              rel="noopener noreferrer"
               href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`}
             >
               <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
-            </Link>
-            <Link
+            </a>
+            <a
+              aria-label="Go to the jet lag chronicles facebook account"
+              target="_blank"
+              rel="noopener noreferrer"
               href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
             >
               <FontAwesomeIcon icon={faFacebook} className={s.icon} />
-            </Link>
-            <Link
+            </a>
+            <a
+              aria-label="Go to the jet lag chronicles linkedin account"
+              target="_blank"
+              rel="noopener noreferrer"
               href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}`}
             >
               <FontAwesomeIcon icon={faLinkedin} className={s.icon} />
-            </Link>
+            </a>
 
             {/* <FontAwesomeIcon icon={faHeart} className={s.icon} /> */}
           </>

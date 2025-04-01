@@ -40,7 +40,7 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
   return (
     <main className={s.container}>
       <Hero
-        srcImage={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1740958385/blog-assets/japan-hero_iedol6.jpg`}
+        srcImage="/japan-hero_iedol6.jpg"
         headline={`${name} Travel & Living Guide`}
         shortDescription={headline}
       />
