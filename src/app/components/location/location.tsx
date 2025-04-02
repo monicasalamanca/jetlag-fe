@@ -7,6 +7,7 @@ const Location: FC<{ mapLink: string }> = ({ mapLink }) => {
       <h1>Location</h1>
       <div>
         <iframe
+          title="map location"
           className={s.googleMaps}
           src={mapLink}
           style={{ border: 0 }}

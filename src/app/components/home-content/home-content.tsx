@@ -85,7 +85,6 @@ const HomeContent = ({
                       `${blogPost.category}/${blogPost.title}`
                     )}`}
                     className={s.readMore}
-                    prefetch={false}
                   >
                     Read More
                     <FontAwesomeIcon icon={faRightLong} className={s.icon} />

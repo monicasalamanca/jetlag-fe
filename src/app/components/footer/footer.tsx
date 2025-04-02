@@ -25,7 +25,6 @@ const Footer = () => {
                   aria-label="Read more about us"
                   className={s.quickLink}
                   href="/about-us"
-                  prefetch={false}
                 >
                   About Us
                 </Link>
@@ -34,7 +33,6 @@ const Footer = () => {
                 <Link
                   aria-label="Read our privacy policy"
                   href="/privacy-policy"
-                  prefetch={false}
                 >
                   Privacy Policy
                 </Link>
@@ -43,7 +41,6 @@ const Footer = () => {
                 <Link
                   aria-label="Read our terms of service"
                   href="/terms-of-service"
-                  prefetch={false}
                 >
                   Terms of Service
                 </Link>
@@ -90,17 +87,12 @@ const Footer = () => {
           <ContactForm buttonName="Contact Us" showIcon />
           <div className={s.year}>© 2025 The Jet Lag Chronicles</div>
           <div className={s.links}>
-            <Link
-              aria-label="Read our privacy policy"
-              href="/privacy-policy"
-              prefetch={false}
-            >
+            <Link aria-label="Read our privacy policy" href="/privacy-policy">
               Privacy Policy
             </Link>
             <Link
               aria-label="Read our terms of service"
               href="/terms-of-service"
-              prefetch={false}
             >
               Terms of Service
             </Link>

@@ -45,7 +45,8 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
     <div className={s.burgerMenu}>
       <button
         type="button"
-        arial-label="burger menu"
+        arial-label={isOpen ? "close menu" : "open menu"}
+        aria-expanded={isOpen}
         className={s.burgerButton}
         onClick={toggleMenu}
       >
@@ -58,12 +59,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
           <ul>
             <li>
               <FontAwesomeIcon icon={faHouse} className={s.icon} />
-              <Link
-                aria-label="Go to home page"
-                href="/"
-                prefetch={false}
-                onClick={closeMenu}
-              >
+              <Link aria-label="Go to home page" href="/" onClick={closeMenu}>
                 Home
               </Link>
             </li>
@@ -89,7 +85,6 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                               aria-label={`Go to ${country} page`}
                               href={`/${country}`}
                               onClick={closeMenu}
-                              prefetch={false}
                             >
                               {country}
                             </Link>
@@ -101,7 +96,6 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                           aria-label="view all countries"
                           href="/"
                           className={s.viewMore}
-                          prefetch={false}
                         >
                           View all 20 countries
                         </Link>
@@ -116,7 +110,6 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                 aria-label="Read more about us"
                 href="/about-us"
                 onClick={closeMenu}
-                prefetch={false}
               >
                 About Us
               </Link>

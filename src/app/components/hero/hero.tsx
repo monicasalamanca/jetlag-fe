@@ -1,7 +1,7 @@
 "use client";
 
-import { FC } from "react";
-// import Image from "next/image";
+import { FC, useEffect, useState } from "react";
+import Image from "next/image";
 
 import s from "./hero.module.scss";
 
@@ -10,24 +10,22 @@ const Hero: FC<{
   headline: string;
   shortDescription: string;
 }> = ({ srcImage, headline, shortDescription }) => {
-  // const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setIsMobile(window.innerWidth < 768);
-  //   };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
-  //   // Run once on mount
-  //   handleResize();
-  //   window.addEventListener("resize", handleResize);
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
-
-  console.log(srcImage);
+    // Run once on mount
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <section className={s.hero}>
-      {/* <Image
+      <Image
         className={s.heroImage}
         src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/f_auto,q_auto,w_${
           isMobile ? "800" : "1200"
@@ -38,7 +36,7 @@ const Hero: FC<{
         priority
         placeholder="blur"
         blurDataURL={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/e_blur:100,q_10,w_10/blog-assets${srcImage}`}
-      /> */}
+      />
       <div className={s.heroContent}>
         <h1>{headline}</h1>
         <p>{shortDescription}</p>

@@ -30,7 +30,7 @@ const UsCard: FC<{ name: string; role: string; desc: string }> = ({
       </div>
       <div className={s.wrapper}>
         <h3>{name}</h3>
-        <p className={s.role}>{role}</p>
+        <h4 className={s.role}>{role}</h4>
         <p className={s.desc}>{desc}</p>
       </div>
     </div>
