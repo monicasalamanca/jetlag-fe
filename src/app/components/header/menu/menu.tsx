@@ -42,6 +42,7 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
                               <Link
                                 aria-label={`Read more about ${country}`}
                                 href={`/${country.replace(" ", "-")}`}
+                                prefetch={false}
                               >
                                 {capitalize(country)}
                               </Link>

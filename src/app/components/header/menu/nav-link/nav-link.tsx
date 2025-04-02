@@ -24,6 +24,7 @@ const NavLink: FC<NavLinkProps> = ({
       aria-label={`Navigate to `}
       href={href}
       className={`${isActive ? s.activeLink : s.defaultLink}`}
+      prefetch={false}
     >
       {children}
     </Link>

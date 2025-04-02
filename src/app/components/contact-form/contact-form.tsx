@@ -182,6 +182,7 @@ const ContactForm: FC<{
                     rel="noopener noreferrer"
                     href="https://twitter.com/the_jetlaggers"
                     className={s.link}
+                    prefetch={false}
                   >
                     <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
                   </Link>
