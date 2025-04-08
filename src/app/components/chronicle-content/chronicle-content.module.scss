@@ -1,0 +1,72 @@
+.container {
+  background-color: var(--light-gray-bg);
+
+  .wrapper {
+    width: 100%;
+
+    @media only screen and (min-width: 768px) {
+      width: 768px;
+      margin: 0 auto;
+      margin-top: 48px;
+      margin-bottom: 48px;
+    }
+
+    h2 {
+      color: var(--primary-font-dark);
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      padding: 16px 0 24px;
+      line-height: 40px;
+    }
+  }
+
+  .latestChronicles,
+  .trending,
+  .mostPopular,
+  .mostLiked,
+  .mostViewed {
+    padding: 24px 16px;
+
+    @media only screen and (min-width: 768px) {
+      padding: 0;
+    }
+
+    .cardWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      @media only screen and (min-width: 600px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+
+  .mostLiked {
+    .cardWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      @media only screen and (min-width: 600px) {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+  }
+
+  .mostViewed {
+    .cardWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      @media only screen and (min-width: 400px) {
+        flex-direction: row;
+      }
+    }
+  }
+}

@@ -1,0 +1,145 @@
+.container {
+  color: var(--primary-font-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background-color: var(--white);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+
+  .imageWrapper {
+    position: relative;
+    .image {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .topTag {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      border-radius: 90px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      padding: 4px 16px;
+      background-color: var(--white);
+      color: var(--primary-font-dark);
+
+      .icon {
+        width: 14px;
+        height: 14px;
+        margin-right: 4px;
+
+        &.blue {
+          color: #2463eb;
+        }
+        &.green {
+          color: #069668;
+        }
+        &.purple {
+          color: #7c3aed;
+        }
+        &.orange {
+          color: #d97707;
+        }
+        &.red {
+          color: #dc2625;
+        }
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+    gap: 16px;
+
+    h3 {
+      color: var(--primary-font-dark);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 28px;
+    }
+
+    p {
+      color: var(--primary-font-dark);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22px;
+    }
+
+    .tags {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .tag {
+        background-color: #dbe9fe;
+        color: var(--color-blue);
+        border-radius: 90px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        padding: 4px 16px;
+
+        &.blue {
+          color: #2463eb;
+          background-color: #dbe9fe;
+        }
+        &.green {
+          color: #069668;
+          background-color: #e2f0f3;
+        }
+        &.purple {
+          color: #7c3aed;
+          background-color: #ece9fe;
+        }
+        &.orange {
+          color: #d97707;
+          background-color: #fef2c7;
+        }
+        &.red {
+          color: #dc2625;
+          background-color: #fde2e1;
+        }
+      }
+    }
+
+    .bottomInfo {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+
+      .country,
+      .readTime {
+        .icon {
+          width: 14px;
+          height: 14px;
+          margin-right: 4px;
+
+          &.blue {
+            color: #2463eb;
+          }
+          &.green {
+            color: #069668;
+          }
+          &.purple {
+            color: #7c3aed;
+          }
+          &.orange {
+            color: #d97707;
+          }
+          &.red {
+            color: #dc2625;
+          }
+        }
+      }
+    }
+  }
+}

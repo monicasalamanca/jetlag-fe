@@ -33,8 +33,8 @@ const Header: FC<{ destinations: Destination[] | null }> = ({
   return (
     <header className={s.header}>
       <Image
-        src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1738804265/blog-assets/JLCLogo_cxqt6p.png`}
-        width={268}
+        src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1738804265/blog-assets/mobileLogo4_qslfhh.png`}
+        width={222}
         height={46}
         alt="The Jet Lag Chronicles Logo"
         loading="lazy"

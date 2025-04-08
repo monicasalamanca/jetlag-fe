@@ -5,6 +5,7 @@ import {
   faGlobe,
   faHouse,
   faLocationDot,
+  faPaperPlane,
   // faNewspaper,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
@@ -50,7 +51,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
         className={s.burgerButton}
         onClick={toggleMenu}
       >
-        <span className={s.burgerIcon}></span>
+        <span className={`${s.burgerIcon} ${s.srOnly}`}>Open menu</span>
         <span className={s.burgerIcon}></span>
         <span className={s.burgerIcon}></span>
       </button>
@@ -103,6 +104,16 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                     </div>
                   </div>
                 ))}
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faPaperPlane} className={s.icon} />
+              <Link
+                aria-label="Read all our chronicles"
+                href="/blog"
+                onClick={closeMenu}
+              >
+                Chronicles
+              </Link>
             </li>
             <li>
               <FontAwesomeIcon icon={faUsers} className={s.icon} />

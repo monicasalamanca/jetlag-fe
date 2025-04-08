@@ -9,6 +9,10 @@ type Params = Promise<{
 const BlogPostPage = async ({ params }: { params: Params }) => {
   const { category } = await params;
   const country = await fetchCountry(category);
+  // In here we either return the data based on country or other category
+  // So first we will have a list of other categories
+  // and we will check if the category exists in the list
+  // If it does exist we will return the page for that specific category
   if (!country) return notFound();
   return <CountryLander country={country[0]} />;
 };

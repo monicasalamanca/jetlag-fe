@@ -56,7 +56,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
         console.error("Error sharing:", error);
       }
     } else {
-      console.log("Web Share API not supported.");
+      console.error("Web Share API not supported.");
     }
   };
 

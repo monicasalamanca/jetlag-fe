@@ -1,0 +1,119 @@
+.container {
+  color: var(--primary-font-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  background-color: var(--white);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+
+  .imageWrapper {
+    position: relative;
+    .image {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .topInfo {
+      display: flex;
+      justify-content: space-between;
+      width: calc(100% - 32px);
+      position: absolute;
+      top: 16px;
+      right: 16px;
+
+      .tag {
+        border-radius: 90px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        padding: 4px 16px;
+        color: var(--white);
+
+        &.blue {
+          background-color: rgba(36, 99, 235, 1);
+        }
+        &.green {
+          background-color: rgba(6, 150, 104, 0.8);
+        }
+        &.purple {
+          background-color: rgba(124, 58, 237, 0.8);
+        }
+        &.orange {
+          background-color: rgba(217, 119, 7, 0.8);
+        }
+        &.red {
+          background-color: rgba(220, 38, 37, 0.8);
+        }
+      }
+
+      .readTime {
+        border-radius: 90px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        padding: 4px 16px;
+        background-color: var(--white);
+        color: var(--primary-font-dark);
+      }
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  gap: 16px;
+
+  .country {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+
+    .icon {
+      margin-right: 8px;
+
+      &.blue {
+        color: #2463eb;
+      }
+      &.green {
+        color: #069668;
+      }
+      &.purple {
+        color: #7c3aed;
+      }
+      &.orange {
+        color: #d97707;
+      }
+      &.red {
+        color: #dc2625;
+      }
+    }
+  }
+
+  h3 {
+    color: var(--primary-font-dark);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+  }
+
+  p {
+    color: var(--primary-font-dark);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+  }
+
+  .date {
+    color: var(--primary-font-dark);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}
