@@ -6,7 +6,20 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 import s from "./card-three.module.scss";
 
-const CardThree: FC<{ color: string }> = ({ color }) => {
+interface mockDataProps {
+  title: string;
+  description: string;
+  thumbnail: string;
+  tags: string[];
+  date: string;
+  country: string;
+  readTime: string;
+}
+
+const CardThree: FC<{ mockData: mockDataProps; color: string }> = ({
+  mockData,
+  color,
+}) => {
   const getColourClassNames = (color: string) => {
     switch (color) {
       case "blue":
@@ -27,7 +40,8 @@ const CardThree: FC<{ color: string }> = ({ color }) => {
       <div className={s.imageWrapper}>
         <Image
           className={s.image}
-          src="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481814/blog-assets/japanese-culture_clexsv.jpg"
+          // src="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481814/blog-assets/japanese-culture_clexsv.jpg"
+          src={mockData.thumbnail}
           alt="Grocery time"
           width={330}
           height={250}
@@ -35,9 +49,9 @@ const CardThree: FC<{ color: string }> = ({ color }) => {
         />
         <div className={s.topInfo}>
           <div className={`${s.tag} ${getColourClassNames(color)}`}>
-            Remote Work
+            {mockData.tags[0]}
           </div>
-          <div className={s.readTime}>5 mins read</div>
+          <div className={s.readTime}>{`${mockData.readTime} read`}</div>
         </div>
       </div>
       <div className={s.content}>
@@ -46,14 +60,11 @@ const CardThree: FC<{ color: string }> = ({ color }) => {
             icon={faLocationDot}
             className={`${s.icon} ${getColourClassNames(color)}`}
           />
-          Bali, Indonesia
+          {mockData.country}
         </div>
-        <h3>Best Beach Destinations</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
-        <div className={s.date}>March 15, 2025</div>
+        <h3>{mockData.title}</h3>
+        <p>{mockData.description}</p>
+        <div className={s.date}>{mockData.date}</div>
       </div>
     </div>
   );

@@ -9,7 +9,20 @@ import {
 
 import s from "./card-two.module.scss";
 
-const CardTwo: FC<{ color: string }> = ({ color }) => {
+interface mockDataProps {
+  title: string;
+  description: string;
+  thumbnail: string;
+  tags: string[];
+  date: string;
+  country: string;
+  readTime: string;
+}
+
+const CardTwo: FC<{ mockData: mockDataProps; color: string }> = ({
+  mockData,
+  color,
+}) => {
   const getColourClassNames = (color: string) => {
     switch (color) {
       case "blue":
@@ -30,20 +43,22 @@ const CardTwo: FC<{ color: string }> = ({ color }) => {
       <div className={s.imageWrapper}>
         <Image
           className={s.image}
-          src="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481814/blog-assets/japanese-culture_clexsv.jpg"
+          // src="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481814/blog-assets/japanese-culture_clexsv.jpg"
+          src={mockData.thumbnail}
           alt="Grocery time"
           width={330}
           height={250}
           loading="lazy"
         />
         <div className={s.readTime}>
-          <FontAwesomeIcon icon={faClockRotateLeft} className={s.icon} />5 mins
+          <FontAwesomeIcon icon={faClockRotateLeft} className={s.icon} />
+          {mockData.readTime}
         </div>
         <div className={s.bottomInfo}>
           <div className={`${s.tag} ${getColourClassNames(color)}`}>
-            Remote Work
+            {mockData.tags[0]}
           </div>
-          <h3>Best Beach Destinations</h3>
+          <h3>{mockData.title}</h3>
         </div>
       </div>
       <div className={s.content}>
@@ -55,12 +70,9 @@ const CardTwo: FC<{ color: string }> = ({ color }) => {
             />
             Bali, Indonesia
           </div>
-          <div className={s.date}>March 15, 2025</div>
+          <div className={s.date}>{mockData.date}</div>
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
+        <p>{mockData.description}</p>
       </div>
     </div>
   );
