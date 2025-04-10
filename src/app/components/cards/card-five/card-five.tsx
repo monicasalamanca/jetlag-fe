@@ -6,13 +6,28 @@ import { faFire } from "@fortawesome/free-solid-svg-icons";
 
 import s from "./card-five.module.scss";
 
-const CardFive = () => {
+interface mockDataProps {
+  title: string;
+  description: string;
+  thumbnail: string;
+  tags: string[];
+  date: string;
+  country: string;
+  readTime: string;
+}
+
+interface CardProps {
+  mockData: mockDataProps;
+}
+
+const CardFive = ({ mockData }: CardProps) => {
   return (
     <div className={s.container}>
       <div className={s.imageWrapper}>
         <Image
           className={s.image}
-          src="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481814/blog-assets/japanese-culture_clexsv.jpg"
+          // src="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481814/blog-assets/japanese-culture_clexsv.jpg"
+          src={mockData.thumbnail}
           alt="Grocery time"
           width={330}
           height={250}
@@ -21,15 +36,11 @@ const CardFive = () => {
         <div className={s.backgroundOverlay}>
           <div className={s.tag}>
             <FontAwesomeIcon icon={faFire} className={s.icon} />
-            Trending
+            {mockData.tags[1]}
           </div>
           <div className={s.content}>
-            <h3>Best Beach Destinations</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad
-            </p>
+            <h3>{mockData.title}</h3>
+            <p>{mockData.description}</p>
           </div>
         </div>
       </div>

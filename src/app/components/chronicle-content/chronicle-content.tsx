@@ -5,7 +5,7 @@ import CardOne from "../cards/card-one/card-one";
 import CardTwo from "../cards/card-two/card-two";
 import CardThree from "../cards/card-three/card-three";
 import CardFour from "../cards/card-four/card-four";
-// import CardFive from "../cards/card-five/card-five";
+import CardFive from "../cards/card-five/card-five";
 
 import s from "./chronicle-content.module.scss";
 
@@ -234,15 +234,15 @@ const ChronicleContent = () => {
           </div>
         </div>
       </section>
-      {/* <section className={s.mostViewed}>
+      <section className={s.mostViewed}>
         <div className={s.wrapper}>
           <h2>Most Viewed</h2>
           <div className={s.cardWrapper}>
-            <CardFive />
-            <CardFive />
+            <CardFive mockData={mockData[13]} />
+            <CardFive mockData={mockData[14]} />
           </div>
         </div>
-      </section> */}
+      </section>
     </main>
   );
 };
