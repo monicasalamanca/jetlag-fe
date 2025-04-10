@@ -40,7 +40,7 @@ const Modal: FC<{
         {children}
       </div>
     </div>,
-    document.body // Portals directly to <body> in App Router
+    document.body, // Portals directly to <body> in App Router
   );
 };
 

@@ -16,7 +16,9 @@
     background-color: var(--background-light);
     padding: 64px 32px 16px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+    box-shadow:
+      0 4px 6px rgba(0, 0, 0, 0.1),
+      0 1px 3px rgba(0, 0, 0, 0.06);
     width: 100%;
     max-width: 450px;
     transition: transform 0.3s ease;

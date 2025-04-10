@@ -36,7 +36,7 @@ const ContactForm: FC<{
   const [isError, setIsError] = useState(false);
 
   const handleChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setForm({ ...form, [event.target.name]: event.target.value });
   };

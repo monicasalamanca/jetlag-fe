@@ -63,7 +63,7 @@ const HomeContent = ({
                 className={s.latestBlogPost}
                 onClick={() =>
                   handleClick(
-                    formatUrl(`${blogPost.category}/${blogPost.title}`)
+                    formatUrl(`${blogPost.category}/${blogPost.title}`),
                   )
                 }
               >
@@ -82,7 +82,7 @@ const HomeContent = ({
                   <Link
                     aria-label={`Click here to Read more about ${blogPost.title}`}
                     href={`/${formatUrl(
-                      `${blogPost.category}/${blogPost.title}`
+                      `${blogPost.category}/${blogPost.title}`,
                     )}`}
                     className={s.readMore}
                   >
