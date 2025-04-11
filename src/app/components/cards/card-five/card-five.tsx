@@ -3,30 +3,20 @@ import React from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFire } from "@fortawesome/free-solid-svg-icons";
+import { CardProps } from "../card.types";
 
 import s from "./card-five.module.scss";
 
 interface mockDataProps {
-  title: string;
-  description: string;
-  thumbnail: string;
-  tags: string[];
-  date: string;
-  country: string;
-  readTime: string;
+  mockData: CardProps;
 }
 
-interface CardProps {
-  mockData: mockDataProps;
-}
-
-const CardFive = ({ mockData }: CardProps) => {
+const CardFive = ({ mockData }: mockDataProps) => {
   return (
     <div className={s.container}>
       <div className={s.imageWrapper}>
         <Image
           className={s.image}
-          // src="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481814/blog-assets/japanese-culture_clexsv.jpg"
           src={mockData.thumbnail}
           alt="Grocery time"
           width={330}

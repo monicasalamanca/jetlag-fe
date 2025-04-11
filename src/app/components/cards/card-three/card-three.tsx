@@ -3,20 +3,11 @@ import React, { FC } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { CardProps } from "../card.types";
 
 import s from "./card-three.module.scss";
 
-interface mockDataProps {
-  title: string;
-  description: string;
-  thumbnail: string;
-  tags: string[];
-  date: string;
-  country: string;
-  readTime: string;
-}
-
-const CardThree: FC<{ mockData: mockDataProps; color: string }> = ({
+const CardThree: FC<{ mockData: CardProps; color: string }> = ({
   mockData,
   color,
 }) => {
@@ -40,7 +31,6 @@ const CardThree: FC<{ mockData: mockDataProps; color: string }> = ({
       <div className={s.imageWrapper}>
         <Image
           className={s.image}
-          // src="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481814/blog-assets/japanese-culture_clexsv.jpg"
           src={mockData.thumbnail}
           alt="Grocery time"
           width={330}

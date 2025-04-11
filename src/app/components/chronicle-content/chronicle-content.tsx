@@ -4,7 +4,7 @@ import Hero from "../hero/hero";
 import CardOne from "../cards/card-one/card-one";
 import CardTwo from "../cards/card-two/card-two";
 import CardThree from "../cards/card-three/card-three";
-import CardFour from "../cards/card-four/card-four";
+// import CardFour from "../cards/card-four/card-four";
 import CardFive from "../cards/card-five/card-five";
 
 import s from "./chronicle-content.module.scss";
@@ -224,7 +224,7 @@ const ChronicleContent = () => {
           </div>
         </div>
       </section>
-      <section className={s.mostLiked}>
+      {/* <section className={s.mostLiked}>
         <div className={s.wrapper}>
           <h2>Most Liked</h2>
           <div className={s.cardWrapper}>
@@ -233,11 +233,19 @@ const ChronicleContent = () => {
             <CardFour mockData={mockData[14]} />
           </div>
         </div>
-      </section>
+      </section> */}
       <section className={s.mostViewed}>
         <div className={s.wrapper}>
           <h2>Most Viewed</h2>
           <div className={s.cardWrapper}>
+            <CardFive mockData={mockData[5]} />
+            <CardFive mockData={mockData[6]} />
+            <CardFive mockData={mockData[7]} />
+            <CardFive mockData={mockData[8]} />
+            <CardFive mockData={mockData[9]} />
+            <CardFive mockData={mockData[10]} />
+            <CardFive mockData={mockData[11]} />
+            <CardFive mockData={mockData[12]} />
             <CardFive mockData={mockData[13]} />
             <CardFive mockData={mockData[14]} />
           </div>

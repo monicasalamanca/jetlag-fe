@@ -14,7 +14,12 @@
     position: relative;
 
     .image {
-      width: auto;
+      width: 100%;
+      object-fit: cover;
+
+      @media only screen and (min-width: 600px) {
+        // height: unset;
+      }
     }
 
     .backgroundOverlay {
@@ -51,7 +56,6 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      padding-bottom: 16px;
 
       h3 {
         font-size: 24px;
@@ -63,33 +67,14 @@
         display: -webkit-box;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
         min-height: 60px; // line-height * 3
         height: 100%;
         font-size: 14px;
         font-weight: 400;
         line-height: 20px;
         color: var(--white);
-      }
-      .country {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-        color: var(--white);
-
-        .icon {
-          width: 14px;
-          height: 14px;
-          border-radius: 50%;
-          background-color: var(--white);
-          padding: 2px;
-          border-radius: 90px;
-          color: var(--white);
-          color: #d97707;
-        }
       }
     }
   }
