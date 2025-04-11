@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const posts = await fetchAllBlogSlugs(); // We'll define this next if you haven't already
+    const posts = await fetchAllBlogSlugs();
 
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL || "https://jetlag-fe.vercel.app/";
@@ -29,30 +29,37 @@ export async function POST(req: Request) {
       )
       .join("");
 
+    const dynamicRoutes =
+      posts &&
+      posts
+        .map(
+          (post: Slug) => `
+      <url>
+        <loc>${baseUrl}/${post.category}/${post.slug}</loc>
+        <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
+      </url>`
+        )
+        .join("");
+
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${staticRoutes}
-${
-  posts &&
-  posts
-    .map(
-      (post: Slug) => `
-  <url>
-    <loc>${baseUrl}/${post.category}/${post.slug}</loc>
-    <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
-  </url>`
-    )
-    .join("")
-}
-</urlset>`;
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+          ${staticRoutes}
+          ${dynamicRoutes}
+        </urlset>`;
 
     fs.writeFileSync(path.join(process.cwd(), "public/sitemap.xml"), sitemap);
 
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    console.error("Sitemap generation failed:", err);
+    return new NextResponse(sitemap, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/xml",
+      },
+    });
+  } catch (error) {
+    console.error("[SITEMAP_ERROR]", error);
+
     return NextResponse.json(
-      { error: "Sitemap generation failed" },
+      { error: "Failed to generate sitemap" },
       { status: 500 }
     );
   }
