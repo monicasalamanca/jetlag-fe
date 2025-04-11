@@ -156,3 +156,26 @@ export type ContactUsInfo = {
   email: string;
   message: string;
 };
+
+export type SlugsResponse = {
+  id: number;
+  attributes: {
+    slug: string;
+    updatedAt: string;
+    category: {
+      data: {
+        id: number;
+        attributes: {
+          slug: string;
+        };
+      };
+    };
+  };
+};
+
+export type Slug = {
+  id: number;
+  slug: string;
+  updatedAt: string;
+  category: string;
+};

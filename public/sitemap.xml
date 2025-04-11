@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<url>
+  <loc>https://jetlag-fe.vercel.app/</loc>
+  <lastmod>2025-04-11T23:10:59.189Z</lastmod>
+</url>
+<url>
+  <loc>https://jetlag-fe.vercel.app/about-us</loc>
+  <lastmod>2025-04-11T23:10:59.189Z</lastmod>
+</url>
+<url>
+  <loc>https://jetlag-fe.vercel.app/chronicles</loc>
+  <lastmod>2025-04-11T23:10:59.189Z</lastmod>
+</url>
+
+  <url>
+    <loc>https://jetlag-fe.vercel.app/japan/tokyo-test</loc>
+    <lastmod>2025-04-11T22:35:05.522Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jetlag-fe.vercel.app/thailand/bangkok-test</loc>
+    <lastmod>2025-04-11T22:35:17.696Z</lastmod>
+  </url>
+</urlset>
