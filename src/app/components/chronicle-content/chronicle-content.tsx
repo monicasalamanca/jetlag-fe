@@ -4,7 +4,6 @@ import Hero from "../hero/hero";
 import CardOne from "../cards/card-one/card-one";
 import CardTwo from "../cards/card-two/card-two";
 import CardThree from "../cards/card-three/card-three";
-// import CardFour from "../cards/card-four/card-four";
 import CardFive from "../cards/card-five/card-five";
 
 import s from "./chronicle-content.module.scss";
@@ -180,8 +179,6 @@ const mockData = [
     readTime: "9 mins",
   },
 ];
-
-console.log(mockData.length);
 
 const ChronicleContent = () => {
   return (

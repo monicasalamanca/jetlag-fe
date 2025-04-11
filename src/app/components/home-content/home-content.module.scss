@@ -1,169 +1,75 @@
 .container {
   .latestBlogPosts {
-    .readMore {
-      display: none;
-    }
+    display: none;
+  }
+
+  background-color: var(--light-gray-bg);
+
+  .wrapper {
+    width: 100%;
 
     @media only screen and (min-width: 768px) {
       width: 768px;
       margin: 0 auto;
-      pointer-events: none;
+      margin-top: 48px;
+      margin-bottom: 48px;
+    }
 
-      .readMore {
-        display: block;
-        pointer-events: auto;
-        text-align: end;
-        font-weight: 500;
-        font-size: 16px;
-        color: var(--color-blue);
-        padding-right: 16px;
-        cursor: pointer;
-
-        .icon {
-          margin-left: 8px;
-        }
-      }
-
-      .wrapper {
-        display: flex;
-        flex-direction: row;
-        gap: 16px;
-      }
+    h2 {
+      color: var(--primary-font-dark);
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      padding: 16px 0 24px;
+      line-height: 40px;
     }
   }
-}
 
-.latestBlogPosts {
-  padding: 32px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  h2 {
-    color: var(--text-color);
-    font-size: 24px;
+  .latestChronicles,
+  .trending,
+  .mostPopular,
+  .mostLiked,
+  .mostViewed {
+    padding: 24px 16px;
 
     @media only screen and (min-width: 768px) {
-      font-size: 28px;
-      text-align: center;
-      padding-top: 24px;
-      padding-bottom: 32px;
+      padding: 0;
+    }
+
+    .cardWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      @media only screen and (min-width: 600px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   }
 
-  .latestBlogPost {
-    color: var(--text-color);
-    display: flex;
-    gap: 16px;
+  .mostLiked {
+    .cardWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
 
-    .thumbnail {
-      height: 120px;
-      width: 120px;
-      object-fit: cover;
-      border-radius: 8px;
+      @media only screen and (min-width: 600px) {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+  }
+
+  .mostViewed {
+    .cardWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
 
       @media only screen and (min-width: 768px) {
-        height: 100px;
-        width: 100px;
-      }
-    }
-
-    .contentWrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding: 8px 0;
-
-      small,
-      p {
-        color: var(--font-dark-gray);
-      }
-      h3 {
-        color: var(--text-color);
-        font-size: 20px;
-        font-weight: 700;
-        text-transform: capitalize;
-      }
-    }
-  }
-  .notWorking {
-    padding: 16px;
-    background-color: var(--white);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px #0000001a;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 16px;
-    margin: 0 auto;
-    text-align: center;
-
-    .icon {
-      width: 32px;
-      height: 32px;
-      margin: 0 auto;
-    }
-
-    h3 {
-      color: var(--text-color);
-    }
-
-    p {
-      color: var(--font-dark-gray);
-    }
-
-    button {
-      background-color: #1bc4f3;
-      display: flex;
-      border-radius: 90px;
-      border: none;
-      padding: 8px 16px;
-      width: fit-content;
-      justify-content: center;
-      align-items: center;
-      margin: 0 auto;
-      cursor: pointer;
-      pointer-events: all;
-
-      .btnIcon {
-        width: 16px;
-        height: 16px;
-        margin-right: 8px;
-      }
-    }
-
-    .bottomLinks {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      border-top: 1px solid var(--super-light-gray);
-      padding-top: 24px;
-      margin: 0 auto;
-      display: none; // TODO: remove once the links for guides are ready
-
-      .links {
-        display: flex;
-        gap: 16px;
-
-        .otherLinks {
-          font-size: 14px;
-          font-weight: 500;
-          color: var(--color-blue);
-          display: flex;
-          align-items: center;
-
-          .icon {
-            width: 16px;
-            height: 16px;
-            margin-right: 4px;
-          }
-        }
+        display: grid;
       }
     }
   }

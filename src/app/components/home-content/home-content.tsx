@@ -1,48 +1,227 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+// import Image from "next/image";
+// import Link from "next/link";
+// import { useRouter } from "next/navigation";
 import { BlogPost } from "@/api/types";
 import Hero from "../hero/hero";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faNewspaper,
-  faRightLong,
-  faRotateRight,
-} from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faNewspaper,
+//   faRightLong,
+//   faRotateRight,
+// } from "@fortawesome/free-solid-svg-icons";
 
 import s from "./home-content.module.scss";
+import CardOne from "../cards/card-one/card-one";
+import CardTwo from "../cards/card-two/card-two";
+import CardThree from "../cards/card-three/card-three";
+import CardFive from "../cards/card-five/card-five";
+
+const mockData = [
+  {
+    title:
+      "Why Moving Almost Anywhere in Southeast Asia Could Be Better Than Your Miserable Life in Canada or the U.S",
+    description:
+      "Explore the benefits of relocating to Southeast Asia and how it can transform your lifestyle.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744161351/for-cards/pexels-triduhi-youtuber-24503819_omppzk.jpg",
+    tags: ["Relocation", "Lifestyle"],
+    date: "April 10, 2025",
+    country: "Thailand",
+    readTime: "7 mins",
+  },
+  {
+    title: "Moving Abroad, The Unspoken Truths: What They Don't Tell You",
+    description: "Uncover the hidden challenges and rewards of moving abroad.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744161492/for-cards/pexels-freestockpro-1008155_jhebz4.jpg",
+    tags: ["Relocation", "Challenges"],
+    date: "May 5, 2025",
+    country: "Portugal",
+    readTime: "6 mins",
+  },
+  {
+    title: "An Ode to Bangkok: A Love Letter to the City of Dreams",
+    description:
+      "Discover the charm and allure of Bangkok through this heartfelt tribute.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744161551/for-cards/pexels-martinpechy-2078248_cwsgok.jpg",
+    tags: ["Travel", "City Guide"],
+    date: "June 15, 2025",
+    country: "Thailand",
+    readTime: "5 mins",
+  },
+  {
+    title:
+      "Colombia vs. Thailand: Which is the Best Fit for Expats, Digital Nomads, and Dreamers?",
+    description:
+      "A comparative guide to help you decide between Colombia and Thailand for your next adventure.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744161625/for-cards/pexels-george-pak-7972945_itkrav.jpg",
+    tags: ["Comparison", "Digital Nomads"],
+    date: "July 20, 2025",
+    country: "Colombia, Thailand",
+    readTime: "8 mins",
+  },
+  {
+    title: "Fear and Loathing in Colombia: A Digital Nomad’s Escapade",
+    description:
+      "A thrilling account of a digital nomad's journey through Colombia.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744161693/for-cards/pexels-juan-tapias-695500451-29559796_pkxmnr.jpg",
+    tags: ["Adventure", "Digital Nomads"],
+    date: "August 10, 2025",
+    country: "Colombia",
+    readTime: "6 mins",
+  },
+  {
+    title:
+      "Top 5 Cities in the World for Introverted Digital Nomads and Expats",
+    description:
+      "A curated list of cities perfect for introverts seeking a peaceful lifestyle.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744161805/for-cards/pexels-mikhail-nilov-8654460_icmdx6.jpg",
+    tags: ["Lifestyle", "Digital Nomads"],
+    date: "September 5, 2025",
+    country: "Global",
+    readTime: "7 mins",
+  },
+  {
+    title: "Bulgaria: The Next European Hub for Digital Nomads and Expats",
+    description:
+      "Why Bulgaria is becoming a hotspot for digital nomads and expats.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744161880/for-cards/pexels-valko23-6658672_hulaba.jpg",
+    tags: ["Europe", "Digital Nomads"],
+    date: "October 15, 2025",
+    country: "Bulgaria",
+    readTime: "5 mins",
+  },
+  {
+    title:
+      "The Philippines: The Underrated Gem for Expats, Digital Nomads, Retirees, and Dreamers",
+    description:
+      "Discover why the Philippines is a hidden treasure for expats and digital nomads.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744161967/for-cards/pexels-tirachard-kumtanom-112571-584302_zrjxrq.jpg",
+    tags: ["Asia", "Lifestyle"],
+    date: "November 10, 2025",
+    country: "Philippines",
+    readTime: "6 mins",
+  },
+  {
+    title: "Top 5 New Digital Nomad Hubs You Haven’t Thought Of Yet",
+    description:
+      "Explore emerging destinations for digital nomads around the world.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744162033/for-cards/pexels-samerdaboul-1212818_dth0jv.jpg",
+    tags: ["Travel", "Digital Nomads"],
+    date: "December 1, 2025",
+    country: "Global",
+    readTime: "7 mins",
+  },
+  {
+    title: "Da Nang, Vietnam: The New Digital Nomad Place to Be",
+    description:
+      "Why Da Nang is quickly becoming a favorite among digital nomads.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744162115/for-cards/pexels-quang-nguyen-vinh-222549-2162459_dk69dp.jpg",
+    tags: ["Asia", "Digital Nomads"],
+    date: "January 15, 2026",
+    country: "Vietnam",
+    readTime: "5 mins",
+  },
+  {
+    title: "The Top Up-and-Coming Cities for Expats and Digital Nomads in 2024",
+    description:
+      "A sneak peek into the cities that are gaining popularity among expats and digital nomads.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744162243/for-cards/pexels-cottonbro-5054213_o1ttzm.jpg",
+    tags: ["Travel", "Digital Nomads"],
+    date: "February 10, 2026",
+    country: "Global",
+    readTime: "6 mins",
+  },
+  {
+    title: "Top 5 Countries for Digital Nomad Visas",
+    description: "A guide to the best countries offering digital nomad visas.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744162340/for-cards/pexels-vlada-karpovich-7365324_a0fnem.jpg",
+    tags: ["Visas", "Digital Nomads"],
+    date: "March 5, 2026",
+    country: "Global",
+    readTime: "7 mins",
+  },
+  {
+    title:
+      "Are There Any Countries Left Where You Can Live for $1,500 or Less Per Month?",
+    description:
+      "Explore affordable countries where you can live comfortably on a budget.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744162433/for-cards/pexels-george-pak-7969106_b8pblb.jpg",
+    tags: ["Budget", "Lifestyle"],
+    date: "April 20, 2026",
+    country: "Global",
+    readTime: "8 mins",
+  },
+  {
+    title: "3 Under-The-Radar Cities for Expats and Digital Nomads",
+    description:
+      "Discover hidden gems that are perfect for expats and digital nomads.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744162509/for-cards/pexels-simonmigaj-951076_cewcd9.jpg",
+    tags: ["Travel", "Hidden Gems"],
+    date: "May 15, 2026",
+    country: "Global",
+    readTime: "6 mins",
+  },
+  {
+    title:
+      "Japan: New Digital Nomad Visa, Renovating Cheap Homes, Tackling Bureaucracy, and the Taxing Reality of Doing Business",
+    description:
+      "An in-depth look at Japan's new digital nomad visa and the challenges of living and working there.",
+    thumbnail:
+      "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744162560/for-cards/pexels-belle-co-99483-402028_h757ui.jpg",
+    tags: ["Japan", "Digital Nomads"],
+    date: "June 10, 2026",
+    country: "Japan",
+    readTime: "9 mins",
+  },
+];
 
 const HomeContent = ({
   latestBlogPosts,
 }: {
   latestBlogPosts: BlogPost[] | null;
 }) => {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const formatDate = (dateString: string): string => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "short",
-      day: "2-digit",
-    };
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat("en-US", options).format(date);
-  };
+  // const formatDate = (dateString: string): string => {
+  //   const options: Intl.DateTimeFormatOptions = {
+  //     year: "numeric",
+  //     month: "short",
+  //     day: "2-digit",
+  //   };
+  //   const date = new Date(dateString);
+  //   return new Intl.DateTimeFormat("en-US", options).format(date);
+  // };
 
-  const handleReload = () => {
-    window.location.reload();
-  };
+  // const handleReload = () => {
+  //   window.location.reload();
+  // };
 
-  const formatUrl = (url: string): string => {
-    return url.replace(/\s+/g, "-").toLowerCase();
-  };
+  // const formatUrl = (url: string): string => {
+  //   return url.replace(/\s+/g, "-").toLowerCase();
+  // };
 
-  // Handle click manually on mobile
-  const handleClick = (url: string) => {
-    router.push(url);
-  };
+  // // Handle click manually on mobile
+  // const handleClick = (url: string) => {
+  //   router.push(url);
+  // };
+
+  console.log("latestBlogPosts", latestBlogPosts);
+  console.log("mockData", mockData.length);
 
   return (
     <main className={s.container}>
@@ -53,7 +232,52 @@ const HomeContent = ({
           "Discover your next destination with our curated guides for digital nomads and expats"
         }
       />
-      {latestBlogPosts ? (
+      <section className={s.latestChronicles}>
+        <div className={s.wrapper}>
+          <h2>Latest Stories</h2>
+          <div className={s.cardWrapper}>
+            <CardOne mockData={mockData[14]} color="blue" />
+            <CardOne mockData={mockData[13]} color="green" />
+          </div>
+        </div>
+      </section>
+      <section className={s.mostViewed}>
+        <div className={s.wrapper}>
+          <h2>Most Viewed</h2>
+          <div className={s.cardWrapper}>
+            <CardFive mockData={mockData[12]} />
+            <CardFive mockData={mockData[11]} />
+            <CardFive mockData={mockData[10]} />
+            <CardFive mockData={mockData[9]} />
+            <CardFive mockData={mockData[8]} />
+            <CardFive mockData={mockData[7]} />
+          </div>
+        </div>
+      </section>
+      <section className={s.trending}>
+        <div className={s.wrapper}>
+          <h2>Trending</h2>
+          <div className={s.cardWrapper}>
+            <CardTwo mockData={mockData[6]} color="red" />
+            <CardTwo mockData={mockData[5]} color="green" />
+            <CardTwo mockData={mockData[4]} color="purple" />
+            <CardTwo mockData={mockData[3]} color="orange" />
+          </div>
+        </div>
+      </section>
+      <section className={s.mostPopular}>
+        <div className={s.wrapper}>
+          <h2>Most Popular</h2>
+          <div className={s.cardWrapper}>
+            <CardThree mockData={mockData[2]} color="purple" />
+            <CardThree mockData={mockData[1]} color="blue" />
+            <CardThree mockData={mockData[0]} color="red" />
+            <CardThree mockData={mockData[11]} color="green" />
+          </div>
+        </div>
+      </section>
+
+      {/* {latestBlogPosts ? (
         <section className={s.latestBlogPosts}>
           <h2>Latest Posts</h2>
           <div className={s.wrapper}>
@@ -63,7 +287,7 @@ const HomeContent = ({
                 className={s.latestBlogPost}
                 onClick={() =>
                   handleClick(
-                    formatUrl(`${blogPost.category}/${blogPost.title}`),
+                    formatUrl(`${blogPost.category}/${blogPost.title}`)
                   )
                 }
               >
@@ -82,7 +306,7 @@ const HomeContent = ({
                   <Link
                     aria-label={`Click here to Read more about ${blogPost.title}`}
                     href={`/${formatUrl(
-                      `${blogPost.category}/${blogPost.title}`,
+                      `${blogPost.category}/${blogPost.title}`
                     )}`}
                     className={s.readMore}
                   >
@@ -115,7 +339,7 @@ const HomeContent = ({
               <FontAwesomeIcon icon={faRotateRight} className={s.btnIcon} /> Try
               Again
             </button>
-            {/* <div className={s.bottomLinks}>
+            <div className={s.bottomLinks}>
               <p>Meanwhile, checkout our</p>
               <div className={s.links}>
                 <a
@@ -134,10 +358,10 @@ const HomeContent = ({
                   Quiz
                 </Link>
               </div>
-            </div> */}
+            </div>
           </div>
         </section>
-      )}
+      )} */}
     </main>
   );
 };
