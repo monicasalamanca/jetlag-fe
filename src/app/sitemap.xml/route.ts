@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 // export const runtime = "nodejs";
 
 // src/app/api/sitemap/regenerate/route.ts
-import { fetchAllBlogSlugs } from "@/api/client"; // this assumes your Strapi logic is in src/api/client.ts
+import { fetchAllBlogSlugs } from "@/api/client";
 import { Slug } from "@/api/types";
 
 export async function GET() {
