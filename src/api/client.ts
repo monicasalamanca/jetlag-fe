@@ -14,7 +14,7 @@ import {
 // get all the blog info
 export const fetchBlogPost = async (
   category: string,
-  slug: string
+  slug: string,
 ): Promise<Post[] | null> => {
   const url = `${BASE_URL}/api/blogs?filters[category][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
   try {
@@ -45,7 +45,7 @@ export const fetchBlogPost = async (
 // TODO: to use on category country page
 // THIS IS NOT USED
 export const fetchBlogPostsFromCategory = async (
-  category: string
+  category: string,
 ): Promise<null> => {
   const url = `${BASE_URL}/api/blogs?filters[categories][slug][$eq]=${category}&populate=categories`;
 
@@ -142,7 +142,7 @@ export const fetchAllCountries = async (): Promise<Country[] | null> => {
 
 // gets one country from params
 export const fetchCountry = async (
-  countryName: string
+  countryName: string,
 ): Promise<Country[] | null> => {
   const url = `${BASE_URL}/api/countries?filters[name][$eq]=${countryName}&pogination[limit]=1`;
 

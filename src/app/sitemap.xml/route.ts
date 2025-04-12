@@ -20,7 +20,7 @@ export async function GET() {
 <url>
   <loc>${baseUrl}/${path}</loc>
   <lastmod>${new Date().toISOString()}</lastmod>
-</url>`
+</url>`,
       )
       .join("");
 
@@ -32,7 +32,7 @@ export async function GET() {
       <url>
         <loc>${baseUrl}/${post.category}/${post.slug}</loc>
         <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
-      </url>`
+      </url>`,
         )
         .join("");
 
@@ -53,7 +53,7 @@ export async function GET() {
 
     return NextResponse.json(
       { error: "Failed to generate sitemap" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
