@@ -240,13 +240,12 @@ export const postContactUs = async (data: ContactUsInfo): Promise<boolean> => {
 // fetch all the blog slugs
 // this is used to generate the sitemap
 export const fetchAllBlogSlugs = async (): Promise<Slug[] | null> => {
-  const url = `${BASE_URL}/api/blogs?fields[0]=slug&fields[1]=updatedAt&populate[category][fields][0]=slug`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?fields[0]=slug&fields[1]=updatedAt&populate[category][fields][0]=slug`;
 
   try {
     const res = await fetch(url, {
       cache: "no-store",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
     });

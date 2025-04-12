@@ -1,19 +1,14 @@
-// src/app/api/sitemap/regenerate/route.ts
 import { NextResponse } from "next/server";
+
+// export const runtime = "nodejs";
+
+// src/app/api/sitemap/regenerate/route.ts
 import { fetchAllBlogSlugs } from "@/api/client"; // this assumes your Strapi logic is in src/api/client.ts
-import fs from "fs";
-import path from "path";
 import { Slug } from "@/api/types";
 
-const SECRET = process.env.SITEMAP_SECRET || "";
-
-export async function POST(req: Request) {
-  const headerSecret = req.headers.get("x-sitemap-secret");
-  if (headerSecret !== SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
+export async function GET() {
   try {
+    console.log("Generating sitemap...");
     const posts = await fetchAllBlogSlugs();
 
     const baseUrl =
@@ -46,8 +41,6 @@ export async function POST(req: Request) {
           ${staticRoutes}
           ${dynamicRoutes}
         </urlset>`;
-
-    fs.writeFileSync(path.join(process.cwd(), "public/sitemap.xml"), sitemap);
 
     return new NextResponse(sitemap, {
       status: 200,
