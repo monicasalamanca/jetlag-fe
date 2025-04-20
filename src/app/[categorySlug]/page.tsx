@@ -2,13 +2,15 @@ import { notFound } from "next/navigation";
 import { fetchCountry } from "@/api/client";
 import CountryLander from "@/components/country-lander/country-lander";
 
-type Params = {
-  categorySlug: string;
-};
-
-const BlogPostPage = async ({ params }: { params: Params }) => {
-  const { categorySlug } = await params;
-  const country = await fetchCountry(categorySlug);
+const BlogPostPage = async ({
+  params,
+}: {
+  params: Promise<{
+    category: string;
+  }>;
+}) => {
+  const { category } = await params;
+  const country = await fetchCountry(category);
   // In here we either return the data based on country or other category
   // So first we will have a list of other categories
   // and we will check if the category exists in the list
