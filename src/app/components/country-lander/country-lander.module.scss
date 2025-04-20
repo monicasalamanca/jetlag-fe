@@ -12,22 +12,37 @@
       color: var(--text-color);
       font-size: 16px;
       line-height: 24px;
-      font-weight: 400;
+      font-weight: 500;
 
       @media only screen and (min-width: 768px) {
-        width: 768px;
+        width: 600px;
         margin: 0 auto;
       }
     }
   }
 
-  .weatherWrapper {
-    @media only screen and (min-width: 768px) {
-      width: 768px;
-      margin: 0 auto;
+  .masonryGridSection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px 24px 24px;
+
+    .column {
       display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    @media only screen and (min-width: 600px) {
+      flex-direction: row;
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    @media only screen and (min-width: 900px) {
+      flex-direction: row;
+      width: 800px;
+      margin: 0 auto;
     }
   }
 }

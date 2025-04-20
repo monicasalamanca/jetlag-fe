@@ -1,18 +1,16 @@
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 
-// export const runtime = "nodejs";
-
-// src/app/api/sitemap/regenerate/route.ts
 import { fetchAllBlogSlugs } from "@/api/client";
 import { Slug } from "@/api/types";
 
 export async function GET() {
   try {
-    console.log("Generating sitemap...");
     const posts = await fetchAllBlogSlugs();
 
     const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || "https://jetlag-fe.vercel.app/";
+      process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com/";
 
     const staticRoutes = ["", "about-us", "chronicles"]
       .map(
@@ -20,7 +18,7 @@ export async function GET() {
 <url>
   <loc>${baseUrl}/${path}</loc>
   <lastmod>${new Date().toISOString()}</lastmod>
-</url>`,
+</url>`
       )
       .join("");
 
@@ -30,9 +28,9 @@ export async function GET() {
         .map(
           (post: Slug) => `
       <url>
-        <loc>${baseUrl}/${post.category}/${post.slug}</loc>
+        <loc>${baseUrl}/${post.categorySlug}/${post.slug}</loc>
         <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
-      </url>`,
+      </url>`
         )
         .join("");
 
@@ -53,7 +51,7 @@ export async function GET() {
 
     return NextResponse.json(
       { error: "Failed to generate sitemap" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

@@ -19,8 +19,10 @@ const CardFive = ({ mockData }: mockDataProps) => {
           className={s.image}
           src={mockData.thumbnail}
           alt="Grocery time"
-          width={330}
-          height={250}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          // width={330}
+          // height={250}
           loading="lazy"
         />
         <div className={s.backgroundOverlay}>

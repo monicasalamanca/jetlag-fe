@@ -1,11 +1,15 @@
-export const revalidate = 86400; // 👈 Ensures ISR is enabled for the entire page
+// export const revalidate = 86400; // 👈 Ensures ISR is enabled for the entire page
 
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import HeaderWrapper from "@/components/headerWrapper/headerWrapper";
 import Footer from "@/components/footer/footer";
+import Script from "next/script";
+import { AnalyticsProvider } from "providers";
+// import { AnalyticsProvider } from "@/app/providers";
 
 import "./globals.css";
+import { Suspense } from "react";
 
 const roboto = Roboto({
   adjustFontFallback: false,
@@ -51,6 +55,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+      page_path: window.location.pathname,
+    });
+  `}
+        </Script>
+
+        <Suspense fallback={null}>
+          <AnalyticsProvider />
+        </Suspense>
         <HeaderWrapper />
         {children}
         <Footer />

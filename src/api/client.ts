@@ -1,9 +1,8 @@
-import { BASE_URL } from "app/urls";
 import {
   BlogPost,
   BlogPostResponse,
   ContactUsInfo,
-  CountriesResponse,
+  // CountriesResponse,
   Country,
   Destination,
   Post,
@@ -11,14 +10,73 @@ import {
   SlugsResponse,
 } from "./types";
 
-// get all the blog info
+// gets one country from params
+// this is used for the country page
+export const fetchCountry = async (
+  countryName: string
+): Promise<Country[] | null> => {
+  const query = new URLSearchParams({
+    "filters[slug][$eq]": countryName,
+    "populate[quickFacts]": "*",
+    "populate[deepInfo][populate]": "image",
+  }).toString();
+  // const url = `http://localhost:1337/api/countries?filters[slug][$eq]=${countryName}&populate[quickFacts]=*&populate[deepInfo][populate]=image`;
+  const url = `${process.env.STRAPI_URL}/countries?${query}`;
+
+  try {
+    // const res = await fetch(url, { next: { revalidate: 604800 } }); // its cached for a week
+    const res = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_READ_API_TOKEN}`,
+      },
+    });
+
+    if (!res.ok) {
+      console.error("Failed to fetch one country: ", res.statusText);
+      return null;
+    }
+
+    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return data.data.map((item: any) => ({
+      id: item.id,
+      name: item.attributes.name,
+      tagline: item.attributes.tagline,
+      intro: item.attributes.intro,
+      continent: item.attributes.continent,
+      slug: item.attributes.slug,
+      quickFacts: item.attributes.quickFacts,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      deepInfo: item.attributes.deepInfo.map((deepInfo: any) => ({
+        id: deepInfo.id,
+        name: deepInfo.name,
+        icon: deepInfo.icon,
+        description: deepInfo.description,
+        keywords: deepInfo.keywords,
+        image: deepInfo.image.data.attributes.url,
+      })),
+    }));
+  } catch (error) {
+    console.error("Error fetching the page country: ", error);
+    return null;
+  }
+};
+
+// Fetch a blog post based on the category and the slug
 export const fetchBlogPost = async (
   category: string,
-  slug: string,
+  slug: string
 ): Promise<Post[] | null> => {
-  const url = `${BASE_URL}/api/blogs?filters[category][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[category][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
   try {
-    const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
+    // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
+    const res = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    });
 
     if (!res.ok) {
       console.error("Failed to fetch a blog post: ", res.statusText);
@@ -30,10 +88,12 @@ export const fetchBlogPost = async (
     return data.data.map((item: BlogPostResponse) => ({
       id: item.id,
       title: item.attributes.title,
+      slug: item.attributes.slug,
       description: item.attributes.description,
       content: item.attributes.content,
       publishedAt: item.attributes.publishedAt,
       likes: item.attributes.likes,
+      views: item.attributes.views,
     }));
   } catch (error) {
     console.error("Error fetching a blog post: ", error);
@@ -41,31 +101,20 @@ export const fetchBlogPost = async (
   }
 };
 
-// gets all the blogs from only one category
-// TODO: to use on category country page
-// THIS IS NOT USED
-export const fetchBlogPostsFromCategory = async (
-  category: string,
-): Promise<null> => {
-  const url = `${BASE_URL}/api/blogs?filters[categories][slug][$eq]=${category}&populate=categories`;
-
-  const res = await fetch(url, { cache: "no-store" });
-
-  if (!res.ok) return null;
-
-  const data = await res.json();
-
-  return data?.data || null;
-};
-
 // gets all the latest blog posts
 // TODO: as it gets bigger limit to 3 or 4 posts only
 export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
-  // const url = `${BASE_URL}/api/blogs?sort=publishedAt:desc&pagination[page]=1&pagination[pageSize]=3&populate[images]=*&populate[category]=*`;
-  const url = `${BASE_URL}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
+  // const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&pagination[page]=1&pagination[pageSize]=3&populate[images]=*&populate[category]=*`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
 
   try {
-    const res = await fetch(url, { next: { revalidate: 604800 } }); // it caches for a week
+    // const res = await fetch(url, { next: { revalidate: 604800 } }); // it caches for a week
+    const res = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_READ_API_TOKEN}`,
+      },
+    });
 
     if (!res.ok) {
       console.error("Failed to fetch the latest blog posts: ", res.statusText);
@@ -91,117 +140,29 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
   }
 };
 
-// fetchs all the countries
-// THIS IS NOT USED
-export const fetchAllCountries = async (): Promise<Country[] | null> => {
-  const url = `${BASE_URL}/api/countries`;
-
-  try {
-    const res = await fetch(url, { cache: "no-store" });
-
-    if (!res.ok) {
-      console.error("Failed to fetch all countries: ", res.statusText);
-      return null;
-    }
-
-    const data = await res.json();
-
-    return data.data.map((item: CountriesResponse) => ({
-      id: item.id,
-      name: item.attributes.name,
-      continent: item.attributes.continent,
-      headline: item.attributes.headline,
-      description: item.attributes.description,
-      mapLink: item.attributes.mapLink,
-      language: item.attributes.language,
-      power: item.attributes.power,
-      currency: item.attributes.currency,
-      timeZone: item.attributes.timeZone,
-      summerTemp: item.attributes.summerTemp,
-      winterTemp: item.attributes.winterTemp,
-      springTemp: item.attributes.springTemp,
-      automnTemp: item.attributes.automnTemp,
-      springBestTimeToTravel: item.attributes.springBestTimeToTravel,
-      summerBestTimeToTravel: item.attributes.summerBestTimeToTravel,
-      autonmBestTimeToTravel: item.attributes.automnBestTimeToTravel,
-      winterBestTimeToTravel: item.attributes.winterBestTimeToTravel,
-      foodDishes: item.attributes.foodDishes,
-      foodDescription: item.attributes.foodDescription,
-      religions: item.attributes.religions,
-      religionDescription: item.attributes.religionDescription,
-      cultureItems: item.attributes.cultureItems,
-      cultureDescription: item.attributes.cultureDescription,
-      crimeAndSafetyIndex: item.attributes.crimeAndSafetyIndex,
-      crimeAndSafetyDescription: item.attributes.crimeAndSafetyDescription,
-    }));
-  } catch (error) {
-    console.error("Error fetching all countries: ", error);
-    return null;
-  }
-};
-
-// gets one country from params
-export const fetchCountry = async (
-  countryName: string,
-): Promise<Country[] | null> => {
-  const url = `${BASE_URL}/api/countries?filters[name][$eq]=${countryName}&pogination[limit]=1`;
-
-  try {
-    const res = await fetch(url, { next: { revalidate: 604800 } }); // its cached for a week
-
-    if (!res.ok) {
-      console.error("Failed fetching to fetch one country: ", res.statusText);
-      return null;
-    }
-
-    const data = await res.json();
-    return data.data.map((item: CountriesResponse) => ({
-      id: item.id,
-      name: item.attributes.name,
-      continent: item.attributes.continent,
-      headline: item.attributes.headline,
-      description: item.attributes.description,
-      mapLink: item.attributes.mapLink,
-      language: item.attributes.language,
-      power: item.attributes.power,
-      currency: item.attributes.currency,
-      timeZone: item.attributes.timeZone,
-      summerTemp: item.attributes.summerTemp,
-      winterTemp: item.attributes.winterTemp,
-      springTemp: item.attributes.springTemp,
-      automnTemp: item.attributes.automnTemp,
-      springBestTimeToTravel: item.attributes.springBestTimeToTravel,
-      summerBestTimeToTravel: item.attributes.summerBestTimeToTravel,
-      automnBestTimeToTravel: item.attributes.automnBestTimeToTravel,
-      winterBestTimeToTravel: item.attributes.winterBestTimeToTravel,
-      foodDishes: item.attributes.foodDishes,
-      foodDescription: item.attributes.foodDescription,
-      religions: item.attributes.religions,
-      religionDescription: item.attributes.religionDescription,
-      cultureItems: item.attributes.cultureItems,
-      cultureDescription: item.attributes.cultureDescription,
-      crimeAndSafetyIndex: item.attributes.crimeAndSafetyIndex,
-      crimeAndSafetyDescription: item.attributes.crimeAndSafetyDescription,
-    }));
-  } catch (error) {
-    console.error("Error fetching the page country: ", error);
-    return null;
-  }
-};
-
 // gets the list of countries with existing blogs
+// this is used to generate the menu for destinations
 export const fetchCountriesWithContinents = async (): Promise<
   Destination[] | null
 > => {
-  const url = `${BASE_URL}/api/countries?fields[0]=name&fields[1]=continent`;
+  const url = `${process.env.STRAPI_URL}/countries?fields[0]=name&fields[1]=continent`;
   try {
-    const res = await fetch(url, { next: { revalidate: 604800 } }); // its cached for a week
+    // const res = await fetch(url, { next: { revalidate: 604800 } }); // its cached for a week
+    const res = await fetch(url, {
+      // cache: "no-store",
+      next: { revalidate: 3600 },
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_READ_API_TOKEN}`,
+      },
+    });
+
     if (!res.ok) {
       console.error("Failed to fetch countries: ", res.statusText);
       return null;
     }
     const data = await res.json();
-    return data.data.map((item: CountriesResponse) => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return data.data.map((item: any) => ({
       id: item.id,
       name: item.attributes.name,
       continent: item.attributes.continent,
@@ -214,7 +175,7 @@ export const fetchCountriesWithContinents = async (): Promise<
 
 // post a contact us message
 export const postContactUs = async (data: ContactUsInfo): Promise<boolean> => {
-  const url = `${BASE_URL}/api/contact-messages`;
+  const url = `${process.env.STRAPI_URL}/api/contact-messages`;
 
   try {
     const res = await fetch(url, {
@@ -244,7 +205,8 @@ export const fetchAllBlogSlugs = async (): Promise<Slug[] | null> => {
 
   try {
     const res = await fetch(url, {
-      cache: "no-store",
+      // cache: "no-store",
+      next: { revalidate: 3600 },
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
@@ -261,7 +223,8 @@ export const fetchAllBlogSlugs = async (): Promise<Slug[] | null> => {
       id: item.id,
       slug: item.attributes.slug,
       updatedAt: item.attributes.updatedAt,
-      category: item.attributes.category.data.attributes.slug,
+      categoryType: item.attributes.category.data.attributes.type,
+      categorySlug: item.attributes.category.data.attributes.slug,
     }));
   } catch (error) {
     console.error("Error fetching all blog slugs: ", error);

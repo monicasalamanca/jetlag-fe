@@ -15,9 +15,9 @@
     flex-grow: 1;
 
     .image {
+      object-fit: cover;
       width: 100%;
       height: auto;
-      object-fit: cover;
     }
 
     .topTag {

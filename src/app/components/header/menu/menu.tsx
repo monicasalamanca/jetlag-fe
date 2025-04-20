@@ -18,7 +18,9 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
     <nav className={s.container}>
       <ul>
         <li>
-          <NavLink href="/">Home</NavLink>
+          <NavLink href="/" name="home">
+            Home
+          </NavLink>
         </li>
         <li>
           <div className={s.menuItem}>
@@ -62,10 +64,14 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
           </div>
         </li>
         <li>
-          <NavLink href="/blog">Chronicles</NavLink>
+          <NavLink href="/blog" name="chronicles">
+            Chronicles
+          </NavLink>
         </li>
         <li>
-          <NavLink href="/about-us">About Us</NavLink>
+          <NavLink href="/about-us" name="about us">
+            About Us
+          </NavLink>
         </li>
       </ul>
     </nav>

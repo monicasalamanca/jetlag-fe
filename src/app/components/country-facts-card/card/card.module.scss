@@ -1,0 +1,122 @@
+.container {
+  padding: 24px;
+  border-radius: 16px;
+  background-color: var(--white);
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  color: var(--primary-font-dark);
+  align-items: flex-start;
+  height: fit-content;
+
+  svg {
+    width: 32px;
+    height: auto;
+  }
+
+  &.whiteBg {
+    background-color: var(--white);
+
+    &.blue {
+      svg {
+        color: #3a83f5;
+      }
+    }
+    &.orange {
+      svg {
+        color: #f49d08;
+      }
+    }
+    &.red {
+      svg {
+        color: #db2974;
+      }
+    }
+    &.green {
+      svg {
+        color: #03956a;
+      }
+    }
+    &.purple {
+      svg {
+        color: #7a3ced;
+      }
+    }
+    &.pink {
+      svg {
+        color: #8e5cf3;
+      }
+    }
+  }
+
+  &.colourBg {
+    background-color: var(--light-gray-bg);
+    color: var(--white) svg {
+      color: var(--white);
+    }
+
+    &.blue {
+      background: #3a83f5;
+      background: linear-gradient(
+        90deg,
+        rgba(58, 131, 245, 1) 0%,
+        rgba(9, 181, 213, 1) 100%
+      );
+    }
+    &.red {
+      background: #db2974;
+      background: linear-gradient(
+        90deg,
+        rgba(219, 41, 116, 1) 0%,
+        rgba(233, 86, 18, 1) 100%
+      );
+    }
+    &.orange {
+      background: #f49d08;
+      background: linear-gradient(
+        90deg,
+        rgba(244, 157, 8, 1) 0%,
+        rgba(248, 116, 21, 1) 100%
+      );
+    }
+    &.green {
+      background: #03956a;
+      background: linear-gradient(
+        90deg,
+        rgba(3, 149, 106, 1) 0%,
+        rgba(15, 147, 135, 1) 100%
+      );
+    }
+    &.purple {
+      background: #7a3ced;
+      background: linear-gradient(
+        90deg,
+        rgba(122, 60, 237, 1) 0%,
+        rgba(63, 90, 235, 1) 100%
+      );
+    }
+    &.pink {
+      background: #8e5cf3;
+      background: linear-gradient(
+        90deg,
+        rgba(142, 92, 243, 1) 0%,
+        rgba(232, 72, 155, 1) 100%
+      );
+    }
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: calc(32 / 24);
+    text-transform: capitalize;
+    margin: 8px 0 12px 0;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: calc(22 / 16);
+    color: var(--primary-font-light);
+  }
+}

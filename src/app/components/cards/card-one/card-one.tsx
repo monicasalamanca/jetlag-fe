@@ -34,6 +34,8 @@ const CardOne: FC<{ mockData: CardProps; color: string }> = ({
           className={s.image}
           src={mockData.thumbnail}
           alt="Grocery time"
+          // fill
+          // sizes="(max-width: 768px) 100vw, 50vw"
           width={330}
           height={250}
           loading="lazy"

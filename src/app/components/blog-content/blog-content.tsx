@@ -11,10 +11,22 @@ import {
 import ReactMarkdown from "react-markdown";
 import { Post } from "@/api/types";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
+// import LikeButton from "@/app/components/blog-like-button/blog-like-button";
 
 import s from "./blog-content.module.scss";
 
+// function useTrackPostView(slug: string) {
+//   useEffect(() => {
+//     if (!slug) return;
+
+//     fetch(`/api/blogs/${slug}/view`, {
+//       method: "POST",
+//     });
+//   }, [slug]);
+// }
+
 const BlogContent: FC<{ post: Post }> = ({ post }) => {
+  // useTrackPostView(post.slug);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
   const [shareText, setShareText] = useState("");
@@ -27,7 +39,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
       setShareUrl(encodeURIComponent(window.location.href));
       setShareText(encodeURIComponent(post.title));
     }
-  }, [post.title]);
+  }, [post]);
 
   const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = {
@@ -77,6 +89,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
             <p>{`${post.likes} likes`}</p>
           </div>
         )} */}
+        {/* <LikeButton slug={post.slug} initialLikes={post.likes || 0} /> */}
       </div>
       <h1>{post.title}</h1>
       <div className={s.socialMedia}>

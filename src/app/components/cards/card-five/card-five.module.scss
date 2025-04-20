@@ -12,14 +12,17 @@
 
   .imageWrapper {
     position: relative;
+    display: flex;
+    flex-grow: 1;
 
     .image {
-      width: 100%;
+      width: auto;
+      height: fit-content;
       object-fit: cover;
 
-      @media only screen and (min-width: 600px) {
-        // height: unset;
-      }
+      // @media only screen and (min-width: 600px) {
+      //   // height: unset;
+      // }
     }
 
     .backgroundOverlay {

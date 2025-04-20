@@ -34,6 +34,50 @@ export type Image = {
 export type Images = {
   data: Image[];
 };
+
+export type CountriesResponse = {
+  id: number;
+  attributes: {
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    tagline: string;
+    intro: string;
+    continent: string;
+    slug: string;
+    quickfacts: QuickFact[];
+    deepInfo: DeepInfo[];
+  };
+};
+
+export type Country = {
+  id: number;
+  name: string;
+  slug: string;
+  continent: string;
+  tagline: string;
+  intro: string;
+  quickFacts: QuickFact[];
+  deepInfo: DeepInfo[];
+};
+
+export type QuickFact = {
+  id: number;
+  label: string;
+  description: string;
+  icon: string;
+};
+
+export type DeepInfo = {
+  id: number;
+  name: string;
+  icon: string;
+  description: string;
+  keywords: string;
+  image: string;
+};
+
 export type Category = {
   data: {
     id: number;
@@ -50,9 +94,11 @@ export type BlogPostResponse = {
   id: number;
   attributes: {
     title: string;
+    slug: string;
     description: string;
     content: string;
     likes: number;
+    views: number;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
@@ -67,6 +113,7 @@ export type BlogPost = {
   description: string;
   content: string;
   likes: number;
+  views: number;
   publishedAt: string;
   imageUrl: string;
   category: string;
@@ -75,70 +122,12 @@ export type BlogPost = {
 export type Post = {
   id: number;
   title: string;
+  slug: string;
   description: string;
   content: string;
   publishedAt: string;
   likes: number;
-};
-
-export type CountriesResponse = {
-  id: number;
-  attributes: {
-    name: string;
-    continent: string;
-    headline: string;
-    description: string;
-    mapLink: string;
-    language: string;
-    power: string;
-    currency: string;
-    timeZone: string;
-    summerTemp: string;
-    winterTemp: string;
-    springTemp: string;
-    automnTemp: string;
-    springBestTimeToTravel: string;
-    summerBestTimeToTravel: string;
-    automnBestTimeToTravel: string;
-    winterBestTimeToTravel: string;
-    foodDishes: string;
-    foodDescription: string;
-    religions: string;
-    religionDescription: string;
-    cultureItems: string;
-    cultureDescription: string;
-    crimeAndSafetyIndex: number;
-    crimeAndSafetyDescription: string;
-  };
-};
-
-export type Country = {
-  id: number;
-  name: string;
-  continent: string;
-  headline: string;
-  description: string;
-  mapLink: string;
-  language: string;
-  power: string;
-  currency: string;
-  timeZone: string;
-  summerTemp: string;
-  winterTemp: string;
-  springTemp: string;
-  automnTemp: string;
-  springBestTimeToTravel: string;
-  summerBestTimeToTravel: string;
-  automnBestTimeToTravel: string;
-  winterBestTimeToTravel: string;
-  foodDishes: string;
-  foodDescription: string;
-  religions: string;
-  religionDescription: string;
-  cultureItems: string;
-  cultureDescription: string;
-  crimeAndSafetyIndex: number;
-  crimeAndSafetyDescription: string;
+  views: number;
 };
 
 export type Destination = {
@@ -167,6 +156,7 @@ export type SlugsResponse = {
         id: number;
         attributes: {
           slug: string;
+          type: string;
         };
       };
     };
@@ -177,5 +167,6 @@ export type Slug = {
   id: number;
   slug: string;
   updatedAt: string;
-  category: string;
+  categoryType: string;
+  categorySlug: string;
 };
