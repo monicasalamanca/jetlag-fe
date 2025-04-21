@@ -1,4 +1,6 @@
-import { FC, useMemo } from "react";
+"use client";
+
+import { FC, useEffect, useMemo } from "react";
 // import CountryInfo from "../country-info/country-info";
 // import TravelResources from "../travel-resources/travel-resources";
 import Hero from "../hero/hero";
@@ -22,36 +24,42 @@ const colourStyle = [
 ] as const;
 
 const getStyle = () => {
-  const randomCardStyle =
-    cardStyles[Math.floor(Math.random() * cardStyles.length)];
+  // const randomCardStyle =
+  //   cardStyles[Math.floor(Math.random() * cardStyles.length)];
+  const randomCardStyle = cardStyles[0]; // For now, we are using only the first style
   return `${randomCardStyle}`;
 };
 
 const getColour = () => {
   const randomColourStyle =
-    colourStyle[Math.floor(Math.random() * colourStyle.length)];
+    // colourStyle[Math.floor(Math.random() * colourStyle.length)];
+    colourStyle[0]; // For now, we are using only the first colour
   return randomColourStyle;
 };
 
 const CountryLander: FC<{ country: Country }> = ({ country }) => {
-  const {
-    name,
-    // continent,
-    tagline,
-    intro,
-    quickFacts,
-    deepInfo,
-  } = country;
+  if (!country) {
+    return <div>Loading...</div>; // Or a custom error/loading component
+  }
+
+  const { name, tagline, intro, quickFacts, deepInfo } = country;
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {}, []);
 
   // Helper function to shuffle an array
   const shuffleArray = <T,>(array: T[]): T[] => {
-    return array
-      .map((item) => ({ item, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ item }) => item);
+    return (
+      array
+        .map((item) => ({ item, sort: Math.random() }))
+        // .map((item) => ({ item, sort: Math.random() * 100 }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ item }) => item)
+    );
   };
 
   // Combine all cards into one array
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const allCards = useMemo(() => {
     const quickFactCards = quickFacts.map((fact) => ({
       type: "quickFact",
@@ -115,6 +123,7 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
   const cardRepetitionCount: Record<string, number> = {};
 
   // Filter and shuffle cards
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredCards = useMemo(() => {
     const shuffledCards = shuffleArray(allCards);
 

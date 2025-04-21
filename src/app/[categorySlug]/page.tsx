@@ -6,11 +6,11 @@ const BlogPostPage = async ({
   params,
 }: {
   params: Promise<{
-    category: string;
+    categorySlug: string;
   }>;
 }) => {
-  const { category } = await params;
-  const country = await fetchCountry(category);
+  const { categorySlug } = await params;
+  const country = await fetchCountry(categorySlug);
   // In here we either return the data based on country or other category
   // So first we will have a list of other categories
   // and we will check if the category exists in the list

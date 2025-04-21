@@ -5,10 +5,10 @@ import NotFoundPage from "../../not-found";
 const BlogPostPage = async ({
   params,
 }: {
-  params: Promise<{ category: string; slug: string }>;
+  params: Promise<{ categorySlug: string; blogSlug: string }>;
 }) => {
-  const { category, slug } = await params;
-  const postArray = await fetchBlogPost(category, slug);
+  const { categorySlug, blogSlug } = await params;
+  const postArray = await fetchBlogPost(categorySlug, blogSlug);
 
   if (!postArray || postArray.length === 0) return <NotFoundPage />;
 
@@ -18,17 +18,3 @@ const BlogPostPage = async ({
 };
 
 export default BlogPostPage;
-
-// // ✅ And here's your static params builder
-// export async function generateStaticParams() {
-//   const res = await fetch(
-//     `${process.env.STRAPI_URL}/api/blogs?fields[0]=slug&populate[category][fields][0]=slug`
-//   );
-//   const data = await res.json();
-
-//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   return data.data.map((post: any) => ({
-//     category: post.attributes.category.data.attributes.slug,
-//     slug: post.attributes.slug,
-//   }));
-// }
