@@ -24,16 +24,14 @@ const colourStyle = [
 ] as const;
 
 const getStyle = () => {
-  // const randomCardStyle =
-  //   cardStyles[Math.floor(Math.random() * cardStyles.length)];
-  const randomCardStyle = cardStyles[0]; // For now, we are using only the first style
+  const randomCardStyle =
+    cardStyles[Math.floor(Math.random() * cardStyles.length)];
   return `${randomCardStyle}`;
 };
 
 const getColour = () => {
   const randomColourStyle =
-    // colourStyle[Math.floor(Math.random() * colourStyle.length)];
-    colourStyle[0]; // For now, we are using only the first colour
+    colourStyle[Math.floor(Math.random() * colourStyle.length)];
   return randomColourStyle;
 };
 
@@ -49,13 +47,10 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
 
   // Helper function to shuffle an array
   const shuffleArray = <T,>(array: T[]): T[] => {
-    return (
-      array
-        .map((item) => ({ item, sort: Math.random() }))
-        // .map((item) => ({ item, sort: Math.random() * 100 }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ item }) => item)
-    );
+    return array
+      .map((item) => ({ item, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ item }) => item);
   };
 
   // Combine all cards into one array
