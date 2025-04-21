@@ -21,7 +21,7 @@ export const fetchCountry = async (
     "populate[deepInfo][populate]": "image",
   }).toString();
   // const url = `http://localhost:1337/api/countries?filters[slug][$eq]=${countryName}&populate[quickFacts]=*&populate[deepInfo][populate]=image`;
-  const url = `${process.env.STRAPI_URL}/countries?${query}`;
+  const url = `${process.env.STRAPI_URL}/api/countries?${query}`;
 
   try {
     // const res = await fetch(url, { next: { revalidate: 604800 } }); // its cached for a week
@@ -145,7 +145,7 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
 export const fetchCountriesWithContinents = async (): Promise<
   Destination[] | null
 > => {
-  const url = `${process.env.STRAPI_URL}/countries?fields[0]=name&fields[1]=continent`;
+  const url = `${process.env.STRAPI_URL}/api/countries?fields[0]=name&fields[1]=continent`;
   try {
     // const res = await fetch(url, { next: { revalidate: 604800 } }); // its cached for a week
     const res = await fetch(url, {
