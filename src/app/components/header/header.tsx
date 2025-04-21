@@ -8,9 +8,9 @@ import { Destination, GroupedCountries } from "@/api/types";
 import s from "./header.module.scss";
 
 // Dynamically import BurgerMenu (only loaded when needed, on mobile)
-// const BurgerMenu = dynamic(() => import("./burger-menu/burger-menu"), {
-//   ssr: false,
-// });
+const BurgerMenu = dynamic(() => import("./burger-menu/burger-menu"), {
+  ssr: false,
+});
 // Dynamically import Menu (only loaded when needed, on desktop)
 const Menu = dynamic(() => import("./menu/menu"), {
   ssr: false,
@@ -39,7 +39,7 @@ const Header: FC<{ destinations: Destination[] | null }> = ({
         alt="The Jet Lag Chronicles Logo"
         loading="lazy"
       />
-      {/* <BurgerMenu destinations={groupedByContinent} /> */}
+      <BurgerMenu destinations={groupedByContinent} />
       <Menu destinations={groupedByContinent} />
     </header>
   );
