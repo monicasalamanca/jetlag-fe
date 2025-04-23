@@ -11,22 +11,25 @@ import {
 import ReactMarkdown from "react-markdown";
 import { Post } from "@/api/types";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
-// import LikeButton from "@/app/components/blog-like-button/blog-like-button";
+import LikeButton from "@/app/components/blog-like-button/blog-like-button";
 
 import s from "./blog-content.module.scss";
 
-// function useTrackPostView(slug: string) {
-//   useEffect(() => {
-//     if (!slug) return;
+function useTrackPostView(blogId: number) {
+  useEffect(() => {
+    if (!blogId) return;
 
-//     fetch(`/api/blogs/${slug}/view`, {
-//       method: "POST",
-//     });
-//   }, [slug]);
-// }
+    // fetch(`/api/blogs/${blogId}/view`, {
+    //   method: "POST",
+    // });
+    fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blogs/${blogId}/view`, {
+      method: "POST",
+    });
+  }, [blogId]);
+}
 
 const BlogContent: FC<{ post: Post }> = ({ post }) => {
-  // useTrackPostView(post.slug);
+  useTrackPostView(post.id);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
   const [shareText, setShareText] = useState("");
@@ -83,13 +86,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
           <FontAwesomeIcon icon={faClock} className={s.icon} />
           <p>8 min read</p>
         </div>
-        {/* {post.likes === 0 && (
-          <div className={s.blogDetail}>
-            <FontAwesomeIcon icon={faHeart} className={s.icon} />
-            <p>{`${post.likes} likes`}</p>
-          </div>
-        )} */}
-        {/* <LikeButton slug={post.slug} initialLikes={post.likes || 0} /> */}
+        <LikeButton blogId={post.id} initialLikes={post.likes || 0} />
       </div>
       <h1>{post.title}</h1>
       <div className={s.socialMedia}>

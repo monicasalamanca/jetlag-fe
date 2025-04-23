@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 4px;
+    color: var(--primary-font-dark);
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    margin-bottom: 0;
+    color: var(--primary-font-dark);
+  }
+}

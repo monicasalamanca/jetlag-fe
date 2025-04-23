@@ -63,12 +63,13 @@ export const fetchCountry = async (
   }
 };
 
-// Fetch a blog post based on the category and the slug
+// Fetch a blog post based on the country and the slug
 export const fetchBlogPost = async (
   category: string,
   slug: string
 ): Promise<Post[] | null> => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[category][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[country][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
+  console.log("process.env.STRAPI_URL", process.env.STRAPI_URL);
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {

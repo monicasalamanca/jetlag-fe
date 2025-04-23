@@ -24,6 +24,8 @@ export async function POST(req: NextRequest) {
       }
     );
 
+    console.log("res", res.json());
+
     const data = await res.json();
     const blog = data.data?.[0];
     if (!blog)

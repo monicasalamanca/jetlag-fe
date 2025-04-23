@@ -1,33 +1,38 @@
 "use client";
 
 import { useState } from "react";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import s from "./blog-like-button.module.scss";
 
 type LikeButtonProps = {
-  slug: string;
+  blogId: number;
   initialLikes: number;
 };
 
-export default function LikeButton({ slug, initialLikes }: LikeButtonProps) {
+export default function LikeButton({ blogId, initialLikes }: LikeButtonProps) {
   const [likes, setLikes] = useState(initialLikes);
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleLike = async () => {
-    if (liked || loading) return; // prevent double likes
+    if (loading) return;
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/blogs/${slug}/like`, {
-        method: "POST",
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blogs/${blogId}/like`,
+        {
+          method: "POST",
+        }
+      );
 
       const data = await res.json();
-      if (data.likes !== undefined) {
-        setLikes(data.likes);
-        setLiked(true);
-      }
+      setLikes(data.likes);
+      setLiked(true);
     } catch (err) {
-      console.error("Failed to like post", err);
+      console.error("Failed to like post:", err);
     } finally {
       setLoading(false);
     }
@@ -36,10 +41,11 @@ export default function LikeButton({ slug, initialLikes }: LikeButtonProps) {
   return (
     <button
       onClick={handleLike}
-      className="text-sm mt-4 px-3 py-1 border rounded hover:bg-pink-100 disabled:opacity-50"
+      className={s.container}
       disabled={liked || loading}
     >
-      ❤️ {likes} {liked ? "Liked" : "Like"}
+      <FontAwesomeIcon icon={faHeart} className={s.icon} />
+      <p>{likes}</p>
     </button>
   );
 }
