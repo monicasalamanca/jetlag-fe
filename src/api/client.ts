@@ -2,12 +2,13 @@ import {
   BlogPost,
   BlogPostResponse,
   ContactUsInfo,
-  // CountriesResponse,
   Country,
   Destination,
   Post,
-  Slug,
-  SlugsResponse,
+  SlugWithCategory,
+  SlugWithCountry,
+  SlugsResponseWithCategory,
+  SlugsResponseWithCountry,
 } from "./types";
 
 // gets one country from params
@@ -64,6 +65,7 @@ export const fetchCountry = async (
 };
 
 // Fetch a blog post based on the country and the slug
+// this is used for the blog post page
 export const fetchBlogPost = async (
   category: string,
   slug: string
@@ -103,6 +105,7 @@ export const fetchBlogPost = async (
 };
 
 // gets all the latest blog posts
+// this is used for the home page
 // TODO: as it gets bigger limit to 3 or 4 posts only
 export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
   // const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&pagination[page]=1&pagination[pageSize]=3&populate[images]=*&populate[category]=*`;
@@ -199,10 +202,12 @@ export const postContactUs = async (data: ContactUsInfo): Promise<boolean> => {
   }
 };
 
-// fetch all the blog slugs
+// fetch all the blog slugs from a country
 // this is used to generate the sitemap
-export const fetchAllBlogSlugs = async (): Promise<Slug[] | null> => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?fields[0]=slug&fields[1]=updatedAt&populate[category][fields][0]=slug`;
+export const fetchAllBlogSlugsFromCountries = async (): Promise<
+  SlugWithCountry[] | null
+> => {
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[country][id][$notNull]=true&fields[0]=slug&fields[1]=updatedAt&populate[country][fields][0]=slug`;
 
   try {
     const res = await fetch(url, {
@@ -214,21 +219,67 @@ export const fetchAllBlogSlugs = async (): Promise<Slug[] | null> => {
     });
 
     if (!res.ok) {
-      console.error("Failed to fetch all blog slugs: ", res.statusText);
+      console.error(
+        "Failed to fetch all blog slugs taht belong to a country: ",
+        res.statusText
+      );
       return null;
     }
 
     const data = await res.json();
 
-    return data.data.map((item: SlugsResponse) => ({
+    return data.data.map((item: SlugsResponseWithCountry) => ({
       id: item.id,
       slug: item.attributes.slug,
       updatedAt: item.attributes.updatedAt,
-      categoryType: item.attributes.category.data.attributes.type,
+      countrySlug: item.attributes.country.data.attributes.slug,
+    }));
+  } catch (error) {
+    console.error(
+      "Error fetching all blog slugs that belong to a country: ",
+      error
+    );
+    return null;
+  }
+};
+
+// fetch all the blog slugs from a category
+// this is used to generate the sitemap
+export const fetchAllBlogSlugsFromCategory = async (): Promise<
+  SlugWithCategory[] | null
+> => {
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[category][id][$notNull]=true&fields[0]=slug&fields[1]=updatedAt&populate[category][fields][0]=slug`;
+
+  try {
+    const res = await fetch(url, {
+      // cache: "no-store",
+      next: { revalidate: 3600 },
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    });
+
+    if (!res.ok) {
+      console.error(
+        "Failed to fetch all blog slugs that belong to a country: ",
+        res.statusText
+      );
+      return null;
+    }
+
+    const data = await res.json();
+
+    return data.data.map((item: SlugsResponseWithCategory) => ({
+      id: item.id,
+      slug: item.attributes.slug,
+      updatedAt: item.attributes.updatedAt,
       categorySlug: item.attributes.category.data.attributes.slug,
     }));
   } catch (error) {
-    console.error("Error fetching all blog slugs: ", error);
+    console.error(
+      "Error fetching all blog slugs that belong to a category: ",
+      error
+    );
     return null;
   }
 };

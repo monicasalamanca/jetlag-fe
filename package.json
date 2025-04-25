@@ -34,5 +34,12 @@
     "prettier": "^3.5.3",
     "sass": "^1.84.0",
     "typescript": "^5"
+  },
+  "author": {
+    "name": "Monica Salamanca"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
   }
 }
