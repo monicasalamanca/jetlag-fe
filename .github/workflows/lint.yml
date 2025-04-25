@@ -20,14 +20,23 @@ jobs:
           node-version: 22.15.0
           cache: "pnpm"
 
-      - name: Install pnpm
+      - name: Cache pnpm store
         run: npm install -g pnpm
 
-      - name: Install dependencies
-        run: pnpm i
+      - name: Install dependencies with pnpm
+        run: pnpm install
+
+      - name: Approve Builds
+        run: pnpm approve-builds @parcel/watcher
+
+      - name: Approve Builds
+        run: pnpm approve-builds sharp
+
+      - name: Approve Builds
+        run: pnpm approve-builds unrs-resolver
 
       - name: Run ESLint
-        run: pnpm lint
+        run: pnpm run lint
 
       - name: Run Prettier check
-        run: pnpm format:check
+        run: pnpm run format:check
