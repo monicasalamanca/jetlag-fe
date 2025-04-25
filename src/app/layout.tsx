@@ -51,7 +51,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <GoogleAnalytics gaId="G-E04G0053EJ" />
-        {/* <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} /> */}
         <HeaderWrapper />
         {children}
         <Footer />
