@@ -14,7 +14,7 @@ import {
 // gets one country from params
 // this is used for the country page
 export const fetchCountry = async (
-  countryName: string
+  countryName: string,
 ): Promise<Country[] | null> => {
   const query = new URLSearchParams({
     "filters[slug][$eq]": countryName,
@@ -68,7 +68,7 @@ export const fetchCountry = async (
 // this is used for the blog post page
 export const fetchBlogPost = async (
   category: string,
-  slug: string
+  slug: string,
 ): Promise<Post[] | null> => {
   const url = `${process.env.STRAPI_URL}/api/blogs?filters[country][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
   console.log("process.env.STRAPI_URL", process.env.STRAPI_URL);
@@ -221,7 +221,7 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
     if (!res.ok) {
       console.error(
         "Failed to fetch all blog slugs taht belong to a country: ",
-        res.statusText
+        res.statusText,
       );
       return null;
     }
@@ -237,7 +237,7 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
   } catch (error) {
     console.error(
       "Error fetching all blog slugs that belong to a country: ",
-      error
+      error,
     );
     return null;
   }
@@ -262,7 +262,7 @@ export const fetchAllBlogSlugsFromCategory = async (): Promise<
     if (!res.ok) {
       console.error(
         "Failed to fetch all blog slugs that belong to a country: ",
-        res.statusText
+        res.statusText,
       );
       return null;
     }
@@ -278,7 +278,7 @@ export const fetchAllBlogSlugsFromCategory = async (): Promise<
   } catch (error) {
     console.error(
       "Error fetching all blog slugs that belong to a category: ",
-      error
+      error,
     );
     return null;
   }
