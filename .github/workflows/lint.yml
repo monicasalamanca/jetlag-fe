@@ -24,10 +24,10 @@ jobs:
         run: npm install -g pnpm
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm i
 
       - name: Run ESLint
-        run: pnpm run lint
+        run: pnpm lint
 
       - name: Run Prettier check
-        run: pnpm run format:check
+        run: pnpm format:check
