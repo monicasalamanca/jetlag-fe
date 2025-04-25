@@ -17,23 +17,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 22
+          node-version: 22.15.0
           cache: "pnpm"
 
-      - name: Cache pnpm store
-        run: npm install -g pnpm
+      - name: Install pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
 
       - name: Install dependencies with pnpm
         run: pnpm install
-
-      - name: Approve Builds
-        run: pnpm approve-builds @parcel/watcher
-
-      - name: Approve Builds
-        run: pnpm approve-builds sharp
-
-      - name: Approve Builds
-        run: pnpm approve-builds unrs-resolver
 
       - name: Run ESLint
         run: pnpm run lint
