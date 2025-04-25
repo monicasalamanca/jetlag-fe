@@ -1,15 +1,10 @@
-// export const revalidate = 86400; // 👈 Ensures ISR is enabled for the entire page
-
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Roboto } from "next/font/google";
 import HeaderWrapper from "@/components/headerWrapper/headerWrapper";
 import Footer from "@/components/footer/footer";
-import Script from "next/script";
-import { AnalyticsProvider } from "providers";
-// import { AnalyticsProvider } from "@/app/providers";
 
 import "./globals.css";
-import { Suspense } from "react";
 
 const roboto = Roboto({
   adjustFontFallback: false,
@@ -27,7 +22,7 @@ export const metadata: Metadata = {
     title: "The Jet Lag Chronicles",
     description: "A curated collection of travel experiences and tips.",
     url: "https://jetlag-fe.vercel.app/",
-    siteName: "My Travel Blog",
+    siteName: "thejetlagchronicles.com",
     images: [
       {
         url: "https://jetlag-fe.vercel.app/default-og.jpg",
@@ -55,24 +50,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
-      page_path: window.location.pathname,
-    });
-  `}
-        </Script>
-
-        <Suspense fallback={null}>
-          <AnalyticsProvider />
-        </Suspense>
+        <GoogleAnalytics gaId="G-E04G0053EJ" />
+        {/* <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} /> */}
         <HeaderWrapper />
         {children}
         <Footer />

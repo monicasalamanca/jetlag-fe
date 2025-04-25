@@ -2,12 +2,16 @@ export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 
-import { fetchAllBlogSlugs } from "@/api/client";
-import { Slug } from "@/api/types";
+import {
+  fetchAllBlogSlugsFromCountries,
+  fetchAllBlogSlugsFromCategory,
+} from "@/api/client";
+import { SlugWithCategory, SlugWithCountry } from "@/api/types";
 
 export async function GET() {
   try {
-    const posts = await fetchAllBlogSlugs();
+    const postsFromCountries = await fetchAllBlogSlugsFromCountries();
+    const postsFromCategories = await fetchAllBlogSlugsFromCategory();
 
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com/";
@@ -18,26 +22,41 @@ export async function GET() {
 <url>
   <loc>${baseUrl}/${path}</loc>
   <lastmod>${new Date().toISOString()}</lastmod>
-</url>`
+</url>`,
       )
       .join("");
 
-    const dynamicRoutes =
-      posts &&
-      posts
-        .map(
-          (post: Slug) => `
+    const dynamicCountryRoutes =
+      (postsFromCountries &&
+        postsFromCountries
+          .map(
+            (post: SlugWithCountry) => `
       <url>
-        <loc>${baseUrl}/${post.categorySlug}/${post.slug}</loc>
+        <loc>${baseUrl}/${post.countrySlug}/${post.slug}</loc>
         <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
-      </url>`
-        )
-        .join("");
+      </url>`,
+          )
+          .join("")) ||
+      "";
+
+    const dynamicCategoryRoutes =
+      (postsFromCategories &&
+        postsFromCategories
+          .map(
+            (post: SlugWithCategory) => `
+        <url>
+          <loc>${baseUrl}/${post.categorySlug}/${post.slug}</loc>
+          <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
+        </url>`,
+          )
+          .join("")) ||
+      "";
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
         <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
           ${staticRoutes}
-          ${dynamicRoutes}
+          ${dynamicCountryRoutes}
+          ${dynamicCategoryRoutes}
         </urlset>`;
 
     return new NextResponse(sitemap, {
@@ -51,7 +70,7 @@ export async function GET() {
 
     return NextResponse.json(
       { error: "Failed to generate sitemap" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

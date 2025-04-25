@@ -25,7 +25,7 @@ export default function LikeButton({ blogId, initialLikes }: LikeButtonProps) {
         `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blogs/${blogId}/like`,
         {
           method: "POST",
-        }
+        },
       );
 
       const data = await res.json();

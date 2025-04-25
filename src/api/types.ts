@@ -146,7 +146,30 @@ export type ContactUsInfo = {
   message: string;
 };
 
-export type SlugsResponse = {
+export type SlugsResponseWithCountry = {
+  id: number;
+  attributes: {
+    slug: string;
+    updatedAt: string;
+    country: {
+      data: {
+        id: number;
+        attributes: {
+          slug: string;
+        };
+      };
+    };
+  };
+};
+
+export type SlugWithCountry = {
+  id: number;
+  slug: string;
+  updatedAt: string;
+  countrySlug: string;
+};
+
+export type SlugsResponseWithCategory = {
   id: number;
   attributes: {
     slug: string;
@@ -156,17 +179,15 @@ export type SlugsResponse = {
         id: number;
         attributes: {
           slug: string;
-          type: string;
         };
       };
     };
   };
 };
 
-export type Slug = {
+export type SlugWithCategory = {
   id: number;
   slug: string;
   updatedAt: string;
-  categoryType: string;
   categorySlug: string;
 };

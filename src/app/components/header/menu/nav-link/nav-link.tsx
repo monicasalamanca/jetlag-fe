@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTrackClick } from "@/app/hooks/useTrackClicks";
+import { trackEvent } from "@/utils/analytics";
 
 import s from "./nav-link.module.scss";
 
@@ -23,17 +23,25 @@ const NavLink: FC<NavLinkProps> = ({
   const pathname = usePathname();
   const isActive = pathname === href;
 
-  const trackClick = useTrackClick({
-    category: "header",
-    label: `${name} link`,
-  });
+  // const trackClick = useTrackClick({
+  //   category: "header",
+  //   label: `${name} link`,
+  // });
+
+  const handleClick = () => {
+    trackEvent({
+      action: "click",
+      category: "header",
+      label: `${name} link`,
+    });
+  };
 
   return (
     <Link
       aria-label={`Navigate to ${name}`}
       href={href}
       className={`${isActive ? s.activeLink : s.defaultLink}`}
-      onClick={trackClick}
+      onClick={handleClick}
     >
       {children}
     </Link>
