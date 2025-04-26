@@ -62,6 +62,20 @@ export type Country = {
   deepInfo: DeepInfo[];
 };
 
+export type CountryName = {
+  id: number;
+  attributes: {
+    slug: string;
+    updatedAt: string;
+  };
+};
+
+export type CountryNameFormatted = {
+  id: number;
+  slug: string;
+  updatedAt: string;
+};
+
 export type QuickFact = {
   id: number;
   label: string;
@@ -169,25 +183,16 @@ export type SlugWithCountry = {
   countrySlug: string;
 };
 
-export type SlugsResponseWithCategory = {
+export type SlugsResponseForLifestyle = {
   id: number;
   attributes: {
     slug: string;
     updatedAt: string;
-    category: {
-      data: {
-        id: number;
-        attributes: {
-          slug: string;
-        };
-      };
-    };
   };
 };
 
-export type SlugWithCategory = {
+export type SlugForLifestyle = {
   id: number;
   slug: string;
   updatedAt: string;
-  categorySlug: string;
 };

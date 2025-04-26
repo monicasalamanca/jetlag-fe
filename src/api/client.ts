@@ -3,18 +3,20 @@ import {
   BlogPostResponse,
   ContactUsInfo,
   Country,
+  CountryName,
+  CountryNameFormatted,
   Destination,
   Post,
-  SlugWithCategory,
+  SlugForLifestyle,
   SlugWithCountry,
-  SlugsResponseWithCategory,
+  SlugsResponseForLifestyle,
   SlugsResponseWithCountry,
 } from "./types";
 
 // gets one country from params
 // this is used for the country page
 export const fetchCountry = async (
-  countryName: string,
+  countryName: string
 ): Promise<Country[] | null> => {
   const query = new URLSearchParams({
     "filters[slug][$eq]": countryName,
@@ -68,7 +70,7 @@ export const fetchCountry = async (
 // this is used for the blog post page
 export const fetchBlogPost = async (
   category: string,
-  slug: string,
+  slug: string
 ): Promise<Post[] | null> => {
   const url = `${process.env.STRAPI_URL}/api/blogs?filters[country][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
   console.log("process.env.STRAPI_URL", process.env.STRAPI_URL);
@@ -221,7 +223,7 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
     if (!res.ok) {
       console.error(
         "Failed to fetch all blog slugs taht belong to a country: ",
-        res.statusText,
+        res.statusText
       );
       return null;
     }
@@ -237,18 +239,48 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
   } catch (error) {
     console.error(
       "Error fetching all blog slugs that belong to a country: ",
-      error,
+      error
     );
     return null;
   }
 };
 
-// fetch all the blog slugs from a category
+// fetch all teh countries
 // this is used to generate the sitemap
-export const fetchAllBlogSlugsFromCategory = async (): Promise<
-  SlugWithCategory[] | null
+export const fetchAllCountries = async (): Promise<
+  CountryNameFormatted[] | null
 > => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[category][id][$notNull]=true&fields[0]=slug&fields[1]=updatedAt&populate[category][fields][0]=slug`;
+  const url = `${process.env.STRAPI_URL}/api/countries?fields[0]=slug&fields[1]=updatedAt`;
+  try {
+    const res = await fetch(url, {
+      // cache: "no-store",
+      next: { revalidate: 3600 },
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    });
+    if (!res.ok) {
+      console.error("Failed to fetch the list of countries: ", res.statusText);
+      return null;
+    }
+    const data = await res.json();
+    return data.data.map((item: CountryName) => ({
+      id: item.id,
+      slug: item.attributes.slug,
+      updatedAt: item.attributes.updatedAt,
+    }));
+  } catch (error) {
+    console.error("Error fetching the list of countries: ", error);
+    return null;
+  }
+};
+
+// fetch all the blog slugs where lifestyle is true
+// this is used to generate the sitemap
+export const fetchAllBlogSlugsFromLifestyle = async (): Promise<
+  SlugForLifestyle[] | null
+> => {
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[lifestyle][$eq]=true&fields[0]=slug&fields[1]=updatedAt`;
 
   try {
     const res = await fetch(url, {
@@ -262,23 +294,22 @@ export const fetchAllBlogSlugsFromCategory = async (): Promise<
     if (!res.ok) {
       console.error(
         "Failed to fetch all blog slugs that belong to a country: ",
-        res.statusText,
+        res.statusText
       );
       return null;
     }
 
     const data = await res.json();
 
-    return data.data.map((item: SlugsResponseWithCategory) => ({
+    return data.data.map((item: SlugsResponseForLifestyle) => ({
       id: item.id,
       slug: item.attributes.slug,
       updatedAt: item.attributes.updatedAt,
-      categorySlug: item.attributes.category.data.attributes.slug,
     }));
   } catch (error) {
     console.error(
       "Error fetching all blog slugs that belong to a category: ",
-      error,
+      error
     );
     return null;
   }
