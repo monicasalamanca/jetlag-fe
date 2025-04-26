@@ -28,7 +28,7 @@ export async function GET() {
 <url>
   <loc>${baseUrl}/${path}</loc>
   <lastmod>${new Date().toISOString()}</lastmod>
-</url>`
+</url>`,
       )
       .join("");
 
@@ -42,7 +42,7 @@ export async function GET() {
         <lastmod>${new Date(country.updatedAt).toISOString()}</lastmod>
         <priority>1.0</priority>
         <changefreq>monthly</changefreq>
-      </url>`
+      </url>`,
           )
           .join("")) ||
       "";
@@ -57,7 +57,7 @@ export async function GET() {
         <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
         <priority>0.8</priority>
         <changefreq>weekly</changefreq>
-      </url>`
+      </url>`,
           )
           .join("")) ||
       "";
@@ -79,7 +79,7 @@ export async function GET() {
           <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
           <priority>0.8</priority>
           <changefreq>weekly</changefreq>
-        </url>`
+        </url>`,
           )
           .join("")) ||
       "";
@@ -104,7 +104,7 @@ export async function GET() {
 
     return NextResponse.json(
       { error: "Failed to generate sitemap" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
