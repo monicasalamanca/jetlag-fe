@@ -4,14 +4,20 @@ import { NextResponse } from "next/server";
 
 import {
   fetchAllBlogSlugsFromCountries,
-  fetchAllBlogSlugsFromCategory,
+  fetchAllCountries,
+  fetchAllBlogSlugsFromLifestyle,
 } from "@/api/client";
-import { SlugWithCategory, SlugWithCountry } from "@/api/types";
+import {
+  CountryNameFormatted,
+  SlugForLifestyle,
+  SlugWithCountry,
+} from "@/api/types";
 
 export async function GET() {
   try {
     const postsFromCountries = await fetchAllBlogSlugsFromCountries();
-    const postsFromCategories = await fetchAllBlogSlugsFromCategory();
+    const countries = await fetchAllCountries();
+    const postsFromCategories = await fetchAllBlogSlugsFromLifestyle();
 
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com/";
@@ -27,6 +33,21 @@ export async function GET() {
       .join("");
 
     const dynamicCountryRoutes =
+      (countries &&
+        countries
+          .map(
+            (country: CountryNameFormatted) => `
+      <url>
+        <loc>${baseUrl}/${country.slug}</loc>
+        <lastmod>${new Date(country.updatedAt).toISOString()}</lastmod>
+        <priority>1.0</priority>
+        <changefreq>monthly</changefreq>
+      </url>`,
+          )
+          .join("")) ||
+      "";
+
+    const dynamicCountryBlogsRoutes =
       (postsFromCountries &&
         postsFromCountries
           .map(
@@ -34,19 +55,30 @@ export async function GET() {
       <url>
         <loc>${baseUrl}/${post.countrySlug}/${post.slug}</loc>
         <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
       </url>`,
           )
           .join("")) ||
       "";
 
-    const dynamicCategoryRoutes =
+    const lifestyleRoute = `<url>
+      <loc>${baseUrl}/lifestyle</loc>
+      <lastmod>${new Date().toISOString()}</lastmod>
+      <priority>1.0</priority>
+      <changefreq>monthly</changefreq>
+    </url>`;
+
+    const dynamicLifestyleRoutes =
       (postsFromCategories &&
         postsFromCategories
           .map(
-            (post: SlugWithCategory) => `
+            (post: SlugForLifestyle) => `
         <url>
-          <loc>${baseUrl}/${post.categorySlug}/${post.slug}</loc>
+          <loc>${baseUrl}/lifestyle/${post.slug}</loc>
           <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
+          <priority>0.8</priority>
+          <changefreq>weekly</changefreq>
         </url>`,
           )
           .join("")) ||
@@ -55,8 +87,10 @@ export async function GET() {
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
         <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
           ${staticRoutes}
+          ${lifestyleRoute}
           ${dynamicCountryRoutes}
-          ${dynamicCategoryRoutes}
+          ${dynamicCountryBlogsRoutes}
+          ${dynamicLifestyleRoutes}
         </urlset>`;
 
     return new NextResponse(sitemap, {
