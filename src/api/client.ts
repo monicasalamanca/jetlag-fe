@@ -66,6 +66,41 @@ export const fetchCountry = async (
   }
 };
 
+// Fetch a blog post from lifestyle
+// this is used for the lifestyle page
+export const fetchBlogPostFromLifestyle = async (
+  slug: string,
+): Promise<Post[] | null> => {
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[lifestyle]=true&filters[slug][$eq]=${slug}`;
+  try {
+    // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
+    const res = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    });
+    if (!res.ok) {
+      console.error("Failed to fetch a blog post: ", res.statusText);
+      return null;
+    }
+    const data = await res.json();
+    return data.data.map((item: BlogPostResponse) => ({
+      id: item.id,
+      title: item.attributes.title,
+      slug: item.attributes.slug,
+      description: item.attributes.description,
+      content: item.attributes.content,
+      publishedAt: item.attributes.publishedAt,
+      likes: item.attributes.likes,
+      views: item.attributes.views,
+    }));
+  } catch (error) {
+    console.error("Error fetching a blog post: ", error);
+    return null;
+  }
+};
+
 // Fetch a blog post based on the country and the slug
 // this is used for the blog post page
 export const fetchBlogPost = async (
@@ -73,7 +108,6 @@ export const fetchBlogPost = async (
   slug: string,
 ): Promise<Post[] | null> => {
   const url = `${process.env.STRAPI_URL}/api/blogs?filters[country][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
-  console.log("process.env.STRAPI_URL", process.env.STRAPI_URL);
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {

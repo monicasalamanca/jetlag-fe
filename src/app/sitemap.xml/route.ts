@@ -17,7 +17,7 @@ export async function GET() {
   try {
     const postsFromCountries = await fetchAllBlogSlugsFromCountries();
     const countries = await fetchAllCountries();
-    const postsFromCategories = await fetchAllBlogSlugsFromLifestyle();
+    const postsFromLifestyle = await fetchAllBlogSlugsFromLifestyle();
 
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com/";
@@ -70,8 +70,8 @@ export async function GET() {
     </url>`;
 
     const dynamicLifestyleRoutes =
-      (postsFromCategories &&
-        postsFromCategories
+      (postsFromLifestyle &&
+        postsFromLifestyle
           .map(
             (post: SlugForLifestyle) => `
         <url>
