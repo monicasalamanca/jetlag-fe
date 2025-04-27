@@ -16,7 +16,7 @@ import {
 // gets one country from params
 // this is used for the country page
 export const fetchCountry = async (
-  countryName: string,
+  countryName: string
 ): Promise<Country[] | null> => {
   const query = new URLSearchParams({
     "filters[slug][$eq]": countryName,
@@ -66,14 +66,48 @@ export const fetchCountry = async (
   }
 };
 
+// Fetch a blog post from lifestyle
+// this is used for the lifestyle page
+export const fetchBlogPostFromLifestyle = async (
+  slug: string
+): Promise<Post[] | null> => {
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[lifestyle]=true&filters[slug][$eq]=${slug}`;
+  try {
+    // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
+    const res = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    });
+    if (!res.ok) {
+      console.error("Failed to fetch a blog post: ", res.statusText);
+      return null;
+    }
+    const data = await res.json();
+    return data.data.map((item: BlogPostResponse) => ({
+      id: item.id,
+      title: item.attributes.title,
+      slug: item.attributes.slug,
+      description: item.attributes.description,
+      content: item.attributes.content,
+      publishedAt: item.attributes.publishedAt,
+      likes: item.attributes.likes,
+      views: item.attributes.views,
+    }));
+  } catch (error) {
+    console.error("Error fetching a blog post: ", error);
+    return null;
+  }
+};
+
 // Fetch a blog post based on the country and the slug
 // this is used for the blog post page
 export const fetchBlogPost = async (
   category: string,
-  slug: string,
+  slug: string
 ): Promise<Post[] | null> => {
   const url = `${process.env.STRAPI_URL}/api/blogs?filters[country][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
-  console.log("process.env.STRAPI_URL", process.env.STRAPI_URL);
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
@@ -223,7 +257,7 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
     if (!res.ok) {
       console.error(
         "Failed to fetch all blog slugs taht belong to a country: ",
-        res.statusText,
+        res.statusText
       );
       return null;
     }
@@ -239,7 +273,7 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
   } catch (error) {
     console.error(
       "Error fetching all blog slugs that belong to a country: ",
-      error,
+      error
     );
     return null;
   }
@@ -294,7 +328,7 @@ export const fetchAllBlogSlugsFromLifestyle = async (): Promise<
     if (!res.ok) {
       console.error(
         "Failed to fetch all blog slugs that belong to a country: ",
-        res.statusText,
+        res.statusText
       );
       return null;
     }
@@ -309,7 +343,7 @@ export const fetchAllBlogSlugsFromLifestyle = async (): Promise<
   } catch (error) {
     console.error(
       "Error fetching all blog slugs that belong to a category: ",
-      error,
+      error
     );
     return null;
   }

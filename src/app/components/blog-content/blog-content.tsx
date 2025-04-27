@@ -8,10 +8,10 @@ import {
   faLinkedin,
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
-import ReactMarkdown from "react-markdown";
 import { Post } from "@/api/types";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import LikeButton from "@/app/components/blog-like-button/blog-like-button";
+import { CustomMarkdownRenderer } from "@/app/utils/markdownRenderer";
 
 import s from "./blog-content.module.scss";
 
@@ -19,9 +19,6 @@ function useTrackPostView(blogId: number) {
   useEffect(() => {
     if (!blogId) return;
 
-    // fetch(`/api/blogs/${blogId}/view`, {
-    //   method: "POST",
-    // });
     fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blogs/${blogId}/view`, {
       method: "POST",
     });
@@ -130,7 +127,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
         )}
       </div>
       <section className={s.postContent}>
-        <ReactMarkdown>{post.content}</ReactMarkdown>
+        <CustomMarkdownRenderer markdown={post.content} />
       </section>
     </div>
   );
