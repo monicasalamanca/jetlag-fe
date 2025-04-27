@@ -215,7 +215,7 @@ export const fetchCountriesWithContinents = async (): Promise<
 
 // post a contact us message
 export const postContactUs = async (data: ContactUsInfo): Promise<boolean> => {
-  const url = `${process.env.STRAPI_URL}/api/contact-messages`;
+  const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/contact-messages`;
 
   try {
     const res = await fetch(url, {

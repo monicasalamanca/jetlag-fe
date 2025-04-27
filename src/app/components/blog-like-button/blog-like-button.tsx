@@ -15,6 +15,7 @@ export default function LikeButton({ blogId, initialLikes }: LikeButtonProps) {
   const [likes, setLikes] = useState(initialLikes);
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleLike = async () => {
     if (loading) return;
@@ -31,6 +32,11 @@ export default function LikeButton({ blogId, initialLikes }: LikeButtonProps) {
       const data = await res.json();
       setLikes(data.likes);
       setLiked(true);
+      setIsAnimating(true);
+
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 300);
     } catch (err) {
       console.error("Failed to like post:", err);
     } finally {
@@ -41,7 +47,7 @@ export default function LikeButton({ blogId, initialLikes }: LikeButtonProps) {
   return (
     <button
       onClick={handleLike}
-      className={s.container}
+      className={`${s.container} ${isAnimating ? s.animate : ""}`}
       disabled={liked || loading}
     >
       <FontAwesomeIcon icon={faHeart} className={s.icon} />
