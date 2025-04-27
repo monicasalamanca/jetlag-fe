@@ -11,6 +11,16 @@
     cursor: pointer;
     margin-right: 4px;
     color: var(--primary-font-dark);
+    transition:
+      transform 0.3s ease,
+      color 0.3s ease;
+  }
+
+  &.animate {
+    .icon {
+      transform: scale(1.25);
+      color: red;
+    }
   }
 
   p {
