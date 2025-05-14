@@ -73,63 +73,65 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
   };
 
   return (
-    <div className={s.container}>
-      <div className={s.blogInfo}>
-        <div className={s.blogDetail}>
-          <FontAwesomeIcon icon={faCalendar} className={s.icon} />
-          <p>{formatDate(post.publishedAt)}</p>
+    <article className={s.container}>
+      <header>
+        <div className={s.blogInfo}>
+          <div className={s.blogDetail}>
+            <FontAwesomeIcon icon={faCalendar} className={s.icon} />
+            <p>{formatDate(post.publishedAt)}</p>
+          </div>
+          <div className={s.blogDetail}>
+            <FontAwesomeIcon icon={faClock} className={s.icon} />
+            <p>8 min read</p>
+          </div>
+          <LikeButton blogId={post.id} initialLikes={post.likes || 0} />
         </div>
-        <div className={s.blogDetail}>
-          <FontAwesomeIcon icon={faClock} className={s.icon} />
-          <p>8 min read</p>
-        </div>
-        <LikeButton blogId={post.id} initialLikes={post.likes || 0} />
-      </div>
-      <h1>{post.title}</h1>
-      <div className={s.socialMedia}>
-        {isMobileDevice ? (
-          <button
-            aria-label="share"
-            onClick={handleShare}
-            className={s.mobileShareButton}
-          >
-            <FontAwesomeIcon icon={faShareNodes} className={s.icon} />
-          </button>
-        ) : (
-          <>
-            <a
-              aria-label="Go to the jet lag chronicles twitter account"
-              target="_blank"
-              rel="noopener noreferrer"
-              href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`}
+        <h1>{post.title}</h1>
+        <div className={s.socialMedia}>
+          {isMobileDevice ? (
+            <button
+              aria-label="share"
+              onClick={handleShare}
+              className={s.mobileShareButton}
             >
-              <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
-            </a>
-            <a
-              aria-label="Go to the jet lag chronicles facebook account"
-              target="_blank"
-              rel="noopener noreferrer"
-              href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
-            >
-              <FontAwesomeIcon icon={faFacebook} className={s.icon} />
-            </a>
-            <a
-              aria-label="Go to the jet lag chronicles linkedin account"
-              target="_blank"
-              rel="noopener noreferrer"
-              href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}`}
-            >
-              <FontAwesomeIcon icon={faLinkedin} className={s.icon} />
-            </a>
+              <FontAwesomeIcon icon={faShareNodes} className={s.icon} />
+            </button>
+          ) : (
+            <>
+              <a
+                aria-label="Go to the jet lag chronicles twitter account"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`}
+              >
+                <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
+              </a>
+              <a
+                aria-label="Go to the jet lag chronicles facebook account"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
+              >
+                <FontAwesomeIcon icon={faFacebook} className={s.icon} />
+              </a>
+              <a
+                aria-label="Go to the jet lag chronicles linkedin account"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}`}
+              >
+                <FontAwesomeIcon icon={faLinkedin} className={s.icon} />
+              </a>
 
-            {/* <FontAwesomeIcon icon={faHeart} className={s.icon} /> */}
-          </>
-        )}
-      </div>
+              {/* <FontAwesomeIcon icon={faHeart} className={s.icon} /> */}
+            </>
+          )}
+        </div>
+      </header>
       <section className={s.postContent}>
         <CustomMarkdownRenderer markdown={post.content} />
       </section>
-    </div>
+    </article>
   );
 };
 

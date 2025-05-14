@@ -2,6 +2,7 @@ import { marked } from "marked";
 import Image from "next/image";
 import Link from "next/link";
 import React, { JSX } from "react";
+import CTAComponent from "@/components/cta-component/cta-component";
 
 // A custom renderer that collects full inline tokens
 marked.use({
@@ -20,6 +21,22 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
   markdown,
 }) => {
   const tokens = marked.lexer(markdown);
+
+  // 📌 CTA pattern matcher
+  const CTA_REGEX = /\[CTA\s+(.*?)\]/; // Matches [CTA type="..." title="..." link="..." button="..." icon="..."]
+
+  // 🔧 Extract key="value" pairs from the string
+  const parseAttributes = (attrString: string): Record<string, string> => {
+    const attrs: Record<string, string> = {};
+    const matches = attrString.match(/(\w+)="([^"]+)"/g) || [];
+
+    matches.forEach((pair) => {
+      const [key, value] = pair.split("=");
+      attrs[key] = value.replace(/"/g, "");
+    });
+
+    return attrs;
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderInline = (token: any, idx: number) => {
@@ -59,6 +76,22 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
         const Tag = `h${token.depth}` as keyof JSX.IntrinsicElements;
         return <Tag key={idx}>{token.text}</Tag>;
       case "paragraph":
+        const text = token.text;
+        if (text && CTA_REGEX.test(text)) {
+          const match = text.match(CTA_REGEX);
+          if (match) {
+            const attrs = parseAttributes(match[1]);
+            return (
+              <CTAComponent
+                key={idx}
+                type={attrs.type}
+                title={attrs.title}
+                link={attrs.link}
+                buttonText={attrs.button}
+              />
+            );
+          }
+        }
         return <p key={idx}>{token.tokens?.map(renderInline) ?? token.text}</p>;
       case "list":
         return (
