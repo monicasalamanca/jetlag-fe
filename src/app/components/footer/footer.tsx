@@ -4,6 +4,7 @@ import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import ContactForm from "../contact-form/contact-form";
 
 import s from "./footer.module.scss";
+import SubscribeForm from "../subscribe-form/subscribe-form";
 
 const Footer = () => {
   return (
@@ -20,6 +21,9 @@ const Footer = () => {
           <div className={s.itemList}>
             <h3>Quick Links</h3>
             <ul>
+              <li>
+                <SubscribeForm buttonName="Subscribe" showIcon={false} />
+              </li>
               <li>
                 <Link
                   aria-label="Read more about us"
