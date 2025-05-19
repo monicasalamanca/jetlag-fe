@@ -44,5 +44,8 @@
   },
   "author": {
     "name": "Monica Salamanca"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

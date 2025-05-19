@@ -1,0 +1,167 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
+import Modal from "../modal/modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEnvelope,
+  faMessage,
+  faPaperPlane,
+} from "@fortawesome/free-regular-svg-icons";
+import Link from "next/link";
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+
+const Success = dynamic(() => import("./success/success"), {
+  loading: () => <p>Loading...</p>,
+});
+
+const Error = dynamic(() => import("./error/error"), {
+  loading: () => <p>Loading...</p>,
+});
+
+import s from "./subscribe-form.module.scss";
+
+const SubscribeForm: FC<{
+  buttonName: string;
+  showIcon: boolean;
+}> = ({ buttonName, showIcon }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [isFormOpen, setIsFormOpen] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setForm({ ...form, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // const res = await postContactUs(form);
+
+    const res = await fetch("/api/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: "submit",
+        email: form.email,
+        botField: (event.target as HTMLFormElement)["bot-field"].value,
+      }),
+    });
+
+    if (res) {
+      setIsFormOpen(false);
+      setIsSuccess(true);
+      setIsError(false);
+      setTimeout(() => {
+        setIsOpen(false);
+        setIsFormOpen(true);
+        setIsSuccess(false);
+        setIsError(false);
+      }, 5000);
+    } else {
+      setIsFormOpen(false);
+      setIsSuccess(false);
+      setIsError(true);
+    }
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+    setIsFormOpen(true);
+    setIsSuccess(false);
+    setIsError(false);
+  };
+
+  const tryAgain = () => {
+    setIsOpen(true);
+    setIsFormOpen(true);
+    setIsSuccess(false);
+    setIsError(false);
+  };
+
+  return (
+    <>
+      <button
+        aria-label="subscribe to our newsletter"
+        onClick={() => setIsOpen(true)}
+        className={s.contactUsButton}
+      >
+        {buttonName}
+        {showIcon && <FontAwesomeIcon icon={faMessage} className={s.icon} />}
+      </button>
+
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        {isFormOpen && (
+          <>
+            <h2 className={s.contactFormTitle}>
+              Talk to Us (We Swear, We’re Nice!)
+            </h2>
+            <p className={s.contactFormDescription}>
+              Whether you have feedback, a question, or a million-dollar idea
+              (seriously, we’re listening), shoot us a message. We’ll get back
+              to you faster than you can say
+            </p>
+            <form onSubmit={handleSubmit} className={s.formContainer}>
+              <div className={s.inputWrapper}>
+                <input
+                  id="bot-field"
+                  type="hidden"
+                  name="name"
+                  maxLength={120}
+                  minLength={10}
+                  placeholder="Your Awesome Name"
+                  onChange={handleChange}
+                  className={s.formInput}
+                  required
+                />
+              </div>
+              <div className={s.inputWrapper}>
+                <input
+                  type="email"
+                  name="email"
+                  maxLength={120}
+                  minLength={10}
+                  placeholder="Your Email Address"
+                  onChange={handleChange}
+                  className={s.formInput}
+                  required
+                />
+                <FontAwesomeIcon icon={faEnvelope} className={s.icon} />
+              </div>
+              <button
+                arial-label="submit"
+                type="submit"
+                className={s.submitButton}
+              >
+                Send Message
+                <FontAwesomeIcon icon={faPaperPlane} className={s.icon} />
+              </button>
+              <footer className={s.footer}>
+                <p>Or reach us on social media</p>
+                <div className={s.socialMediaWrapper}>
+                  <Link
+                    aria-label="Go to the jet lag chronicles twitter account"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://twitter.com/the_jetlaggers"
+                    className={s.link}
+                  >
+                    <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
+                  </Link>
+                </div>
+              </footer>
+            </form>
+          </>
+        )}
+        {isSuccess && <Success closeModal={closeModal} />}
+        {isError && <Error tryAgain={tryAgain} />}
+      </Modal>
+    </>
+  );
+};
+
+export default SubscribeForm;
