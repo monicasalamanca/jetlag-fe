@@ -1,0 +1,21 @@
+.container {
+  width: 768px;
+  margin: 0 auto;
+  padding: 24px;
+  color: var(--black);
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--primary-font-dark);
+  }
+
+  p {
+    color: var(--primary-font-dark);
+    text-align: center;
+    font-size: 14px;
+    padding: 0 22px;
+    margin: 16px 0 24px;
+  }
+}
