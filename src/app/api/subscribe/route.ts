@@ -25,7 +25,7 @@ export async function POST(req: Request) {
         email,
         tags: [tag],
       }),
-    }
+    },
   );
 
   const data = await res.json();
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
   if (!res.ok) {
     return NextResponse.json(
       { error: data.message || "Subscription failed" },
-      { status: res.status }
+      { status: res.status },
     );
   }
 
