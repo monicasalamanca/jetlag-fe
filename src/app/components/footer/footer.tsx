@@ -88,6 +88,7 @@ const Footer = () => {
           </div>
         </div>
         <div className={s.footerLinks}>
+          <SubscribeForm buttonName="Subscribe" showIcon={false} />
           <ContactForm buttonName="Contact Us" showIcon />
           <div className={s.year}>© 2025 The Jet Lag Chronicles</div>
           <div className={s.links}>
