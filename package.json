@@ -46,6 +46,6 @@
     "name": "Monica Salamanca"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "22.15.0"
   }
 }
