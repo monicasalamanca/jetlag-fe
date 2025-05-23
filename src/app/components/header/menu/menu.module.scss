@@ -23,23 +23,26 @@
         font-weight: 400;
         color: var(--primary-font-dark);
         cursor: pointer;
+        padding: 8px 0;
+        border-radius: 6px;
+
+        .icon {
+          margin-left: 4px;
+          margin-bottom: 1px;
+          font-size: 12px;
+        }
 
         &:hover {
-          // color: var(--color-blue);
-          font-weight: 500;
-
-          .destinations {
-            display: flex;
-          }
+          color: var(--color-blue);
         }
       }
 
       .destinations {
-        display: none;
         flex-direction: column;
         position: absolute;
-        left: -80%;
-        width: 300px;
+        right: 0;
+        min-width: 250px;
+        width: auto;
         height: auto;
         border-top: 1px solid rgb(233, 231, 231);
         padding: 16px;
@@ -49,6 +52,9 @@
         z-index: 1;
 
         .destinationsWrapper {
+          display: flex;
+          flex-direction: column;
+
           ul {
             list-style-type: none;
             padding: 0;
@@ -64,13 +70,9 @@
           }
 
           .continent {
-            width: calc(50% - 8px);
+            width: 100%;
             padding-top: 16px;
             margin-right: 8px;
-
-            &:not(:last-child) {
-              margin-bottom: 24px;
-            }
 
             .wrapper {
               h3 {
@@ -85,9 +87,8 @@
               }
 
               ul {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: repeat(2, 1fr);
+                display: flex;
+                flex-direction: column;
                 gap: 8px;
                 padding: 16px 0;
 
@@ -102,23 +103,6 @@
                   }
                 }
               }
-            }
-          }
-        }
-
-        .popularDestinations {
-          display: flex;
-          justify-content: flex-end;
-          width: 100%;
-          border-top: 1px solid rgb(231, 231, 231);
-          padding-top: 16px;
-
-          a.viewAll {
-            color: var(--color-blue);
-            font-weight: 500;
-
-            .icon {
-              margin-left: 4px;
             }
           }
         }
