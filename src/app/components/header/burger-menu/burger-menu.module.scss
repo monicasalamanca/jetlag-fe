@@ -1,6 +1,6 @@
 .noScroll {
-  height: calc(100vh);
-  scrollbar-width: none;
+  overflow: hidden !important;
+  height: 100vh;
 }
 
 .burgerMenu {
@@ -21,6 +21,17 @@
     width: 30px;
     padding: 0;
     z-index: 10;
+
+    .icon {
+      color: var(--black);
+      font-size: 32px;
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s linear;
+      transform: rotate(0deg);
+      transform-origin: 0.5px;
+      transition: transform 0.3s ease-in-out;
+    }
   }
 
   .burgerIcon {
@@ -43,85 +54,118 @@
     }
   }
 
-  .menu {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
+  .backdrop {
+    position: fixed;
+    top: 0;
     left: 0;
-    background-color: var(--light-gray-bg);
+    right: 0;
+    bottom: 0;
+    display: none;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
     color: var(--primary-font-dark);
-    top: 78px;
-    z-index: 1;
-    overflow-y: auto;
+    backdrop-filter: blur(0);
+    transition: backdrop-filter 0.3s ease;
+    z-index: 50;
+    overflow-y: hidden;
 
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    &.open {
+      backdrop-filter: blur(4px);
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      margin: 0 auto;
-      padding: 32px 16px;
-      gap: 20px;
+    }
 
-      li {
-        display: flex;
+    .menuWrapper {
+      background-color: var(--white);
+      height: 100%;
+      width: 310px;
+      position: fixed;
+      top: 0;
+      transform: translateX(150%);
+      transition: transform 8s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: -2px 0 16px rgba(0, 0, 0, 0.08);
+      z-index: 100;
+
+      &.open {
+        transform: translateX(0);
+      }
+
+      .closeMenu {
         width: 100%;
+        display: flex;
+        justify-content: flex-end;
 
-        &.destinationSection {
-          flex-direction: column;
+        button.closeBtn {
+          background-color: transparent;
+          padding: 0;
+          margin: 0;
+          border: 0;
+          color: var(--black);
 
-          .destinationsWrapper {
-            display: flex;
-            flex-direction: row;
+          .icon {
+            font-size: 32px;
+            margin: 0;
+            padding: 0;
           }
         }
+      }
 
-        .testMenu {
-          border: 1px solid red;
-        }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 auto;
+        padding: 24px 16px 32px 24px;
+        gap: 20px;
 
-        svg {
-          margin-right: 8px;
-        }
+        li {
+          display: flex;
+          width: 100%;
 
-        a,
-        h2 {
-          font-size: 16px;
-          line-height: 18px;
-          font-weight: 400;
-        }
+          &.destinationSection {
+            flex-direction: column;
 
-        .continent {
-          margin-left: 24px;
-          padding-top: 16px;
-
-          &:not(:last-child) {
-            margin-bottom: 24px;
+            .destinationsWrapper {
+              display: flex;
+              flex-direction: row;
+            }
           }
 
-          .wrapper {
-            padding-left: 16px;
-            border-left: 3px solid var(--color-blue);
+          svg {
+            margin-right: 8px;
+          }
 
-            h3 {
-              font-size: 18px;
-              line-height: 18px;
-              font-weight: 600;
-              color: var(--color-blue);
-            }
+          a,
+          h2 {
+            font-size: 16px;
+            line-height: 18px;
+            font-weight: 400;
+          }
 
-            ul {
-              display: grid;
-              grid-template-columns: repeat(2, 1fr);
-              grid-template-rows: repeat(2, 1fr);
-              gap: 16px;
-              padding: 24px 0;
-            }
+          .continent {
+            margin-left: 24px;
+            padding-top: 16px;
 
-            a.viewMore {
-              color: var(--color-blue);
+            .wrapper {
+              h3 {
+                font-size: 16px;
+                line-height: 18px;
+                font-weight: 600;
+                color: var(--color-blue);
+              }
+
+              ul {
+                display: flex;
+                padding: 16px;
+              }
+
+              a.viewMore {
+                color: var(--color-blue);
+              }
             }
           }
         }
