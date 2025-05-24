@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, JSX, useEffect, useMemo, useState } from "react";
+import { FC, useMemo } from "react";
 // import CountryInfo from "../country-info/country-info";
 // import TravelResources from "../travel-resources/travel-resources";
 import Hero from "../hero/hero";
@@ -35,12 +35,7 @@ const getColour = () => {
   return randomColourStyle;
 };
 
-// The type for your card objects:
-type Card = { type: string; id: number | string; component: JSX.Element };
-
 const CountryLander: FC<{ country: Country }> = ({ country }) => {
-  const [firstHalf, setFirstHalf] = useState<Card[]>([]);
-  const [secondHalf, setSecondHalf] = useState<Card[]>([]);
   if (!country) {
     return <div>Loading...</div>; // Or a custom error/loading component
   }
@@ -135,20 +130,9 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
     });
   }, [allCards, cardRepetitionCount]);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    // Split the filteredCards array into two parts
-    const firstHalfTemp = filteredCards.slice(
-      0,
-      Math.ceil(filteredCards.length / 2),
-    );
-    const secondHalfTemp = filteredCards.slice(
-      Math.ceil(filteredCards.length / 2),
-    );
-
-    setFirstHalf(firstHalfTemp);
-    setSecondHalf(secondHalfTemp);
-  }, [filteredCards]);
+  // Split the filteredCards array into two parts
+  const firstHalf = filteredCards.slice(0, Math.ceil(filteredCards.length / 2));
+  const secondHalf = filteredCards.slice(Math.ceil(filteredCards.length / 2));
 
   return (
     <main className={s.container}>
