@@ -89,12 +89,17 @@
 
       &.open {
         transform: translateX(0);
+        overflow-y: auto;
       }
 
       .closeMenu {
         width: 100%;
         display: flex;
         justify-content: flex-end;
+        padding-top: 24px;
+        position: sticky;
+        top: 0;
+        background-color: var(--white);
 
         button.closeBtn {
           background-color: transparent;
@@ -119,7 +124,7 @@
         flex-direction: column;
         justify-content: center;
         margin: 0 auto;
-        padding: 24px 16px 32px 24px;
+        padding: 0 16px 32px 24px;
         gap: 20px;
 
         li {
