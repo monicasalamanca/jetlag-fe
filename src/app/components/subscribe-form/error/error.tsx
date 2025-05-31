@@ -14,15 +14,13 @@ const Error = ({ tryAgain }: { tryAgain: () => void }) => {
         <FontAwesomeIcon icon={faExclamation} className={s.icon} />
       </div>
       <h2 className={s.title}>
-        Oops! your message <br></br>tripped into a wire
+        Grounded Before Takeoff
         <FontAwesomeIcon icon={faCircle} className={s.circleIcon} />
       </h2>
-      <p className={s.headline}>
-        Something went wrong, and your message is currently wandering the void.
-        Maybe try again? Or bribe your WiFi with a kind word?
-      </p>
+      <p className={s.headline}>Well, that didn&apos;t fly.</p>
       <p className={s.description}>
-        Don&apos;t worry, even the best messages stumble sometimes!
+        Something glitched while signing you up. Refresh, retry, or offer your
+        router a peace offering (maybe a cookie?).
       </p>
       <button
         aria-label="try again"

@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import NavLink from "./nav-link/nav-link";
+import SubscribeForm from "../../subscribe-form/subscribe-form";
 import { GroupedCountries } from "@/api/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
@@ -91,6 +92,13 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
           <NavLink href="/about-us" name="about us">
             About Us
           </NavLink>
+        </li>
+        <li className={s.subscribe}>
+          <SubscribeForm
+            buttonName="Subscribe"
+            showIcon={false}
+            trackEventName="desktopMenu"
+          />
         </li>
       </ul>
     </nav>

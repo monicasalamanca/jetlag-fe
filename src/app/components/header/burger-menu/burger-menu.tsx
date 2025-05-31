@@ -3,25 +3,20 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
+  faEnvelope,
   faGlobe,
   faHouse,
-  // faLocationDot,
+  faInbox,
   faPaperPlane,
-  // faNewspaper,
   faUsers,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  // faFacebook,
-  // faInstagram,
-  // faPinterest,
-  faXTwitter,
-  // faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { GroupedCountries } from "@/api/types";
+import ContactForm from "@/components/contact-form/contact-form";
+import SubscribeForm from "../../subscribe-form/subscribe-form";
 
 import s from "./burger-menu.module.scss";
-import ContactForm from "@/components/contact-form/contact-form";
 
 const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
   destinations,
@@ -53,9 +48,6 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
         className={s.burgerButton}
         onClick={toggleMenu}
       >
-        {/* <span className={`${s.burgerIcon} ${s.srOnly}`}>Open menu</span>
-        <span className={s.burgerIcon}></span>
-        <span className={s.burgerIcon}></span> */}
         <FontAwesomeIcon icon={faBars} className={s.icon} />
       </button>
       {isOpen && (
@@ -132,7 +124,16 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                   About Us
                 </Link>
               </li>
+              <li className={s.subscribe}>
+                <FontAwesomeIcon icon={faInbox} className={s.icon} />
+                <SubscribeForm
+                  buttonName="Subscribe"
+                  showIcon={false}
+                  trackEventName="mobileMenu"
+                />
+              </li>
               <li>
+                <FontAwesomeIcon icon={faEnvelope} className={s.icon} />
                 <ContactForm buttonName="Contact Us" showIcon={false} />
               </li>
             </ul>

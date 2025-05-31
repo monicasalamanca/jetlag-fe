@@ -21,11 +21,13 @@ const Error = dynamic(() => import("./error/error"), {
 });
 
 import s from "./subscribe-form.module.scss";
+import { trackEvent } from "@/app/utils/analytics";
 
 const SubscribeForm: FC<{
   buttonName: string;
   showIcon: boolean;
-}> = ({ buttonName, showIcon }) => {
+  trackEventName?: string;
+}> = ({ buttonName, showIcon, trackEventName }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [isFormOpen, setIsFormOpen] = useState(true);
@@ -40,7 +42,6 @@ const SubscribeForm: FC<{
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // const res = await postContactUs(form);
 
     const res = await fetch("/api/subscribe", {
       method: "POST",
@@ -50,6 +51,12 @@ const SubscribeForm: FC<{
         email: form.email,
         botField: (event.target as HTMLFormElement)["bot-field"].value,
       }),
+    });
+
+    trackEvent({
+      action: "click",
+      category: "subscribe from",
+      label: `${trackEventName}`,
     });
 
     if (res) {
@@ -98,12 +105,12 @@ const SubscribeForm: FC<{
         {isFormOpen && (
           <>
             <h2 className={s.contactFormTitle}>
-              Talk to Us (We Swear, We’re Nice!)
+              Subscribe for the Cool Stuff Only
             </h2>
             <p className={s.contactFormDescription}>
-              Whether you have feedback, a question, or a million-dollar idea
-              (seriously, we’re listening), shoot us a message. We’ll get back
-              to you faster than you can say
+              Think of it like a travel mixtape: curated tips, digital freebies,
+              and zero nonsense. Just pop in your email and we’ll take it from
+              there.
             </p>
             <form onSubmit={handleSubmit} className={s.formContainer}>
               <div className={s.inputWrapper}>
@@ -137,7 +144,7 @@ const SubscribeForm: FC<{
                 type="submit"
                 className={s.submitButton}
               >
-                Send Message
+                Unlock Freebies
                 <FontAwesomeIcon icon={faPaperPlane} className={s.icon} />
               </button>
               <footer className={s.footer}>
