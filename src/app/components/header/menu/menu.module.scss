@@ -17,6 +17,17 @@
     gap: 16px;
 
     li {
+      &.subscribe {
+        border-radius: 16px;
+        padding: 6px 16px;
+        background-color: var(--color-blue);
+        button {
+          font-size: 16px;
+          opacity: 1;
+          color: var(--white);
+        }
+      }
+
       .menuItem {
         position: relative;
         font-size: 16px;

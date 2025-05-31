@@ -15,12 +15,13 @@ const Success = ({ closeModal }: { closeModal: () => void }) => {
         <FontAwesomeIcon icon={faCheck} className={s.icon} />
       </div>
       <h2 className={s.title}>
-        Boom! Your message is <br></br>out in the wild
+        Almost there!
         <FontAwesomeIcon icon={faRocket} className={s.rocketIcon} />
       </h2>
       <p className={s.headline}>
-        The internet gods have accepted your offering, and we&apos;ll get back
-        to you faster than a cat spotting an open box
+        We just sent you an email to confirm your subscription. Hit that button,
+        and we&apos;ll send the good stuff straight to your inbox — free guides,
+        tips, and sunshine.
         <FontAwesomeIcon icon={faCat} className={s.catIcon} />
       </p>
       <p className={s.description}>

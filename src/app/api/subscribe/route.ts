@@ -1,8 +1,6 @@
-// app/api/subscribe/route.ts
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  console.log("Loaded secret:", process.env.KIT_API_KEY?.slice(0, 6));
   const { email, botField, tag = "JetLagNewsletter" } = await req.json();
 
   if (botField) {

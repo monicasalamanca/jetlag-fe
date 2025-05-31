@@ -22,7 +22,11 @@ const Footer = () => {
             <h3>Quick Links</h3>
             <ul>
               <li>
-                <SubscribeForm buttonName="Subscribe" showIcon={false} />
+                <SubscribeForm
+                  buttonName="Subscribe"
+                  showIcon={false}
+                  trackEventName="footerDesktopMenu"
+                />
               </li>
               <li>
                 <Link
@@ -88,7 +92,11 @@ const Footer = () => {
           </div>
         </div>
         <div className={s.footerLinks}>
-          <SubscribeForm buttonName="Subscribe" showIcon={false} />
+          <SubscribeForm
+            buttonName="Subscribe"
+            showIcon={false}
+            trackEventName="footerMobileMenu"
+          />
           <ContactForm buttonName="Contact Us" showIcon />
           <div className={s.year}>© 2025 The Jet Lag Chronicles</div>
           <div className={s.links}>
