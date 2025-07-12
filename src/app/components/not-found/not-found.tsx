@@ -1,11 +1,11 @@
 import Image from "next/image";
-
-import s from "./not-found.module.scss";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCompass, faHouse } from "@fortawesome/free-solid-svg-icons";
 
-const NotFound = () => {
+import s from "./not-found.module.scss";
+
+const NotFoundContent = () => {
   return (
     <div className={s.container}>
       <Image
@@ -42,4 +42,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default NotFoundContent;

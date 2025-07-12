@@ -1,13 +1,11 @@
 .container {
-  // border: 1px solid red;
-  // width: 640px;
-  // height: 427px;
   max-width: 640px;
   width: 100%;
   padding: 32px 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 0 auto;
 
   .image {
     width: 100%;

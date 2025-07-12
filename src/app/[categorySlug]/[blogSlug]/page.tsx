@@ -1,6 +1,6 @@
 import { fetchBlogPost } from "@/api/client";
+import { notFound } from "next/navigation";
 import BlogContent from "@/components/blog-content/blog-content";
-import NotFoundPage from "../../not-found";
 
 const BlogPostPage = async ({
   params,
@@ -10,7 +10,7 @@ const BlogPostPage = async ({
   const { categorySlug, blogSlug } = await params;
   const postArray = await fetchBlogPost(categorySlug, blogSlug);
 
-  if (!postArray || postArray.length === 0) return <NotFoundPage />;
+  if (!postArray || postArray.length === 0) return notFound();
 
   const post = postArray[0];
 
