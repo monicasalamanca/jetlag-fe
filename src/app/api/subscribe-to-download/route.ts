@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     if (!formId) {
       return NextResponse.json(
         { error: "Form ID not configured" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     if (!apiKey) {
       return NextResponse.json(
         { error: "API key not configured" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
   } catch (error) {
     return NextResponse.json(
       { error: `Internal server error: ${error}` },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
