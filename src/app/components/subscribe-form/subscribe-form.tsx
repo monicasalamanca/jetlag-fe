@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import { trackEvent } from "@/app/utils/analytics";
 
 const Success = dynamic(() => import("./success/success"), {
   loading: () => <p>Loading...</p>,
@@ -21,7 +22,6 @@ const Error = dynamic(() => import("./error/error"), {
 });
 
 import s from "./subscribe-form.module.scss";
-import { trackEvent } from "@/app/utils/analytics";
 
 const SubscribeForm: FC<{
   buttonName: string;
@@ -29,7 +29,7 @@ const SubscribeForm: FC<{
   trackEventName?: string;
 }> = ({ buttonName, showIcon, trackEventName }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({ email: "" });
   const [isFormOpen, setIsFormOpen] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -59,7 +59,7 @@ const SubscribeForm: FC<{
       label: `${trackEventName}`,
     });
 
-    if (res) {
+    if (res.status === 200) {
       setIsFormOpen(false);
       setIsSuccess(true);
       setIsError(false);

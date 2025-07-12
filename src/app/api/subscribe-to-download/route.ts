@@ -12,7 +12,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing email" }, { status: 400 });
     }
 
-    const formId = process.env.KIT_SUBSCRIBE_FORM_ID;
+    const formId = process.env.KIT_THAILAND_GUIDE_FORM_ID;
     if (!formId) {
       return NextResponse.json(
         { error: "Form ID not configured" },

@@ -3,6 +3,7 @@
 import { FC, useMemo } from "react";
 // import CountryInfo from "../country-info/country-info";
 // import TravelResources from "../travel-resources/travel-resources";
+import { notFound } from "next/navigation";
 import Hero from "../hero/hero";
 import QuickFactCard from "../country-facts-card/card/card";
 import InfoCard from "../country-facts-card/info-card/info-card";
@@ -37,7 +38,7 @@ const getColour = () => {
 
 const CountryLander: FC<{ country: Country }> = ({ country }) => {
   if (!country) {
-    return <div>Loading...</div>; // Or a custom error/loading component
+    return notFound();
   }
 
   const { name, tagline, intro, quickFacts, deepInfo } = country;
