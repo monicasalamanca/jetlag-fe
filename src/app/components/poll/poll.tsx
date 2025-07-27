@@ -40,7 +40,7 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
   // Calculate total votes and percentages
   const originalTotalVotes = options.reduce(
     (sum, option) => sum + option.votes,
-    0
+    0,
   );
 
   // If original votes were all zero, we need to add fake votes to all options
@@ -58,7 +58,7 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
 
   const adjustedTotalVotes = optionsWithFakeVotes.reduce(
     (sum, option) => sum + option.votes,
-    0
+    0,
   );
 
   const optionsWithPercentages = optionsWithFakeVotes.map((option) => ({
@@ -86,7 +86,7 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
     try {
       localStorage.setItem(
         `poll_selection_${question.replace(/\s+/g, "_").toLowerCase()}`,
-        JSON.stringify(pollData)
+        JSON.stringify(pollData),
       );
     } catch (error) {
       console.warn("Failed to save poll selection to localStorage:", error);
@@ -95,8 +95,10 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
     // Update the vote count for the selected option
     setUpdatedOptions((prevOptions) =>
       prevOptions.map((option) =>
-        option.id === optionId ? { ...option, votes: option.votes + 1 } : option
-      )
+        option.id === optionId
+          ? { ...option, votes: option.votes + 1 }
+          : option,
+      ),
     );
 
     // Start the transition after a brief moment to show selection
@@ -111,7 +113,7 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
     if (hasVoted || isTransitioning) return;
 
     const currentIndex = updatedOptions.findIndex(
-      (option) => option.id === optionId
+      (option) => option.id === optionId,
     );
 
     switch (event.key) {
@@ -125,7 +127,7 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
         event.preventDefault();
         const nextIndex = (currentIndex + 1) % updatedOptions.length;
         const nextInput = document.getElementById(
-          `option-${updatedOptions[nextIndex].id}`
+          `option-${updatedOptions[nextIndex].id}`,
         ) as HTMLInputElement;
         nextInput?.focus();
         break;
@@ -135,7 +137,7 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
         const prevIndex =
           currentIndex === 0 ? updatedOptions.length - 1 : currentIndex - 1;
         const prevInput = document.getElementById(
-          `option-${updatedOptions[prevIndex].id}`
+          `option-${updatedOptions[prevIndex].id}`,
         ) as HTMLInputElement;
         prevInput?.focus();
         break;
@@ -231,7 +233,7 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
                       const pollData = JSON.parse(storedPollData);
                       console.log(
                         "Poll data available for API submission:",
-                        pollData
+                        pollData,
                       );
                       // Pass poll data to CTA click handler
                       cta.onCtaClick?.(pollData);

@@ -147,7 +147,7 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
                     // 3. Navigate to landing page with poll context
                   } else {
                     console.warn(
-                      "No poll data available - user may not have voted"
+                      "No poll data available - user may not have voted",
                     );
                   }
                   // Handle download or navigation to guide
