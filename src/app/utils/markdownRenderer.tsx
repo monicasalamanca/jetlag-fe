@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { JSX } from "react";
 import CTAComponent from "@/components/cta-component/cta-component";
+import Poll from "@/app/components/poll/poll";
 
 // A custom renderer that collects full inline tokens
 marked.use({
@@ -15,15 +16,38 @@ marked.use({
 
 interface CustomMarkdownRendererProps {
   markdown: string;
+  poll?: {
+    title: string;
+    question: string;
+    options: Array<{ id: number; label: string; votes: number }>;
+    onVote?: (optionId: number) => void;
+    cta?: {
+      title: string;
+      description: string;
+      highlightText?: string;
+      buttonText: string;
+      buttonIcon?: string;
+      onCtaClick?: (pollData?: {
+        optionId: number;
+        timestamp: number;
+        pollQuestion: string;
+        optionText: string;
+      }) => void;
+    };
+  };
 }
 
 export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
   markdown,
+  poll,
 }) => {
   const tokens = marked.lexer(markdown);
 
   // 📌 CTA pattern matcher
   const CTA_REGEX = /\[CTA\s+(.*?)\]/; // Matches [CTA type="..." title="..." link="..." button="..." icon="..."]
+
+  // 📌 Poll pattern matcher - simple marker
+  const POLL_REGEX = /\[POLL\]/; // Matches simple [POLL] marker
 
   // 🔧 Extract key="value" pairs from the string
   const parseAttributes = (attrString: string): Record<string, string> => {
@@ -77,6 +101,7 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
         return <Tag key={idx}>{token.text}</Tag>;
       case "paragraph":
         const text = token.text;
+        // Check for CTA pattern
         if (text && CTA_REGEX.test(text)) {
           const match = text.match(CTA_REGEX);
           if (match) {
@@ -92,6 +117,46 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
             );
           }
         }
+
+        // Check for Poll pattern
+        if (text && POLL_REGEX.test(text) && poll) {
+          console.log("Rendering poll:", poll.options);
+          return (
+            <Poll
+              key={idx}
+              title="Quick Poll"
+              question={poll.question}
+              options={poll.options}
+              onVote={(optionId) => {
+                console.log("User voted for:", optionId);
+                // Here you can integrate with your analytics or backend
+              }}
+              cta={{
+                title: "Scams dodged. Now let's talk rent.",
+                description:
+                  "Discover what it really costs to live in Phuket, Koh Samui, Phangan & more — rent, food, transport, and pro tips included.",
+                highlightText: "",
+                buttonText: "Download the Island Cost Guide",
+                onCtaClick: (pollData) => {
+                  console.log("CTA clicked: Download Thailand scam guide");
+                  if (pollData) {
+                    console.log("Poll data for API submission:", pollData);
+                    // Here you can:
+                    // 1. Open email capture modal/form
+                    // 2. Store poll data for later API submission
+                    // 3. Navigate to landing page with poll context
+                  } else {
+                    console.warn(
+                      "No poll data available - user may not have voted"
+                    );
+                  }
+                  // Handle download or navigation to guide
+                },
+              }}
+            />
+          );
+        }
+
         return <p key={idx}>{token.tokens?.map(renderInline) ?? token.text}</p>;
       case "list":
         return (

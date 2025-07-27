@@ -104,6 +104,35 @@ export type Category = {
     };
   };
 };
+
+export type PollOption = {
+  id: number;
+  label: string;
+  votes: number;
+};
+
+export type Poll = {
+  id: number;
+  title: string;
+  question: string;
+  options: PollOption[];
+};
+
+export type PollResponse = {
+  data: {
+    id: number;
+    attributes: {
+      question: string;
+      slug: string;
+      status: string;
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+      options: PollOption[];
+    };
+  };
+};
+
 export type BlogPostResponse = {
   id: number;
   attributes: {
@@ -118,6 +147,7 @@ export type BlogPostResponse = {
     publishedAt: string;
     images?: Images;
     category?: Category;
+    poll?: PollResponse;
   };
 };
 
@@ -142,6 +172,7 @@ export type Post = {
   publishedAt: string;
   likes: number;
   views: number;
+  poll?: Poll;
 };
 
 export type Destination = {
