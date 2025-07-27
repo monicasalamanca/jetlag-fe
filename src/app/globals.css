@@ -13,6 +13,23 @@
 
   --background-light: #f6faff;
 
+  /* Primary Colors */
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
+
+  /* Background Colors */
+  --gray-50: #f9f9f9;
+  --blue-50: #eff6ff;
+  --gray-200: #e5e5e5;
+  --gray-300: #d1d5db;
+
+  /* Text Colors */
+  --dark: #1a1a1a;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #666666;
+
   /* Fonts */
   --font-primary: "Roboto", "Helvetica Neue", "Helvetica", arial, sans-serif;
   --font-secondary: "Open Sans", sans-serif;

@@ -72,6 +72,8 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
     }
   };
 
+  console.log("Post content:", post);
+
   return (
     <article className={s.container}>
       <header>
@@ -129,7 +131,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
         </div>
       </header>
       <section className={s.postContent}>
-        <CustomMarkdownRenderer markdown={post.content} />
+        <CustomMarkdownRenderer markdown={post.content} poll={post.poll} />
       </section>
     </article>
   );

@@ -107,7 +107,7 @@ export const fetchBlogPost = async (
   category: string,
   slug: string,
 ): Promise<Post[] | null> => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[country][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate=category`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[country][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate[poll][populate]=options`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
@@ -124,16 +124,31 @@ export const fetchBlogPost = async (
 
     const data = await res.json();
 
-    return data.data.map((item: BlogPostResponse) => ({
-      id: item.id,
-      title: item.attributes.title,
-      slug: item.attributes.slug,
-      description: item.attributes.description,
-      content: item.attributes.content,
-      publishedAt: item.attributes.publishedAt,
-      likes: item.attributes.likes,
-      views: item.attributes.views,
-    }));
+    return data.data.map((item: BlogPostResponse) => {
+      const pollData = item.attributes.poll?.data;
+      return {
+        id: item.id,
+        title: item.attributes.title,
+        slug: item.attributes.slug,
+        description: item.attributes.description,
+        content: item.attributes.content,
+        publishedAt: item.attributes.publishedAt,
+        likes: item.attributes.likes,
+        views: item.attributes.views,
+        poll: pollData
+          ? {
+              id: pollData.id,
+              slug: pollData.attributes.slug,
+              question: pollData.attributes.question,
+              options: pollData.attributes.options.map((option) => ({
+                id: option.id,
+                label: option.label,
+                votes: option.votes,
+              })),
+            }
+          : null,
+      };
+    });
   } catch (error) {
     console.error("Error fetching a blog post: ", error);
     return null;
