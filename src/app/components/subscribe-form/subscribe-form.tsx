@@ -27,7 +27,8 @@ const SubscribeForm: FC<{
   buttonName: string;
   showIcon: boolean;
   trackEventName?: string;
-}> = ({ buttonName, showIcon, trackEventName }) => {
+  pollStyling?: boolean;
+}> = ({ buttonName, showIcon, trackEventName, pollStyling = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState({ email: "" });
   const [isFormOpen, setIsFormOpen] = useState(true);
@@ -95,7 +96,7 @@ const SubscribeForm: FC<{
       <button
         aria-label="subscribe to our newsletter"
         onClick={() => setIsOpen(true)}
-        className={s.contactUsButton}
+        className={pollStyling ? s.downloadGuideButton : s.contactUsButton}
       >
         {buttonName}
         {showIcon && <FontAwesomeIcon icon={faMessage} className={s.icon} />}
@@ -144,8 +145,10 @@ const SubscribeForm: FC<{
                 type="submit"
                 className={s.submitButton}
               >
-                Unlock Freebies
-                <FontAwesomeIcon icon={faPaperPlane} className={s.icon} />
+                {buttonName}
+                {showIcon && (
+                  <FontAwesomeIcon icon={faPaperPlane} className={s.icon} />
+                )}
               </button>
               <footer className={s.footer}>
                 <p>Or reach us on social media</p>

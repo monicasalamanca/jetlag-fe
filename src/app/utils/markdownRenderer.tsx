@@ -17,6 +17,9 @@ marked.use({
 interface CustomMarkdownRendererProps {
   markdown: string;
   poll?: {
+    ctaButtonText: string;
+    ctaDescription: string;
+    ctaTitle: string;
     title: string;
     question: string;
     options: Array<{ id: number; label: string; votes: number }>;
@@ -130,28 +133,9 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
                 console.log("User voted for:", optionId);
                 // Here you can integrate with your analytics or backend
               }}
-              cta={{
-                title: "Scams dodged. Now let's talk rent.",
-                description:
-                  "Discover what it really costs to live in Phuket, Koh Samui, Phangan & more — rent, food, transport, and pro tips included.",
-                highlightText: "",
-                buttonText: "Download the Island Cost Guide",
-                onCtaClick: (pollData) => {
-                  console.log("CTA clicked: Download Thailand scam guide");
-                  if (pollData) {
-                    console.log("Poll data for API submission:", pollData);
-                    // Here you can:
-                    // 1. Open email capture modal/form
-                    // 2. Store poll data for later API submission
-                    // 3. Navigate to landing page with poll context
-                  } else {
-                    console.warn(
-                      "No poll data available - user may not have voted",
-                    );
-                  }
-                  // Handle download or navigation to guide
-                },
-              }}
+              ctaTitle={poll.ctaTitle}
+              ctaDescription={poll.ctaDescription}
+              ctaButtonText={poll.ctaButtonText}
             />
           );
         }

@@ -145,6 +145,9 @@ export const fetchBlogPost = async (
                 label: option.label,
                 votes: option.votes,
               })),
+              ctaTitle: pollData.attributes.ctaTitle,
+              ctaDescription: pollData.attributes.ctaDescription,
+              ctaButtonText: pollData.attributes.ctaButtonText,
             }
           : null,
       };

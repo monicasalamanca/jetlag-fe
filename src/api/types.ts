@@ -116,6 +116,9 @@ export type Poll = {
   title: string;
   question: string;
   options: PollOption[];
+  ctaTitle: string;
+  ctaDescription: string;
+  ctaButtonText: string;
 };
 
 export type PollResponse = {
@@ -129,6 +132,9 @@ export type PollResponse = {
       updatedAt: string;
       publishedAt: string;
       options: PollOption[];
+      ctaTitle: string;
+      ctaDescription: string;
+      ctaButtonText: string;
     };
   };
 };

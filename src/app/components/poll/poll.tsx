@@ -1,6 +1,7 @@
 "use client";
 
 import { FC, useState } from "react";
+import SubscribeForm from "../subscribe-form/subscribe-form";
 import s from "./poll.module.scss";
 
 interface PollOption {
@@ -9,29 +10,27 @@ interface PollOption {
   votes: number;
 }
 
-interface CTAProps {
-  title: string;
-  description: string;
-  highlightText?: string;
-  buttonText: string;
-  buttonIcon?: string;
-  onCtaClick?: (pollData?: {
-    optionId: number;
-    timestamp: number;
-    pollQuestion: string;
-    optionText: string;
-  }) => void;
-}
-
 interface PollProps {
   title: string;
   question: string;
   options: PollOption[];
   onVote?: (optionId: number) => void;
-  cta?: CTAProps;
+  ctaTitle: string;
+  ctaDescription: string;
+  ctaButtonText: string;
+  showCTA?: boolean;
 }
 
-const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
+const Poll: FC<PollProps> = ({
+  title,
+  question,
+  options,
+  onVote,
+  ctaTitle,
+  ctaDescription,
+  ctaButtonText,
+  showCTA = true,
+}) => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [hasVoted, setHasVoted] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -211,42 +210,17 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
         </div>
 
         {/* CTA Footer */}
-        {cta && (
+        {showCTA && (
           <footer className={`${s.ctaFooter} ${s.fadeInUp}`}>
             <div className={s.ctaContent}>
-              <h3 className={s.ctaTitle}>{cta.title}</h3>
-              <p className={s.ctaDescription}>
-                {cta.description}{" "}
-                {cta.highlightText && (
-                  <span className={s.highlight}>{cta.highlightText}</span>
-                )}
-              </p>
-              <button
-                className={s.ctaButton}
-                onClick={() => {
-                  // Retrieve stored poll selection for API submission
-                  const pollKey = `poll_selection_${question.replace(/\s+/g, "_").toLowerCase()}`;
-                  const storedPollData = localStorage.getItem(pollKey);
-
-                  if (storedPollData) {
-                    try {
-                      const pollData = JSON.parse(storedPollData);
-                      // Pass poll data to CTA click handler
-                      cta.onCtaClick?.(pollData);
-                    } catch (error) {
-                      console.warn("Failed to parse stored poll data:", error);
-                      cta.onCtaClick?.();
-                    }
-                  } else {
-                    console.warn("No poll selection found in localStorage");
-                    cta.onCtaClick?.();
-                  }
-                }}
-                aria-label={`${cta.buttonText} button`}
-              >
-                {cta.buttonIcon && `${cta.buttonIcon} `}
-                {cta.buttonText}
-              </button>
+              <h3 className={s.ctaTitle}>{ctaTitle}</h3>
+              <p className={s.ctaDescription}>{ctaDescription} </p>
+              <SubscribeForm
+                buttonName={ctaButtonText}
+                showIcon={false}
+                trackEventName="poll"
+                pollStyling={true}
+              />
             </div>
           </footer>
         )}
