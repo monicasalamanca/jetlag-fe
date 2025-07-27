@@ -153,9 +153,9 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
         aria-live="polite"
       >
         <header className={s.pollHeader}>
-          <h3 className={`${s.title} ${s.fadeInUp}`} id="poll-results-title">
+          <h2 className={`${s.title} ${s.fadeInUp}`} id="poll-results-title">
             Thanks for voting!
-          </h3>
+          </h2>
           <p
             className={`${s.subtitle} ${s.fadeInUp}`}
             aria-describedby="poll-results-title"
@@ -214,7 +214,7 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
         {cta && (
           <footer className={`${s.ctaFooter} ${s.fadeInUp}`}>
             <div className={s.ctaContent}>
-              <h4 className={s.ctaTitle}>{cta.title}</h4>
+              <h3 className={s.ctaTitle}>{cta.title}</h3>
               <p className={s.ctaDescription}>
                 {cta.description}{" "}
                 {cta.highlightText && (
@@ -231,10 +231,6 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
                   if (storedPollData) {
                     try {
                       const pollData = JSON.parse(storedPollData);
-                      console.log(
-                        "Poll data available for API submission:",
-                        pollData,
-                      );
                       // Pass poll data to CTA click handler
                       cta.onCtaClick?.(pollData);
                     } catch (error) {
@@ -266,9 +262,9 @@ const Poll: FC<PollProps> = ({ title, question, options, onVote, cta }) => {
       aria-busy={isTransitioning}
     >
       <header className={s.pollHeader}>
-        <h3 className={s.title} id="poll-title">
+        <h2 className={s.title} id="poll-title">
           {title}
-        </h3>
+        </h2>
         <p className={s.question} id="poll-question">
           {question}
         </p>

@@ -120,7 +120,6 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
 
         // Check for Poll pattern
         if (text && POLL_REGEX.test(text) && poll) {
-          console.log("Rendering poll:", poll.options);
           return (
             <Poll
               key={idx}

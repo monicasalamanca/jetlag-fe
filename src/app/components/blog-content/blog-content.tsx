@@ -72,8 +72,6 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
     }
   };
 
-  console.log("Post content:", post);
-
   return (
     <article className={s.container}>
       <header>
@@ -92,7 +90,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
         <div className={s.socialMedia}>
           {isMobileDevice ? (
             <button
-              aria-label="share"
+              aria-label="Share this article using your device's share menu"
               onClick={handleShare}
               className={s.mobileShareButton}
             >
@@ -101,7 +99,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
           ) : (
             <>
               <a
-                aria-label="Go to the jet lag chronicles twitter account"
+                aria-label="Share this article on Twitter"
                 target="_blank"
                 rel="noopener noreferrer"
                 href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`}
@@ -109,7 +107,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
                 <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
               </a>
               <a
-                aria-label="Go to the jet lag chronicles facebook account"
+                aria-label="Share this article on Facebook"
                 target="_blank"
                 rel="noopener noreferrer"
                 href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
@@ -117,7 +115,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
                 <FontAwesomeIcon icon={faFacebook} className={s.icon} />
               </a>
               <a
-                aria-label="Go to the jet lag chronicles linkedin account"
+                aria-label="Share this article on LinkedIn"
                 target="_blank"
                 rel="noopener noreferrer"
                 href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}`}
