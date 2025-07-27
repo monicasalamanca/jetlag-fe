@@ -43,7 +43,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
     <div className={s.burgerMenu}>
       <button
         type="button"
-        arial-label={isOpen ? "close menu" : "open menu"}
+        aria-label={isOpen ? "close menu" : "open menu"}
         aria-expanded={isOpen}
         className={s.burgerButton}
         onClick={toggleMenu}

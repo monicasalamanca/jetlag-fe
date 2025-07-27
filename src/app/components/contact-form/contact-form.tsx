@@ -166,7 +166,7 @@ const ContactForm: FC<{
                 <FontAwesomeIcon icon={faComment} className={s.icon} />
               </div>
               <button
-                arial-label="submit"
+                aria-label="submit"
                 type="submit"
                 className={s.submitButton}
               >
