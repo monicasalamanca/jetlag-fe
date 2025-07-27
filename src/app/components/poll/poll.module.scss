@@ -351,42 +351,6 @@
   font-weight: 500;
 }
 
-.ctaButton {
-  background: var(--primary);
-  color: var(--white);
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.15);
-
-  &:hover {
-    background: var(--primary-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.25);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  &:focus {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-  }
-
-  @media only screen and (max-width: 768px) {
-    padding: 10px 20px;
-    font-size: 13px;
-  }
-}
-
 @keyframes fillBar {
   0% {
     width: 0%;
