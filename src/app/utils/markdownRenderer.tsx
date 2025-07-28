@@ -122,22 +122,27 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
         }
 
         // Check for Poll pattern
-        if (text && POLL_REGEX.test(text) && poll) {
-          return (
-            <Poll
-              key={idx}
-              title="Quick Poll"
-              question={poll.question}
-              options={poll.options}
-              onVote={(optionId) => {
-                console.log("User voted for:", optionId);
-                // Here you can integrate with your analytics or backend
-              }}
-              ctaTitle={poll.ctaTitle}
-              ctaDescription={poll.ctaDescription}
-              ctaButtonText={poll.ctaButtonText}
-            />
-          );
+        if (text && POLL_REGEX.test(text)) {
+          if (poll) {
+            return (
+              <Poll
+                key={idx}
+                title="Quick Poll"
+                question={poll.question}
+                options={poll.options}
+                onVote={(optionId) => {
+                  console.log("User voted for:", optionId);
+                  // Here you can integrate with your analytics or backend
+                }}
+                ctaTitle={poll.ctaTitle}
+                ctaDescription={poll.ctaDescription}
+                ctaButtonText={poll.ctaButtonText}
+              />
+            );
+          } else {
+            // If no poll data is provided, don't render anything (filter out [POLL] text)
+            return null;
+          }
         }
 
         return <p key={idx}>{token.tokens?.map(renderInline) ?? token.text}</p>;

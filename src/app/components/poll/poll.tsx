@@ -220,6 +220,14 @@ const Poll: FC<PollProps> = ({
                 showIcon={false}
                 trackEventName="poll"
                 pollStyling={true}
+                config={{
+                  apiEndpoint: "/api/subscribe-to-download",
+                  modal: {
+                    title: "Before You Pack Your Bags…",
+                    description:
+                      "Want the real cost of island life in Thailand? We&apos;re talking rent, food, bikes, beachfront vs. budget — all in one free, honest, no-fluff guide. Drop your email and we&apos;ll zip it over faster than a GrabBike in Bangkok.",
+                  },
+                }}
               />
             </div>
           </footer>
