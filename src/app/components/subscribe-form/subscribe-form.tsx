@@ -23,17 +23,45 @@ const Error = dynamic(() => import("./error/error"), {
 
 import s from "./subscribe-form.module.scss";
 
+interface SubscribeFormConfig {
+  apiEndpoint: string;
+  modal: {
+    title: string;
+    description: string;
+  };
+}
+
 const SubscribeForm: FC<{
   buttonName: string;
   showIcon: boolean;
   trackEventName?: string;
   pollStyling?: boolean;
-}> = ({ buttonName, showIcon, trackEventName, pollStyling = false }) => {
+  config?: SubscribeFormConfig;
+}> = ({
+  buttonName,
+  showIcon,
+  trackEventName,
+  pollStyling = false,
+  config,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState({ email: "" });
   const [isFormOpen, setIsFormOpen] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  // Default configuration for regular newsletter subscription
+  const defaultConfig: SubscribeFormConfig = {
+    apiEndpoint: "/api/subscribe",
+    modal: {
+      title: "Subscribe for the Cool Stuff Only",
+      description:
+        "Think of it like a travel mixtape: curated tips, digital freebies, and zero nonsense. Just pop in your email and we'll take it from there.",
+    },
+  };
+
+  // Use provided config or fall back to default
+  const activeConfig = config || defaultConfig;
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -44,7 +72,7 @@ const SubscribeForm: FC<{
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const res = await fetch("/api/subscribe", {
+    const res = await fetch(activeConfig.apiEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -105,13 +133,9 @@ const SubscribeForm: FC<{
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         {isFormOpen && (
           <>
-            <h2 className={s.contactFormTitle}>
-              Subscribe for the Cool Stuff Only
-            </h2>
+            <h2 className={s.contactFormTitle}>{activeConfig.modal.title}</h2>
             <p className={s.contactFormDescription}>
-              Think of it like a travel mixtape: curated tips, digital freebies,
-              and zero nonsense. Just pop in your email and we’ll take it from
-              there.
+              {activeConfig.modal.description}
             </p>
             <form onSubmit={handleSubmit} className={s.formContainer}>
               <div className={s.inputWrapper}>
