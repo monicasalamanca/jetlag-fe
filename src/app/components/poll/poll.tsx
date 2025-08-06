@@ -1,152 +1,106 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, useState, useCallback } from "react";
 import SubscribeForm from "../subscribe-form/subscribe-form";
+import { Poll, VoteResponse } from "@/api/poll";
+import { usePoll, PollOptionWithPercentage } from "./hooks/usePoll";
 import s from "./poll.module.scss";
 
-interface PollOption {
-  id: number;
-  label: string;
-  votes: number;
-}
-
 interface PollProps {
-  title: string;
-  question: string;
-  options: PollOption[];
-  onVote?: (optionId: number) => void;
-  ctaTitle: string;
-  ctaDescription: string;
-  ctaButtonText: string;
+  poll: Poll;
+  title?: string; // Optional override for poll title
+  onVote?: (optionId: number, voteResponse: VoteResponse) => void;
   showCTA?: boolean;
+  className?: string;
+  simulateVotes?: boolean; // Enable vote simulation for polls with 0 votes
 }
 
-const Poll: FC<PollProps> = ({
+const PollComponent: FC<PollProps> = ({
+  poll,
   title,
-  question,
-  options,
   onVote,
-  ctaTitle,
-  ctaDescription,
-  ctaButtonText,
   showCTA = true,
+  className = "",
+  simulateVotes = true,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [hasVoted, setHasVoted] = useState(false);
+  // All hooks must be called before any conditional returns
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [updatedOptions, setUpdatedOptions] = useState(options);
+  const [hasSubscribed, setHasSubscribed] = useState(false);
 
-  // Calculate total votes and percentages
-  const originalTotalVotes = options.reduce(
-    (sum, option) => sum + option.votes,
-    0,
+  const {
+    isLoading,
+    error,
+    hasVoted,
+    selectedOptionId,
+    optionsData,
+    handleVote,
+    clearError,
+    isSimulated,
+  } = usePoll({ poll, onVote, simulateVotes });
+
+  // Handle vote submission with transition effects
+  const handleVoteSubmission = useCallback(
+    async (optionId: number) => {
+      if (isLoading || hasVoted) return;
+
+      setIsTransitioning(true);
+      await handleVote(optionId);
+
+      // Complete transition after delay
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 600);
+    },
+    [isLoading, hasVoted, handleVote]
   );
 
-  // If original votes were all zero, we need to add fake votes to all options
-  // and then add the user's vote on top of that
-  const optionsWithFakeVotes =
-    originalTotalVotes === 0
-      ? updatedOptions.map((option) => {
-          // If this was the voted option, add fake votes + 1 user vote
-          // If not, just add fake votes
-          const baseVotes = 5; // fake votes
-          const userVote = hasVoted && selectedOption === option.id ? 1 : 0;
-          return { ...option, votes: baseVotes + userVote };
-        })
-      : updatedOptions;
+  // Handle keyboard navigation
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent, optionId: number) => {
+      if (hasVoted || isTransitioning) return;
 
-  const adjustedTotalVotes = optionsWithFakeVotes.reduce(
-    (sum, option) => sum + option.votes,
-    0,
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        handleVoteSubmission(optionId);
+      }
+    },
+    [hasVoted, isTransitioning, handleVoteSubmission]
   );
 
-  const optionsWithPercentages = optionsWithFakeVotes.map((option) => ({
-    ...option,
-    percentage:
-      adjustedTotalVotes > 0
-        ? Math.round((option.votes / adjustedTotalVotes) * 100)
-        : 0,
-  }));
+  // Handle subscription success - convert simulated vote to real vote
+  const handleSubscriptionSuccess = useCallback(async () => {
+    setHasSubscribed(true);
 
-  const handleOptionSelect = (optionId: number) => {
-    if (hasVoted || isTransitioning) return;
-
-    setSelectedOption(optionId);
-    setIsTransitioning(true);
-
-    // Store the selected option in localStorage for later API submission
-    const pollData = {
-      optionId,
-      timestamp: Date.now(),
-      pollQuestion: question,
-      optionText: updatedOptions.find((opt) => opt.id === optionId)?.label,
-    };
-
-    try {
-      localStorage.setItem(
-        `poll_selection_${question.replace(/\s+/g, "_").toLowerCase()}`,
-        JSON.stringify(pollData),
-      );
-    } catch (error) {
-      console.warn("Failed to save poll selection to localStorage:", error);
-    }
-
-    // Update the vote count for the selected option
-    setUpdatedOptions((prevOptions) =>
-      prevOptions.map((option) =>
-        option.id === optionId
-          ? { ...option, votes: option.votes + 1 }
-          : option,
-      ),
+    // Note: The actual vote conversion is handled by the subscribe form
+    // We just need to update our local state to reflect the subscription
+    console.log(
+      "Subscription successful - vote conversion handled by subscribe form"
     );
+  }, []);
 
-    // Start the transition after a brief moment to show selection
-    setTimeout(() => {
-      setHasVoted(true);
-      onVote?.(optionId);
-      setIsTransitioning(false);
-    }, 600); // 600ms delay for smooth transition
-  };
+  // Early return validation AFTER all hooks are called
+  if (!poll) {
+    console.warn("Poll component received undefined poll data");
+    return null;
+  }
 
-  const handleKeyDown = (event: React.KeyboardEvent, optionId: number) => {
-    if (hasVoted || isTransitioning) return;
-
-    const currentIndex = updatedOptions.findIndex(
-      (option) => option.id === optionId,
+  // Validate poll structure
+  if (!poll.id || !poll.question || !Array.isArray(poll.options)) {
+    console.error("Invalid poll structure:", poll);
+    return (
+      <div className={`${s.poll} ${s.errorState} ${className}`} role="alert">
+        <p>Unable to load poll. Please try again later.</p>
+      </div>
     );
+  }
 
-    switch (event.key) {
-      case "Enter":
-      case " ":
-        event.preventDefault();
-        handleOptionSelect(optionId);
-        break;
-      case "ArrowDown":
-      case "ArrowRight":
-        event.preventDefault();
-        const nextIndex = (currentIndex + 1) % updatedOptions.length;
-        const nextInput = document.getElementById(
-          `option-${updatedOptions[nextIndex].id}`,
-        ) as HTMLInputElement;
-        nextInput?.focus();
-        break;
-      case "ArrowUp":
-      case "ArrowLeft":
-        event.preventDefault();
-        const prevIndex =
-          currentIndex === 0 ? updatedOptions.length - 1 : currentIndex - 1;
-        const prevInput = document.getElementById(
-          `option-${updatedOptions[prevIndex].id}`,
-        ) as HTMLInputElement;
-        prevInput?.focus();
-        break;
-    }
-  };
+  const displayTitle = title || poll.question;
 
+  // Results view after voting
   if (hasVoted) {
     return (
       <section
-        className={`${s.poll} ${s.resultsView}`}
+        className={`${s.poll} ${s.resultsView} ${className}`}
         role="region"
         aria-label="Poll results"
         aria-live="polite"
@@ -159,8 +113,17 @@ const Poll: FC<PollProps> = ({
             className={`${s.subtitle} ${s.fadeInUp}`}
             aria-describedby="poll-results-title"
           >
-            Here&apos;s what other jetlaggers have chose:
+            {isSimulated
+              ? "Here's what other jetlaggers might choose:"
+              : "Here's what other jetlaggers have chosen:"}
           </p>
+          {isSimulated && (
+            <p className={`${s.simulationNotice} ${s.fadeInUp}`}>
+              <small>
+                * Results are simulated. Subscribe to see real voting data!
+              </small>
+            </p>
+          )}
         </header>
 
         <div
@@ -168,67 +131,92 @@ const Poll: FC<PollProps> = ({
           role="list"
           aria-label="Poll results breakdown"
         >
-          {optionsWithPercentages.map((option, index) => (
-            <div
-              key={option.id}
-              className={`${s.resultItem} ${s.slideInLeft}`}
-              style={{ animationDelay: `${index * 100}ms` }}
-              role="listitem"
-              aria-label={`${option.label}: ${option.percentage}% of votes`}
-            >
-              <div className={s.resultHeader}>
-                <span className={s.optionText} id={`result-${option.id}`}>
-                  {option.label}
-                </span>
-                <span className="sr-only">
-                  {option.percentage}% of votes, {option.votes} total votes
-                </span>
-              </div>
+          {optionsData.map(
+            (option: PollOptionWithPercentage, index: number) => (
               <div
-                className={s.progressBar}
-                role="progressbar"
-                aria-valuenow={option.percentage}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-labelledby={`result-${option.id}`}
-                aria-describedby={`result-${option.id}-description`}
+                key={option.id}
+                className={`${s.resultItem} ${s.slideInLeft} ${
+                  selectedOptionId === option.id ? s.userSelected : ""
+                }`}
+                style={{ animationDelay: `${index * 100}ms` }}
+                role="listitem"
+                aria-label={`${option.label}: ${option.percentage}% of votes`}
               >
+                <div className={s.resultHeader}>
+                  <span className={s.optionText} id={`result-${option.id}`}>
+                    {option.label}
+                  </span>
+                  <span className={s.percentageText} aria-live="polite">
+                    {option.percentage}%
+                  </span>
+                </div>
                 <div
-                  className={`${s.progressFill} ${s[`gradient${index + 1}`]} ${s.fillAnimation}`}
-                  style={{
-                    width: `${option.percentage}%`,
-                    animationDelay: `${400 + index * 150}ms`,
-                  }}
-                />
+                  className={s.progressBar}
+                  role="progressbar"
+                  aria-valuenow={option.percentage}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-labelledby={`result-${option.id}`}
+                  aria-describedby={`result-${option.id}-description`}
+                >
+                  <div
+                    className={`${s.progressFill} ${s[`gradient${(index % 4) + 1}`]} ${s.fillAnimation}`}
+                    style={{
+                      width: `${option.percentage}%`,
+                      animationDelay: `${400 + index * 150}ms`,
+                    }}
+                  />
+                </div>
+                <span
+                  id={`result-${option.id}-description`}
+                  className="sr-only"
+                >
+                  Progress bar showing {option.percentage}% support for this
+                  option
+                </span>
               </div>
-              <span id={`result-${option.id}-description`} className="sr-only">
-                Progress bar showing {option.percentage}% support for this
-                option
-              </span>
-            </div>
-          ))}
+            )
+          )}
         </div>
 
         {/* CTA Footer */}
         {showCTA && (
           <footer className={`${s.ctaFooter} ${s.fadeInUp}`}>
             <div className={s.ctaContent}>
-              <h3 className={s.ctaTitle}>{ctaTitle}</h3>
-              <p className={s.ctaDescription}>{ctaDescription} </p>
-              <SubscribeForm
-                buttonName={ctaButtonText}
-                showIcon={false}
-                trackEventName="poll"
-                pollStyling={true}
-                config={{
-                  apiEndpoint: "/api/subscribe-to-download",
-                  modal: {
-                    title: "Before You Pack Your Bags…",
-                    description:
-                      "Want the real cost of island life in Thailand? We&apos;re talking rent, food, bikes, beachfront vs. budget — all in one free, honest, no-fluff guide. Drop your email and we&apos;ll zip it over faster than a GrabBike in Bangkok.",
-                  },
-                }}
-              />
+              {hasSubscribed ? (
+                <>
+                  <h3 className={s.ctaTitle}>✅ Vote counted!</h3>
+                  <p className={s.ctaDescription}>
+                    You’re officially a Jet Lagger now.
+                  </p>
+                  <p className={s.ctaDescription}>
+                    📬 Check your inbox and confirm your email to unlock the
+                    free guide.
+                    <br />
+                    Spam folder playing hide and seek? Go hunt it down. 😉
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h3 className={s.ctaTitle}>{poll.ctaTitle}</h3>
+                  <p className={s.ctaDescription}>{poll.ctaDescription}</p>
+                  <SubscribeForm
+                    buttonName={poll.ctaButtonText}
+                    showIcon={false}
+                    trackEventName="poll"
+                    pollStyling={true}
+                    onSubscriptionSuccess={handleSubscriptionSuccess}
+                    config={{
+                      apiEndpoint: "/api/subscribe-to-download",
+                      modal: {
+                        title: "Before You Pack Your Bags…",
+                        description:
+                          "Want the real cost of island life in Thailand? We&apos;re talking rent, food, bikes, beachfront vs. budget — all in one free, honest, no-fluff guide. Drop your email and we&apos;ll zip it over faster than a GrabBike in Bangkok.",
+                      },
+                    }}
+                  />
+                </>
+              )}
             </div>
           </footer>
         )}
@@ -236,66 +224,89 @@ const Poll: FC<PollProps> = ({
     );
   }
 
+  // Voting interface
   return (
     <section
-      className={`${s.poll} ${isTransitioning ? s.transitioning : ""}`}
+      className={`${s.poll} ${isTransitioning ? s.transitioning : ""} ${className}`}
       role="region"
       aria-label="Interactive poll"
-      aria-busy={isTransitioning}
+      aria-busy={isLoading}
     >
       <header className={s.pollHeader}>
         <h2 className={s.title} id="poll-title">
-          {title}
+          {displayTitle}
         </h2>
         <p className={s.question} id="poll-question">
-          {question}
+          {poll.question}
         </p>
       </header>
+
+      {/* Error message */}
+      {error && (
+        <div className={s.errorMessage} role="alert">
+          <p>{error.message}</p>
+          <button
+            type="button"
+            onClick={clearError}
+            className={s.retryButton}
+            aria-label="Dismiss error and try again"
+          >
+            Try Again
+          </button>
+        </div>
+      )}
 
       <fieldset
         className={s.optionsContainer}
         aria-labelledby="poll-title"
         aria-describedby="poll-question poll-instructions"
-        disabled={isTransitioning}
+        disabled={isTransitioning || isLoading}
       >
-        <legend className="sr-only">Poll options: {question}</legend>
+        <legend className="sr-only">Poll options: {poll.question}</legend>
         <div id="poll-instructions" className="sr-only">
           Use arrow keys to navigate between options. Press Enter or Space to
           select an option.
         </div>
 
-        {updatedOptions.map((option) => (
+        {optionsData.map((option: PollOptionWithPercentage) => (
           <div key={option.id} className={s.optionItem}>
             <input
               type="radio"
-              name="poll-option"
+              name={`poll-option-${poll.id}`}
               id={`option-${option.id}`}
               value={option.id}
-              checked={selectedOption === option.id}
-              onChange={() => handleOptionSelect(option.id)}
+              checked={selectedOptionId === option.id}
+              onChange={() => handleVoteSubmission(option.id)}
               onKeyDown={(e) => handleKeyDown(e, option.id)}
               className={s.radioInput}
               aria-describedby={`option-${option.id}-label`}
-              disabled={isTransitioning}
-              tabIndex={isTransitioning ? -1 : 0}
+              disabled={isTransitioning || isLoading}
+              tabIndex={isTransitioning || isLoading ? -1 : 0}
             />
             <label
               htmlFor={`option-${option.id}`}
-              className={`${s.customRadio} ${selectedOption === option.id ? s.selected : ""} ${isTransitioning ? s.transitioning : ""}`}
+              className={`${s.customRadio} ${
+                selectedOptionId === option.id ? s.selected : ""
+              } ${isTransitioning ? s.transitioning : ""} ${
+                isLoading ? s.loading : ""
+              }`}
               id={`option-${option.id}-label`}
             >
               <span className={s.optionText}>{option.label}</span>
               <div className={s.radioButton} aria-hidden="true">
-                {selectedOption === option.id && (
+                {selectedOptionId === option.id && (
                   <div className={s.radioButtonInner} />
+                )}
+                {isLoading && selectedOptionId === option.id && (
+                  <div className={s.loadingSpinner} aria-hidden="true" />
                 )}
               </div>
             </label>
 
             {/* Status announcement for screen readers */}
-            {selectedOption === option.id && (
+            {selectedOptionId === option.id && isLoading && (
               <div className="sr-only" aria-live="assertive" role="status">
-                {option.label} selected. Vote will be cast automatically.
+                {option.label} selected. Submitting your vote...
               </div>
             )}
           </div>
@@ -303,7 +314,7 @@ const Poll: FC<PollProps> = ({
       </fieldset>
 
       {/* Loading state announcement */}
-      {isTransitioning && (
+      {isLoading && (
         <div className="sr-only" aria-live="assertive" role="status">
           Processing your vote...
         </div>
@@ -312,4 +323,4 @@ const Poll: FC<PollProps> = ({
   );
 };
 
-export default Poll;
+export default PollComponent;
