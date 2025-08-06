@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const apiKey = process.env.KIT_DEFAULT_KEY;
+    const apiKey = process.env.KIT_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
         { error: "API key not configured" },
