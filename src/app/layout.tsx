@@ -5,6 +5,7 @@ import HeaderWrapper from "@/components/headerWrapper/headerWrapper";
 import Footer from "@/components/footer/footer";
 
 import "./globals.css";
+import { StorageBanner } from "./components/storage-banner";
 
 const roboto = Roboto({
   adjustFontFallback: false,
@@ -54,6 +55,7 @@ export default function RootLayout({
         <HeaderWrapper />
         {children}
         <Footer />
+        <StorageBanner />
       </body>
     </html>
   );
