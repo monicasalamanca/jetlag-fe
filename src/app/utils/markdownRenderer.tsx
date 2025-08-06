@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { JSX } from "react";
 import CTAComponent from "@/components/cta-component/cta-component";
-import Poll from "@/app/components/poll/poll";
+import { SafePoll } from "@/app/components/poll";
 
 // A custom renderer that collects full inline tokens
 marked.use({
@@ -124,19 +124,32 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
         // Check for Poll pattern
         if (text && POLL_REGEX.test(text)) {
           if (poll) {
+            // Convert the markdown poll format to our Poll component format
+            const pollData = {
+              id: 1, // Default ID for markdown polls
+              slug: "markdown-poll",
+              question: poll.question,
+              status: "live" as const,
+              ctaTitle: poll.ctaTitle,
+              ctaDescription: poll.ctaDescription,
+              ctaButtonText: poll.ctaButtonText,
+              options: poll.options.map((option) => ({
+                id: option.id,
+                label: option.label,
+                votes: option.votes,
+              })),
+            };
+
             return (
-              <Poll
+              <SafePoll
                 key={idx}
-                title="Quick Poll"
-                question={poll.question}
-                options={poll.options}
-                onVote={(optionId) => {
-                  console.log("User voted for:", optionId);
+                poll={pollData}
+                title={poll.title}
+                simulateVotes={true}
+                onVote={(optionId: number) => {
                   // Here you can integrate with your analytics or backend
+                  poll.onVote?.(optionId);
                 }}
-                ctaTitle={poll.ctaTitle}
-                ctaDescription={poll.ctaDescription}
-                ctaButtonText={poll.ctaButtonText}
               />
             );
           } else {

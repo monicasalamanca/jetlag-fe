@@ -37,12 +37,14 @@ const SubscribeForm: FC<{
   trackEventName?: string;
   pollStyling?: boolean;
   config?: SubscribeFormConfig;
+  onSubscriptionSuccess?: () => void;
 }> = ({
   buttonName,
   showIcon,
   trackEventName,
   pollStyling = false,
   config,
+  onSubscriptionSuccess,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState({ email: "" });
@@ -62,6 +64,65 @@ const SubscribeForm: FC<{
 
   // Use provided config or fall back to default
   const activeConfig = config || defaultConfig;
+
+  /**
+   * Convert simulated votes to real API calls after successful subscription
+   * This function checks localStorage for any simulated poll votes and converts them to real votes
+   */
+  const castSimulatedVoteAsReal = async () => {
+    try {
+      const votedPolls = localStorage.getItem("votedPolls");
+      if (!votedPolls) return;
+
+      const parsedVotedPolls = JSON.parse(votedPolls);
+
+      // Process each voted poll
+      for (const [pollId, vote] of Object.entries(parsedVotedPolls)) {
+        const voteRecord = vote as {
+          optionId: number;
+          timestamp: number;
+          isSimulated: boolean;
+        };
+
+        // Only convert simulated votes to real votes
+        if (voteRecord.isSimulated) {
+          try {
+            // Import the poll API function
+            const { castPollVote } = await import("@/api/poll");
+
+            // Cast the real vote
+            await castPollVote(parseInt(pollId), {
+              optionId: voteRecord.optionId,
+              metadata: {
+                timestamp: Date.now(),
+              },
+            });
+
+            // Update the vote record to mark it as real
+            parsedVotedPolls[pollId] = {
+              ...voteRecord,
+              isSimulated: false,
+              convertedTimestamp: Date.now(),
+            };
+
+            console.log(
+              `Converted simulated vote to real vote for poll ${pollId}, option ${voteRecord.optionId}`,
+            );
+          } catch (error) {
+            console.error(
+              `Failed to convert simulated vote for poll ${pollId}:`,
+              error,
+            );
+          }
+        }
+      }
+
+      // Save the updated vote records
+      localStorage.setItem("votedPolls", JSON.stringify(parsedVotedPolls));
+    } catch (error) {
+      console.error("Failed to cast simulated votes as real:", error);
+    }
+  };
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -92,12 +153,35 @@ const SubscribeForm: FC<{
       setIsFormOpen(false);
       setIsSuccess(true);
       setIsError(false);
+
+      // Store subscription status for poll system
+      try {
+        localStorage.setItem("hasSubscribedToDownload", "true");
+
+        // Cast real vote if user had previously voted in simulation mode
+        await castSimulatedVoteAsReal();
+      } catch (error) {
+        console.warn("Failed to store subscription status:", error);
+      }
+
+      // Call the subscription success callback
+      if (onSubscriptionSuccess) {
+        onSubscriptionSuccess();
+      }
+
+      // Dispatch global subscription event for any listening components
+      window.dispatchEvent(
+        new CustomEvent("userSubscribed", {
+          detail: { timestamp: Date.now() },
+        }),
+      );
+
       setTimeout(() => {
         setIsOpen(false);
         setIsFormOpen(true);
         setIsSuccess(false);
         setIsError(false);
-      }, 5000);
+      }, 100); // Close modal immediately to prevent body overflow conflicts
     } else {
       setIsFormOpen(false);
       setIsSuccess(false);
@@ -130,7 +214,11 @@ const SubscribeForm: FC<{
         {showIcon && <FontAwesomeIcon icon={faMessage} className={s.icon} />}
       </button>
 
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        disableBodyScroll={!pollStyling}
+      >
         {isFormOpen && (
           <>
             <h2 className={s.contactFormTitle}>{activeConfig.modal.title}</h2>

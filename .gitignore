@@ -44,3 +44,10 @@ next-env.d.ts
 #sitemap
 public/sitemap.xml
 OLDsitemap.ts
+src/app/components/poll/test-example-fixed.tsx
+.vscode/claude-prompts.md
+
+# Development and testing files
+**/test-example.tsx
+**/*-example.tsx
+**/*.backup.*

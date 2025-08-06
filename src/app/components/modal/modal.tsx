@@ -11,7 +11,8 @@ const Modal: FC<{
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
-}> = ({ isOpen, onClose, children }) => {
+  disableBodyScroll?: boolean;
+}> = ({ isOpen, onClose, children, disableBodyScroll = true }) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -20,9 +21,11 @@ const Modal: FC<{
   }, []);
 
   useEffect(() => {
-    if (isOpen) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "auto";
-  }, [isOpen]);
+    if (disableBodyScroll) {
+      if (isOpen) document.body.style.overflow = "hidden";
+      else document.body.style.overflow = "auto";
+    }
+  }, [isOpen, disableBodyScroll]);
 
   if (!mounted || !isOpen) return null;
 
