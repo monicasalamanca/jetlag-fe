@@ -129,7 +129,7 @@ export const fetchPollById = async (pollId: number): Promise<Poll | null> => {
  */
 export const castPollVote = async (
   pollId: number,
-  voteData: VoteRequest
+  voteData: VoteRequest,
 ): Promise<VoteResponse> => {
   try {
     // First, fetch the current poll data to get all options
@@ -154,7 +154,7 @@ export const castPollVote = async (
     const updatedOptions = currentOptions.map((option) =>
       option.id === voteData.optionId
         ? { ...option, votes: option.votes + 1 }
-        : option
+        : option,
     );
 
     // Update the poll with the new options array
