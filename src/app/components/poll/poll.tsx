@@ -51,7 +51,7 @@ const PollComponent: FC<PollProps> = ({
         setIsTransitioning(false);
       }, 600);
     },
-    [isLoading, hasVoted, handleVote]
+    [isLoading, hasVoted, handleVote],
   );
 
   // Handle keyboard navigation
@@ -64,7 +64,7 @@ const PollComponent: FC<PollProps> = ({
         handleVoteSubmission(optionId);
       }
     },
-    [hasVoted, isTransitioning, handleVoteSubmission]
+    [hasVoted, isTransitioning, handleVoteSubmission],
   );
 
   // Handle subscription success - convert simulated vote to real vote
@@ -74,7 +74,7 @@ const PollComponent: FC<PollProps> = ({
     // Note: The actual vote conversion is handled by the subscribe form
     // We just need to update our local state to reflect the subscription
     console.log(
-      "Subscription successful - vote conversion handled by subscribe form"
+      "Subscription successful - vote conversion handled by subscribe form",
     );
   }, []);
 
@@ -175,7 +175,7 @@ const PollComponent: FC<PollProps> = ({
                   option
                 </span>
               </div>
-            )
+            ),
           )}
         </div>
 
