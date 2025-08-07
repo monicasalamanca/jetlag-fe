@@ -12,11 +12,26 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
   destinations,
 }) => {
   const [isDestinationsMenuOpen, setIsDestinationsMenuOpen] = useState(false);
+  const [hasAlreadySubscribed, setHasAlreadySubscribed] = useState(false);
   const menuRef = useRef<HTMLLIElement>(null);
   const capitalize = (country: string) => {
     if (!country) return "";
     return country.charAt(0).toUpperCase() + country.slice(1).toLowerCase();
   };
+
+  // Check subscription status from localStorage on component mount
+  useEffect(() => {
+    try {
+      const subscriptionStatus = localStorage.getItem(
+        "hasSubscribedToDownload",
+      );
+      if (subscriptionStatus === "true") {
+        setHasAlreadySubscribed(true);
+      }
+    } catch (error) {
+      console.warn("Failed to check subscription status:", error);
+    }
+  }, []);
 
   useEffect(() => {
     if (!isDestinationsMenuOpen) return;
@@ -93,13 +108,15 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
             About Us
           </NavLink>
         </li>
-        <li className={s.subscribe}>
-          <SubscribeForm
-            buttonName="Subscribe"
-            showIcon={false}
-            trackEventName="desktopMenu"
-          />
-        </li>
+        {!hasAlreadySubscribed && (
+          <li className={s.subscribe}>
+            <SubscribeForm
+              buttonName="Subscribe"
+              showIcon={false}
+              trackEventName="desktopMenu"
+            />
+          </li>
+        )}
       </ul>
     </nav>
   );

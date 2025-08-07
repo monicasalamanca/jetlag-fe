@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { ChangeEvent, FC, FormEvent, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useState, useEffect } from "react";
 import Modal from "../modal/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -38,6 +38,7 @@ const SubscribeForm: FC<{
   pollStyling?: boolean;
   config?: SubscribeFormConfig;
   onSubscriptionSuccess?: () => void;
+  subscribedComponent?: React.ReactNode; // Optional component to show when already subscribed
 }> = ({
   buttonName,
   showIcon,
@@ -45,12 +46,28 @@ const SubscribeForm: FC<{
   pollStyling = false,
   config,
   onSubscriptionSuccess,
+  subscribedComponent,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState({ email: "" });
   const [isFormOpen, setIsFormOpen] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [hasAlreadySubscribed, setHasAlreadySubscribed] = useState(false);
+
+  // Check if user has already subscribed
+  useEffect(() => {
+    try {
+      const subscriptionStatus = localStorage.getItem(
+        "hasSubscribedToDownload",
+      );
+      if (subscriptionStatus === "true") {
+        setHasAlreadySubscribed(true);
+      }
+    } catch (error) {
+      console.warn("Failed to check subscription status:", error);
+    }
+  }, []);
 
   // Default configuration for regular newsletter subscription
   const defaultConfig: SubscribeFormConfig = {
@@ -157,6 +174,7 @@ const SubscribeForm: FC<{
       // Store subscription status for poll system
       try {
         localStorage.setItem("hasSubscribedToDownload", "true");
+        setHasAlreadySubscribed(true); // Update state to immediately hide form
 
         // Cast real vote if user had previously voted in simulation mode
         await castSimulatedVoteAsReal();
@@ -202,6 +220,11 @@ const SubscribeForm: FC<{
     setIsSuccess(false);
     setIsError(false);
   };
+
+  // Don't render the form if user has already subscribed
+  if (hasAlreadySubscribed) {
+    return subscribedComponent || null;
+  }
 
   return (
     <>
