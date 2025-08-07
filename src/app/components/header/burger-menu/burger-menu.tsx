@@ -22,10 +22,25 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
   destinations,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasAlreadySubscribed, setHasAlreadySubscribed] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  // Check subscription status from localStorage on component mount
+  useEffect(() => {
+    try {
+      const subscriptionStatus = localStorage.getItem(
+        "hasSubscribedToDownload",
+      );
+      if (subscriptionStatus === "true") {
+        setHasAlreadySubscribed(true);
+      }
+    } catch (error) {
+      console.warn("Failed to check subscription status:", error);
+    }
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -124,14 +139,16 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                   About Us
                 </Link>
               </li>
-              <li className={s.subscribe}>
-                <FontAwesomeIcon icon={faInbox} className={s.icon} />
-                <SubscribeForm
-                  buttonName="Subscribe"
-                  showIcon={false}
-                  trackEventName="mobileMenu"
-                />
-              </li>
+              {!hasAlreadySubscribed && (
+                <li className={s.subscribe}>
+                  <FontAwesomeIcon icon={faInbox} className={s.icon} />
+                  <SubscribeForm
+                    buttonName="Subscribe"
+                    showIcon={false}
+                    trackEventName="mobileMenu"
+                  />
+                </li>
+              )}
               <li>
                 <FontAwesomeIcon icon={faEnvelope} className={s.icon} />
                 <ContactForm buttonName="Contact Us" showIcon={false} />

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState, useCallback } from "react";
+import { FC, useState, useCallback, useEffect } from "react";
 import SubscribeForm from "../subscribe-form/subscribe-form";
 import { Poll, VoteResponse } from "@/api/poll";
 import { usePoll, PollOptionWithPercentage } from "./hooks/usePoll";
@@ -76,6 +76,20 @@ const PollComponent: FC<PollProps> = ({
     console.log(
       "Subscription successful - vote conversion handled by subscribe form",
     );
+  }, []);
+
+  // Check subscription status from localStorage on component mount
+  useEffect(() => {
+    try {
+      const subscriptionStatus = localStorage.getItem(
+        "hasSubscribedToDownload",
+      );
+      if (subscriptionStatus === "true") {
+        setHasSubscribed(true);
+      }
+    } catch (error) {
+      console.warn("Failed to check subscription status:", error);
+    }
   }, []);
 
   // Early return validation AFTER all hooks are called
