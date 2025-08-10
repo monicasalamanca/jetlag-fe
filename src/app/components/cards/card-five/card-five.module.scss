@@ -8,12 +8,12 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   overflow: hidden;
-  height: 240px;
 
   .imageWrapper {
     position: relative;
     display: flex;
     flex-grow: 1;
+    min-height: 240px;
 
     .image {
       width: auto;
@@ -80,5 +80,39 @@
         color: var(--white);
       }
     }
+  }
+}
+
+// Clickable card styles
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  display: block;
+  height: 100%;
+  min-height: 240px;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    .container {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  .container {
+    height: 100%;
   }
 }

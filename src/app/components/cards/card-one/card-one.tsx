@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-
+import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faPlane } from "@fortawesome/free-solid-svg-icons";
@@ -27,51 +27,62 @@ const CardOne: FC<{ mockData: CardProps; color: string }> = ({
     }
   };
 
+  // Generate URL based on category and slug
+  const getCardUrl = () => {
+    if (mockData.category && mockData.slug) {
+      return `/${mockData.category}/${mockData.slug}`;
+    }
+    // Fallback to blog if no category specified
+    return `/blog/${mockData.slug || "post"}`;
+  };
+
   return (
-    <div className={s.container}>
-      <div className={s.imageWrapper}>
-        <Image
-          className={s.image}
-          src={mockData.thumbnail}
-          alt="Grocery time"
-          // fill
-          // sizes="(max-width: 768px) 100vw, 50vw"
-          width={330}
-          height={250}
-          loading="lazy"
-        />
-        <div className={s.topTag}>
-          <FontAwesomeIcon
-            icon={faPlane}
-            className={`${s.icon} ${getColourClassNames(color)}`}
+    <Link href={getCardUrl()} className={s.cardLink}>
+      <div className={s.container}>
+        <div className={s.imageWrapper}>
+          <Image
+            className={s.image}
+            src={mockData.thumbnail}
+            alt={`${mockData.title} - ${mockData.country}`}
+            // fill
+            // sizes="(max-width: 768px) 100vw, 50vw"
+            width={330}
+            height={250}
+            loading="lazy"
           />
-          {mockData.tags[0]}
-        </div>
-      </div>
-      <div className={s.content}>
-        <div className={s.tags}>
-          <div className={`${s.tag} ${getColourClassNames(color)}`}>
-            {mockData.tags[1]}
-          </div>
-          <div className={s.date}>March 15, 2025</div>
-        </div>
-        <h3>{mockData.title}</h3>
-        <p>{mockData.description}</p>
-        <div className={s.bottomInfo}>
-          <div className={s.country}>
+          <div className={s.topTag}>
             <FontAwesomeIcon
-              icon={faLocationDot}
+              icon={faPlane}
               className={`${s.icon} ${getColourClassNames(color)}`}
             />
-            {mockData.country}
+            {mockData.tags[0]}
           </div>
-          <div className={s.readTime}>
-            <FontAwesomeIcon icon={faClock} className={s.icon} />
-            {mockData.readTime}
+        </div>
+        <div className={s.content}>
+          <div className={s.tags}>
+            <div className={`${s.tag} ${getColourClassNames(color)}`}>
+              {mockData.tags[1]}
+            </div>
+            <div className={s.date}>{mockData.date}</div>
+          </div>
+          <h3>{mockData.title}</h3>
+          <p>{mockData.description}</p>
+          <div className={s.bottomInfo}>
+            <div className={s.country}>
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                className={`${s.icon} ${getColourClassNames(color)}`}
+              />
+              {mockData.country}
+            </div>
+            <div className={s.readTime}>
+              <FontAwesomeIcon icon={faClock} className={s.icon} />
+              {mockData.readTime}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
