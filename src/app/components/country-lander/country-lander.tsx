@@ -9,6 +9,8 @@ import QuickFactCard from "../country-facts-card/card/card";
 import InfoCard from "../country-facts-card/info-card/info-card";
 import { Country } from "@/api/types";
 import CardOne from "../cards/card-one/card-one";
+import CardTwo from "../cards/card-two/card-two";
+import CardThree from "../cards/card-three/card-three";
 import CardFive from "../cards/card-five/card-five";
 import blogs from "@/app/blogs.json";
 
@@ -104,7 +106,22 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
       {
         type: "blog",
         id: "blog-4",
-        component: <CardFive key="blog-4" mockData={blogs[4]} />,
+        component: <CardTwo mockData={blogs[5]} color="green" />,
+      },
+      {
+        type: "blog",
+        id: "blog-5",
+        component: <CardTwo mockData={blogs[4]} color="red" />,
+      },
+      {
+        type: "blog",
+        id: "blog-6",
+        component: <CardThree mockData={blogs[6]} color="purple" />,
+      },
+      {
+        type: "blog",
+        id: "blog-7",
+        component: <CardThree mockData={blogs[6]} color="blue" />,
       },
     ];
 
