@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import Image from "next/image";
@@ -5,6 +7,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFire } from "@fortawesome/free-solid-svg-icons";
 import { CardProps } from "../card.types";
+import { trackCardClick } from "@/app/utils/analytics";
 
 import s from "./card-five.module.scss";
 
@@ -25,8 +28,19 @@ const CardFive = ({ mockData }: mockDataProps) => {
     return `/${mockData.category}/${mockData.slug}`;
   };
 
+  const handleCardClick = () => {
+    if (mockData) {
+      trackCardClick({
+        cardTitle: mockData.title || "Unknown Title",
+        cardCategory: mockData.category || "Unknown Category",
+        cardType: "CardFive",
+        location: window.location.pathname,
+      });
+    }
+  };
+
   return (
-    <Link href={getCardUrl()} className={s.cardLink}>
+    <Link href={getCardUrl()} className={s.cardLink} onClick={handleCardClick}>
       <div className={s.container}>
         <div className={s.imageWrapper}>
           <Image

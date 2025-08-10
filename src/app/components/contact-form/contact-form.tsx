@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { postContactUs } from "@/api/client";
+import { trackFormSubmission, trackLinkClick } from "@/app/utils/analytics";
 
 const Success = dynamic(() => import("./success/success"), {
   loading: () => <p>Loading...</p>,
@@ -41,9 +42,25 @@ const ContactForm: FC<{
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
+  const handleTwitterClick = () => {
+    trackLinkClick({
+      url: "https://twitter.com/the_jetlaggers",
+      text: "Twitter/X Follow Link",
+      location: "Contact Form",
+      link_type: "social",
+    });
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const res = await postContactUs(form);
+
+    trackFormSubmission({
+      formName: "Contact Form",
+      location: window.location.pathname,
+      success: !!res,
+    });
+
     if (res) {
       setIsFormOpen(false);
       setIsSuccess(true);
@@ -182,6 +199,7 @@ const ContactForm: FC<{
                     rel="noopener noreferrer"
                     href="https://twitter.com/the_jetlaggers"
                     className={s.link}
+                    onClick={handleTwitterClick}
                   >
                     <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
                   </Link>

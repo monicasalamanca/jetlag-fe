@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { trackButtonClick } from "@/app/utils/analytics";
 
 import s from "./blog-like-button.module.scss";
 
@@ -20,6 +21,13 @@ export default function LikeButton({ blogId, initialLikes }: LikeButtonProps) {
   const handleLike = async () => {
     if (loading) return;
     setLoading(true);
+
+    // Track button click
+    trackButtonClick({
+      buttonText: "Like Button",
+      location: `blog-${blogId}`,
+      buttonType: "like",
+    });
 
     try {
       const res = await fetch(

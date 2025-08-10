@@ -1,7 +1,9 @@
+"use client";
+
 import { FC, ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { trackEvent } from "@/utils/analytics";
+import { trackNavigation } from "@/app/utils/analytics";
 
 import s from "./nav-link.module.scss";
 
@@ -29,10 +31,11 @@ const NavLink: FC<NavLinkProps> = ({
   // });
 
   const handleClick = () => {
-    trackEvent({
-      action: "click",
-      category: "header",
-      label: `${name} link`,
+    trackNavigation({
+      destination: href,
+      source: pathname,
+      navigationText: name,
+      navigationType: "header",
     });
   };
 

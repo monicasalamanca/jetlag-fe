@@ -3,6 +3,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Roboto } from "next/font/google";
 import HeaderWrapper from "@/components/headerWrapper/headerWrapper";
 import Footer from "@/components/footer/footer";
+import AnalyticsPageView from "./components/analytics-page-view";
 
 import "./globals.css";
 import { StorageBanner } from "./components/storage-banner";
@@ -85,7 +86,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <GoogleAnalytics gaId="G-E04G0053EJ" />
+        <GoogleAnalytics
+          gaId={process.env.NEXT_PUBLIC_GA_ID || "G-E04G0053EJ"}
+        />
+        <AnalyticsPageView />
         <HeaderWrapper />
         {children}
         <Footer />

@@ -106,30 +106,39 @@ const colourStyle = [
   "pink",
 ] as const;
 
-const getStyle = () => {
-  const randomCardStyle =
-    cardStyles[Math.floor(Math.random() * cardStyles.length)];
-  return `${randomCardStyle}`;
+// Deterministic functions to avoid hydration mismatches while maintaining variety
+const getStyle = (index: number, seed: string = "") => {
+  // Combine index with seed for more variety
+  const hash = seed.length > 0 ? seed.charCodeAt(index % seed.length) : 0;
+  const styleIndex = (index + hash) % cardStyles.length;
+  return `${cardStyles[styleIndex]}`;
 };
 
-const getColour = () => {
-  const randomColourStyle =
-    colourStyle[Math.floor(Math.random() * colourStyle.length)];
-  return randomColourStyle;
+const getColour = (index: number, seed: string = "") => {
+  // Combine index with seed for more variety
+  const hash = seed.length > 0 ? seed.charCodeAt(index % seed.length) : 0;
+  const colourIndex = (index + hash) % colourStyle.length;
+  return colourStyle[colourIndex];
 };
 
 const LifestyleLander = () => {
-  // Helper function to shuffle an array
-  const shuffleArray = <T,>(array: T[]): T[] => {
-    return array
-      .map((item) => ({ item, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ item }) => item);
+  // Seeded random function for deterministic shuffling
+  const seededRandom = (seed: string) => {
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+      const char = seed.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return () => {
+      hash = (hash * 9301 + 49297) % 233280;
+      return hash / 233280;
+    };
   };
 
   // Combine all cards into one array
   const allCards = useMemo(() => {
-    const quickFactCards = quickFacts.map((fact) => ({
+    const quickFactCards = quickFacts.map((fact, index) => ({
       type: "quickFact",
       id: fact.id,
       component: (
@@ -138,8 +147,8 @@ const LifestyleLander = () => {
           label={fact.label}
           description={fact.description}
           icon={fact.icon}
-          cardStyle={getStyle()}
-          colour={getColour()}
+          cardStyle={getStyle(index)}
+          colour={getColour(index)}
         />
       ),
     }));
@@ -170,11 +179,22 @@ const LifestyleLander = () => {
     return [...quickFactCards, ...blogCards];
   }, []);
 
-  // Filter and shuffle cards
+  // Filter and shuffle cards with deterministic randomization
   const filteredCards = useMemo(() => {
+    // Helper function to shuffle an array deterministically (moved inside useMemo)
+    const shuffleArraySeeded = <T,>(array: T[], seed: string): T[] => {
+      const rng = seededRandom(seed);
+      return array
+        .map((item) => ({ item, sort: rng() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ item }) => item);
+    };
+
     // Track card repetition
     const cardRepetitionCount: Record<string, number> = {};
-    const shuffledCards = shuffleArray(allCards);
+
+    // Use "lifestyle" as seed for consistent shuffling
+    const shuffledCards = shuffleArraySeeded(allCards, "lifestyle");
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return shuffledCards.filter((card: any) => {

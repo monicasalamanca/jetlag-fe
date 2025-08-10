@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -5,13 +7,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faPlane } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { CardProps } from "../card.types";
+import { trackCardClick } from "@/app/utils/analytics";
 
 import s from "./card-one.module.scss";
 
-const CardOne: FC<{ mockData: CardProps; color: string }> = ({
-  mockData,
-  color,
-}) => {
+const CardOne: FC<{
+  mockData: CardProps;
+  color: string;
+  position?: number;
+}> = ({ mockData, color, position }) => {
   const getColourClassNames = (color: string) => {
     switch (color) {
       case "blue":
@@ -36,8 +40,20 @@ const CardOne: FC<{ mockData: CardProps; color: string }> = ({
     return `/blog/${mockData.slug || "post"}`;
   };
 
+  const handleCardClick = () => {
+    if (mockData) {
+      trackCardClick({
+        cardTitle: mockData.title || "Unknown Title",
+        cardCategory: mockData.category || "Unknown Category",
+        cardType: "CardOne",
+        location: window.location.pathname,
+        cardPosition: position,
+      });
+    }
+  };
+
   return (
-    <Link href={getCardUrl()} className={s.cardLink}>
+    <Link href={getCardUrl()} className={s.cardLink} onClick={handleCardClick}>
       <div className={s.container}>
         <div className={s.imageWrapper}>
           <Image

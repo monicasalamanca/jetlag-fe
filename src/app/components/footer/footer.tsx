@@ -1,12 +1,24 @@
+"use client";
+
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import ContactForm from "../contact-form/contact-form";
+import { trackLinkClick } from "@/app/utils/analytics";
 
 import s from "./footer.module.scss";
 import SubscribeForm from "../subscribe-form/subscribe-form";
 
 const Footer = () => {
+  const handleTwitterClick = () => {
+    trackLinkClick({
+      url: "https://twitter.com/the_jetlaggers",
+      text: "Twitter/X Follow Link",
+      location: "Footer",
+      link_type: "social",
+    });
+  };
+
   return (
     <footer className={s.footer}>
       <div className={s.desktopFooter}>
@@ -66,6 +78,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://twitter.com/the_jetlaggers"
+                onClick={handleTwitterClick}
               >
                 <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
               </a>
@@ -86,6 +99,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               className={s.followLink}
               href="https://twitter.com/the_jetlaggers"
+              onClick={handleTwitterClick}
             >
               <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
             </a>
@@ -100,12 +114,31 @@ const Footer = () => {
           <ContactForm buttonName="Contact Us" showIcon />
           <div className={s.year}>© 2025 The Jet Lag Chronicles</div>
           <div className={s.links}>
-            <Link aria-label="Read our privacy policy" href="/privacy-policy">
+            <Link
+              aria-label="Read our privacy policy"
+              href="/privacy-policy"
+              onClick={() =>
+                trackLinkClick({
+                  url: "/privacy-policy",
+                  text: "Privacy Policy",
+                  location: "footer",
+                  link_type: "internal",
+                })
+              }
+            >
               Privacy Policy
             </Link>
             <Link
               aria-label="Read our terms of service"
               href="/terms-of-service"
+              onClick={() =>
+                trackLinkClick({
+                  url: "/terms-of-service",
+                  text: "Terms of Service",
+                  location: "footer",
+                  link_type: "internal",
+                })
+              }
             >
               Terms of Service
             </Link>

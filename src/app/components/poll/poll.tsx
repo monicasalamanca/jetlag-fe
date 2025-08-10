@@ -2,8 +2,9 @@
 
 import { FC, useState, useCallback, useEffect } from "react";
 import SubscribeForm from "../subscribe-form/subscribe-form";
-import { Poll, VoteResponse } from "@/api/poll";
+import { Poll, PollOption, VoteResponse } from "@/api/poll";
 import { usePoll, PollOptionWithPercentage } from "./hooks/usePoll";
+import { trackEvent } from "@/app/utils/analytics";
 import s from "./poll.module.scss";
 
 interface PollProps {
@@ -43,6 +44,23 @@ const PollComponent: FC<PollProps> = ({
     async (optionId: number) => {
       if (isLoading || hasVoted) return;
 
+      // Track poll vote
+      const selectedOption = poll.options.find(
+        (option: PollOption) => option.id === selectedOptionId,
+      );
+      trackEvent({
+        action: "vote",
+        category: "poll",
+        label: `Poll ${poll.id}: ${selectedOption?.label || "Unknown option"}`,
+        custom_parameters: {
+          poll_id: poll.id,
+          poll_question: poll.question,
+          option_id: optionId,
+          option_label: selectedOption?.label,
+          is_simulated: isSimulated,
+        },
+      });
+
       setIsTransitioning(true);
       await handleVote(optionId);
 
@@ -51,7 +69,7 @@ const PollComponent: FC<PollProps> = ({
         setIsTransitioning(false);
       }, 600);
     },
-    [isLoading, hasVoted, handleVote],
+    [isLoading, hasVoted, handleVote, poll, isSimulated, selectedOptionId],
   );
 
   // Handle keyboard navigation
