@@ -6,4 +6,6 @@ export interface CardProps {
   date: string;
   country: string;
   readTime: string;
+  slug: string;
+  category: string;
 }

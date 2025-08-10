@@ -146,3 +146,36 @@
     }
   }
 }
+
+// Card link wrapper
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    .container {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &:focus {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+    border-radius: 16px;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  .container {
+    height: 100%;
+  }
+}

@@ -94,17 +94,17 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
       {
         type: "blog",
         id: "blog-2",
-        component: <CardOne key="blog-2" mockData={blogs[5]} color="orange" />,
+        component: <CardOne key="blog-2" mockData={blogs[2]} color="orange" />,
       },
       {
         type: "blog",
         id: "blog-3",
-        component: <CardFive key="blog-3" mockData={blogs[11]} />,
+        component: <CardFive key="blog-3" mockData={blogs[3]} />,
       },
       {
         type: "blog",
         id: "blog-4",
-        component: <CardFive key="blog-4" mockData={blogs[14]} />,
+        component: <CardFive key="blog-4" mockData={blogs[4]} />,
       },
     ];
 

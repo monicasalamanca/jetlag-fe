@@ -6,9 +6,7 @@
     "tags": ["real talk", "culture shock"],
     "date": "August 10, 2025",
     "country": "Thailand",
-    "readTime": "9 mins",
-    "slug": "thailand-scams-2025",
-    "category": "thailand"
+    "readTime": "9 mins"
   },
   {
     "title": "Thai Visas & Border Runs: How Farangs Keep Outsmarting Bureaucracy in 2025",
@@ -17,9 +15,7 @@
     "tags": ["expat life", "expat hubs"],
     "date": "August 10, 2025",
     "country": "Thailand",
-    "readTime": "8 mins",
-    "slug": "thailand-visa-border-run-guide-2025",
-    "category": "thailand"
+    "readTime": "8 mins"
   },
   {
     "title": "Chiang Mai vs. Bangkok: Which Thai City Is Best for Expats and Digital Nomads in 2025?",
@@ -28,9 +24,7 @@
     "tags": ["comparison", "digital nomad"],
     "date": "August 10, 2025",
     "country": "Thailand",
-    "readTime": "10 mins",
-    "slug": "chiang-mai-vs-bangkok-expat-guide-2025",
-    "category": "thailand"
+    "readTime": "10 mins"
   },
   {
     "title": "How Much Does It Really Cost to Live in Thailand in 2025?",
@@ -39,31 +33,25 @@
     "tags": ["slow travel", "expat hubs"],
     "date": "August 10, 2025",
     "country": "Thailand",
-    "readTime": "7 mins",
-    "slug": "cost-of-living-thailand-2025",
-    "category": "thailand"
+    "readTime": "7 mins"
   },
   {
     "title": "Thailand Under Pressure: Is the Land of Smiles Still Worth It?",
-    "description": "Thailand in 2025 isn't what it used to be. From politics to petty crime to rising costs, here's the unfiltered truth for expats and nomads.",
+    "description": "Thailand in 2025 isn't what it used to be. From politics to petty crime to rising costs, here’s the unfiltered truth for expats and nomads.",
     "thumbnail": "https://res.cloudinary.com/jetlagchronicles/image/upload/v1748895188/Thailand_Buddah_Statue_4a17cd3bc1.jpg",
     "tags": ["nomad visa", "slow travel"],
     "date": "August 10, 2025",
     "country": "Thailand",
-    "readTime": "6 mins",
-    "slug": "is-thailand-still-worth-it-2025",
-    "category": "thailand"
+    "readTime": "6 mins"
   },
   {
     "title": "Phuket: Is It Still Worth It? A Roast, a Love Letter, and a Warning for Expats and Nomads",
-    "description": "Overcrowded, overpriced, and still somehow irresistible—Phuket is complicated. Here's a hilarious, honest guide for digital nomads and expats wondering if this Thai hotspot still deserves a spot on their itinerary.",
+    "description": "Overcrowded, overpriced, and still somehow irresistible—Phuket is complicated. Here’s a hilarious, honest guide for digital nomads and expats wondering if this Thai hotspot still deserves a spot on their itinerary.",
     "thumbnail": "https://res.cloudinary.com/jetlagchronicles/image/upload/v1748895188/Thailand_Buddah_Statue_4a17cd3bc1.jpg",
     "tags": ["real talk", "moving abroad"],
     "date": "August 10, 2025",
     "country": "Thailand",
-    "readTime": "8 mins",
-    "slug": "phuket-expat-digital-nomad-guide",
-    "category": "thailand"
+    "readTime": "8 mins"
   },
   {
     "title": "An Ode to Bangkok: A Love Letter to the City of Dreams",
@@ -72,19 +60,6 @@
     "tags": ["Bangkok", "Culture"],
     "date": "August 10, 2025",
     "country": "Thailand",
-    "readTime": "5 mins",
-    "slug": "ode-to-bangkok-love-letter-to-the-city",
-    "category": "thailand"
-  },
-  {
-    "title": "Thailand Under Pressure: Is the Land of Smiles Still Worth It?",
-    "description": "Tourism changes, economic pressures, and shifting vibes—is Thailand still the dream?",
-    "thumbnail": "https://res.cloudinary.com/jetlagchronicles/image/upload/v1744161351/for-cards/thailand-under-pressure.jpg",
-    "tags": ["Opinion", "Travel Trends"],
-    "date": "August 10, 2025",
-    "country": "Thailand",
-    "readTime": "6 mins",
-    "slug": "is-thailand-still-worth-it-2025",
-    "category": "thailand"
+    "readTime": "5 mins"
   }
 ]
