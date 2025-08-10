@@ -17,16 +17,34 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "The Jet Lag Chronicles",
-  description: "A curated collection of travel experiences and tips.",
+  title: {
+    default: "The Jet Lag Chronicles",
+    template: "%s | The Jet Lag Chronicles",
+  },
+  description:
+    "Discover authentic travel experiences, destination guides, and practical tips from seasoned travelers. Your companion for meaningful travel adventures.",
+  keywords: [
+    "travel",
+    "digital nomad",
+    "expat",
+    "destination guides",
+    "travel tips",
+    "authentic travel",
+    "travel stories",
+  ],
+  authors: [{ name: "The Jet Lag Chronicles" }],
+  creator: "The Jet Lag Chronicles",
+  publisher: "The Jet Lag Chronicles",
+  metadataBase: new URL("https://thejetlagchronicles.com"),
   openGraph: {
     title: "The Jet Lag Chronicles",
-    description: "A curated collection of travel experiences and tips.",
-    url: "https://jetlag-fe.vercel.app/",
-    siteName: "thejetlagchronicles.com",
+    description:
+      "Discover authentic travel experiences, destination guides, and practical tips from seasoned travelers.",
+    url: "https://thejetlagchronicles.com/",
+    siteName: "The Jet Lag Chronicles",
     images: [
       {
-        url: "https://jetlag-fe.vercel.app/default-og.jpg",
+        url: "https://thejetlagchronicles.com/default-og.jpg",
         width: 1200,
         height: 630,
         alt: "The Jet Lag Chronicles OG image",
@@ -38,8 +56,24 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "The Jet Lag Chronicles",
-    description: "A curated collection of travel experiences and tips.",
-    images: ["https://jetlag-fe.vercel.app/default-og.jpg"],
+    description:
+      "Discover authentic travel experiences, destination guides, and practical tips from seasoned travelers.",
+    images: ["https://thejetlagchronicles.com/default-og.jpg"],
+    creator: "@the_jetlaggers",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "your-google-verification-code", // Add your actual Google verification code
   },
 };
 
