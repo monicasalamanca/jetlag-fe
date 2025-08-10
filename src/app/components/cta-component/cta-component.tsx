@@ -1,4 +1,6 @@
-import { trackEvent } from "@/utils/analytics";
+"use client";
+
+import { trackButtonClick } from "@/app/utils/analytics";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 
@@ -16,10 +18,10 @@ const CTAComponent = ({
   buttonText: string;
 }) => {
   const handleClick = () => {
-    trackEvent({
-      action: "click",
-      category: "cta from",
-      label: `${name} link`,
+    trackButtonClick({
+      buttonText: buttonText || "CTA Button",
+      location: window.location.pathname,
+      buttonType: "cta",
     });
   };
 

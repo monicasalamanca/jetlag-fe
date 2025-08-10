@@ -26,16 +26,19 @@ const colourStyle = [
   "pink",
 ] as const;
 
-const getStyle = () => {
-  const randomCardStyle =
-    cardStyles[Math.floor(Math.random() * cardStyles.length)];
-  return `${randomCardStyle}`;
+// Deterministic functions to avoid hydration mismatches while maintaining variety
+const getStyle = (index: number, seed: string = "") => {
+  // Combine index with seed for more variety
+  const hash = seed.length > 0 ? seed.charCodeAt(index % seed.length) : 0;
+  const styleIndex = (index + hash) % cardStyles.length;
+  return `${cardStyles[styleIndex]}`;
 };
 
-const getColour = () => {
-  const randomColourStyle =
-    colourStyle[Math.floor(Math.random() * colourStyle.length)];
-  return randomColourStyle;
+const getColour = (index: number, seed: string = "") => {
+  // Combine index with seed for more variety
+  const hash = seed.length > 0 ? seed.charCodeAt(index % seed.length) : 0;
+  const colourIndex = (index + hash) % colourStyle.length;
+  return colourStyle[colourIndex];
 };
 
 const CountryLander: FC<{ country: Country }> = ({ country }) => {
@@ -45,18 +48,24 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
 
   const { name, tagline, intro, quickFacts, deepInfo } = country;
 
-  // Helper function to shuffle an array
-  const shuffleArray = <T,>(array: T[]): T[] => {
-    return array
-      .map((item) => ({ item, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ item }) => item);
+  // Seeded random function for deterministic shuffling
+  const seededRandom = (seed: string) => {
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+      const char = seed.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return () => {
+      hash = (hash * 9301 + 49297) % 233280;
+      return hash / 233280;
+    };
   };
 
   // Combine all cards into one array
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const allCards = useMemo(() => {
-    const quickFactCards = quickFacts.map((fact) => ({
+    const quickFactCards = quickFacts.map((fact, index) => ({
       type: "quickFact",
       id: fact.id,
       component: (
@@ -65,8 +74,8 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
           label={fact.label}
           description={fact.description}
           icon={fact.icon}
-          cardStyle={getStyle()}
-          colour={getColour()}
+          cardStyle={getStyle(index, name)}
+          colour={getColour(index, name)}
         />
       ),
     }));
@@ -106,36 +115,47 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
       {
         type: "blog",
         id: "blog-4",
-        component: <CardTwo mockData={blogs[5]} color="green" />,
+        component: <CardTwo key="blog-4" mockData={blogs[5]} color="green" />,
       },
       {
         type: "blog",
         id: "blog-5",
-        component: <CardTwo mockData={blogs[4]} color="red" />,
+        component: <CardTwo key="blog-5" mockData={blogs[4]} color="red" />,
       },
       {
         type: "blog",
         id: "blog-6",
-        component: <CardThree mockData={blogs[6]} color="purple" />,
+        component: (
+          <CardThree key="blog-6" mockData={blogs[6]} color="purple" />
+        ),
       },
       {
         type: "blog",
         id: "blog-7",
-        component: <CardThree mockData={blogs[6]} color="blue" />,
+        component: <CardThree key="blog-7" mockData={blogs[6]} color="blue" />,
       },
     ];
 
     return [...quickFactCards, ...deepInfoCards, ...blogCards];
   }, [quickFacts, deepInfo, name]);
 
-  // Track card repetition
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const cardRepetitionCount: Record<string, number> = {};
-
-  // Filter and shuffle cards
+  // Filter and shuffle cards with deterministic randomization
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredCards = useMemo(() => {
-    const shuffledCards = shuffleArray(allCards);
+    // Helper function to shuffle an array deterministically (moved inside useMemo)
+    const shuffleArraySeeded = <T,>(array: T[], seed: string): T[] => {
+      const rng = seededRandom(seed);
+      return array
+        .map((item) => ({ item, sort: rng() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ item }) => item);
+    };
+
+    // Track card repetition (moved inside useMemo)
+    const cardRepetitionCount: Record<string, number> = {};
+
+    // Use country name as seed for consistent shuffling
+    const shuffledCards = shuffleArraySeeded(allCards, name);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return shuffledCards.filter((card: any) => {
@@ -146,7 +166,7 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
       }
       return false;
     });
-  }, [allCards, cardRepetitionCount]);
+  }, [allCards, name]);
 
   // Split the filteredCards array into two parts
   const firstHalf = filteredCards.slice(0, Math.ceil(filteredCards.length / 2));
@@ -166,11 +186,15 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
         {/* {filteredCards.map((card: any) => card.component)} */}
         <div className={s.column}>
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {firstHalf.map((card: any) => card.component)}
+          {firstHalf.map((card: any) => (
+            <div key={`first-${card.id}`}>{card.component}</div>
+          ))}
         </div>
         <div className={s.column}>
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {secondHalf.map((card: any) => card.component)}
+          {secondHalf.map((card: any) => (
+            <div key={`second-${card.id}`}>{card.component}</div>
+          ))}
         </div>
       </section>
     </main>

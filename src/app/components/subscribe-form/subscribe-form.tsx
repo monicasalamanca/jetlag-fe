@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
-import { trackEvent } from "@/app/utils/analytics";
+import { trackFormSubmission } from "@/app/utils/analytics";
 
 const Success = dynamic(() => import("./success/success"), {
   loading: () => <p>Loading...</p>,
@@ -160,10 +160,10 @@ const SubscribeForm: FC<{
       }),
     });
 
-    trackEvent({
-      action: "click",
-      category: "subscribe from",
-      label: `${trackEventName}`,
+    trackFormSubmission({
+      formName: `Subscribe Form - ${trackEventName}`,
+      location: window.location.pathname,
+      success: res.status === 200,
     });
 
     if (res.status === 200) {
