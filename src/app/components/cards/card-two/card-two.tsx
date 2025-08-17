@@ -81,7 +81,7 @@ const CardTwo: FC<{ mockData: CardProps; color: string }> = ({
                 icon={faLocationDot}
                 className={`${s.icon} ${getColourClassNames(color)}`}
               />
-              Bali, Indonesia
+              {mockData.country}
             </div>
             <div className={s.date}>{mockData.date}</div>
           </div>
