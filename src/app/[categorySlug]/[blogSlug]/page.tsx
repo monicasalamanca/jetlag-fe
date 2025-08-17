@@ -53,7 +53,11 @@ const BlogPostPage = async ({ params }: Props) => {
 
   const post = postArray[0];
 
-  return <BlogContent post={post} />;
+  return (
+    <>
+      <BlogContent post={post} />
+    </>
+  );
 };
 
 export default BlogPostPage;
