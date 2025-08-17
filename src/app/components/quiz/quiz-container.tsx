@@ -147,22 +147,22 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
     );
   }
 
-  if (error) {
-    return (
-      <div className={styles.errorContainer}>
-        <h3 className={styles.errorTitle}>Quiz Loading Failed</h3>
-        <p className={styles.errorMessage}>{error}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className={styles.retryButton}
-        >
-          Try Again
-        </button>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div className={styles.errorContainer}>
+  //       <h3 className={styles.errorTitle}>Quiz Loading Failed</h3>
+  //       <p className={styles.errorMessage}>{error}</p>
+  //       <button
+  //         onClick={() => window.location.reload()}
+  //         className={styles.retryButton}
+  //       >
+  //         Try Again
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
-  if (!quizData) {
+  if (!quizData || error) {
     return null;
   }
 
