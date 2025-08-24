@@ -224,8 +224,6 @@ const PollComponent: FC<PollProps> = ({
                   <p className={s.ctaDescription}>
                     📬 Check your inbox and confirm your email to unlock the
                     free guide.
-                    <br />
-                    Spam folder playing hide and seek? Go hunt it down. 😉
                   </p>
                 </>
               ) : (

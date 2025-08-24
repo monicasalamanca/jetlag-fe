@@ -25,6 +25,13 @@ const Modal: FC<{
       if (isOpen) document.body.style.overflow = "hidden";
       else document.body.style.overflow = "auto";
     }
+
+    // Cleanup function to ensure body scroll is reset when component unmounts
+    return () => {
+      if (disableBodyScroll) {
+        document.body.style.overflow = "auto";
+      }
+    };
   }, [isOpen, disableBodyScroll]);
 
   if (!mounted || !isOpen) return null;

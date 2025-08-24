@@ -4,8 +4,10 @@
   padding: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   max-width: 600px;
+  width: 100%;
   margin: 0 auto;
   transition: all 0.6s ease;
+  box-sizing: border-box; /* Ensure consistent box model */
 
   &.transitioning {
     transform: scale(0.98);
@@ -87,6 +89,8 @@
   border: none;
   padding: 0;
   margin: 0;
+  width: 100%;
+  box-sizing: border-box;
 
   @media only screen and (max-width: 768px) {
     gap: 12px;
@@ -434,6 +438,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
 
   @media only screen and (max-width: 768px) {
     gap: 16px;
@@ -504,6 +510,8 @@
 // CTA Footer Styles
 .ctaFooter {
   padding-top: 24px;
+  width: 100%;
+  box-sizing: border-box;
 
   @media only screen and (max-width: 768px) {
     margin-top: 24px;
@@ -517,6 +525,8 @@
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   border-radius: 12px;
   border: 1px solid var(--gray-200);
+  width: 100%;
+  box-sizing: border-box;
 
   @media only screen and (max-width: 768px) {
     padding: 16px;
