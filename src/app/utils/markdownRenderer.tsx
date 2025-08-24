@@ -109,6 +109,34 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
           const match = text.match(CTA_REGEX);
           if (match) {
             const attrs = parseAttributes(match[1]);
+
+            // Check if this should be a subscribe modal (handle string "true" value)
+            const isSubscribeModal = attrs.isSubscribeModal === "true";
+
+            if (isSubscribeModal) {
+              return (
+                <CTAComponent
+                  key={idx}
+                  type={attrs.type}
+                  title={attrs.title}
+                  link={attrs.link}
+                  buttonText={attrs.button}
+                  isSubscribeModal={true}
+                  subscribeConfig={{
+                    apiEndpoint: "/api/subscribe-to-download",
+                    modal: {
+                      title: "Download Your Free Travel Guide",
+                      description:
+                        "Get exclusive travel tips and destinations guide.",
+                    },
+                  }}
+                  onSubscriptionSuccess={() => {
+                    // Handle successful subscription (e.g., trigger download)
+                    console.log("User subscribed! Trigger download...");
+                  }}
+                />
+              );
+            }
             return (
               <CTAComponent
                 key={idx}
