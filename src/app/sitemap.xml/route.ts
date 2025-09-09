@@ -20,7 +20,7 @@ export async function GET() {
     const postsFromLifestyle = await fetchAllBlogSlugsFromLifestyle();
 
     const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com/";
+      process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com";
 
     const staticRoutes = ["", "about-us", "chronicles"]
       .map(

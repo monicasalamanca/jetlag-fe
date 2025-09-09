@@ -10,7 +10,6 @@ import {
   SlugForLifestyle,
   SlugWithCountry,
   SlugsResponseForLifestyle,
-  SlugsResponseWithCountry,
 } from "./types";
 
 // gets one country from params
@@ -261,12 +260,12 @@ export const postContactUs = async (data: ContactUsInfo): Promise<boolean> => {
 export const fetchAllBlogSlugsFromCountries = async (): Promise<
   SlugWithCountry[] | null
 > => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[country][id][$notNull]=true&fields[0]=slug&fields[1]=updatedAt&populate[country][fields][0]=slug`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[publishedAt][$notNull]=true&fields[0]=slug&fields[1]=updatedAt&populate[countries][fields][0]=slug`;
 
   try {
     const res = await fetch(url, {
       // cache: "no-store",
-      next: { revalidate: 3600 },
+      next: { revalidate: 3600 }, // Cache for 1 hour
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
@@ -274,20 +273,47 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
 
     if (!res.ok) {
       console.error(
-        "Failed to fetch all blog slugs taht belong to a country: ",
+        "Failed to fetch all blog slugs that belong to a country: ",
         res.statusText,
+        "Status:",
+        res.status,
       );
       return null;
     }
 
     const data = await res.json();
 
-    return data.data.map((item: SlugsResponseWithCountry) => ({
-      id: item.id,
-      slug: item.attributes.slug,
-      updatedAt: item.attributes.updatedAt,
-      countrySlug: item.attributes.country.data.attributes.slug,
-    }));
+    if (!data.data || data.data.length === 0) {
+      return null;
+    }
+
+    // Handle many-to-many relationship - flatten blogs by countries
+    const blogSlugs: SlugWithCountry[] = [];
+    data.data.forEach(
+      (item: {
+        id: number;
+        attributes: {
+          slug: string;
+          updatedAt: string;
+          countries?: { data: { attributes: { slug: string } }[] };
+        };
+      }) => {
+        if (item.attributes.countries?.data) {
+          item.attributes.countries.data.forEach(
+            (country: { attributes: { slug: string } }) => {
+              blogSlugs.push({
+                id: item.id,
+                slug: item.attributes.slug,
+                updatedAt: item.attributes.updatedAt,
+                countrySlug: country.attributes.slug,
+              });
+            },
+          );
+        }
+      },
+    );
+
+    return blogSlugs;
   } catch (error) {
     console.error(
       "Error fetching all blog slugs that belong to a country: ",
@@ -305,8 +331,8 @@ export const fetchAllCountries = async (): Promise<
   const url = `${process.env.STRAPI_URL}/api/countries?fields[0]=slug&fields[1]=updatedAt`;
   try {
     const res = await fetch(url, {
-      // cache: "no-store",
-      next: { revalidate: 3600 },
+      cache: "no-store",
+      // next: { revalidate: 3600 },
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
@@ -332,12 +358,12 @@ export const fetchAllCountries = async (): Promise<
 export const fetchAllBlogSlugsFromLifestyle = async (): Promise<
   SlugForLifestyle[] | null
 > => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[lifestyle][$eq]=true&fields[0]=slug&fields[1]=updatedAt`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[lifestyle][$eq]=true&filters[publishedAt][$notNull]=true&fields[0]=slug&fields[1]=updatedAt`;
 
   try {
     const res = await fetch(url, {
-      // cache: "no-store",
-      next: { revalidate: 3600 },
+      cache: "no-store",
+      // next: { revalidate: 3600 },
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
