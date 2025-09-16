@@ -446,13 +446,13 @@
         font-weight: var(--quiz-font-weight-medium);
         cursor: pointer;
         transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
 
         @media (min-width: 768px) {
           font-size: 16px;
         }
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
 
         &:disabled {
           opacity: 0.5;

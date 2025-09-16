@@ -25,16 +25,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const post = postArray[0];
-  const title =
+
+  // Format country name for better readability
+  const countryName = categorySlug
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (l) => l.toUpperCase());
+
+  // Clean, concise title with country prefix for better GA tracking
+  const baseTitle =
     post.title ||
     blogSlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+
+  const cleanTitle = `${countryName}: ${baseTitle}`;
+
   const description =
     post.description ||
     post.content?.slice(0, 160) ||
     `Read this authentic travel story from The Jet Lag Chronicles about ${categorySlug.replace(/-/g, " ")}.`;
 
   return createMetadata({
-    title,
+    title: cleanTitle,
     description,
     url: `https://thejetlagchronicles.com/${categorySlug}/${blogSlug}`,
     image: `https://thejetlagchronicles.com/country-og.jpg`,
