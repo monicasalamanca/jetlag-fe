@@ -1,0 +1,106 @@
+.section {
+  background-color: var(--gray-50);
+  color: var(--primary-font-dark);
+}
+
+.container {
+  padding: 48px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media only screen and (min-width: 768px) {
+    width: 768px;
+    margin: 0 auto;
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+
+  .iconWrapper {
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-amber-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+
+    .cameraIcon {
+      color: var(--color-amber);
+      font-size: 28px;
+    }
+  }
+
+  .title {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--dark);
+
+    @media only screen and (max-width: 767px) {
+      font-size: 32px;
+    }
+  }
+}
+
+.content {
+  max-width: 1024px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.imageScroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 24px;
+  padding-bottom: 16px;
+
+  /* Custom scrollbar for webkit browsers */
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--gray-100);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--gray-300);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-400);
+  }
+}
+
+.imageWrapper {
+  flex-shrink: 0;
+  width: 320px;
+  height: 320px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 70%;
+  border-radius: 16px;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}

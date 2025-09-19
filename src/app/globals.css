@@ -10,8 +10,13 @@
   ); /* Using existing primary blue instead of separate blue */
   --color-blue-medium: #0c90e9;
   --color-blue-light: var(--primary-light); /* Using existing primary-light */
-  --color-bright-green: #acf877;
-  --color-dark-bright-green: #75c13f;
+  --color-bright-green: #22c55e; /* Better contrast green */
+  --color-dark-bright-green: #16a34a; /* Higher contrast dark green */
+  --color-bright-green-light: #dcfce7; /* Light background variant */
+  --color-amber: #f59e0b; /* High contrast amber/orange */
+  --color-amber-light: #fef3c7; /* Light amber background */
+  --color-purple: #8b5cf6; /* High contrast purple */
+  --color-purple-light: #f3e8ff; /* Light purple background */
 
   --background-light: #f6faff;
 
