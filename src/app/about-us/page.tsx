@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Hero from "@/components/hero/hero";
 import AboutUsContent from "@/components/about-us-content/about-us-content";
+import WhatYouWillFind from "../../components/what-you-will-find/what-you-will-find";
 import OurMission from "@/components/our-mission/our-mission";
-import MeetUs from "@/components/meet-us/meet-us";
+import WhoWeAre from "@/components/who-we-are/who-we-are";
+import WhyTrustUs from "@/components/why-trust-us/why-trust-us";
+import MeetTheJetlaggers from "@/components/meet-the-jetlaggers/meet-the-jetlaggers";
 import OurValues from "@/components/our-values/our-values";
 import { createMetadata } from "@/app/utils/metadata";
 
@@ -23,8 +26,11 @@ export default function About() {
         shortDescription="Empowering Expats and Digital Nomads to Find Their Perfect Destination"
       />
       <AboutUsContent />
+      <WhatYouWillFind />
       <OurMission />
-      <MeetUs />
+      <WhoWeAre />
+      <WhyTrustUs />
+      <MeetTheJetlaggers />
       <OurValues />
     </>
   );

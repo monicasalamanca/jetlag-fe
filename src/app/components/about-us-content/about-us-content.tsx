@@ -3,34 +3,29 @@ import s from "./about-us-content.module.scss";
 const AboutUsContent = () => {
   return (
     <section className={s.aboutContent}>
-      <h2>Hello, fellow travellers!</h2>
+      {/* <h2>Hello, fellow travellers!</h2> */}
       <p>
-        Welcome to The Jet Lag Chronicles, where the world is your oyster, and
-        we’re here to shuck it open, one adventure at a time. Grab your passport
-        and let’s dive into the rich tapestry of humanity, culture, and yes,
-        life beyond borders.
+        Welcome to <b>The Jet Lag Chronicles</b>, where the world is your
+        oyster, and we’re here to crack it open, spill it on our pants, and eat
+        it off the floor. So, get your passport ready and join us as we learn
+        and explore the highs and lows of life beyond borders.
       </p>
       <p>
-        This isn’t just another travel blog, its a network; it’s an invitation
-        to break free from the conventional, to seek out the places that
-        resonate with your spirit, and to embrace a lifestyle that defies the
-        ordinary.
+        For us, this isn’t just another travel blog. It’s a means for change in
+        our own lives.{" "}
+        <b>A community for expats, digital nomads, and curious</b>
+        travellers who want more than surface-level travel tips and two week
+        vacation plans. This is about slow travel and finding the place(s) right
+        for you. We’re here to help you{" "}
+        <b>
+          skip the tourist traps, uncover hidden gems, and truly live abroad.
+        </b>
       </p>
       <p>
-        In a world that’s more connected than ever, why settle for the
-        nine-to-five grind when the globe is your playground? We’ll traverse
-        continents, exploring vibrant cities and quiet corners alike, uncovering
-        the destinations that call to expats, digital nomads, and dreamers
-        alike. From the artistic heartbeat of Lisbon to the tranquil beaches of
-        Thailand, we’ll dive deep into what makes each location unique, offering
-        insights that go beyond the surface.
-      </p>
-      <p>
-        So, let’s set forth into the wild unknown, trading the comforts of home
-        for the thrill of the unfamiliar. Life is too short to stay put, so why
-        not throw caution to the wind and book that flight? Here’s to the
-        stories yet to be told, and the memories that will last a lifetime. -
-        Here’s to the adventurous! 🌍✈️
+        So, whether it’s the chaos of Bangkok, the creative spark of Medellín,
+        or the coastal energy of Da Nang, we dive deep into what makes each
+        place unique and share the practical details that help you live smarter,
+        cheaper, and happier.
       </p>
     </section>
   );

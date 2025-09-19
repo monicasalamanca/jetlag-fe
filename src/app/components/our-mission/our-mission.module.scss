@@ -5,7 +5,6 @@
   text-align: center;
   align-items: center;
   margin: 0 auto;
-  padding: 32px 16px;
   background-color: var(--white);
   color: var(--primary-font-dark);
 
@@ -14,9 +13,27 @@
     margin: 0 auto;
   }
 
-  .compassIcon {
-    width: 32px;
-    margin-bottom: 8px;
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 16px 32px;
+  }
+
+  .iconWrapper {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(59, 130, 246, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+
+    .compassIcon {
+      color: var(--primary-dark);
+      font-size: 28px;
+    }
   }
 
   h2 {
@@ -24,8 +41,8 @@
   }
 
   p {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
   }
 }
