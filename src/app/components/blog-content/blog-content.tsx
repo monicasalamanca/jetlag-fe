@@ -3,11 +3,7 @@
 import { FC, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock } from "@fortawesome/free-regular-svg-icons";
-import {
-  faFacebook,
-  faLinkedin,
-  faXTwitter,
-} from "@fortawesome/free-brands-svg-icons";
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Post } from "@/api/types";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import LikeButton from "@/app/components/blog-like-button/blog-like-button";
@@ -106,7 +102,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
               >
                 <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
               </a>
-              <a
+              {/* <a
                 aria-label="Share this article on Facebook"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -121,7 +117,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
                 href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}`}
               >
                 <FontAwesomeIcon icon={faLinkedin} className={s.icon} />
-              </a>
+              </a> */}
 
               {/* <FontAwesomeIcon icon={faHeart} className={s.icon} /> */}
             </>
