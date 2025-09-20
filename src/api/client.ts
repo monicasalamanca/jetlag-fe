@@ -106,7 +106,7 @@ export const fetchBlogPost = async (
   category: string,
   slug: string,
 ): Promise<Post[] | null> => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[countries][slug][$eq]=${category}&filter[slug][$eq]=${slug}&populate[poll][populate]=options`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[countries][slug][$eq]=${category}&filters[slug][$eq]=${slug}&populate[poll][populate]=options`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {

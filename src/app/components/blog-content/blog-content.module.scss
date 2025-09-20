@@ -93,6 +93,22 @@
         position: unset !important;
       }
     }
+
+    ul {
+      list-style-type: disc;
+      padding-left: 24px;
+      margin: 0;
+
+      li {
+        margin-bottom: 8px;
+      }
+    }
+
+    div.faq-section {
+      // margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--gray-200, #e5e5e5);
+    }
   }
 
   .pollSection {
