@@ -55,7 +55,7 @@ const HomeContent = () => {
           <h2>Most Popular</h2>
           <div className={s.cardWrapper}>
             <CardThree mockData={blogs[6]} color="purple" />
-            <CardThree mockData={blogs[1]} color="blue" />
+            <CardThree mockData={blogs[7]} color="blue" />
             {/* <CardThree mockData={blogs[0]} color="red" />
             <CardThree mockData={blogs[11]} color="green" /> */}
           </div>
