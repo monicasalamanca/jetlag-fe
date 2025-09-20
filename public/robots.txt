@@ -1,22 +1,12 @@
 # Allow all search engines to crawl the site
 User-agent: *
 
-# Disallow crawling of the Next.js internal API routes
+# Block internal Next.js files and APIs
 Disallow: /api/
-
-# Disallow crawling of the Next.js internal build files
 Disallow: /_next/
 
-# Disallow crawling of dynamic routes that shouldn't be indexed
-Disallow: /404
-Disallow: /500
+# Don’t block error pages — rely on correct HTTP status codes instead
+# Don’t block legal pages — use <meta name="robots" content="noindex"> inside them if needed
 
-# Disallow crawling of private or sensitive pages (if applicable)
-Disallow: /privacy-policy
-Disallow: /terms-of-service
-
-# Allow crawling of all other pages
-Allow: /
-
-# Specify the location of the sitemap for better SEO
-Sitemap: https://yourdomain.com/sitemap.xml
+# Point to your sitemap
+Sitemap: https://thejetlagchronicles.com/sitemap.xml
