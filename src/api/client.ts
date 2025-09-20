@@ -198,7 +198,10 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
       publishedAt: item.attributes.publishedAt,
       likes: item.attributes.likes,
       imageUrl:
-        item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail?.url,
+        item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
+          ?.url ||
+        item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
+        item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
       category: item.attributes.category?.data.attributes.name,
     }));
   } catch (error) {
