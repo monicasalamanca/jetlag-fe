@@ -70,7 +70,7 @@ export const fetchCountry = async (
 export const fetchBlogPostFromLifestyle = async (
   slug: string,
 ): Promise<Post[] | null> => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[lifestyle]=true&filters[slug][$eq]=${slug}`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[lifestyle]=true&filters[slug][$eq]=${slug}&populate[images]=*`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
@@ -93,6 +93,11 @@ export const fetchBlogPostFromLifestyle = async (
       publishedAt: item.attributes.publishedAt,
       likes: item.attributes.likes,
       views: item.attributes.views,
+      imageUrl:
+        item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
+          ?.url ||
+        item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
+        item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
     }));
   } catch (error) {
     console.error("Error fetching a blog post: ", error);
@@ -106,7 +111,7 @@ export const fetchBlogPost = async (
   category: string,
   slug: string,
 ): Promise<Post[] | null> => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[countries][slug][$eq]=${category}&filters[slug][$eq]=${slug}&populate[poll][populate]=options`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[countries][slug][$eq]=${category}&filters[slug][$eq]=${slug}&populate[poll][populate]=options&populate[images]=*`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
@@ -134,6 +139,11 @@ export const fetchBlogPost = async (
         publishedAt: item.attributes.publishedAt,
         likes: item.attributes.likes,
         views: item.attributes.views,
+        imageUrl:
+          item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
+            ?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
         poll: pollData
           ? {
               id: pollData.id,
@@ -188,7 +198,7 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
       publishedAt: item.attributes.publishedAt,
       likes: item.attributes.likes,
       imageUrl:
-        item.attributes.images?.data[0]?.attributes?.formats?.thumbnail?.url,
+        item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail?.url,
       category: item.attributes.category?.data.attributes.name,
     }));
   } catch (error) {

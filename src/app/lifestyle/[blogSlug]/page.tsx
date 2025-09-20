@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     url: `https://thejetlagchronicles.com/lifestyle/${blogSlug}`,
-    image: `https://thejetlagchronicles.com/lifestyle-og.jpg`,
+    image: post.imageUrl || `https://thejetlagchronicles.com/lifestyle-og.jpg`,
     type: "article",
     publishedTime: post.publishedAt,
     authors: ["The Jet Lag Chronicles"],

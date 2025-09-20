@@ -178,6 +178,7 @@ export type Post = {
   publishedAt: string;
   likes: number;
   views: number;
+  imageUrl?: string;
   poll?: Poll;
 };
 
