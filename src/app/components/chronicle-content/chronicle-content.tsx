@@ -26,7 +26,7 @@ const ChronicleContent = () => {
             <CardOne mockData={blogs[4]} color="blue" />
             <CardOne mockData={blogs[5]} color="green" />
             <CardOne mockData={blogs[6]} color="purple" />
-            <CardOne mockData={blogs[1]} color="orange" />
+            <CardOne mockData={blogs[7]} color="orange" />
           </div>
         </div>
       </section>
