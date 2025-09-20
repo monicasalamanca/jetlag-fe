@@ -5,7 +5,7 @@ import React, { JSX, useMemo, useCallback } from "react";
 import CTAComponent from "@/components/cta-component/cta-component";
 import { SafePoll } from "@/app/components/poll";
 
-// Type definitions for marked tokens
+// Type definitions for marked tokens for marked tokens
 interface MarkedToken {
   type: string;
   text?: string;
@@ -135,16 +135,8 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
           </Link>
         );
       case "image":
-        return (
-          <Image
-            key={idx}
-            src={token.href || ""}
-            alt={token.text || ""}
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            loading="lazy"
-          />
-        );
+        // Images are handled at the paragraph level to avoid div-in-p issues
+        return null;
       case "br":
         return <br key={idx} />;
       default:
@@ -206,7 +198,7 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
             isSubscribeModal={true}
             subscribeConfig={CTA_CONFIG.SUBSCRIBE_MODAL}
             onSubscriptionSuccess={() => {
-              console.log("User subscribed! Trigger download...");
+              // User subscribed successfully
             }}
           />
         );
@@ -278,6 +270,76 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
 
         case "paragraph": {
           const text = token.text;
+
+          // Check if this paragraph contains only an image
+          const hasOnlyImage =
+            token.tokens?.length === 1 && token.tokens[0].type === "image";
+
+          // Check if this paragraph contains any images (even mixed with text)
+          const hasImages = token.tokens?.some((t) => t.type === "image");
+
+          if (hasOnlyImage && token.tokens?.[0]) {
+            const imageToken = token.tokens[0] as InlineToken;
+            return (
+              <div
+                key={idx}
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "16/9",
+                  minHeight: "200px",
+                  maxHeight: "500px",
+                  marginBottom: "1rem",
+                }}
+              >
+                <Image
+                  src={imageToken.href || ""}
+                  alt={imageToken.text || ""}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                  loading="lazy"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            );
+          }
+
+          // Handle paragraphs with mixed content that includes images
+          if (hasImages && !hasOnlyImage) {
+            return (
+              <div key={idx}>
+                {token.tokens?.map(
+                  (inlineToken: InlineToken, inlineIdx: number) => {
+                    if (inlineToken.type === "image") {
+                      return (
+                        <div
+                          key={inlineIdx}
+                          style={{
+                            position: "relative",
+                            width: "100%",
+                            aspectRatio: "16/9",
+                            minHeight: "200px",
+                            maxHeight: "500px",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          <Image
+                            src={inlineToken.href || ""}
+                            alt={inlineToken.text || ""}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                            loading="lazy"
+                            style={{ objectFit: "cover" }}
+                          />
+                        </div>
+                      );
+                    }
+                    return renderInline(inlineToken, inlineIdx);
+                  },
+                )}
+              </div>
+            );
+          }
 
           // Handle special content types (only if not inside FAQ to prevent recursion)
           if (!isInsideFAQ && text && handlers) {
