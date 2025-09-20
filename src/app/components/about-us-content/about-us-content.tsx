@@ -3,7 +3,6 @@ import s from "./about-us-content.module.scss";
 const AboutUsContent = () => {
   return (
     <section className={s.aboutContent}>
-      {/* <h2>Hello, fellow travellers!</h2> */}
       <p>
         Welcome to <b>The Jet Lag Chronicles</b>, where the world is your
         oyster, and we’re here to crack it open, spill it on our pants, and eat
@@ -13,10 +12,10 @@ const AboutUsContent = () => {
       <p>
         For us, this isn’t just another travel blog. It’s a means for change in
         our own lives.{" "}
-        <b>A community for expats, digital nomads, and curious</b>
-        travellers who want more than surface-level travel tips and two week
-        vacation plans. This is about slow travel and finding the place(s) right
-        for you. We’re here to help you{" "}
+        <b>A community for expats, digital nomads, and curious</b> travellers
+        who want more than surface-level travel tips and two week vacation
+        plans. This is about slow travel and finding the place(s) right for you.
+        We’re here to help you{" "}
         <b>
           skip the tourist traps, uncover hidden gems, and truly live abroad.
         </b>

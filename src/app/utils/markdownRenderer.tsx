@@ -1,18 +1,48 @@
 import { marked } from "marked";
 import Image from "next/image";
 import Link from "next/link";
-import React, { JSX } from "react";
+import React, { JSX, useMemo, useCallback } from "react";
 import CTAComponent from "@/components/cta-component/cta-component";
 import { SafePoll } from "@/app/components/poll";
 
-// A custom renderer that collects full inline tokens
+// Type definitions for marked tokens
+interface MarkedToken {
+  type: string;
+  text?: string;
+  depth?: number;
+  tokens?: MarkedToken[];
+  items?: MarkedToken[];
+  href?: string;
+}
+
+interface InlineToken {
+  type: string;
+  text?: string;
+  href?: string;
+}
+
+// Configure marked once globally for better performance
 marked.use({
-  walkTokens: (token) => {
-    if (token.type === "paragraph" && typeof token.text === "string") {
-      token.tokens = marked.lexer(token.text, { gfm: true });
-    }
-  },
+  gfm: true,
+  breaks: true, // Convert single line breaks to <br> tags
 });
+
+// Constants for better maintainability
+const PATTERNS = {
+  CTA: /\[CTA\s+(.*?)\]/, // Matches [CTA type="..." title="..." link="..." button="..."]
+  POLL: /\[POLL\]/, // Matches simple [POLL] marker
+  FAQ: /\*\*(FAQ|FAQs)\*\*/, // Matches **FAQ** or **FAQs**
+} as const;
+
+const CTA_CONFIG = {
+  SUBSCRIBE_MODAL: {
+    apiEndpoint: "/api/subscribe-to-download",
+    modal: {
+      title: "Download Your Free Travel Guide",
+      description: "Get exclusive travel tips and destinations guide.",
+    },
+  },
+} as const;
 
 interface CustomMarkdownRendererProps {
   markdown: string;
@@ -44,29 +74,53 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
   markdown,
   poll,
 }) => {
-  const tokens = marked.lexer(markdown);
+  // Memoize processed markdown to avoid recalculation on every render
+  const processedMarkdown = useMemo(() => {
+    return (
+      markdown
+        // Normalize line breaks
+        .replace(/\r\n/g, "\n")
+        .replace(/\r/g, "\n")
+        // Convert single newlines to proper markdown line breaks (two spaces + newline)
+        .replace(/(?<!\n)\n(?!\n)/g, "  \n")
+        // Keep double newlines as paragraph breaks
+        .replace(/  \n  \n/g, "\n\n")
+    );
+  }, [markdown]);
 
-  // 📌 CTA pattern matcher
-  const CTA_REGEX = /\[CTA\s+(.*?)\]/; // Matches [CTA type="..." title="..." link="..." button="..." icon="..."]
+  // Memoize tokens to avoid re-parsing on every render
+  const tokens = useMemo(
+    () => marked.lexer(processedMarkdown),
+    [processedMarkdown],
+  );
 
-  // 📌 Poll pattern matcher - simple marker
-  const POLL_REGEX = /\[POLL\]/; // Matches simple [POLL] marker
+  // Utility functions - moved outside component for better performance
+  const parseAttributes = useCallback(
+    (attributeString: string): Record<string, string> => {
+      const attrs: Record<string, string> = {};
+      const regex = /(\w+)="([^"]+)"/g;
+      let match;
 
-  // 🔧 Extract key="value" pairs from the string
-  const parseAttributes = (attrString: string): Record<string, string> => {
-    const attrs: Record<string, string> = {};
-    const matches = attrString.match(/(\w+)="([^"]+)"/g) || [];
+      while ((match = regex.exec(attributeString)) !== null) {
+        attrs[match[1]] = match[2];
+      }
 
-    matches.forEach((pair) => {
-      const [key, value] = pair.split("=");
-      attrs[key] = value.replace(/"/g, "");
-    });
+      return attrs;
+    },
+    [],
+  );
 
-    return attrs;
-  };
+  const formatFAQText = useCallback((text: string): string => {
+    return text
+      .replace(/Q:/g, "\n\n**Q:**")
+      .replace(/A:/g, "\n**A:**")
+      .replace(/\*\*(FAQ|FAQs)\*\*\n\n/g, (match) =>
+        match.replace("\n\n", "\n"),
+      )
+      .trim();
+  }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const renderInline = (token: any, idx: number) => {
+  const renderInline = useCallback((token: InlineToken, idx: number) => {
     switch (token.type) {
       case "text":
         return token.text;
@@ -76,7 +130,7 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
         return <em key={idx}>{token.text}</em>;
       case "link":
         return (
-          <Link key={idx} href={token.href}>
+          <Link key={idx} href={token.href || "#"}>
             {token.text}
           </Link>
         );
@@ -84,122 +138,206 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
         return (
           <Image
             key={idx}
-            src={token.href}
-            alt={token.text}
+            src={token.href || ""}
+            alt={token.text || ""}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             loading="lazy"
           />
         );
+      case "br":
+        return <br key={idx} />;
       default:
         return null;
     }
-  };
+  }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const renderToken = (token: any, idx: number) => {
-    switch (token.type) {
-      case "heading":
-        const Tag = `h${token.depth}` as keyof JSX.IntrinsicElements;
-        return <Tag key={idx}>{token.text}</Tag>;
-      case "paragraph":
-        const text = token.text;
-        // Check for CTA pattern
-        if (text && CTA_REGEX.test(text)) {
-          const match = text.match(CTA_REGEX);
-          if (match) {
-            const attrs = parseAttributes(match[1]);
+  // Handler functions for different content types
+  const handleFAQContent = useCallback(
+    (text: string, idx: number): JSX.Element | null => {
+      if (!PATTERNS.FAQ.test(text)) return null;
 
-            // Check if this should be a subscribe modal (handle string "true" value)
-            const isSubscribeModal = attrs.isSubscribeModal === "true";
+      const formattedFAQText = formatFAQText(text);
+      const faqTokens = marked.lexer(formattedFAQText);
 
-            if (isSubscribeModal) {
+      // Directly render FAQ tokens without circular dependency
+      return (
+        <div key={idx} className="faq-section">
+          {faqTokens.map((faqToken, faqIdx) => {
+            const token = faqToken as MarkedToken;
+            if (token.type === "heading") {
+              const Tag = `h${token.depth}` as keyof JSX.IntrinsicElements;
+              return <Tag key={faqIdx}>{token.text}</Tag>;
+            }
+            if (token.type === "paragraph") {
               return (
-                <CTAComponent
-                  key={idx}
-                  type={attrs.type}
-                  title={attrs.title}
-                  link={attrs.link}
-                  buttonText={attrs.button}
-                  isSubscribeModal={true}
-                  subscribeConfig={{
-                    apiEndpoint: "/api/subscribe-to-download",
-                    modal: {
-                      title: "Download Your Free Travel Guide",
-                      description:
-                        "Get exclusive travel tips and destinations guide.",
-                    },
-                  }}
-                  onSubscriptionSuccess={() => {
-                    // Handle successful subscription (e.g., trigger download)
-                    console.log("User subscribed! Trigger download...");
-                  }}
-                />
+                <p key={faqIdx}>
+                  {token.tokens?.map(
+                    (inlineToken: InlineToken, inlineIdx: number) =>
+                      renderInline(inlineToken, inlineIdx),
+                  ) ?? token.text}
+                </p>
               );
             }
-            return (
-              <CTAComponent
-                key={idx}
-                type={attrs.type}
-                title={attrs.title}
-                link={attrs.link}
-                buttonText={attrs.button}
-              />
-            );
-          }
-        }
-
-        // Check for Poll pattern
-        if (text && POLL_REGEX.test(text)) {
-          if (poll) {
-            // Convert the markdown poll format to our Poll component format
-            const pollData = {
-              id: 1, // Default ID for markdown polls
-              slug: "markdown-poll",
-              question: poll.question,
-              status: "live" as const,
-              ctaTitle: poll.ctaTitle,
-              ctaDescription: poll.ctaDescription,
-              ctaButtonText: poll.ctaButtonText,
-              options: poll.options.map((option) => ({
-                id: option.id,
-                label: option.label,
-                votes: option.votes,
-              })),
-            };
-
-            return (
-              <SafePoll
-                key={idx}
-                poll={pollData}
-                title={poll.title}
-                simulateVotes={true}
-                onVote={(optionId: number) => {
-                  // Here you can integrate with your analytics or backend
-                  poll.onVote?.(optionId);
-                }}
-              />
-            );
-          } else {
-            // If no poll data is provided, don't render anything (filter out [POLL] text)
             return null;
-          }
+          })}
+        </div>
+      );
+    },
+    [formatFAQText, renderInline],
+  );
+
+  const handleCTAContent = useCallback(
+    (text: string, idx: number): JSX.Element | null => {
+      const match = text.match(PATTERNS.CTA);
+      if (!match) return null;
+
+      const attrs = parseAttributes(match[1]);
+      const isSubscribeModal = attrs.isSubscribeModal === "true";
+
+      if (isSubscribeModal) {
+        return (
+          <CTAComponent
+            key={idx}
+            type={attrs.type}
+            title={attrs.title}
+            link={attrs.link}
+            buttonText={attrs.button}
+            isSubscribeModal={true}
+            subscribeConfig={CTA_CONFIG.SUBSCRIBE_MODAL}
+            onSubscriptionSuccess={() => {
+              console.log("User subscribed! Trigger download...");
+            }}
+          />
+        );
+      }
+
+      return (
+        <CTAComponent
+          key={idx}
+          type={attrs.type}
+          title={attrs.title}
+          link={attrs.link}
+          buttonText={attrs.button}
+        />
+      );
+    },
+    [parseAttributes],
+  );
+
+  const handlePollContent = useCallback(
+    (text: string, idx: number): JSX.Element | null => {
+      if (!PATTERNS.POLL.test(text) || !poll) return null;
+
+      const pollData = {
+        id: 1,
+        slug: "markdown-poll",
+        question: poll.question,
+        status: "live" as const,
+        ctaTitle: poll.ctaTitle,
+        ctaDescription: poll.ctaDescription,
+        ctaButtonText: poll.ctaButtonText,
+        options: poll.options.map((option) => ({
+          id: option.id,
+          label: option.label,
+          votes: option.votes,
+        })),
+      };
+
+      return (
+        <SafePoll
+          key={idx}
+          poll={pollData}
+          title={poll.title}
+          simulateVotes={true}
+          onVote={(optionId: number) => {
+            poll.onVote?.(optionId);
+          }}
+        />
+      );
+    },
+    [poll],
+  );
+
+  const renderToken = useCallback(
+    (
+      token: MarkedToken,
+      idx: number,
+      isInsideFAQ = false,
+      handlers?: {
+        handleFAQContent: (text: string, idx: number) => JSX.Element | null;
+        handleCTAContent: (text: string, idx: number) => JSX.Element | null;
+        handlePollContent: (text: string, idx: number) => JSX.Element | null;
+      },
+    ): JSX.Element | null => {
+      switch (token.type) {
+        case "heading": {
+          const Tag = `h${token.depth}` as keyof JSX.IntrinsicElements;
+          return <Tag key={idx}>{token.text}</Tag>;
         }
 
-        return <p key={idx}>{token.tokens?.map(renderInline) ?? token.text}</p>;
-      case "list":
-        return (
-          <ul key={idx}>
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {token.items.map((item: any, itemIdx: number) => (
-              <li key={itemIdx}>{item.text}</li>
-            ))}
-          </ul>
-        );
-      default:
-        return null;
-    }
-  };
+        case "paragraph": {
+          const text = token.text;
 
-  return <>{tokens.map(renderToken)}</>;
+          // Handle special content types (only if not inside FAQ to prevent recursion)
+          if (!isInsideFAQ && text && handlers) {
+            // Check for FAQ pattern first
+            const faqElement = handlers.handleFAQContent(text, idx);
+            if (faqElement) return faqElement;
+
+            // Check for CTA pattern
+            const ctaElement = handlers.handleCTAContent(text, idx);
+            if (ctaElement) return ctaElement;
+
+            // Check for Poll pattern
+            const pollElement = handlers.handlePollContent(text, idx);
+            if (pollElement) return pollElement;
+          }
+
+          // Render regular paragraph
+          return (
+            <p key={idx}>
+              {token.tokens?.map(
+                (inlineToken: InlineToken, inlineIdx: number) =>
+                  renderInline(inlineToken, inlineIdx),
+              ) ?? token.text}
+            </p>
+          );
+        }
+
+        case "list":
+          return (
+            <ul key={idx}>
+              {token.items?.map((item: MarkedToken, itemIdx: number) => (
+                <li key={itemIdx}>{item.text}</li>
+              )) ?? null}
+            </ul>
+          );
+
+        default:
+          return null;
+      }
+    },
+    [renderInline],
+  );
+
+  const handlers = useMemo(
+    () => ({
+      handleFAQContent,
+      handleCTAContent,
+      handlePollContent,
+    }),
+    [handleFAQContent, handleCTAContent, handlePollContent],
+  );
+
+  return (
+    <>
+      {tokens.map((token, idx) =>
+        renderToken(token as MarkedToken, idx, false, handlers),
+      )}
+    </>
+  );
 };
+
+// Set display name for better debugging
+CustomMarkdownRenderer.displayName = "CustomMarkdownRenderer";
