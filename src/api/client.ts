@@ -412,7 +412,7 @@ export const fetchBlogsByCountry = async (
   countrySlug: string,
 ): Promise<BlogPost[] | null> => {
   // For now, fetch all blogs and filter by content since country relationship might not be set up
-  const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
 
   try {
     const res = await fetch(url, {
