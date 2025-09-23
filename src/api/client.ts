@@ -17,20 +17,25 @@ import {
 export const fetchCountry = async (
   countryName: string,
 ): Promise<Country[] | null> => {
+  const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token =
+    process.env.STRAPI_READ_API_TOKEN ||
+    process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
   const query = new URLSearchParams({
     "filters[slug][$eq]": countryName,
     "populate[quickFacts]": "*",
     "populate[deepInfo][populate]": "image",
   }).toString();
   // const url = `http://localhost:1337/api/countries?filters[slug][$eq]=${countryName}&populate[quickFacts]=*&populate[deepInfo][populate]=image`;
-  const url = `${process.env.STRAPI_URL}/api/countries?${query}`;
+  const url = `${baseUrl}/api/countries?${query}`;
 
   try {
     // const res = await fetch(url, { next: { revalidate: 604800 } }); // its cached for a week
     const res = await fetch(url, {
       cache: "no-store",
       headers: {
-        Authorization: `Bearer ${process.env.STRAPI_READ_API_TOKEN}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -70,13 +75,17 @@ export const fetchCountry = async (
 export const fetchBlogPostFromLifestyle = async (
   slug: string,
 ): Promise<Post[] | null> => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[lifestyle]=true&filters[slug][$eq]=${slug}&populate[images]=*`;
+  const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token =
+    process.env.STRAPI_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  const url = `${baseUrl}/api/blogs?filters[lifestyle]=true&filters[slug][$eq]=${slug}&populate[images]=*`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
       cache: "no-store",
       headers: {
-        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     if (!res.ok) {
@@ -111,13 +120,17 @@ export const fetchBlogPost = async (
   category: string,
   slug: string,
 ): Promise<Post[] | null> => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[countries][slug][$eq]=${category}&filters[slug][$eq]=${slug}&populate[poll][populate]=options&populate[images]=*`;
+  const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token =
+    process.env.STRAPI_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  const url = `${baseUrl}/api/blogs?filters[countries][slug][$eq]=${category}&filters[slug][$eq]=${slug}&populate[poll][populate]=options&populate[images]=*`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
       cache: "no-store",
       headers: {
-        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -412,13 +425,19 @@ export const fetchBlogsByCountry = async (
   countrySlug: string,
 ): Promise<BlogPost[] | null> => {
   // For now, fetch all blogs and filter by content since country relationship might not be set up
-  const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_STRAPI_URL ||
+    "https://jetlag-be-production.up.railway.app";
+  console.log("fetchBlogsByCountry baseUrl:", baseUrl); // Debug log
+  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
 
   try {
+    const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+    console.log("fetchBlogsByCountry token exists:", !!token); // Debug log
     const res = await fetch(url, {
       cache: "no-store",
       headers: {
-        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
