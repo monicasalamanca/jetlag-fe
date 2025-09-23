@@ -425,9 +425,9 @@ export const fetchBlogsByCountry = async (
   countrySlug: string,
 ): Promise<BlogPost[] | null> => {
   // For now, fetch all blogs and filter by content since country relationship might not be set up
-  const baseUrl =
-    process.env.NEXT_PUBLIC_STRAPI_URL ||
-    "https://jetlag-be-production.up.railway.app";
+  const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
+  console.log("Raw STRAPI_URL:", strapiUrl); // Temporary debug
+  const baseUrl = strapiUrl || "https://jetlag-be-production.up.railway.app";
   const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
 
   try {
