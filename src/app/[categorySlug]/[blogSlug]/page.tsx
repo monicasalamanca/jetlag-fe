@@ -38,13 +38,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const cleanTitle = `${countryName}: ${baseTitle}`;
 
-  // Add debugging
-  console.log("🔍 DEBUG - Post data:", {
-    postImageUrl: post.imageUrl,
-    postTitle: post.title,
-    hasImages: !!post.imageUrl,
-  });
-
   const description =
     post.description ||
     post.content?.slice(0, 160) ||

@@ -88,12 +88,6 @@ const PollComponent: FC<PollProps> = ({
   // Handle subscription success - convert simulated vote to real vote
   const handleSubscriptionSuccess = useCallback(async () => {
     setHasSubscribed(true);
-
-    // Note: The actual vote conversion is handled by the subscribe form
-    // We just need to update our local state to reflect the subscription
-    console.log(
-      "Subscription successful - vote conversion handled by subscribe form",
-    );
   }, []);
 
   // Check subscription status from localStorage on component mount

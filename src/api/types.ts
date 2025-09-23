@@ -167,6 +167,7 @@ export type BlogPost = {
   publishedAt: string;
   imageUrl: string;
   category: string;
+  slug: string;
 };
 
 export type Post = {
