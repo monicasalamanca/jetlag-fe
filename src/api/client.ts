@@ -418,7 +418,7 @@ export const fetchBlogsByCountry = async (
     const res = await fetch(url, {
       cache: "no-store",
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
     });
 
