@@ -1,18 +1,19 @@
 "use client";
 
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState, useEffect } from "react";
 // import CountryInfo from "../country-info/country-info";
 // import TravelResources from "../travel-resources/travel-resources";
 import { notFound } from "next/navigation";
 import Hero from "../hero/hero";
 import QuickFactCard from "../country-facts-card/card/card";
 import InfoCard from "../country-facts-card/info-card/info-card";
-import { Country } from "@/api/types";
+import ComingSoonSection from "../coming-soon-section/coming-soon-section";
 import CardOne from "../cards/card-one/card-one";
 import CardTwo from "../cards/card-two/card-two";
 import CardThree from "../cards/card-three/card-three";
 import CardFive from "../cards/card-five/card-five";
-import blogs from "@/app/blogs.json";
+import { Country, BlogPost } from "@/api/types";
+import { fetchBlogsByCountry } from "@/api/client";
 
 import s from "./country-lander.module.scss";
 
@@ -42,11 +43,52 @@ const getColour = (index: number, seed: string = "") => {
 };
 
 const CountryLander: FC<{ country: Country }> = ({ country }) => {
+  const [blogData, setBlogData] = useState<BlogPost[]>([]);
+  const [isLoadingBlogs, setIsLoadingBlogs] = useState(false);
+
+  // Fetch blog data for Thailand
+  useEffect(() => {
+    if (!country) return;
+
+    const fetchBlogs = async () => {
+      if (country.name.toLowerCase() === "thailand") {
+        setIsLoadingBlogs(true);
+        try {
+          const blogs = await fetchBlogsByCountry("thailand");
+          setBlogData(blogs || []);
+        } catch (error) {
+          console.error("Error fetching Thailand blogs:", error);
+          // Gracefully handle API failure - no blog cards will be shown
+          setBlogData([]);
+        } finally {
+          setIsLoadingBlogs(false);
+        }
+      }
+    };
+
+    fetchBlogs();
+  }, [country]);
+
   if (!country) {
     return notFound();
   }
 
   const { name, tagline, intro, quickFacts, deepInfo } = country;
+
+  // Helper function to convert BlogPost to CardProps format
+  const blogToCardProps = (blog: BlogPost) => {
+    return {
+      title: blog.title,
+      description: blog.description || "",
+      thumbnail: blog.imageUrl || "/placeholder-image.jpg",
+      tags: ["travel", blog.category || "guide"],
+      date: new Date(blog.publishedAt).toLocaleDateString(),
+      country: "Thailand",
+      readTime: "5 min",
+      slug: blog.slug,
+      category: "thailand",
+    };
+  };
 
   // Seeded random function for deterministic shuffling
   const seededRandom = (seed: string) => {
@@ -65,79 +107,107 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
   // Combine all cards into one array
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const allCards = useMemo(() => {
-    const quickFactCards = quickFacts.map((fact, index) => ({
-      type: "quickFact",
-      id: fact.id,
-      component: (
-        <QuickFactCard
-          key={`quickFact-${fact.id}`}
-          label={fact.label}
-          description={fact.description}
-          icon={fact.icon}
-          cardStyle={getStyle(index, name)}
-          colour={getColour(index, name)}
-        />
-      ),
-    }));
+    const quickFactCards =
+      quickFacts?.length > 0
+        ? quickFacts.map((fact, index) => ({
+            type: "quickFact",
+            id: fact.id,
+            component: (
+              <QuickFactCard
+                key={`quickFact-${fact.id}`}
+                label={fact.label}
+                description={fact.description}
+                icon={fact.icon}
+                cardStyle={getStyle(index, name)}
+                colour={getColour(index, name)}
+              />
+            ),
+          }))
+        : [];
 
-    const deepInfoCards = deepInfo.map((info) => ({
-      type: "deepInfo",
-      id: info.id,
-      component: (
-        <InfoCard
-          key={`deepInfo-${info.id}`}
-          name={info.name}
-          icon={info.icon}
-          description={info.description}
-          keywords={info.keywords}
-          image={info.image}
-          imageAltText={`image of ${name} ${info.name}`}
-        />
-      ),
-    }));
+    const deepInfoCards =
+      deepInfo?.length > 0
+        ? deepInfo.map((info) => ({
+            type: "deepInfo",
+            id: info.id,
+            component: (
+              <InfoCard
+                key={`deepInfo-${info.id}`}
+                name={info.name}
+                icon={info.icon}
+                description={info.description}
+                keywords={info.keywords}
+                image={info.image}
+                imageAltText={`image of ${name} ${info.name}`}
+              />
+            ),
+          }))
+        : [];
 
-    const blogCards = [
-      {
-        type: "blog",
-        id: "blog-1",
-        component: <CardOne key="blog-1" mockData={blogs[1]} color="blue" />,
-      },
-      {
-        type: "blog",
-        id: "blog-2",
-        component: <CardOne key="blog-2" mockData={blogs[2]} color="orange" />,
-      },
-      {
-        type: "blog",
-        id: "blog-3",
-        component: <CardFive key="blog-3" mockData={blogs[3]} />,
-      },
-      {
-        type: "blog",
-        id: "blog-4",
-        component: <CardTwo key="blog-4" mockData={blogs[5]} color="green" />,
-      },
-      {
-        type: "blog",
-        id: "blog-5",
-        component: <CardTwo key="blog-5" mockData={blogs[4]} color="red" />,
-      },
-      {
-        type: "blog",
-        id: "blog-6",
-        component: (
-          <CardThree key="blog-6" mockData={blogs[6]} color="purple" />
-        ),
-      },
-      {
-        type: "blog",
-        id: "blog-7",
-        component: <CardThree key="blog-7" mockData={blogs[6]} color="blue" />,
-      },
-    ];
+    // Add blog cards only for Thailand - mix of different card types
+    const blogCards =
+      name.toLowerCase() === "thailand" && blogData.length > 0
+        ? blogData.map((blog, index) => {
+            const cardProps = blogToCardProps(blog);
+            const color = getColour(index, name);
+
+            // Cycle through different card types for variety
+            const cardType = index % 4;
+            let cardComponent;
+
+            switch (cardType) {
+              case 0:
+                cardComponent = (
+                  <CardOne
+                    key={`blog-${blog.id}`}
+                    mockData={cardProps}
+                    color={color}
+                  />
+                );
+                break;
+              case 1:
+                cardComponent = (
+                  <CardTwo
+                    key={`blog-${blog.id}`}
+                    mockData={cardProps}
+                    color={color}
+                  />
+                );
+                break;
+              case 2:
+                cardComponent = (
+                  <CardThree
+                    key={`blog-${blog.id}`}
+                    mockData={cardProps}
+                    color={color}
+                  />
+                );
+                break;
+              case 3:
+                cardComponent = (
+                  <CardFive key={`blog-${blog.id}`} mockData={cardProps} />
+                );
+                break;
+              default:
+                cardComponent = (
+                  <CardOne
+                    key={`blog-${blog.id}`}
+                    mockData={cardProps}
+                    color={color}
+                  />
+                );
+            }
+
+            return {
+              type: "blog",
+              id: `blog-${blog.id}`,
+              component: cardComponent,
+            };
+          })
+        : [];
 
     return [...quickFactCards, ...deepInfoCards, ...blogCards];
-  }, [quickFacts, deepInfo, name]);
+  }, [quickFacts, deepInfo, name, blogData]);
 
   // Filter and shuffle cards with deterministic randomization
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -179,21 +249,29 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
         headline={`${name} Travel & Living Guide`}
         shortDescription={tagline}
       />
+      {name.toLowerCase() !== "thailand" && (
+        <ComingSoonSection countryName={name} />
+      )}
       <section className={s.countryIntro}>
         <p>{intro}</p>
+        {name.toLowerCase() === "thailand" && isLoadingBlogs && (
+          <p style={{ fontStyle: "italic", color: "#666" }}>
+            Loading Thailand travel stories...
+          </p>
+        )}
       </section>
       <section className={s.masonryGridSection}>
         {/* {filteredCards.map((card: any) => card.component)} */}
         <div className={s.column}>
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {firstHalf.map((card: any) => (
-            <div key={`first-${card.id}`}>{card.component}</div>
+          {firstHalf.map((card: any, index: number) => (
+            <div key={`first-${card.id}-${index}`}>{card.component}</div>
           ))}
         </div>
         <div className={s.column}>
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {secondHalf.map((card: any) => (
-            <div key={`second-${card.id}`}>{card.component}</div>
+          {secondHalf.map((card: any, index: number) => (
+            <div key={`second-${card.id}-${index}`}>{card.component}</div>
           ))}
         </div>
       </section>

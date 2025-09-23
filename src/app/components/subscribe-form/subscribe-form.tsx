@@ -232,10 +232,6 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
                 isSimulated: false,
                 convertedTimestamp: Date.now(),
               };
-
-              console.log(
-                `Converted simulated vote to real vote for poll ${pollId}, option ${voteRecord.optionId}`,
-              );
             } catch (error) {
               console.error(
                 `Failed to convert simulated vote for poll ${pollId}:`,

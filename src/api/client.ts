@@ -405,3 +405,64 @@ export const fetchAllBlogSlugsFromLifestyle = async (): Promise<
     return null;
   }
 };
+
+// gets all blogs for a specific country
+// this is used for the coming soon section to show Thailand blogs
+export const fetchBlogsByCountry = async (
+  countrySlug: string,
+): Promise<BlogPost[] | null> => {
+  // For now, fetch all blogs and filter by content since country relationship might not be set up
+  const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
+
+  try {
+    const res = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+      },
+    });
+
+    if (!res.ok) {
+      console.error(
+        `Failed to fetch blogs for ${countrySlug}: `,
+        res.statusText,
+      );
+      return null;
+    }
+
+    const blogData = await res.json();
+
+    // Filter blogs that mention Thailand in title or content (temporary solution)
+    const allBlogs = blogData.data.map((item: BlogPostResponse) => ({
+      id: item.id,
+      title: item.attributes.title,
+      description: item.attributes.description,
+      content: item.attributes.content,
+      publishedAt: item.attributes.publishedAt,
+      likes: item.attributes.likes,
+      slug: item.attributes.slug,
+      imageUrl:
+        item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
+          ?.url ||
+        item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
+        item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
+      category: item.attributes.category?.data.attributes.name,
+    }));
+
+    // Filter for Thailand-related content
+    if (countrySlug === "thailand") {
+      return allBlogs.filter(
+        (blog: BlogPost) =>
+          blog.title.toLowerCase().includes("thailand") ||
+          blog.title.toLowerCase().includes("thai") ||
+          blog.content.toLowerCase().includes("thailand") ||
+          blog.slug.includes("thailand"),
+      );
+    }
+
+    return allBlogs;
+  } catch (error) {
+    console.error(`Error fetching blogs for ${countrySlug}: `, error);
+    return null;
+  }
+};
