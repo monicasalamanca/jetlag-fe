@@ -428,12 +428,20 @@ export const fetchBlogsByCountry = async (
   const baseUrl =
     process.env.NEXT_PUBLIC_STRAPI_URL ||
     "https://jetlag-be-production.up.railway.app";
-  console.log("fetchBlogsByCountry baseUrl:", baseUrl); // Debug log
   const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
 
   try {
-    const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
-    console.log("fetchBlogsByCountry token exists:", !!token); // Debug log
+    // Try different token names available in production
+    const token =
+      process.env.NEXT_PUBLIC_STRAPI_API_TOKEN ||
+      process.env.STRAPI_API_READ_TOKEN ||
+      process.env.STRAPI_TOKEN;
+
+    if (!token) {
+      console.error("No API token found in production");
+      return null;
+    }
+
     const res = await fetch(url, {
       cache: "no-store",
       headers: {
