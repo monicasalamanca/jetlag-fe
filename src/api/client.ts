@@ -419,34 +419,16 @@ export const fetchAllBlogSlugsFromLifestyle = async (): Promise<
   }
 };
 
-// gets all blogs for a specific country
+// gets all blogs for a specific country via Next.js API route
 // this is used for the coming soon section to show Thailand blogs
 export const fetchBlogsByCountry = async (
   countrySlug: string,
 ): Promise<BlogPost[] | null> => {
-  // For now, fetch all blogs and filter by content since country relationship might not be set up
-  const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
-  console.log("Raw STRAPI_URL:", strapiUrl); // Temporary debug
-  const baseUrl = strapiUrl || "https://jetlag-be-production.up.railway.app";
-  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
-
   try {
-    // Try different token names available in production
-    const token =
-      process.env.NEXT_PUBLIC_STRAPI_API_TOKEN ||
-      process.env.STRAPI_API_READ_TOKEN ||
-      process.env.STRAPI_TOKEN;
-
-    if (!token) {
-      console.error("No API token found in production");
-      return null;
-    }
+    const url = `/api/blogs?country=${countrySlug}`;
 
     const res = await fetch(url, {
       cache: "no-store",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
 
     if (!res.ok) {
@@ -457,37 +439,8 @@ export const fetchBlogsByCountry = async (
       return null;
     }
 
-    const blogData = await res.json();
-
-    // Filter blogs that mention Thailand in title or content (temporary solution)
-    const allBlogs = blogData.data.map((item: BlogPostResponse) => ({
-      id: item.id,
-      title: item.attributes.title,
-      description: item.attributes.description,
-      content: item.attributes.content,
-      publishedAt: item.attributes.publishedAt,
-      likes: item.attributes.likes,
-      slug: item.attributes.slug,
-      imageUrl:
-        item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
-          ?.url ||
-        item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
-        item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
-      category: item.attributes.category?.data.attributes.name,
-    }));
-
-    // Filter for Thailand-related content
-    if (countrySlug === "thailand") {
-      return allBlogs.filter(
-        (blog: BlogPost) =>
-          blog.title.toLowerCase().includes("thailand") ||
-          blog.title.toLowerCase().includes("thai") ||
-          blog.content.toLowerCase().includes("thailand") ||
-          blog.slug.includes("thailand"),
-      );
-    }
-
-    return allBlogs;
+    const blogs = await res.json();
+    return blogs;
   } catch (error) {
     console.error(`Error fetching blogs for ${countrySlug}: `, error);
     return null;
