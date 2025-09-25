@@ -376,6 +376,19 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
             </ul>
           );
 
+        case "hr":
+          return (
+            <hr
+              key={idx}
+              style={{
+                border: "none",
+                borderTop: "2px solid var(--gray-400)",
+                margin: "16px 0",
+                width: "100%",
+              }}
+            />
+          );
+
         default:
           return null;
       }
