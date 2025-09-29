@@ -51,3 +51,5 @@ src/app/components/poll/test-example-fixed.tsx
 **/test-example.tsx
 **/*-example.tsx
 **/*.backup.*
+# ignore .vscode mcp
+.vscode/mcp.json

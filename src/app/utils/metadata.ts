@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { normalizeUrl } from "./canonicalUrl";
 
 interface CreateMetadataProps {
   title: string;
@@ -27,13 +28,16 @@ export function createMetadata({
     ? title
     : `${title} | The Jet Lag Chronicles`;
 
+  // Ensure canonical URL is properly formatted and consistent with redirects
+  const canonicalUrl = normalizeUrl(url);
+
   return {
     title: fullTitle,
     description,
     openGraph: {
       title: fullTitle,
       description,
-      url,
+      url: canonicalUrl,
       siteName: "The Jet Lag Chronicles",
       images: [
         {
@@ -56,7 +60,7 @@ export function createMetadata({
       images: [image],
     },
     alternates: {
-      canonical: url,
+      canonical: canonicalUrl,
     },
     robots: {
       index: true,
