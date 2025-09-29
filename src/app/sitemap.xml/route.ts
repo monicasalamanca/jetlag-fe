@@ -22,45 +22,47 @@ export async function GET() {
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com";
 
-    const staticRoutes = ["", "about-us", "chronicles"]
+    const staticRoutes = ["", "about-us", "blog"]
       .map(
         (path) => `
 <url>
   <loc>${baseUrl}/${path}</loc>
   <lastmod>${new Date().toISOString()}</lastmod>
+  <priority>0.9</priority>
+  <changefreq>weekly</changefreq>
 </url>`,
       )
       .join("");
 
     const dynamicCountryRoutes =
-      (countries &&
-        countries
-          .map(
-            (country: CountryNameFormatted) => `
+      countries && countries.length > 0
+        ? countries
+            .map(
+              (country: CountryNameFormatted) => `
       <url>
         <loc>${baseUrl}/${country.slug}</loc>
         <lastmod>${new Date(country.updatedAt).toISOString()}</lastmod>
         <priority>1.0</priority>
         <changefreq>monthly</changefreq>
       </url>`,
-          )
-          .join("")) ||
-      "";
+            )
+            .join("")
+        : "";
 
     const dynamicCountryBlogsRoutes =
-      (postsFromCountries &&
-        postsFromCountries
-          .map(
-            (post: SlugWithCountry) => `
+      postsFromCountries && postsFromCountries.length > 0
+        ? postsFromCountries
+            .map(
+              (post: SlugWithCountry) => `
       <url>
         <loc>${baseUrl}/${post.countrySlug}/${post.slug}</loc>
         <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
         <priority>0.8</priority>
         <changefreq>weekly</changefreq>
       </url>`,
-          )
-          .join("")) ||
-      "";
+            )
+            .join("")
+        : "";
 
     const lifestyleRoute = `<url>
       <loc>${baseUrl}/lifestyle</loc>
@@ -70,28 +72,28 @@ export async function GET() {
     </url>`;
 
     const dynamicLifestyleRoutes =
-      (postsFromLifestyle &&
-        postsFromLifestyle
-          .map(
-            (post: SlugForLifestyle) => `
+      postsFromLifestyle && postsFromLifestyle.length > 0
+        ? postsFromLifestyle
+            .map(
+              (post: SlugForLifestyle) => `
         <url>
           <loc>${baseUrl}/lifestyle/${post.slug}</loc>
           <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>
           <priority>0.8</priority>
           <changefreq>weekly</changefreq>
         </url>`,
-          )
-          .join("")) ||
-      "";
+            )
+            .join("")
+        : "";
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-          ${staticRoutes}
-          ${lifestyleRoute}
-          ${dynamicCountryRoutes}
-          ${dynamicCountryBlogsRoutes}
-          ${dynamicLifestyleRoutes}
-        </urlset>`;
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${staticRoutes}
+${lifestyleRoute}
+${dynamicCountryRoutes}
+${dynamicCountryBlogsRoutes}
+${dynamicLifestyleRoutes}
+</urlset>`;
 
     return new NextResponse(sitemap, {
       status: 200,
