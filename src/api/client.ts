@@ -19,7 +19,7 @@ import {
 // gets one country from params
 // this is used for the country page
 export const fetchCountry = async (
-  countryName: string
+  countryName: string,
 ): Promise<Country[] | null> => {
   const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
   const token =
@@ -77,7 +77,7 @@ export const fetchCountry = async (
 // Fetch a blog post from lifestyle
 // this is used for the lifestyle page
 export const fetchBlogPostFromLifestyle = async (
-  slug: string
+  slug: string,
 ): Promise<Post[] | null> => {
   const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
   const token =
@@ -100,13 +100,13 @@ export const fetchBlogPostFromLifestyle = async (
     return data.data.map((item: BlogPostResponse) => {
       const content = sanitizeInternalUrls(item.attributes.content || "");
       const description = sanitizeInternalUrls(
-        item.attributes.description || ""
+        item.attributes.description || "",
       );
 
       // Log any www URLs found in development
       logNonCanonicalUrls(
         item.attributes.content || "",
-        `Blog post: ${item.attributes.title}`
+        `Blog post: ${item.attributes.title}`,
       );
 
       return {
@@ -135,7 +135,7 @@ export const fetchBlogPostFromLifestyle = async (
 // this is used for the blog post page
 export const fetchBlogPost = async (
   category: string,
-  slug: string
+  slug: string,
 ): Promise<Post[] | null> => {
   const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
   const token =
@@ -162,13 +162,13 @@ export const fetchBlogPost = async (
       const pollData = item.attributes.poll?.data;
       const content = sanitizeInternalUrls(item.attributes.content || "");
       const description = sanitizeInternalUrls(
-        item.attributes.description || ""
+        item.attributes.description || "",
       );
 
       // Log any www URLs found in development
       logNonCanonicalUrls(
         item.attributes.content || "",
-        `Blog post: ${item.attributes.title}`
+        `Blog post: ${item.attributes.title}`,
       );
 
       return {
@@ -234,13 +234,13 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
     return data.data.map((item: BlogPostResponse) => {
       const content = sanitizeInternalUrls(item.attributes.content || "");
       const description = sanitizeInternalUrls(
-        item.attributes.description || ""
+        item.attributes.description || "",
       );
 
       // Log any www URLs found in development
       logNonCanonicalUrls(
         item.attributes.content || "",
-        `Latest blog post: ${item.attributes.title}`
+        `Latest blog post: ${item.attributes.title}`,
       );
 
       return {
@@ -343,7 +343,7 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
         "Failed to fetch all blog slugs that belong to a country: ",
         res.statusText,
         "Status:",
-        res.status
+        res.status,
       );
       return null;
     }
@@ -374,17 +374,17 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
                 updatedAt: item.attributes.updatedAt,
                 countrySlug: country.attributes.slug,
               });
-            }
+            },
           );
         }
-      }
+      },
     );
 
     return blogSlugs;
   } catch (error) {
     console.error(
       "Error fetching all blog slugs that belong to a country: ",
-      error
+      error,
     );
     return null;
   }
@@ -439,7 +439,7 @@ export const fetchAllBlogSlugsFromLifestyle = async (): Promise<
     if (!res.ok) {
       console.error(
         "Failed to fetch all blog slugs that belong to a country: ",
-        res.statusText
+        res.statusText,
       );
       return null;
     }
@@ -454,7 +454,7 @@ export const fetchAllBlogSlugsFromLifestyle = async (): Promise<
   } catch (error) {
     console.error(
       "Error fetching all blog slugs that belong to a category: ",
-      error
+      error,
     );
     return null;
   }
@@ -463,7 +463,7 @@ export const fetchAllBlogSlugsFromLifestyle = async (): Promise<
 // gets all blogs for a specific country via Next.js API route
 // this is used for the coming soon section to show Thailand blogs
 export const fetchBlogsByCountry = async (
-  countrySlug: string
+  countrySlug: string,
 ): Promise<BlogPost[] | null> => {
   try {
     const url = `/api/blogs?country=${countrySlug}`;
@@ -475,7 +475,7 @@ export const fetchBlogsByCountry = async (
     if (!res.ok) {
       console.error(
         `Failed to fetch blogs for ${countrySlug}: `,
-        res.statusText
+        res.statusText,
       );
       return null;
     }

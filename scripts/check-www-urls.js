@@ -61,7 +61,7 @@ if (fs.existsSync(buildDir)) {
       console.log(`   ${result.file}: ${result.matches} matches`);
     });
     console.log(
-      "\n💡 These URLs should be updated in Strapi content to use thejetlagchronicles.com (without www)"
+      "\n💡 These URLs should be updated in Strapi content to use thejetlagchronicles.com (without www)",
     );
   }
 } else {

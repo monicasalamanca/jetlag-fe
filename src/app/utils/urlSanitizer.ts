@@ -17,11 +17,11 @@ export function sanitizeInternalUrls(content: string): string {
     .replace(/https?:\/\/www\.thejetlagchronicles\.com/g, CANONICAL_URL)
     .replace(
       /href=["']https?:\/\/www\.thejetlagchronicles\.com/g,
-      `href="${CANONICAL_URL}`
+      `href="${CANONICAL_URL}`,
     )
     .replace(
       /src=["']https?:\/\/www\.thejetlagchronicles\.com/g,
-      `src="${CANONICAL_URL}`
+      `src="${CANONICAL_URL}`,
     );
 
   return sanitized;
@@ -35,7 +35,7 @@ export function getCanonicalDomain(url: string): string {
 
   return url.replace(
     /https?:\/\/www\.thejetlagchronicles\.com/g,
-    CANONICAL_URL
+    CANONICAL_URL,
   );
 }
 
@@ -56,7 +56,7 @@ export function isCanonicalInternalUrl(url: string): boolean {
  */
 export function logNonCanonicalUrls(
   content: string,
-  context: string = ""
+  context: string = "",
 ): void {
   if (process.env.NODE_ENV !== "development") return;
 
@@ -65,10 +65,10 @@ export function logNonCanonicalUrls(
   if (wwwMatches && wwwMatches.length > 0) {
     console.warn(
       `🚨 Found ${wwwMatches.length} www URLs in ${context}:`,
-      wwwMatches
+      wwwMatches,
     );
     console.warn(
-      "These should be updated in Strapi to use thejetlagchronicles.com (without www)"
+      "These should be updated in Strapi to use thejetlagchronicles.com (without www)",
     );
   }
 }
