@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/home", destination: "/", permanent: true },
+      { source: "/chronicles", destination: "/blog", permanent: true },
       {
         source: "/thailand/chiang-mai-vs-bangkok-expat-guide-2025",
         destination: "/thailand/chiang-mai-vs-bangkok-expat-guide",
