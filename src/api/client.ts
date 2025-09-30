@@ -11,6 +11,10 @@ import {
   SlugWithCountry,
   SlugsResponseForLifestyle,
 } from "./types";
+import {
+  sanitizeInternalUrls,
+  logNonCanonicalUrls,
+} from "@/app/utils/urlSanitizer";
 
 // gets one country from params
 // this is used for the country page
@@ -93,21 +97,34 @@ export const fetchBlogPostFromLifestyle = async (
       return null;
     }
     const data = await res.json();
-    return data.data.map((item: BlogPostResponse) => ({
-      id: item.id,
-      title: item.attributes.title,
-      slug: item.attributes.slug,
-      description: item.attributes.description,
-      content: item.attributes.content,
-      publishedAt: item.attributes.publishedAt,
-      likes: item.attributes.likes,
-      views: item.attributes.views,
-      imageUrl:
-        item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
-          ?.url ||
-        item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
-        item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
-    }));
+    return data.data.map((item: BlogPostResponse) => {
+      const content = sanitizeInternalUrls(item.attributes.content || "");
+      const description = sanitizeInternalUrls(
+        item.attributes.description || "",
+      );
+
+      // Log any www URLs found in development
+      logNonCanonicalUrls(
+        item.attributes.content || "",
+        `Blog post: ${item.attributes.title}`,
+      );
+
+      return {
+        id: item.id,
+        title: item.attributes.title,
+        slug: item.attributes.slug,
+        description,
+        content,
+        publishedAt: item.attributes.publishedAt,
+        likes: item.attributes.likes,
+        views: item.attributes.views,
+        imageUrl:
+          item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
+            ?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
+      };
+    });
   } catch (error) {
     console.error("Error fetching a blog post: ", error);
     return null;
@@ -143,12 +160,23 @@ export const fetchBlogPost = async (
 
     return data.data.map((item: BlogPostResponse) => {
       const pollData = item.attributes.poll?.data;
+      const content = sanitizeInternalUrls(item.attributes.content || "");
+      const description = sanitizeInternalUrls(
+        item.attributes.description || "",
+      );
+
+      // Log any www URLs found in development
+      logNonCanonicalUrls(
+        item.attributes.content || "",
+        `Blog post: ${item.attributes.title}`,
+      );
+
       return {
         id: item.id,
         title: item.attributes.title,
         slug: item.attributes.slug,
-        description: item.attributes.description,
-        content: item.attributes.content,
+        description,
+        content,
         publishedAt: item.attributes.publishedAt,
         likes: item.attributes.likes,
         views: item.attributes.views,
@@ -203,20 +231,33 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
 
     const data = await res.json();
 
-    return data.data.map((item: BlogPostResponse) => ({
-      id: item.id,
-      title: item.attributes.title,
-      description: item.attributes.description,
-      content: item.attributes.content,
-      publishedAt: item.attributes.publishedAt,
-      likes: item.attributes.likes,
-      imageUrl:
-        item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
-          ?.url ||
-        item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
-        item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
-      category: item.attributes.category?.data.attributes.name,
-    }));
+    return data.data.map((item: BlogPostResponse) => {
+      const content = sanitizeInternalUrls(item.attributes.content || "");
+      const description = sanitizeInternalUrls(
+        item.attributes.description || "",
+      );
+
+      // Log any www URLs found in development
+      logNonCanonicalUrls(
+        item.attributes.content || "",
+        `Latest blog post: ${item.attributes.title}`,
+      );
+
+      return {
+        id: item.id,
+        title: item.attributes.title,
+        description,
+        content,
+        publishedAt: item.attributes.publishedAt,
+        likes: item.attributes.likes,
+        imageUrl:
+          item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
+            ?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
+        category: item.attributes.category?.data.attributes.name,
+      };
+    });
   } catch (error) {
     console.error("Error fetching the latests blog posts: ", error);
     return null;
