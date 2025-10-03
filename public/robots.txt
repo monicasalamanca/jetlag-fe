@@ -1,5 +1,6 @@
 # Allow all search engines to crawl the site
 User-agent: *
+Allow: /
 
 # Block internal Next.js files and APIs
 Disallow: /api/
