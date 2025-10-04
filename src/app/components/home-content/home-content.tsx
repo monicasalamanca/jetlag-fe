@@ -29,10 +29,10 @@ const HomeContent = () => {
     const url = getBlogCanonicalUrl(
       blogPost.slug,
       blogPost.lifestyle ? undefined : countryToUse,
-      blogPost.lifestyle,
+      blogPost.lifestyle
     ).replace(
       process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com",
-      "",
+      ""
     );
 
     return {
@@ -91,7 +91,7 @@ const HomeContent = () => {
             <div className={s.wrapper}>
               <h2>Latest Stories</h2>
               <div className={s.cardWrapper}>
-                {blogs[0] && <CardOne blog={blogs[0]} color="blue" />}
+                {blogs[0] && <CardOne blog={blogs[6]} color="blue" />}
                 {blogs[1] && <CardOne blog={blogs[1]} color="green" />}
               </div>
             </div>
@@ -100,8 +100,8 @@ const HomeContent = () => {
             <div className={s.wrapper}>
               <h2>Most Viewed</h2>
               <div className={s.cardWrapper}>
-                {blogs[2] && <CardFive blog={blogs[2]} />}
-                {blogs[3] && <CardFive blog={blogs[3]} />}
+                {blogs[2] && <CardFive blog={blogs[5]} />}
+                {blogs[3] && <CardFive blog={blogs[4]} />}
               </div>
             </div>
           </section>
@@ -110,8 +110,8 @@ const HomeContent = () => {
             <div className={s.wrapper}>
               <h2>Trending</h2>
               <div className={s.cardWrapper}>
-                {blogs[4] && <CardTwo blog={blogs[4]} color="red" />}
-                {blogs[5] && <CardTwo blog={blogs[5]} color="green" />}
+                {blogs[4] && <CardTwo blog={blogs[2]} color="red" />}
+                {blogs[5] && <CardTwo blog={blogs[3]} color="green" />}
               </div>
             </div>
           </section>
@@ -119,8 +119,8 @@ const HomeContent = () => {
             <div className={s.wrapper}>
               <h2>Most Popular</h2>
               <div className={s.cardWrapper}>
-                {blogs[6] && <CardThree blog={blogs[6]} color="purple" />}
-                {blogs[7] && <CardThree blog={blogs[7]} color="blue" />}
+                {blogs[6] && <CardThree blog={blogs[7]} color="purple" />}
+                {blogs[7] && <CardThree blog={blogs[0]} color="blue" />}
               </div>
             </div>
           </section>
