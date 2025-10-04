@@ -54,7 +54,7 @@ const CardFive = ({ blog }: blogProps) => {
             src={blog.thumbnail}
             alt={blog.title}
             fill
-            style={{ objectFit: "cover" }}
+            sizes="(max-width: 768px) 100vw, 50vw"
             loading="lazy"
           />
           <div className={s.backgroundOverlay}>
