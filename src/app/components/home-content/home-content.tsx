@@ -29,10 +29,10 @@ const HomeContent = () => {
     const url = getBlogCanonicalUrl(
       blogPost.slug,
       blogPost.lifestyle ? undefined : countryToUse,
-      blogPost.lifestyle
+      blogPost.lifestyle,
     ).replace(
       process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com",
-      ""
+      "",
     );
 
     return {
