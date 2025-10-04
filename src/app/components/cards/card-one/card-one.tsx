@@ -12,10 +12,10 @@ import { trackCardClick } from "@/app/utils/analytics";
 import s from "./card-one.module.scss";
 
 const CardOne: FC<{
-  mockData: CardProps;
+  blog: CardProps;
   color: string;
   position?: number;
-}> = ({ mockData, color, position }) => {
+}> = ({ blog, color, position }) => {
   const getColourClassNames = (color: string) => {
     switch (color) {
       case "blue":
@@ -31,20 +31,22 @@ const CardOne: FC<{
     }
   };
 
-  // Generate URL based on category and slug
+  // Use the pre-computed URL from the blog data
   const getCardUrl = () => {
-    if (mockData.category && mockData.slug) {
-      return `/${mockData.category}/${mockData.slug}`;
-    }
-    // Fallback to blog if no category specified
-    return `/blog/${mockData.slug || "post"}`;
+    // Use pre-computed URL, fallback to country-based URL, or home page as last resort
+    return (
+      blog?.url ||
+      (blog?.country && blog?.slug
+        ? `/${blog.country.toLowerCase()}/${blog.slug}`
+        : "/")
+    );
   };
 
   const handleCardClick = () => {
-    if (mockData) {
+    if (blog) {
       trackCardClick({
-        cardTitle: mockData.title || "Unknown Title",
-        cardCategory: mockData.category || "Unknown Category",
+        cardTitle: blog.title || "Unknown Title",
+        cardCategory: blog.country || "Unknown Country",
         cardType: "CardOne",
         location: window.location.pathname,
         cardPosition: position,
@@ -52,14 +54,18 @@ const CardOne: FC<{
     }
   };
 
+  if (!blog) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Link href={getCardUrl()} className={s.cardLink} onClick={handleCardClick}>
       <div className={s.container}>
         <div className={s.imageWrapper}>
           <Image
             className={s.image}
-            src={mockData.thumbnail}
-            alt={`${mockData.title} - ${mockData.country}`}
+            src={blog.thumbnail}
+            alt={`${blog.title} - ${blog.country}`}
             // fill
             // sizes="(max-width: 768px) 100vw, 50vw"
             width={330}
@@ -71,29 +77,29 @@ const CardOne: FC<{
               icon={faPlane}
               className={`${s.icon} ${getColourClassNames(color)}`}
             />
-            {mockData.tags[0]}
+            {blog.tags[0]}
           </div>
         </div>
         <div className={s.content}>
           <div className={s.tags}>
             <div className={`${s.tag} ${getColourClassNames(color)}`}>
-              {mockData.tags[1]}
+              {blog.tags[1]}
             </div>
-            <div className={s.date}>{mockData.date}</div>
+            <div className={s.date}>{blog.date}</div>
           </div>
-          <h3>{mockData.title}</h3>
-          <p>{mockData.description}</p>
+          <h3>{blog.title}</h3>
+          <p>{blog.description}</p>
           <div className={s.bottomInfo}>
             <div className={s.country}>
               <FontAwesomeIcon
                 icon={faLocationDot}
                 className={`${s.icon} ${getColourClassNames(color)}`}
               />
-              {mockData.country}
+              {blog.country}
             </div>
             <div className={s.readTime}>
               <FontAwesomeIcon icon={faClock} className={s.icon} />
-              {mockData.readTime}
+              {blog.readTime}
             </div>
           </div>
         </div>

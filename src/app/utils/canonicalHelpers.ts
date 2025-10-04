@@ -28,6 +28,7 @@ interface BlogPost {
   featuredImage?: { url: string };
   publishedAt?: string;
   updatedAt?: string;
+  lifestyle?: boolean;
   tags?: BlogTag[];
   authors?: BlogAuthor[];
 }
@@ -82,7 +83,11 @@ export async function generateBlogMetadata(
   }
 
   // Generate canonical URL - this MUST match your redirect logic
-  const canonicalUrl = getBlogCanonicalUrl(blog.slug, countrySlug);
+  const canonicalUrl = getBlogCanonicalUrl(
+    blog.slug,
+    countrySlug,
+    blog.lifestyle,
+  );
 
   return createMetadata({
     title: blog.title,

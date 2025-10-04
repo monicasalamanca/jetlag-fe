@@ -7,17 +7,17 @@ import { CardProps } from "../card.types";
 
 import s from "./card-four.module.scss";
 
-interface mockDataProps {
-  mockData: CardProps;
+interface blogProps {
+  blog: CardProps;
 }
 
-const CardFour = ({ mockData }: mockDataProps) => {
+const CardFour = ({ blog }: blogProps) => {
   return (
     <div className={s.container}>
       <div className={s.imageWrapper}>
         <Image
           className={s.image}
-          src={mockData.thumbnail}
+          src={blog.thumbnail}
           alt="Grocery time"
           width={330}
           height={250}
@@ -25,15 +25,15 @@ const CardFour = ({ mockData }: mockDataProps) => {
         />
         <div className={s.tag}>
           <FontAwesomeIcon icon={faFire} className={s.icon} />
-          {mockData.tags[1]}
+          {blog.tags[1]}
         </div>
       </div>
       <div className={s.content}>
-        <h3>{mockData.title}</h3>
-        <p>{mockData.description}</p>
+        <h3>{blog.title}</h3>
+        <p>{blog.description}</p>
         <div className={s.country}>
           <FontAwesomeIcon icon={faLocationDot} className={s.icon} />
-          {mockData.country}
+          {blog.country}
         </div>
       </div>
     </div>

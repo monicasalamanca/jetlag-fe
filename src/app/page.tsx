@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-// import { fetchLatestBlogPosts } from "@/api/client";
-// import { BlogPost } from "@/api/types";
 import HomeContent from "@/components/home-content/home-content";
 import { createMetadata } from "@/app/utils/metadata";
 
@@ -13,9 +11,6 @@ export const metadata: Metadata = createMetadata({
 });
 
 const Home = async () => {
-  // const latestPosts = await fetchLatestBlogPosts();
-  // const latestPosts: BlogPost[] | null = [];
-
   return <HomeContent />;
 };
 

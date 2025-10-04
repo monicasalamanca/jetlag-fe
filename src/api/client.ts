@@ -134,14 +134,14 @@ export const fetchBlogPostFromLifestyle = async (
 // Fetch a blog post based on the country and the slug
 // this is used for the blog post page
 export const fetchBlogPost = async (
-  category: string,
+  countrySlug: string,
   slug: string,
 ): Promise<Post[] | null> => {
   const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
   const token =
     process.env.STRAPI_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
-  const url = `${baseUrl}/api/blogs?filters[countries][slug][$eq]=${category}&filters[slug][$eq]=${slug}&populate[poll][populate]=options&populate[images]=*`;
+  const url = `${baseUrl}/api/blogs?filters[countries][slug][$eq]=${countrySlug}&filters[slug][$eq]=${slug}&populate[poll][populate]=options&populate[images]=*`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
@@ -213,7 +213,7 @@ export const fetchBlogPost = async (
 // TODO: as it gets bigger limit to 3 or 4 posts only
 export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
   // const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&pagination[page]=1&pagination[pageSize]=3&populate[images]=*&populate[category]=*`;
-  const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[countries]=*&populate[tags]=*`;
 
   try {
     // const res = await fetch(url, { next: { revalidate: 604800 } }); // it caches for a week
@@ -250,16 +250,98 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
         content,
         publishedAt: item.attributes.publishedAt,
         likes: item.attributes.likes,
+        slug: item.attributes.slug,
         imageUrl:
           item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
             ?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
-        category: item.attributes.category?.data.attributes.name,
+        countries:
+          item.attributes.countries?.data?.map(
+            (country) => country.attributes.name,
+          ) || [],
+        tags:
+          item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
+        views: item.attributes.views,
+        lifestyle: item.attributes.lifestyle || false,
       };
     });
   } catch (error) {
     console.error("Error fetching the latests blog posts: ", error);
+    return null;
+  }
+};
+
+// Client-side version of fetchLatestBlogPosts for use in client components
+export const fetchLatestBlogPostsClient = async (): Promise<
+  BlogPost[] | null
+> => {
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  if (!baseUrl) {
+    console.error("NEXT_PUBLIC_STRAPI_URL is not defined");
+    return null;
+  }
+
+  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[countries]=*&populate[tags]=*`;
+
+  try {
+    const res = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      console.error(
+        "Failed to fetch the latest blog posts (client): ",
+        res.statusText,
+      );
+      return null;
+    }
+
+    const data = await res.json();
+
+    return data.data.map((item: BlogPostResponse) => {
+      const content = sanitizeInternalUrls(item.attributes.content || "");
+      const description = sanitizeInternalUrls(
+        item.attributes.description || "",
+      );
+
+      // Log any www URLs found in development
+      logNonCanonicalUrls(
+        item.attributes.content || "",
+        `Latest blog post (client): ${item.attributes.title}`,
+      );
+
+      return {
+        id: item.id,
+        title: item.attributes.title,
+        description,
+        content,
+        publishedAt: item.attributes.publishedAt,
+        likes: item.attributes.likes,
+        slug: item.attributes.slug,
+        imageUrl:
+          item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
+            ?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url ||
+          "/placeholder-image.jpg",
+        countries:
+          item.attributes.countries?.data?.map(
+            (country) => country.attributes.name,
+          ) || [],
+        tags:
+          item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
+        views: item.attributes.views,
+        lifestyle: item.attributes.lifestyle || false,
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching the latest blog posts (client): ", error);
     return null;
   }
 };

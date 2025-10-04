@@ -11,28 +11,30 @@ import { trackCardClick } from "@/app/utils/analytics";
 
 import s from "./card-five.module.scss";
 
-interface mockDataProps {
-  mockData: CardProps;
+interface blogProps {
+  blog: CardProps;
 }
 
-const CardFive = ({ mockData }: mockDataProps) => {
-  // Handle case where mockData is undefined
-  if (!mockData) {
+const CardFive = ({ blog }: blogProps) => {
+  // Handle case where blog is undefined
+  if (!blog) {
     return null;
   }
 
-  const getCardUrl = () => {
-    if (!mockData?.category || !mockData?.slug) {
-      return "#"; // fallback URL
-    }
-    return `/${mockData.category}/${mockData.slug}`;
+  const generateBlogUrl = () => {
+    // Use pre-computed URL or fallback to country-based URL, or home page as last resort
+    return (
+      blog?.url ||
+      `/${blog?.country?.toLowerCase() || ""}/${blog?.slug || ""}` ||
+      "/"
+    );
   };
 
   const handleCardClick = () => {
-    if (mockData) {
+    if (blog) {
       trackCardClick({
-        cardTitle: mockData.title || "Unknown Title",
-        cardCategory: mockData.category || "Unknown Category",
+        cardTitle: blog.title || "Unknown Title",
+        cardCategory: blog.country || "Unknown Country",
         cardType: "CardFive",
         location: window.location.pathname,
       });
@@ -40,27 +42,29 @@ const CardFive = ({ mockData }: mockDataProps) => {
   };
 
   return (
-    <Link href={getCardUrl()} className={s.cardLink} onClick={handleCardClick}>
+    <Link
+      href={generateBlogUrl()}
+      className={s.cardLink}
+      onClick={handleCardClick}
+    >
       <div className={s.container}>
         <div className={s.imageWrapper}>
           <Image
             className={s.image}
-            src={mockData.thumbnail}
-            alt={mockData.title}
+            src={blog.thumbnail}
+            alt={blog.title}
             fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            // width={330}
-            // height={250}
+            style={{ objectFit: "cover" }}
             loading="lazy"
           />
           <div className={s.backgroundOverlay}>
             <div className={s.tag}>
               <FontAwesomeIcon icon={faFire} className={s.icon} />
-              {mockData.tags[0]}
+              Hot
             </div>
             <div className={s.content}>
-              <h3>{mockData.title}</h3>
-              <p>{mockData.description}</p>
+              <h3>{blog.title}</h3>
+              <p>{blog.description}</p>
             </div>
           </div>
         </div>

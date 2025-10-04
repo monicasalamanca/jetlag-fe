@@ -7,5 +7,6 @@ export interface CardProps {
   country: string;
   readTime: string;
   slug: string;
-  category: string;
+  url?: string; // Optional pre-computed URL for the blog post
+  category?: string; // Optional for backward compatibility
 }
