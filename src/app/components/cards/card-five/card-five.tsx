@@ -60,7 +60,7 @@ const CardFive = ({ blog }: blogProps) => {
           <div className={s.backgroundOverlay}>
             <div className={s.tag}>
               <FontAwesomeIcon icon={faFire} className={s.icon} />
-              Hot
+              {blog.tags && blog.tags.length > 0 ? blog.tags[0] : "Hot"}
             </div>
             <div className={s.content}>
               <h3>{blog.title}</h3>
