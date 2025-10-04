@@ -14,10 +14,7 @@ import { trackCardClick } from "@/app/utils/analytics";
 
 import s from "./card-two.module.scss";
 
-const CardTwo: FC<{ mockData: CardProps; color: string }> = ({
-  mockData,
-  color,
-}) => {
+const CardTwo: FC<{ blog: CardProps; color: string }> = ({ blog, color }) => {
   const getColourClassNames = (color: string) => {
     switch (color) {
       case "blue":
@@ -33,18 +30,21 @@ const CardTwo: FC<{ mockData: CardProps; color: string }> = ({
     }
   };
 
-  const getCardUrl = () => {
-    if (!mockData?.category || !mockData?.slug) {
-      return "#"; // fallback URL
-    }
-    return `/${mockData.category}/${mockData.slug}`;
+  const generateBlogUrl = () => {
+    // Use pre-computed URL, fallback to country-based URL, or home page as last resort
+    return (
+      blog?.url ||
+      (blog?.country && blog?.slug
+        ? `/${blog.country.toLowerCase()}/${blog.slug}`
+        : "/")
+    );
   };
 
   const handleCardClick = () => {
-    if (mockData) {
+    if (blog) {
       trackCardClick({
-        cardTitle: mockData.title || "Unknown Title",
-        cardCategory: mockData.category || "Unknown Category",
+        cardTitle: blog.title || "Unknown Title",
+        cardCategory: blog.country || "Unknown Country",
         cardType: "CardTwo",
         location: window.location.pathname,
       });
@@ -52,26 +52,30 @@ const CardTwo: FC<{ mockData: CardProps; color: string }> = ({
   };
 
   return (
-    <Link href={getCardUrl()} className={s.cardLink} onClick={handleCardClick}>
+    <Link
+      href={generateBlogUrl()}
+      className={s.cardLink}
+      onClick={handleCardClick}
+    >
       <div className={s.container}>
         <div className={s.imageWrapper}>
           <Image
             className={s.image}
-            src={mockData.thumbnail}
-            alt={mockData.title}
+            src={blog.thumbnail}
+            alt={blog.title}
             width={330}
             height={250}
             loading="lazy"
           />
           <div className={s.readTime}>
             <FontAwesomeIcon icon={faClockRotateLeft} className={s.icon} />
-            {mockData.readTime}
+            {blog.readTime}
           </div>
           <div className={s.bottomInfo}>
             <div className={`${s.tag} ${getColourClassNames(color)}`}>
-              {mockData.tags[0]}
+              {blog.tags && blog.tags.length > 0 ? blog.tags[0] : "Travel"}
             </div>
-            <h3>{mockData.title}</h3>
+            <h3>{blog.title}</h3>
           </div>
         </div>
         <div className={s.content}>
@@ -81,11 +85,11 @@ const CardTwo: FC<{ mockData: CardProps; color: string }> = ({
                 icon={faLocationDot}
                 className={`${s.icon} ${getColourClassNames(color)}`}
               />
-              {mockData.country}
+              {blog.country}
             </div>
-            <div className={s.date}>{mockData.date}</div>
+            <div className={s.date}>{blog.date}</div>
           </div>
-          <p>{mockData.description}</p>
+          <p>{blog.description}</p>
         </div>
       </div>
     </Link>

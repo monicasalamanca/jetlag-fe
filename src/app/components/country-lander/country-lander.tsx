@@ -81,12 +81,15 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
       title: blog.title,
       description: blog.description || "",
       thumbnail: blog.imageUrl || "/placeholder-image.jpg",
-      tags: ["travel", blog.category || "guide"],
-      date: new Date(blog.publishedAt).toLocaleDateString(),
-      country: "Thailand",
+      tags: ["travel", blog.countries?.[0] || "guide"],
+      date: new Date(blog.publishedAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
+      country: blog.countries?.[0] || "Thailand",
       readTime: "5 min",
       slug: blog.slug,
-      category: "thailand",
     };
   };
 
@@ -160,7 +163,7 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
                 cardComponent = (
                   <CardOne
                     key={`blog-${blog.id}`}
-                    mockData={cardProps}
+                    blog={cardProps}
                     color={color}
                   />
                 );
@@ -169,7 +172,7 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
                 cardComponent = (
                   <CardTwo
                     key={`blog-${blog.id}`}
-                    mockData={cardProps}
+                    blog={cardProps}
                     color={color}
                   />
                 );
@@ -178,21 +181,21 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
                 cardComponent = (
                   <CardThree
                     key={`blog-${blog.id}`}
-                    mockData={cardProps}
+                    blog={cardProps}
                     color={color}
                   />
                 );
                 break;
               case 3:
                 cardComponent = (
-                  <CardFive key={`blog-${blog.id}`} mockData={cardProps} />
+                  <CardFive key={`blog-${blog.id}`} blog={cardProps} />
                 );
                 break;
               default:
                 cardComponent = (
                   <CardOne
                     key={`blog-${blog.id}`}
-                    mockData={cardProps}
+                    blog={cardProps}
                     color={color}
                   />
                 );

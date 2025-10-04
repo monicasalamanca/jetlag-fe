@@ -1,11 +1,14 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Hero from "../hero/hero";
 import QuickFactCard from "../country-facts-card/card/card";
 import CardOne from "../cards/card-one/card-one";
 import CardFive from "../cards/card-five/card-five";
-import blogs from "@/app/blogs.json";
+import { fetchLatestBlogPostsClient } from "@/api/client";
+import { BlogPost } from "@/api/types";
+import { CardProps } from "@/components/cards/card.types";
+import { getBlogCanonicalUrl } from "@/app/utils/canonicalUrl";
 
 import s from "./lifestyle-lander.module.scss";
 
@@ -122,6 +125,61 @@ const getColour = (index: number, seed: string = "") => {
 };
 
 const LifestyleLander = () => {
+  const [blogs, setBlogs] = useState<CardProps[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Function to map API BlogPost to CardProps format
+  const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
+    const tagsToUse =
+      blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
+    const countryToUse =
+      blogPost.countries.length > 0 ? blogPost.countries[0] : "Unknown";
+
+    // Generate the correct URL based on lifestyle vs country
+    const url = getBlogCanonicalUrl(
+      blogPost.slug,
+      blogPost.lifestyle ? undefined : countryToUse,
+      blogPost.lifestyle,
+    ).replace(
+      process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com",
+      "",
+    );
+
+    return {
+      title: blogPost.title,
+      description: blogPost.description || "",
+      thumbnail: blogPost.imageUrl || "/placeholder-image.jpg",
+      tags: tagsToUse,
+      date: new Date(blogPost.publishedAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
+      country: countryToUse,
+      readTime: "5 mins",
+      slug: blogPost.slug,
+      url: url,
+    };
+  };
+
+  useEffect(() => {
+    const getBlogs = async () => {
+      try {
+        setLoading(true);
+        const blogData = await fetchLatestBlogPostsClient();
+        if (blogData) {
+          const mappedBlogs = blogData.map(mapBlogPostToCardProps);
+          setBlogs(mappedBlogs);
+        }
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getBlogs();
+  }, []);
+
   // Seeded random function for deterministic shuffling
   const seededRandom = (seed: string) => {
     let hash = 0;
@@ -138,6 +196,10 @@ const LifestyleLander = () => {
 
   // Combine all cards into one array
   const allCards = useMemo(() => {
+    if (loading || blogs.length === 0) {
+      return [];
+    }
+
     const quickFactCards = quickFacts.map((fact, index) => ({
       type: "quickFact",
       id: fact.id,
@@ -157,27 +219,35 @@ const LifestyleLander = () => {
       {
         type: "blog",
         id: "blog-1",
-        component: <CardOne key="blog-1" mockData={blogs[1]} color="blue" />,
+        component: blogs[1] ? (
+          <CardOne key="blog-1" blog={blogs[1]} color="blue" />
+        ) : null,
       },
       {
         type: "blog",
         id: "blog-2",
-        component: <CardOne key="blog-2" mockData={blogs[5]} color="orange" />,
+        component: blogs[5] ? (
+          <CardOne key="blog-2" blog={blogs[5]} color="orange" />
+        ) : null,
       },
       {
         type: "blog",
         id: "blog-3",
-        component: <CardFive key="blog-3" mockData={blogs[11]} />,
+        component: blogs[11] ? (
+          <CardFive key="blog-3" blog={blogs[11]} />
+        ) : null,
       },
       {
         type: "blog",
         id: "blog-4",
-        component: <CardFive key="blog-4" mockData={blogs[14]} />,
+        component: blogs[14] ? (
+          <CardFive key="blog-4" blog={blogs[14]} />
+        ) : null,
       },
-    ];
+    ].filter((card) => card.component !== null); // Filter out null components
 
     return [...quickFactCards, ...blogCards];
-  }, []);
+  }, [blogs, loading]);
 
   // Filter and shuffle cards with deterministic randomization
   const filteredCards = useMemo(() => {
@@ -218,17 +288,23 @@ const LifestyleLander = () => {
         headline="Live Anywhere. Work Everywhere. Love the Journey."
         shortDescription="Digital nomads. Expats. Travel lovers."
       />
-      <section className={s.masonryGridSection}>
-        {/* {filteredCards.map((card: any) => card.component)} */}
-        <div className={s.column}>
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {firstHalf.map((card: any) => card.component)}
-        </div>
-        <div className={s.column}>
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {secondHalf.map((card: any) => card.component)}
-        </div>
-      </section>
+      {loading ? (
+        <section className={s.masonryGridSection}>
+          <div>Loading...</div>
+        </section>
+      ) : (
+        <section className={s.masonryGridSection}>
+          {/* {filteredCards.map((card: any) => card.component)} */}
+          <div className={s.column}>
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            {firstHalf.map((card: any) => card.component)}
+          </div>
+          <div className={s.column}>
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            {secondHalf.map((card: any) => card.component)}
+          </div>
+        </section>
+      )}
     </main>
   );
 };

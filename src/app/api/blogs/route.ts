@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   const strapiUrl =
     process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
   const baseUrl = strapiUrl || "https://jetlag-be-production.up.railway.app";
-  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[category]=*`;
+  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[countries]=*`;
 
   try {
     // Server-side can access all environment variables
@@ -67,7 +67,10 @@ export async function GET(request: NextRequest) {
           ?.url ||
         item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
         item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
-      category: item.attributes.category?.data.attributes.name,
+      countries:
+        item.attributes.countries?.data?.map(
+          (country) => country.attributes.name,
+        ) || [],
     }));
 
     // Filter for specific country content

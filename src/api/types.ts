@@ -1,3 +1,37 @@
+export type BlogCountryResponse = {
+  id: number;
+  attributes: {
+    name: string;
+    tagline?: string;
+    intro?: string;
+    continent: string;
+    slug: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
+};
+
+export type BlogCountriesData = {
+  data: BlogCountryResponse[];
+};
+
+export type Tag = {
+  id: number;
+  attributes: {
+    name: string;
+    slug: string;
+    group: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
+};
+
+export type Tags = {
+  data: Tag[];
+};
+
 export type Format = {
   ext: string;
   url: string;
@@ -92,19 +126,6 @@ export type DeepInfo = {
   image: string;
 };
 
-export type Category = {
-  data: {
-    id: number;
-    attributes: {
-      name: string;
-      slug: string;
-      createdAt: string;
-      updatedAt: string;
-      publishedAt: string;
-    };
-  };
-};
-
 export type PollOption = {
   id: number;
   label: string;
@@ -148,11 +169,13 @@ export type BlogPostResponse = {
     content: string;
     likes: number;
     views: number;
+    lifestyle?: boolean;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
+    tags?: Tags;
     images?: Images;
-    category?: Category;
+    countries?: BlogCountriesData;
     poll?: PollResponse;
   };
 };
@@ -164,10 +187,12 @@ export type BlogPost = {
   content: string;
   likes: number;
   views: number;
+  lifestyle?: boolean;
   publishedAt: string;
   imageUrl: string;
-  category: string;
+  countries: string[]; // Processed country names from the relational data
   slug: string;
+  tags: string[]; // Processed tag names from the relational data
 };
 
 export type Post = {

@@ -18,6 +18,10 @@
       object-fit: cover;
       width: 100%;
       height: auto;
+
+      @media only screen and (min-width: 600px) {
+        height: unset;
+      }
     }
 
     .topTag {
@@ -111,6 +115,13 @@
           color: #dc2625;
           background-color: #fde2e1;
         }
+      }
+
+      .date {
+        color: var(--primary-font-dark);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
       }
     }
 

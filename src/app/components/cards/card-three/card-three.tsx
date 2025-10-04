@@ -11,10 +11,7 @@ import { trackCardClick } from "@/app/utils/analytics";
 
 import s from "./card-three.module.scss";
 
-const CardThree: FC<{ mockData: CardProps; color: string }> = ({
-  mockData,
-  color,
-}) => {
+const CardThree: FC<{ blog: CardProps; color: string }> = ({ blog, color }) => {
   const getColourClassNames = (color: string) => {
     switch (color) {
       case "blue":
@@ -30,18 +27,21 @@ const CardThree: FC<{ mockData: CardProps; color: string }> = ({
     }
   };
 
-  const getCardUrl = () => {
-    if (!mockData?.category || !mockData?.slug) {
-      return "#"; // fallback URL
-    }
-    return `/${mockData.category}/${mockData.slug}`;
+  const generateBlogUrl = () => {
+    // Use pre-computed URL, fallback to country-based URL, or home page as last resort
+    return (
+      blog?.url ||
+      (blog?.country && blog?.slug
+        ? `/${blog.country.toLowerCase()}/${blog.slug}`
+        : "/")
+    );
   };
 
   const handleCardClick = () => {
-    if (mockData) {
+    if (blog) {
       trackCardClick({
-        cardTitle: mockData.title || "Unknown Title",
-        cardCategory: mockData.category || "Unknown Category",
+        cardTitle: blog.title || "Unknown Title",
+        cardCategory: blog.country || "Unknown Country",
         cardType: "CardThree",
         location: window.location.pathname,
       });
@@ -49,22 +49,26 @@ const CardThree: FC<{ mockData: CardProps; color: string }> = ({
   };
 
   return (
-    <Link href={getCardUrl()} className={s.cardLink} onClick={handleCardClick}>
+    <Link
+      href={generateBlogUrl()}
+      className={s.cardLink}
+      onClick={handleCardClick}
+    >
       <div className={s.container}>
         <div className={s.imageWrapper}>
           <Image
             className={s.image}
-            src={mockData.thumbnail}
-            alt={mockData.title}
+            src={blog.thumbnail}
+            alt={blog.title}
             width={330}
             height={250}
             loading="lazy"
           />
           <div className={s.topInfo}>
             <div className={`${s.tag} ${getColourClassNames(color)}`}>
-              {mockData.tags[0]}
+              {blog.tags && blog.tags.length > 0 ? blog.tags[0] : "Travel"}
             </div>
-            <div className={s.readTime}>{`${mockData.readTime} read`}</div>
+            <div className={s.readTime}>{`${blog.readTime} read`}</div>
           </div>
         </div>
         <div className={s.content}>
@@ -73,11 +77,13 @@ const CardThree: FC<{ mockData: CardProps; color: string }> = ({
               icon={faLocationDot}
               className={`${s.icon} ${getColourClassNames(color)}`}
             />
-            {mockData.country}
+            {blog.country}
           </div>
-          <h3>{mockData.title}</h3>
-          <p>{mockData.description}</p>
-          <div className={s.date}>{mockData.date}</div>
+          <h3>{blog.title}</h3>
+          <p>{blog.description}</p>
+          <div className={s.bottomInfo}>
+            <div className={s.date}>{blog.date}</div>
+          </div>
         </div>
       </div>
     </Link>
