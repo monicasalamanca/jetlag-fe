@@ -77,13 +77,13 @@ const CardOne: FC<{
               icon={faPlane}
               className={`${s.icon} ${getColourClassNames(color)}`}
             />
-            {blog.tags[0]}
+            {blog.tags && blog.tags.length > 0 ? blog.tags[0] : "Travel"}
           </div>
         </div>
         <div className={s.content}>
           <div className={s.tags}>
             <div className={`${s.tag} ${getColourClassNames(color)}`}>
-              {blog.tags[1]}
+              {blog.tags && blog.tags.length > 1 ? blog.tags[1] : "Blog"}
             </div>
             <div className={s.date}>{blog.date}</div>
           </div>

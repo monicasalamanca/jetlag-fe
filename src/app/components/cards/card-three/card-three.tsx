@@ -66,7 +66,7 @@ const CardThree: FC<{ blog: CardProps; color: string }> = ({ blog, color }) => {
           />
           <div className={s.topInfo}>
             <div className={`${s.tag} ${getColourClassNames(color)}`}>
-              {blog.tags[0]}
+              {blog.tags && blog.tags.length > 0 ? blog.tags[0] : "Travel"}
             </div>
             <div className={s.readTime}>{`${blog.readTime} read`}</div>
           </div>

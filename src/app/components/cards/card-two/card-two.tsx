@@ -73,7 +73,7 @@ const CardTwo: FC<{ blog: CardProps; color: string }> = ({ blog, color }) => {
           </div>
           <div className={s.bottomInfo}>
             <div className={`${s.tag} ${getColourClassNames(color)}`}>
-              {blog.tags[0]}
+              {blog.tags && blog.tags.length > 0 ? blog.tags[0] : "Travel"}
             </div>
             <h3>{blog.title}</h3>
           </div>
