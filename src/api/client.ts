@@ -119,8 +119,7 @@ export const fetchBlogPostFromLifestyle = async (
         likes: item.attributes.likes,
         views: item.attributes.views,
         imageUrl:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
-            ?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
       };
@@ -181,8 +180,7 @@ export const fetchBlogPost = async (
         likes: item.attributes.likes,
         views: item.attributes.views,
         imageUrl:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
-            ?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
         poll: pollData
@@ -252,8 +250,7 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
         likes: item.attributes.likes,
         slug: item.attributes.slug,
         imageUrl:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
-            ?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
         countries:
@@ -325,8 +322,7 @@ export const fetchLatestBlogPostsClient = async (): Promise<
         likes: item.attributes.likes,
         slug: item.attributes.slug,
         imageUrl:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
-            ?.url ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url ||
           "/placeholder-image.jpg",
