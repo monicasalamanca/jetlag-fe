@@ -15,10 +15,17 @@ const nextConfig: NextConfig = {
 
   async redirects() {
     return [
-      // --- Host + slash normalization: ONE HOP to apex, no slash ---
-      // www (with or without trailing slash) -> apex no slash - MUST BE FIRST
+      // --- Host + slash normalization: OPTIMIZED for 2 hops max ---
+      // www + trailing slash -> apex no slash (handles both slash removal and www removal)
       {
-        source: "/:path*(.*)",
+        source: "/:path*/",
+        has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
+        destination: "https://thejetlagchronicles.com/:path*",
+        permanent: true,
+      },
+      // www + no trailing slash -> apex no slash
+      {
+        source: "/:path*",
         has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
         destination: "https://thejetlagchronicles.com/:path*",
         permanent: true,
