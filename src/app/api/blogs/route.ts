@@ -74,18 +74,13 @@ export async function GET(request: NextRequest) {
     }));
 
     // Filter for specific country content
-    if (countrySlug === "thailand") {
-      const filteredBlogs = allBlogs.filter(
-        (blog: BlogPost) =>
-          blog.title.toLowerCase().includes("thailand") ||
-          blog.title.toLowerCase().includes("thai") ||
-          blog.content.toLowerCase().includes("thailand") ||
-          blog.slug.includes("thailand"),
-      );
-      return NextResponse.json(filteredBlogs);
-    }
+    const filteredBlogs = allBlogs.filter((blog: BlogPost) =>
+      blog.countries.some(
+        (country) => country.toLowerCase() === countrySlug.toLowerCase(),
+      ),
+    );
 
-    return NextResponse.json(allBlogs);
+    return NextResponse.json(filteredBlogs);
   } catch (error) {
     console.error(`Error fetching blogs for ${countrySlug}: `, error);
     return NextResponse.json(

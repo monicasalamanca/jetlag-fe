@@ -45,24 +45,37 @@ const getColour = (index: number, seed: string = "") => {
 const CountryLander: FC<{ country: Country }> = ({ country }) => {
   const [blogData, setBlogData] = useState<BlogPost[]>([]);
   const [isLoadingBlogs, setIsLoadingBlogs] = useState(false);
+  const [showComingSoon, setShowComingSoon] = useState(false);
 
-  // Fetch blog data for Thailand
+  // Fetch blog data for the country with fallback logic
   useEffect(() => {
     if (!country) return;
 
     const fetchBlogs = async () => {
-      if (country.name.toLowerCase() === "thailand") {
-        setIsLoadingBlogs(true);
-        try {
-          const blogs = await fetchBlogsByCountry("thailand");
-          setBlogData(blogs || []);
-        } catch (error) {
-          console.error("Error fetching Thailand blogs:", error);
-          // Gracefully handle API failure - no blog cards will be shown
-          setBlogData([]);
-        } finally {
-          setIsLoadingBlogs(false);
+      setIsLoadingBlogs(true);
+      setShowComingSoon(false);
+
+      try {
+        // First, try to fetch blogs for the current country
+        const countrySlug = country.name.toLowerCase();
+
+        const blogs = await fetchBlogsByCountry(countrySlug);
+
+        if (blogs && blogs.length > 0) {
+          // Found blogs for this country
+          setBlogData(blogs);
+          setShowComingSoon(false);
+        } else {
+          // No blogs found for this country
+          setBlogData([]); // Don't show any blog cards in masonry grid
+          setShowComingSoon(true); // Show ComingSoonSection (which handles Thailand fallback internally)
         }
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        setBlogData([]);
+        setShowComingSoon(true);
+      } finally {
+        setIsLoadingBlogs(false);
       }
     };
 
@@ -147,9 +160,9 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
           }))
         : [];
 
-    // Add blog cards only for Thailand - mix of different card types
+    // Add blog cards for any country that has blogs - mix of different card types
     const blogCards =
-      name.toLowerCase() === "thailand" && blogData.length > 0
+      blogData.length > 0
         ? blogData.map((blog, index) => {
             const cardProps = blogToCardProps(blog);
             const color = getColour(index, name);
@@ -252,14 +265,12 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
         headline={`${name} Travel & Living Guide`}
         shortDescription={tagline}
       />
-      {name.toLowerCase() !== "thailand" && (
-        <ComingSoonSection countryName={name} />
-      )}
+      {showComingSoon && <ComingSoonSection countryName={name} />}
       <section className={s.countryIntro}>
         <p>{intro}</p>
-        {name.toLowerCase() === "thailand" && isLoadingBlogs && (
+        {isLoadingBlogs && (
           <p style={{ fontStyle: "italic", color: "#666" }}>
-            Loading Thailand travel stories...
+            Loading travel stories...
           </p>
         )}
       </section>
