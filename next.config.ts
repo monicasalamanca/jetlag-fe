@@ -10,31 +10,50 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Canonical = NO trailing slash
-  trailingSlash: false,
+  // Disable automatic trailing slash handling - we handle it explicitly in redirects
+  // trailingSlash: false,
 
   async redirects() {
     return [
-      // --- Host + slash normalization: FORCE ABSOLUTE REDIRECTS ---
-      // www with trailing slash -> apex no slash (one hop)
+      // --- WWW DOMAIN redirects (www.thejetlagchronicles.com) ---
+      // Specific common paths
+      {
+        source: "/thailand/",
+        has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
+        destination: "https://thejetlagchronicles.com/thailand",
+        permanent: true,
+      },
+      {
+        source: "/blog/",
+        has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
+        destination: "https://thejetlagchronicles.com/blog",
+        permanent: true,
+      },
+      // Generic www redirects (fallback)
       {
         source: "/:path+/",
         has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
         destination: "https://thejetlagchronicles.com/:path+",
         permanent: true,
       },
-      // www without trailing slash -> apex no slash
       {
         source: "/:path+",
         has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
         destination: "https://thejetlagchronicles.com/:path+",
         permanent: true,
       },
-      // Root www -> apex
       {
         source: "/",
         has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
-        destination: "https://thejetlagchronicles.com/",
+        destination: "https://thejetlagchronicles.com",
+        permanent: true,
+      },
+
+      // --- APEX DOMAIN trailing slash removal (thejetlagchronicles.com) ---
+      {
+        source: "/:path+/",
+        has: [{ type: "host", value: "thejetlagchronicles.com" }],
+        destination: "https://thejetlagchronicles.com/:path+",
         permanent: true,
       },
 
