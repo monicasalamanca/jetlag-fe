@@ -46,6 +46,7 @@ const CardFive = ({ blog }: blogProps) => {
       href={generateBlogUrl()}
       className={s.cardLink}
       onClick={handleCardClick}
+      rel={"canonical"}
     >
       <div className={s.container}>
         <div className={s.imageWrapper}>

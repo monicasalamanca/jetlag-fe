@@ -522,6 +522,7 @@ const Quiz: FC<QuizProps> = ({
             <div className={s.resultActions}>
               <Link
                 href="/"
+                rel="canonical"
                 className={s.ctaButton}
                 aria-label="Go to homepage for more travel adventures"
                 onClick={() =>
@@ -542,6 +543,7 @@ const Quiz: FC<QuizProps> = ({
 
               <Link
                 href="/thailand"
+                rel="canonical"
                 className={s.shareButton}
                 aria-label="Explore Thailand travel guides and tips"
                 onClick={() =>

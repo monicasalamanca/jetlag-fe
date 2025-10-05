@@ -25,7 +25,12 @@ const NotFoundContent = () => {
         got plenty more to explore!
       </p>
       <section className={s.buttonsSection}>
-        <Link aria-label="Go to Home page" className={s.goHomeBtn} href="/">
+        <Link
+          aria-label="Go to Home page"
+          className={s.goHomeBtn}
+          href="/"
+          rel="canonical"
+        >
           <FontAwesomeIcon icon={faHouse} className={s.icon} />
           <span>Go to Homepage</span>
         </Link>
@@ -33,6 +38,7 @@ const NotFoundContent = () => {
           aria-label="Read our latest blogs"
           className={s.readLatestArticles}
           href="/"
+          rel="canonical"
         >
           <FontAwesomeIcon icon={faCompass} className={s.icon} />
           <span>Read Latest Articles</span>

@@ -53,6 +53,7 @@ const CardThree: FC<{ blog: CardProps; color: string }> = ({ blog, color }) => {
       href={generateBlogUrl()}
       className={s.cardLink}
       onClick={handleCardClick}
+      rel="canonical"
     >
       <div className={s.container}>
         <div className={s.imageWrapper}>
