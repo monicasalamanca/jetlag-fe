@@ -59,7 +59,12 @@ const CardOne: FC<{
   }
 
   return (
-    <Link href={getCardUrl()} className={s.cardLink} onClick={handleCardClick}>
+    <Link
+      href={getCardUrl()}
+      className={s.cardLink}
+      onClick={handleCardClick}
+      rel="canonical"
+    >
       <div className={s.container}>
         <div className={s.imageWrapper}>
           <Image

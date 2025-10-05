@@ -45,6 +45,7 @@ const Footer = () => {
                   aria-label="Read more about us"
                   className={s.quickLink}
                   href="/about-us"
+                  rel="canonical"
                 >
                   About Us
                 </Link>
@@ -53,6 +54,7 @@ const Footer = () => {
                 <Link
                   aria-label="Read our privacy policy"
                   href="/privacy-policy"
+                  rel="canonical"
                 >
                   Privacy Policy
                 </Link>
@@ -61,6 +63,7 @@ const Footer = () => {
                 <Link
                   aria-label="Read our terms of service"
                   href="/terms-of-service"
+                  rel="canonical"
                 >
                   Terms of Service
                 </Link>
@@ -117,6 +120,7 @@ const Footer = () => {
             <Link
               aria-label="Read our privacy policy"
               href="/privacy-policy"
+              rel="canonical"
               onClick={() =>
                 trackLinkClick({
                   url: "/privacy-policy",
@@ -131,6 +135,7 @@ const Footer = () => {
             <Link
               aria-label="Read our terms of service"
               href="/terms-of-service"
+              rel="canonical"
               onClick={() =>
                 trackLinkClick({
                   url: "/terms-of-service",

@@ -76,7 +76,12 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
               </li>
               <li>
                 <FontAwesomeIcon icon={faHouse} className={s.icon} />
-                <Link aria-label="Go to home page" href="/" onClick={closeMenu}>
+                <Link
+                  aria-label="Go to home page"
+                  href="/"
+                  onClick={closeMenu}
+                  rel="canonical"
+                >
                   Home
                 </Link>
               </li>
@@ -100,6 +105,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                                 aria-label={`Go to ${country} page`}
                                 href={`/${country}`}
                                 onClick={closeMenu}
+                                rel="canonical"
                               >
                                 {country}
                               </Link>
@@ -111,6 +117,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                             aria-label="view all countries"
                             href="/"
                             className={s.viewMore}
+                            rel="canonical"
                           >
                             View all 20 countries
                           </Link>
@@ -124,6 +131,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                 <Link
                   aria-label="Read all our chronicles"
                   href="/blog"
+                  rel="canonical"
                   onClick={closeMenu}
                 >
                   Chronicles
@@ -134,6 +142,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                 <Link
                   aria-label="Read more about us"
                   href="/about-us"
+                  rel="canonical"
                   onClick={closeMenu}
                 >
                   About Us

@@ -68,7 +68,12 @@ const ComingSoonSection: FC<ComingSoonSectionProps> = ({ countryName }) => {
                 // Use the actual slug from the blog data
                 const slug = `/thailand/${card.slug}`;
                 return (
-                  <Link key={card.id} href={slug} className={s.cardLink}>
+                  <Link
+                    key={card.id}
+                    href={slug}
+                    className={s.cardLink}
+                    rel="canonical"
+                  >
                     <div className={s.card}>
                       <div className={s.imageWrapper}>
                         <Image

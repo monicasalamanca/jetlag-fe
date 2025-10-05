@@ -1,20 +1,44 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        port: "",
         pathname: "/jetlagchronicles/**",
-        search: "",
       },
     ],
   },
+  // Canonical = NO trailing slash
+  trailingSlash: false,
+
   async redirects() {
     return [
+      // --- Host + slash normalization: ONE HOP to apex, no slash ---
+      // www + trailing slash -> apex no slash
+      {
+        source: "/:path*/",
+        has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
+        destination: "https://thejetlagchronicles.com/:path*",
+        permanent: true,
+      },
+      // www + no slash -> apex no slash
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
+        destination: "https://thejetlagchronicles.com/:path*",
+        permanent: true,
+      },
+      // apex + trailing slash -> apex no slash
+      {
+        source: "/:path*/",
+        has: [{ type: "host", value: "thejetlagchronicles.com" }],
+        destination: "https://thejetlagchronicles.com/:path*",
+        permanent: true,
+      },
+
+      // --- Your content redirects (unchanged) ---
       { source: "/home", destination: "/", permanent: true },
       { source: "/chronicles", destination: "/blog", permanent: true },
       {
@@ -42,4 +66,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-module.exports = nextConfig;
