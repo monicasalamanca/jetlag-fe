@@ -15,26 +15,26 @@ const nextConfig: NextConfig = {
 
   async redirects() {
     return [
-      // --- Host + slash normalization: OPTIMIZED for 2 hops max ---
-      // www + trailing slash -> apex no slash (handles both slash removal and www removal)
+      // --- Host + slash normalization: FORCE ABSOLUTE REDIRECTS ---
+      // www with trailing slash -> apex no slash (one hop)
       {
-        source: "/:path*/",
+        source: "/:path+/",
         has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
-        destination: "https://thejetlagchronicles.com/:path*",
+        destination: "https://thejetlagchronicles.com/:path+",
         permanent: true,
       },
-      // www + no trailing slash -> apex no slash
+      // www without trailing slash -> apex no slash
       {
-        source: "/:path*",
+        source: "/:path+",
         has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
-        destination: "https://thejetlagchronicles.com/:path*",
+        destination: "https://thejetlagchronicles.com/:path+",
         permanent: true,
       },
-      // apex + trailing slash -> apex no slash (only for apex domain)
+      // Root www -> apex
       {
-        source: "/:path*/",
-        has: [{ type: "host", value: "thejetlagchronicles.com" }],
-        destination: "https://thejetlagchronicles.com/:path*",
+        source: "/",
+        has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
+        destination: "https://thejetlagchronicles.com/",
         permanent: true,
       },
 
