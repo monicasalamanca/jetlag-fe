@@ -10,54 +10,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Disable automatic trailing slash handling - we handle it explicitly in redirects
-  // trailingSlash: false,
-
+  trailingSlash: false,
   async redirects() {
     return [
-      // --- WWW DOMAIN redirects (www.thejetlagchronicles.com) ---
-      // Specific common paths
-      {
-        source: "/thailand/",
-        has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
-        destination: "https://thejetlagchronicles.com/thailand",
-        permanent: true,
-      },
-      {
-        source: "/blog/",
-        has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
-        destination: "https://thejetlagchronicles.com/blog",
-        permanent: true,
-      },
-      // Generic www redirects (fallback)
-      {
-        source: "/:path+/",
-        has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
-        destination: "https://thejetlagchronicles.com/:path+",
-        permanent: true,
-      },
-      {
-        source: "/:path+",
-        has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
-        destination: "https://thejetlagchronicles.com/:path+",
-        permanent: true,
-      },
-      {
-        source: "/",
-        has: [{ type: "host", value: "www.thejetlagchronicles.com" }],
-        destination: "https://thejetlagchronicles.com",
-        permanent: true,
-      },
-
-      // --- APEX DOMAIN trailing slash removal (thejetlagchronicles.com) ---
-      {
-        source: "/:path+/",
-        has: [{ type: "host", value: "thejetlagchronicles.com" }],
-        destination: "https://thejetlagchronicles.com/:path+",
-        permanent: true,
-      },
-
-      // --- Your content redirects (unchanged) ---
       { source: "/home", destination: "/", permanent: true },
       { source: "/chronicles", destination: "/blog", permanent: true },
       {
