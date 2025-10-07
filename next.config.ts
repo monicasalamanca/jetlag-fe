@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
   trailingSlash: undefined,
   async redirects() {
     return [
+      // Content redirects - CRITICAL for Google SEO
       { source: "/home", destination: "/", permanent: true },
       { source: "/chronicles", destination: "/blog", permanent: true },
       {
