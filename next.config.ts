@@ -10,7 +10,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  trailingSlash: false,
+  // EMERGENCY: Completely disable trailing slash to break the loop
+  trailingSlash: undefined,
   async redirects() {
     return [
       { source: "/home", destination: "/", permanent: true },
