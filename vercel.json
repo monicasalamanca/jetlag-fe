@@ -11,12 +11,6 @@
       "has": [{ "type": "host", "value": "www.thejetlagchronicles.com" }],
       "destination": "https://thejetlagchronicles.com/:path*",
       "permanent": true
-    },
-    {
-      "source": "/:path*/",
-      "has": [{ "type": "host", "value": "thejetlagchronicles.com" }],
-      "destination": "https://thejetlagchronicles.com/:path*",
-      "permanent": true
     }
   ]
 }
