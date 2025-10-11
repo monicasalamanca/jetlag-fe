@@ -13,7 +13,7 @@ export default function SeoDebugTools() {
     // Simple validation function
     const validateSingleSchema = (
       schema: Record<string, unknown>,
-      schemaType?: string
+      schemaType?: string,
     ): boolean => {
       try {
         if (!schema["@context"] || !schema["@type"]) {
@@ -21,7 +21,7 @@ export default function SeoDebugTools() {
           return false;
         }
         console.log(
-          `✅ Schema validation passed for ${schemaType || schema["@type"]}`
+          `✅ Schema validation passed for ${schemaType || schema["@type"]}`,
         );
         return true;
       } catch (error) {
@@ -33,7 +33,7 @@ export default function SeoDebugTools() {
     // Debug all schemas on current page
     const debugPageSchemas = (): void => {
       const scripts = document.querySelectorAll(
-        'script[type="application/ld+json"]'
+        'script[type="application/ld+json"]',
       );
       console.group("📊 Page Schema Debug");
 
@@ -59,7 +59,7 @@ export default function SeoDebugTools() {
     // Check for duplicate schemas
     const checkDuplicateSchemas = (): void => {
       const scripts = document.querySelectorAll(
-        'script[type="application/ld+json"]'
+        'script[type="application/ld+json"]',
       );
       const seenTypes = new Map<string, number>();
 

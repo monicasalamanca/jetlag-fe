@@ -169,7 +169,7 @@ export function isValidUrl(url: string): boolean {
 export function safeGet<T>(
   obj: Record<string, unknown> | null | undefined,
   path: string,
-  fallback: T
+  fallback: T,
 ): T {
   try {
     const keys = path.split(".");

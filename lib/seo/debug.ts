@@ -10,7 +10,7 @@ import { SCHEMA_CONFIG } from "./schema/config";
  */
 export function validateSingleSchema(
   schema: Record<string, unknown>,
-  schemaType?: string
+  schemaType?: string,
 ): boolean {
   if (!SCHEMA_CONFIG.enableValidation) return true;
 
@@ -71,7 +71,7 @@ export function validateSingleSchema(
     }
 
     console.log(
-      `✅ Schema validation passed for ${schemaType || schema["@type"]}`
+      `✅ Schema validation passed for ${schemaType || schema["@type"]}`,
     );
     return true;
   } catch (error) {
@@ -102,7 +102,7 @@ export function debugPageSchemas(): void {
   if (typeof window === "undefined") return;
 
   const scripts = document.querySelectorAll(
-    'script[type="application/ld+json"]'
+    'script[type="application/ld+json"]',
   );
   console.group("📊 Page Schema Debug");
 
@@ -132,7 +132,7 @@ export function checkDuplicateSchemas(): void {
   if (typeof window === "undefined") return;
 
   const scripts = document.querySelectorAll(
-    'script[type="application/ld+json"]'
+    'script[type="application/ld+json"]',
   );
   const seenTypes = new Map<string, number>();
 
