@@ -8,7 +8,7 @@ export const metadata: Metadata = createMetadata({
   title: "The Jet Lag Chronicles | Authentic Travel Stories & Guides",
   description:
     "Discover authentic travel experiences, destination guides, and practical tips from seasoned travelers. Your companion for meaningful travel adventures.",
-  url: "https://thejetlagchronicles.com/",
+  url: "https://thejetlagchronicles.com",
   image: "https://thejetlagchronicles.com/home-og.jpg",
 });
 

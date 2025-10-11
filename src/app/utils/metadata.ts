@@ -85,7 +85,7 @@ export const defaultPageMetadata: Metadata = {
     title: "Page Not Found | The Jet Lag Chronicles",
     description:
       "The page you're looking for could not be found. Explore our travel stories and destination guides.",
-    url: "https://thejetlagchronicles.com/",
+    url: "https://thejetlagchronicles.com",
     siteName: "The Jet Lag Chronicles",
     images: [
       {

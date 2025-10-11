@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "The Jet Lag Chronicles",
     description:
       "Discover authentic travel experiences, destination guides, and practical tips from seasoned travelers.",
-    url: "https://thejetlagchronicles.com/",
+    url: "https://thejetlagchronicles.com",
     siteName: "The Jet Lag Chronicles",
     images: [
       {
