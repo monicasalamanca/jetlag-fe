@@ -31,12 +31,14 @@ const NavLink: FC<NavLinkProps> = ({
   // });
 
   const handleClick = () => {
-    trackNavigation({
-      destination: href,
-      source: pathname,
-      navigationText: name,
-      navigationType: "header",
-    });
+    if (pathname) {
+      trackNavigation({
+        destination: href,
+        source: pathname,
+        navigationText: name,
+        navigationType: "header",
+      });
+    }
   };
 
   return (
