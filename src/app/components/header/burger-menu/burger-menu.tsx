@@ -32,7 +32,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
   useEffect(() => {
     try {
       const subscriptionStatus = localStorage.getItem(
-        "hasSubscribedToDownload"
+        "hasSubscribedToDownload",
       );
       if (subscriptionStatus === "true") {
         setHasAlreadySubscribed(true);
