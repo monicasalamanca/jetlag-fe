@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { fetchCountry } from "@/api/client";
 import CountryLander from "@/components/country-lander/country-lander";
 import { createMetadata } from "@/app/utils/metadata";
+import PageSchemas from "../../../components/seo/PageSchemas";
+import { SITE_URL } from "../../../lib/seo/schema/utils";
 
 type Props = {
   params: Promise<{
@@ -47,7 +49,41 @@ const BlogPostPage = async ({ params }: Props) => {
   // and we will check if the category exists in the list
   // If it does exist we will return the page for that specific category
   if (!country) return notFound();
-  return <CountryLander country={country[0]} />;
+
+  const countryData = country[0];
+  const countryName =
+    countryData.name ||
+    categorySlug.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase());
+
+  return (
+    <>
+      {/* Page-specific SEO Schemas */}
+      <PageSchemas
+        page={{
+          url: `${SITE_URL}/${categorySlug}`,
+          title: `${countryName} Travel Guide`,
+          description: `Discover ${countryName} through our authentic travel experiences. Find practical tips, hidden gems, cost of living insights, and essential information for your ${countryName} adventure.`,
+          lang: "en",
+          image: {
+            url: `${SITE_URL}/country-og.jpg`,
+            width: 1200,
+            height: 630,
+            alt: `${countryName} Travel Guide`,
+          },
+        }}
+        breadcrumbs={[
+          { name: "Home", item: SITE_URL, position: 1 },
+          {
+            name: countryName,
+            item: `${SITE_URL}/${categorySlug}`,
+            position: 2,
+          },
+        ]}
+      />
+
+      <CountryLander country={countryData} />
+    </>
+  );
 };
 
 export default BlogPostPage;

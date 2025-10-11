@@ -36,7 +36,8 @@ export default function AnalyticsPageView() {
       milestones.forEach((milestone) => {
         if (
           scrollPercent >= milestone &&
-          !scrollDepthTracked.current.has(milestone)
+          !scrollDepthTracked.current.has(milestone) &&
+          pathname
         ) {
           scrollDepthTracked.current.add(milestone);
           trackScrollDepth(milestone, pathname);
@@ -46,7 +47,7 @@ export default function AnalyticsPageView() {
 
     // Time on page tracking
     const handleBeforeUnload = () => {
-      if (startTime.current) {
+      if (startTime.current && pathname) {
         const timeOnPage = Math.round((Date.now() - startTime.current) / 1000);
         // Only track if user spent more than 10 seconds on page
         if (timeOnPage > 10) {
@@ -57,7 +58,11 @@ export default function AnalyticsPageView() {
 
     // Visibility change tracking (for tab switching)
     const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden" && startTime.current) {
+      if (
+        document.visibilityState === "hidden" &&
+        startTime.current &&
+        pathname
+      ) {
         const timeOnPage = Math.round((Date.now() - startTime.current) / 1000);
         if (timeOnPage > 10) {
           trackTimeOnPage(timeOnPage, pathname);

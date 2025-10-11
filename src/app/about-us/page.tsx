@@ -8,6 +8,8 @@ import WhyTrustUs from "@/components/why-trust-us/why-trust-us";
 import MeetTheJetlaggers from "@/components/meet-the-jetlaggers/meet-the-jetlaggers";
 import OurValues from "@/components/our-values/our-values";
 import { createMetadata } from "@/app/utils/metadata";
+import PageSchemas from "../../../components/seo/PageSchemas";
+import { SITE_CONFIG } from "../../../lib/seo/schema/config";
 
 export const metadata: Metadata = createMetadata({
   title: "About Us",
@@ -20,6 +22,31 @@ export const metadata: Metadata = createMetadata({
 export default function About() {
   return (
     <>
+      {/* About Us SEO Schemas */}
+      <PageSchemas
+        page={{
+          url: `${SITE_CONFIG.url}/about-us`,
+          title: "About Us",
+          description:
+            "Meet the travel enthusiasts behind The Jet Lag Chronicles. Learn about our mission to empower expats and digital nomads to find their perfect destination through authentic travel experiences.",
+          lang: "en",
+          image: {
+            url: "https://thejetlagchronicles.com/about-us-og.jpg",
+            width: 1200,
+            height: 630,
+            alt: "About The Jet Lag Chronicles",
+          },
+        }}
+        breadcrumbs={[
+          { name: "Home", item: SITE_CONFIG.url, position: 1 },
+          {
+            name: "About Us",
+            item: `${SITE_CONFIG.url}/about-us`,
+            position: 2,
+          },
+        ]}
+      />
+
       <Hero
         srcImage="/aboutus-hero_vpxp49.jpg"
         headline="About Jet Lag Chronicles"

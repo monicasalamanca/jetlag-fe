@@ -46,6 +46,8 @@ public/sitemap.xml
 OLDsitemap.ts
 src/app/components/poll/test-example-fixed.tsx
 .vscode/claude-prompts.md
+.github
+*.md
 
 # Development and testing files
 **/test-example.tsx

@@ -4,6 +4,8 @@ import { Roboto } from "next/font/google";
 import HeaderWrapper from "@/components/headerWrapper/headerWrapper";
 import Footer from "@/components/footer/footer";
 import AnalyticsPageView from "./components/analytics-page-view";
+import SiteSchemas from "../../components/seo/SiteSchemas";
+import SeoDebugTools from "../../components/seo/SeoDebugTools";
 
 import "./globals.css";
 import { StorageBanner } from "./components/storage-banner";
@@ -86,6 +88,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
+        {/* Site-wide SEO Schemas */}
+        <SiteSchemas />
+
+        {/* Development-only debug tools */}
+        {process.env.NODE_ENV === "development" && <SeoDebugTools />}
+
         <GoogleAnalytics
           gaId={process.env.NEXT_PUBLIC_GA_ID || "G-E04G0053EJ"}
         />
