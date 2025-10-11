@@ -20,13 +20,13 @@ export const SITE_CONFIG = {
     process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@thejetlagchronicles.com",
   social: {
     twitter:
-      process.env.NEXT_PUBLIC_TWITTER_URL || "https://twitter.com/jetlagchron",
+      process.env.NEXT_PUBLIC_TWITTER_URL || "https://x.com/thejetLaggers_X",
     youtube:
       process.env.NEXT_PUBLIC_YOUTUBE_URL ||
-      "https://www.youtube.com/@MoniAndDunny",
+      "https://www.youtube.com/@TheJetLaggers_yt",
     instagram:
       process.env.NEXT_PUBLIC_INSTAGRAM_URL ||
-      "https://www.instagram.com/thejetlagchronicles",
+      "https://www.instagram.com/thejetlaggers_ig",
   },
   logo: {
     url: process.env.NEXT_PUBLIC_LOGO_URL || "/logo.png",
@@ -34,8 +34,8 @@ export const SITE_CONFIG = {
     height: 512,
   },
   defaultAuthor: {
-    name: process.env.NEXT_PUBLIC_DEFAULT_AUTHOR || "Monica & Danny",
-    url: "/about",
+    name: process.env.NEXT_PUBLIC_DEFAULT_AUTHOR || "Moni & Dunny",
+    url: "/about-us",
   },
 } as const;
 
