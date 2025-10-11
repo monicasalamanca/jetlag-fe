@@ -32,7 +32,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
   useEffect(() => {
     try {
       const subscriptionStatus = localStorage.getItem(
-        "hasSubscribedToDownload",
+        "hasSubscribedToDownload"
       );
       if (subscriptionStatus === "true") {
         setHasAlreadySubscribed(true);
@@ -170,7 +170,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   className={s.followLink}
-                  href="https://twitter.com/the_jetlaggers"
+                  href="https://x.com/thejetLaggers_X"
                   onClick={closeMenu}
                 >
                   <FontAwesomeIcon icon={faXTwitter} className={s.icon} />

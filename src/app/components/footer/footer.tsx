@@ -101,7 +101,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               className={s.followLink}
-              href="https://twitter.com/the_jetlaggers"
+              href="https://x.com/thejetLaggers_X"
               onClick={handleTwitterClick}
             >
               <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
