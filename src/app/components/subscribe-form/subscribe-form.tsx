@@ -496,7 +496,7 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
                       aria-label="Go to the jet lag chronicles twitter account"
                       target="_blank"
                       rel="noopener noreferrer"
-                      href="https://twitter.com/the_jetlaggers"
+                      href="https://x.com/thejetLaggers_X"
                       className={s.link}
                     >
                       <FontAwesomeIcon icon={faXTwitter} className={s.icon} />

@@ -12,7 +12,7 @@ import SubscribeForm from "../subscribe-form/subscribe-form";
 const Footer = () => {
   const handleTwitterClick = () => {
     trackLinkClick({
-      url: "https://twitter.com/the_jetlaggers",
+      url: "https://x.com/thejetLaggers_X",
       text: "Twitter/X Follow Link",
       location: "Footer",
       link_type: "social",
@@ -80,7 +80,7 @@ const Footer = () => {
                 className={s.followLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://twitter.com/the_jetlaggers"
+                href="https://x.com/thejetLaggers_X"
                 onClick={handleTwitterClick}
               >
                 <FontAwesomeIcon icon={faXTwitter} className={s.icon} />

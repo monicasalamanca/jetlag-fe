@@ -44,7 +44,7 @@ const ContactForm: FC<{
 
   const handleTwitterClick = () => {
     trackLinkClick({
-      url: "https://twitter.com/the_jetlaggers",
+      url: "https://x.com/thejetLaggers_X",
       text: "Twitter/X Follow Link",
       location: "Contact Form",
       link_type: "social",
@@ -197,7 +197,7 @@ const ContactForm: FC<{
                     aria-label="Go to the jet lag chronicles twitter account"
                     target="_blank"
                     rel="noopener noreferrer"
-                    href="https://twitter.com/the_jetlaggers"
+                    href="https://x.com/thejetLaggers_X"
                     className={s.link}
                     onClick={handleTwitterClick}
                   >
