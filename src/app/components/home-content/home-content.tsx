@@ -16,6 +16,7 @@ import s from "./home-content.module.scss";
 
 const HomeContent = () => {
   const [blogs, setBlogs] = useState<CardProps[]>([]);
+  const [shuffledBlogs, setShuffledBlogs] = useState<CardProps[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Function to map API BlogPost to CardProps format
@@ -52,13 +53,39 @@ const HomeContent = () => {
     };
   };
 
+  // Utility function for daily shuffling with consistent seed
+  const getDailyShuffledBlogs = (blogs: CardProps[]): CardProps[] => {
+    if (blogs.length === 0) return blogs;
+
+    // Use current date as seed for consistent daily shuffle
+    const today = new Date().toDateString(); // "Mon Oct 15 2025"
+    const seed = today
+      .split("")
+      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+
+    // Fisher-Yates shuffle with seeded random
+    const shuffled = [...blogs];
+    let random = seed;
+
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      random = (random * 9301 + 49297) % 233280; // Simple LCG
+      const j = Math.floor((random / 233280) * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    return shuffled;
+  };
+
   useEffect(() => {
     const getBlogs = async () => {
       try {
         const blogData = await fetchLatestBlogPostsClient();
         if (blogData) {
           const mappedBlogs = blogData.map(mapBlogPostToCardProps);
-          setBlogs(mappedBlogs);
+          const dailyShuffled = getDailyShuffledBlogs(mappedBlogs);
+
+          setBlogs(mappedBlogs); // Keep original order for "Latest Stories"
+          setShuffledBlogs(dailyShuffled); // Use shuffled for other sections
         }
       } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -91,7 +118,7 @@ const HomeContent = () => {
             <div className={s.wrapper}>
               <h2>Latest Stories</h2>
               <div className={s.cardWrapper}>
-                {blogs[0] && <CardOne blog={blogs[6]} color="blue" />}
+                {blogs[0] && <CardOne blog={blogs[0]} color="blue" />}
                 {blogs[1] && <CardOne blog={blogs[1]} color="green" />}
               </div>
             </div>
@@ -100,8 +127,8 @@ const HomeContent = () => {
             <div className={s.wrapper}>
               <h2>Most Viewed</h2>
               <div className={s.cardWrapper}>
-                {blogs[2] && <CardFive blog={blogs[5]} />}
-                {blogs[3] && <CardFive blog={blogs[4]} />}
+                {shuffledBlogs[0] && <CardFive blog={shuffledBlogs[0]} />}
+                {shuffledBlogs[1] && <CardFive blog={shuffledBlogs[1]} />}
               </div>
             </div>
           </section>
@@ -110,8 +137,12 @@ const HomeContent = () => {
             <div className={s.wrapper}>
               <h2>Trending</h2>
               <div className={s.cardWrapper}>
-                {blogs[4] && <CardTwo blog={blogs[2]} color="red" />}
-                {blogs[5] && <CardTwo blog={blogs[3]} color="green" />}
+                {shuffledBlogs[2] && (
+                  <CardTwo blog={shuffledBlogs[2]} color="red" />
+                )}
+                {shuffledBlogs[3] && (
+                  <CardTwo blog={shuffledBlogs[3]} color="green" />
+                )}
               </div>
             </div>
           </section>
@@ -119,8 +150,12 @@ const HomeContent = () => {
             <div className={s.wrapper}>
               <h2>Most Popular</h2>
               <div className={s.cardWrapper}>
-                {blogs[6] && <CardThree blog={blogs[7]} color="purple" />}
-                {blogs[7] && <CardThree blog={blogs[0]} color="blue" />}
+                {shuffledBlogs[4] && (
+                  <CardThree blog={shuffledBlogs[4]} color="purple" />
+                )}
+                {shuffledBlogs[5] && (
+                  <CardThree blog={shuffledBlogs[5]} color="blue" />
+                )}
               </div>
             </div>
           </section>
