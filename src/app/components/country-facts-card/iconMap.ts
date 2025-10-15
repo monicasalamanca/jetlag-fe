@@ -71,6 +71,11 @@ import {
   faTv,
   faRobot,
   faCamera,
+  faWifi,
+  faPassport,
+  faPlaneDeparture,
+  faSun,
+  faPeopleGroup,
 } from "@fortawesome/free-solid-svg-icons";
 
 // import { faCalendar, faCommentDots } from "@fortawesome/free-regular-svg-icons";
@@ -153,6 +158,11 @@ export const iconMap: Record<string, IconDefinition> = {
   faTv,
   faRobot,
   faCamera,
+  faWifi,
+  faPassport,
+  faPlaneDeparture,
+  faSun,
+  faPeopleGroup,
   // regular
 
   // brands
