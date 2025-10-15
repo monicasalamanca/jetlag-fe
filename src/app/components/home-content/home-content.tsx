@@ -120,6 +120,8 @@ const HomeContent = () => {
               <div className={s.cardWrapper}>
                 {blogs[0] && <CardOne blog={blogs[0]} color="blue" />}
                 {blogs[1] && <CardOne blog={blogs[1]} color="green" />}
+                {blogs[2] && <CardOne blog={blogs[2]} color="red" />}
+                {blogs[3] && <CardOne blog={blogs[3]} color="purple" />}
               </div>
             </div>
           </section>
