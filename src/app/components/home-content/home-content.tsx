@@ -82,10 +82,13 @@ const HomeContent = () => {
         const blogData = await fetchLatestBlogPostsClient();
         if (blogData) {
           const mappedBlogs = blogData.map(mapBlogPostToCardProps);
-          const dailyShuffled = getDailyShuffledBlogs(mappedBlogs);
 
-          setBlogs(mappedBlogs); // Keep original order for "Latest Stories"
-          setShuffledBlogs(dailyShuffled); // Use shuffled for other sections
+          // Exclude first 4 blogs (used in Latest Stories) from shuffling
+          const blogsForShuffling = mappedBlogs.slice(4); // Skip first 4 blogs
+          const dailyShuffled = getDailyShuffledBlogs(blogsForShuffling);
+
+          setBlogs(mappedBlogs); // Keep original order for "Latest Stories" (indexes 0-3)
+          setShuffledBlogs(dailyShuffled); // Use shuffled remaining blogs for other sections (no duplicates)
         }
       } catch (error) {
         console.error("Error fetching blogs:", error);
