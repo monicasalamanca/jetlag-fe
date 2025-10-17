@@ -5,7 +5,7 @@ import WhatYouWillFind from "../../components/what-you-will-find/what-you-will-f
 import OurMission from "@/components/our-mission/our-mission";
 import WhoWeAre from "@/components/who-we-are/who-we-are";
 import WhyTrustUs from "@/components/why-trust-us/why-trust-us";
-import MeetTheJetlaggers from "@/components/meet-the-jetlaggers/meet-the-jetlaggers";
+// import MeetTheJetlaggers from "@/components/meet-the-jetlaggers/meet-the-jetlaggers";
 import OurValues from "@/components/our-values/our-values";
 import { createMetadata } from "@/app/utils/metadata";
 import PageSchemas from "../../../components/seo/PageSchemas";
@@ -57,7 +57,7 @@ export default function About() {
       <OurMission />
       <WhoWeAre />
       <WhyTrustUs />
-      <MeetTheJetlaggers />
+      {/* <MeetTheJetlaggers /> */}
       <OurValues />
     </>
   );
