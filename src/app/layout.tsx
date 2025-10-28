@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Roboto } from "next/font/google";
+import { Roboto, Poppins, Source_Sans_3 } from "next/font/google";
 import HeaderWrapper from "@/components/headerWrapper/headerWrapper";
 import Footer from "@/components/footer/footer";
 import AnalyticsPageView from "./components/analytics-page-view";
@@ -11,6 +11,24 @@ import "./globals.css";
 import { StorageBanner } from "./components/storage-banner";
 
 const roboto = Roboto({
+  adjustFontFallback: false,
+  display: "swap",
+  fallback: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+});
+
+const poppins = Poppins({
+  adjustFontFallback: false,
+  display: "swap",
+  fallback: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+});
+
+const sourceSans3 = Source_Sans_3({
   adjustFontFallback: false,
   display: "swap",
   fallback: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
@@ -87,7 +105,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.className}>
+      <body
+        className={`${roboto.className} ${poppins.className} ${sourceSans3.className}`}
+      >
         {/* Site-wide SEO Schemas */}
         <SiteSchemas />
 

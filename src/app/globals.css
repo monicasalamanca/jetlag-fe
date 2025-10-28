@@ -126,6 +126,17 @@ body {
   }
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", "Helvetica Neue", "Helvetica", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body,
 a,
 button,
@@ -133,14 +144,9 @@ input,
 textarea,
 li,
 ul,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Roboto", "Helvetica Neue", "Helvetica", arial, sans-serif;
+p {
+  font-family:
+    "Source Sans 3", "Helvetica Neue", "Helvetica", arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
