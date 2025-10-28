@@ -35,7 +35,7 @@ const Header: FC<{ destinations: Destination[] | null }> = ({
       <Image
         src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1761613439/blog-assets/Logo_dlz9d2.png`}
         width={222}
-        height={46}
+        height={57}
         alt="The Jet Lag Chronicles Logo"
         loading="lazy"
       />
