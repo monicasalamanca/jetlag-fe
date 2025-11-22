@@ -5,7 +5,7 @@ import PageSchemas from "../../components/seo/PageSchemas";
 import { SITE_CONFIG } from "../../lib/seo/schema/config";
 
 export const metadata: Metadata = createMetadata({
-  title: "The Jet Lag Chronicles | Authentic Travel Stories & Guides",
+  title: "The Jet Lag Chronicles | Authentic Travel Stories and Guides",
   description:
     "Discover authentic travel experiences, destination guides, and practical tips from seasoned travelers. Your companion for meaningful travel adventures.",
   url: "https://thejetlagchronicles.com",
@@ -19,7 +19,7 @@ const Home = async () => {
       <PageSchemas
         page={{
           url: SITE_CONFIG.url,
-          title: "The Jet Lag Chronicles | Authentic Travel Stories & Guides",
+          title: "The Jet Lag Chronicles | Authentic Travel Stories and Guides",
           description:
             "Discover authentic travel experiences, destination guides, and practical tips from seasoned travelers. Your companion for meaningful travel adventures.",
           lang: "en",
@@ -27,7 +27,7 @@ const Home = async () => {
             url: "https://thejetlagchronicles.com/home-og.jpg",
             width: 1200,
             height: 630,
-            alt: "The Jet Lag Chronicles - Travel Stories & Guides",
+            alt: "The Jet Lag Chronicles - Travel Stories and Guides",
           },
         }}
         breadcrumbs={[{ name: "Home", item: SITE_CONFIG.url, position: 1 }]}

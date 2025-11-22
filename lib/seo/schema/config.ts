@@ -34,7 +34,7 @@ export const SITE_CONFIG = {
     height: 512,
   },
   defaultAuthor: {
-    name: process.env.NEXT_PUBLIC_DEFAULT_AUTHOR || "Moni & Dunny",
+    name: process.env.NEXT_PUBLIC_DEFAULT_AUTHOR || "Moni and Dunny",
     url: "/about-us",
   },
 } as const;
