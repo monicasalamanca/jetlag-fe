@@ -1,8 +1,38 @@
 {
   "redirects": [
     {
-      "source": "/:path*/",
+      "source": "/home",
       "has": [{ "type": "host", "value": "www.thejetlagchronicles.com" }],
+      "destination": "https://thejetlagchronicles.com/",
+      "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "has": [{ "type": "host", "value": "www.thejetlagchronicles.com" }],
+      "destination": "https://thejetlagchronicles.com/about-us",
+      "permanent": true
+    },
+    {
+      "source": "/chronicles",
+      "has": [{ "type": "host", "value": "www.thejetlagchronicles.com" }],
+      "destination": "https://thejetlagchronicles.com/blog",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        { "type": "host", "value": "www.thejetlagchronicles.com" },
+        { "type": "header", "key": "x-forwarded-proto", "value": "http" }
+      ],
+      "destination": "https://thejetlagchronicles.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        { "type": "host", "value": "thejetlagchronicles.com" },
+        { "type": "header", "key": "x-forwarded-proto", "value": "http" }
+      ],
       "destination": "https://thejetlagchronicles.com/:path*",
       "permanent": true
     },

@@ -5,7 +5,7 @@ import PageSchemas from "../../../components/seo/PageSchemas";
 import { SITE_URL } from "../../../lib/seo/schema/utils";
 
 export const metadata: Metadata = createMetadata({
-  title: "Travel Chronicles & Guides",
+  title: "Travel Chronicles and Guides",
   description:
     "Discover authentic travel stories, destination guides, and practical tips from experienced travelers. Explore our collection of travel chronicles and find inspiration for your next adventure.",
   url: "https://thejetlagchronicles.com/blog",
@@ -19,7 +19,7 @@ export default function Blog() {
       <PageSchemas
         page={{
           url: `${SITE_URL}/blog`,
-          title: "Travel Chronicles & Guides",
+          title: "Travel Chronicles and Guides",
           description:
             "Discover authentic travel stories, destination guides, and practical tips from experienced travelers. Explore our collection of travel chronicles and find inspiration for your next adventure.",
           lang: "en",
