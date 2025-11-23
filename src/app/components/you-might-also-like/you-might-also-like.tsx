@@ -30,7 +30,6 @@ const YouMightAlsoLike = ({
 }: YouMightAlsoLikeProps) => {
   const [relatedBlogs, setRelatedBlogs] = useState<CardProps[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [shouldShow, setShouldShow] = useState(false);
 
   // Function to map API BlogPost to CardProps format
   const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
@@ -119,16 +118,33 @@ const YouMightAlsoLike = ({
       return today.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
     };
 
-    // Select 4 blogs with prioritization
+    // Select 4 blogs with prioritization - always return up to 4 blogs
     const selectRelatedBlogs = (
       eligibleBlogs: CardProps[],
+      allBlogs: CardProps[],
       currentTags: string[],
       currentCountry?: string,
     ): CardProps[] => {
-      if (eligibleBlogs.length < 4) return [];
+      // Start with eligible blogs (excluding current and oldest 4)
+      let blogsToUse = eligibleBlogs;
 
-      // Calculate priorities for all eligible blogs
-      const prioritizedBlogs = eligibleBlogs.map((blog) =>
+      // If we don't have enough eligible blogs, expand to include oldest blogs (but still exclude current)
+      if (blogsToUse.length < 4) {
+        blogsToUse = allBlogs.filter(
+          (blog) => blog.slug !== currentBlogSlug
+        );
+      }
+
+      // If still not enough (edge case), duplicate some blogs to reach 4
+      while (blogsToUse.length > 0 && blogsToUse.length < 4) {
+        blogsToUse = [...blogsToUse, ...blogsToUse.slice(0, 4 - blogsToUse.length)];
+      }
+
+      // Take only what we need (up to 4)
+      blogsToUse = blogsToUse.slice(0, Math.max(4, blogsToUse.length));
+
+      // Calculate priorities for all blogs
+      const prioritizedBlogs = blogsToUse.map((blog) =>
         calculateBlogPriority(blog, currentTags, currentCountry),
       );
 
@@ -146,8 +162,9 @@ const YouMightAlsoLike = ({
         return seededRandom(seedA) - seededRandom(seedB);
       });
 
-      // Return top 4 blogs
-      return prioritizedBlogs.slice(0, 4).map((item) => item.blog);
+      // Return up to 4 blogs, but ensure we return exactly 4 if possible
+      const result = prioritizedBlogs.slice(0, 4).map((item) => item.blog);
+      return result.length === 4 ? result : prioritizedBlogs.slice(0, Math.min(4, prioritizedBlogs.length)).map((item) => item.blog);
     };
 
     const getRelatedBlogs = async () => {
@@ -163,22 +180,21 @@ const YouMightAlsoLike = ({
             (blog) => blog.slug !== currentBlogSlug,
           );
 
-          // Filter out "latest blogs" (first 4 from homepage)
-          const withoutLatestBlogs = withoutCurrentBlog.slice(4);
+          // Filter out "oldest blogs" (last 4 from homepage) - keep the newest content
+          const withoutOldestBlogs = withoutCurrentBlog.slice(0, -4);
 
-          // Select related blogs with prioritization
+          // Select related blogs with prioritization - always get 4 blogs
           const selectedBlogs = selectRelatedBlogs(
-            withoutLatestBlogs,
+            withoutOldestBlogs,
+            mappedBlogs, // Pass all mapped blogs as fallback
             currentBlogTags,
             currentBlogCountry,
           );
 
           setRelatedBlogs(selectedBlogs);
-          setShouldShow(selectedBlogs.length === 4);
         }
       } catch (error) {
         console.error("Error fetching related blogs:", error);
-        setShouldShow(false);
       } finally {
         setIsLoading(false);
       }
@@ -187,19 +203,27 @@ const YouMightAlsoLike = ({
     getRelatedBlogs();
   }, [currentBlogSlug, currentBlogTags, currentBlogCountry]);
 
-  // Don't render if loading, error, or insufficient blogs
-  if (isLoading || !shouldShow) {
+  // Don't render if loading or no blogs available  
+  if (isLoading || relatedBlogs.length === 0) {
     return null;
   }
+
+  // Ensure we always have 4 cards to display (pad with duplicates if needed)
+  const cardsToDisplay = [...relatedBlogs];
+  while (cardsToDisplay.length < 4 && relatedBlogs.length > 0) {
+    const extraCards = relatedBlogs.slice(0, 4 - cardsToDisplay.length);
+    cardsToDisplay.push(...extraCards);
+  }
+  const displayCards = cardsToDisplay.slice(0, 4);
 
   return (
     <section className={s.container}>
       <div className={s.wrapper}>
         <h2>You Might Also Like</h2>
         <div className={s.cardWrapper}>
-          {relatedBlogs.map((blog, index) => (
+          {displayCards.map((blog, index) => (
             <div
-              key={blog.slug}
+              key={`${blog.slug}-${index}`} // Use index to handle duplicates
               onClick={() => handleRelatedCardClick(blog, index + 1)}
             >
               <CardThree
