@@ -130,14 +130,15 @@ const YouMightAlsoLike = ({
 
       // If we don't have enough eligible blogs, expand to include oldest blogs (but still exclude current)
       if (blogsToUse.length < 4) {
-        blogsToUse = allBlogs.filter(
-          (blog) => blog.slug !== currentBlogSlug
-        );
+        blogsToUse = allBlogs.filter((blog) => blog.slug !== currentBlogSlug);
       }
 
       // If still not enough (edge case), duplicate some blogs to reach 4
       while (blogsToUse.length > 0 && blogsToUse.length < 4) {
-        blogsToUse = [...blogsToUse, ...blogsToUse.slice(0, 4 - blogsToUse.length)];
+        blogsToUse = [
+          ...blogsToUse,
+          ...blogsToUse.slice(0, 4 - blogsToUse.length),
+        ];
       }
 
       // Take only what we need (up to 4)
@@ -164,7 +165,11 @@ const YouMightAlsoLike = ({
 
       // Return up to 4 blogs, but ensure we return exactly 4 if possible
       const result = prioritizedBlogs.slice(0, 4).map((item) => item.blog);
-      return result.length === 4 ? result : prioritizedBlogs.slice(0, Math.min(4, prioritizedBlogs.length)).map((item) => item.blog);
+      return result.length === 4
+        ? result
+        : prioritizedBlogs
+            .slice(0, Math.min(4, prioritizedBlogs.length))
+            .map((item) => item.blog);
     };
 
     const getRelatedBlogs = async () => {
@@ -203,7 +208,7 @@ const YouMightAlsoLike = ({
     getRelatedBlogs();
   }, [currentBlogSlug, currentBlogTags, currentBlogCountry]);
 
-  // Don't render if loading or no blogs available  
+  // Don't render if loading or no blogs available
   if (isLoading || relatedBlogs.length === 0) {
     return null;
   }
