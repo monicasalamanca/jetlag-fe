@@ -6,6 +6,7 @@ import { createMetadata } from "@/app/utils/metadata";
 import PageSchemas from "../../../../components/seo/PageSchemas";
 import { SITE_CONFIG } from "../../../../lib/seo/schema/config";
 import { toWordCount } from "../../../../lib/seo/schema/utils";
+import YouMightAlsoLike from "../../components/you-might-also-like/you-might-also-like";
 
 type Props = {
   params: Promise<{ categorySlug: string; blogSlug: string }>;
@@ -137,6 +138,12 @@ const BlogPostPage = async ({ params }: Props) => {
       />
 
       <BlogContent post={post} />
+
+      <YouMightAlsoLike
+        currentBlogSlug={blogSlug}
+        currentBlogTags={[categorySlug.replace(/-/g, " ")]}
+        currentBlogCountry={countryName}
+      />
     </>
   );
 };
