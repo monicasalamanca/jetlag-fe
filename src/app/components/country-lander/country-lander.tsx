@@ -90,19 +90,35 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
 
   // Helper function to convert BlogPost to CardProps format
   const blogToCardProps = (blog: BlogPost) => {
+    // Support migration: use countries[0], fallback to country_temp
+    const countryName = blog.countries?.[0] || blog.country_temp || "Unknown";
+
+    // Generate the correct URL based on lifestyle vs country
+    let url = "";
+    if (blog.lifestyle) {
+      url = `/lifestyle/${blog.slug}`;
+    } else if (blog.countries.length > 0) {
+      url = `/${blog.countries[0].toLowerCase().replace(/\s+/g, "-")}/${blog.slug}`;
+    } else if (blog.country_temp) {
+      url = `/${blog.country_temp.toLowerCase().replace(/\s+/g, "-")}/${blog.slug}`;
+    } else {
+      url = `/unknown/${blog.slug}`;
+    }
+
     return {
       title: blog.title,
       description: blog.description || "",
       thumbnail: blog.imageUrl || "/placeholder-image.jpg",
-      tags: ["travel", blog.countries?.[0] || "guide"],
+      tags: ["travel", countryName],
       date: new Date(blog.publishedAt).toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
         year: "numeric",
       }),
-      country: blog.countries?.[0] || "Thailand",
+      country: countryName,
       readTime: "5 min",
       slug: blog.slug,
+      url: url,
     };
   };
 
