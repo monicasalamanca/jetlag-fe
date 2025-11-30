@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   const strapiUrl =
     process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
   const baseUrl = strapiUrl || "https://jetlag-be-production.up.railway.app";
-  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[countries]=*`;
+  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[countries]=*&populate[tags]=*`;
 
   try {
     // Server-side can access all environment variables
@@ -71,14 +71,25 @@ export async function GET(request: NextRequest) {
         item.attributes.countries?.data?.map(
           (country) => country.attributes.name,
         ) || [],
+      tags: item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
+      country_temp: item.attributes.country_temp,
+      lifestyle: item.attributes.lifestyle || false,
     }));
 
     // Filter for specific country content
-    const filteredBlogs = allBlogs.filter((blog: BlogPost) =>
-      blog.countries.some(
+    // Check both countries array and country_temp (migration support)
+    const filteredBlogs = allBlogs.filter((blog: BlogPost) => {
+      // Check if country matches in countries array
+      const matchesCountriesArray = blog.countries.some(
         (country) => country.toLowerCase() === countrySlug.toLowerCase(),
-      ),
-    );
+      );
+
+      // Also check country_temp as it may be set during migration
+      const matchesCountryTemp =
+        blog.country_temp?.toLowerCase() === countrySlug.toLowerCase();
+
+      return matchesCountriesArray || matchesCountryTemp;
+    });
 
     return NextResponse.json(filteredBlogs);
   } catch (error) {
