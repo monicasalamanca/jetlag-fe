@@ -140,7 +140,8 @@ export const fetchBlogPost = async (
   const token =
     process.env.STRAPI_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
-  const url = `${baseUrl}/api/blogs?filters[countries][slug][$eq]=${countrySlug}&filters[slug][$eq]=${slug}&populate[poll][populate]=options&populate[images]=*`;
+  // Fetch by slug only, then filter by country (supports both countries array and country_temp)
+  const url = `${baseUrl}/api/blogs?filters[slug][$eq]=${slug}&populate[poll][populate]=options&populate[images]=*&populate[countries]=*`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
@@ -157,7 +158,31 @@ export const fetchBlogPost = async (
 
     const data = await res.json();
 
-    return data.data.map((item: BlogPostResponse) => {
+    // Filter to match the country (check both countries array and country_temp)
+    const filteredData = data.data.filter((item: BlogPostResponse) => {
+      const countrySlugs =
+        item.attributes.countries?.data?.map(
+          (country) => country.attributes.slug,
+        ) || [];
+
+      const matchesCountriesArray = countrySlugs.some(
+        (slug) => slug.toLowerCase() === countrySlug.toLowerCase(),
+      );
+
+      const matchesCountryTemp =
+        item.attributes.country_temp?.toLowerCase() ===
+        countrySlug.toLowerCase();
+
+      return matchesCountriesArray || matchesCountryTemp;
+    });
+
+    if (filteredData.length === 0) {
+      return null;
+    }
+
+    const data2 = { data: filteredData };
+
+    return data2.data.map((item: BlogPostResponse) => {
       const pollData = item.attributes.poll?.data;
       const content = sanitizeInternalUrls(item.attributes.content || "");
       const description = sanitizeInternalUrls(
