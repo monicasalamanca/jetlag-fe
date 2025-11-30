@@ -35,18 +35,16 @@ const YouMightAlsoLike = ({
     const tagsToUse =
       blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
 
-    // Support migration: use countries[0], fallback to country_temp, then "Unknown"
+    // Use country first, fallback to country_temp
     const countryToUse =
-      blogPost.countries.length > 0
-        ? blogPost.countries[0]
-        : blogPost.country_temp || "Lifestyle";
+      blogPost.country || blogPost.country_temp || "Lifestyle";
 
     // Generate the correct URL based on lifestyle vs country
     let url = "";
     if (blogPost.lifestyle) {
       url = `/lifestyle/${blogPost.slug}`;
-    } else if (blogPost.countries.length > 0) {
-      url = `/${blogPost.countries[0].toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
+    } else if (blogPost.country) {
+      url = `/${blogPost.country.toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
     } else if (blogPost.country_temp) {
       url = `/${blogPost.country_temp.toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
     } else {

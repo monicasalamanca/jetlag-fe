@@ -90,17 +90,15 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
 
   // Helper function to convert BlogPost to CardProps format
   const blogToCardProps = (blog: BlogPost) => {
-    // Support migration: use countries[0], fallback to country_temp
-    const countryName = blog.countries?.[0] || blog.country_temp || "Unknown";
+    // Use country first, fallback to country_temp
+    const countryName = blog.country || blog.country_temp || "Unknown";
 
     // Generate the correct URL based on lifestyle vs country
     let url = "";
     if (blog.lifestyle) {
       url = `/lifestyle/${blog.slug}`;
-    } else if (blog.countries.length > 0) {
-      url = `/${blog.countries[0].toLowerCase().replace(/\s+/g, "-")}/${blog.slug}`;
-    } else if (blog.country_temp) {
-      url = `/${blog.country_temp.toLowerCase().replace(/\s+/g, "-")}/${blog.slug}`;
+    } else if (blog.country) {
+      url = `/${blog.country.toLowerCase().replace(/\s+/g, "-")}/${blog.slug}`;
     } else {
       url = `/unknown/${blog.slug}`;
     }

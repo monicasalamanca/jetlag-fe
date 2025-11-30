@@ -28,20 +28,16 @@ const HomeContent = () => {
       url = `/lifestyle/${blogPost.slug}`;
       countryToUse = "lifestyle";
     } else {
-      if (
-        !Array.isArray(blogPost.countries) ||
-        blogPost.countries.length === 0
-      ) {
-        if (blogPost.country_temp) {
-          countryToUse = blogPost.country_temp;
-          url = `/${countryToUse}/${blogPost.slug}`;
-        } else {
-          countryToUse = "";
-          url = `/${blogPost.slug}`;
-        }
+      // Use country first, fallback to country_temp
+      if (blogPost.country) {
+        countryToUse = blogPost.country;
+        url = `/${countryToUse.toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
+      } else if (blogPost.country_temp) {
+        countryToUse = blogPost.country_temp;
+        url = `/${countryToUse.toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
       } else {
-        countryToUse = blogPost.countries[0];
-        url = `/${countryToUse}/${blogPost.slug}`;
+        countryToUse = "";
+        url = `/${blogPost.slug}`;
       }
     }
 
