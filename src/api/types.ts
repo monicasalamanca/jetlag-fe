@@ -176,7 +176,15 @@ export type BlogPostResponse = {
     publishedAt: string;
     tags?: Tags;
     images?: Images;
-    countries?: BlogCountriesData;
+    country?: {
+      data?: {
+        id: number;
+        attributes: {
+          name: string;
+          slug: string;
+        };
+      };
+    };
     poll?: PollResponse;
   };
 };
@@ -191,8 +199,8 @@ export type BlogPost = {
   lifestyle?: boolean;
   publishedAt: string;
   imageUrl: string;
-  countries: string[]; // Processed country names from the relational data
-  country_temp?: string; // Temporary single country field
+  country?: string; // Single country from oneToMany relationship
+  country_temp?: string; // Fallback for migration
   slug: string;
   tags: string[]; // Processed tag names from the relational data
 };

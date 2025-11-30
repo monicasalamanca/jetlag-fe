@@ -140,8 +140,8 @@ export const fetchBlogPost = async (
   const token =
     process.env.STRAPI_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
-  // Fetch by slug only, then filter by country (supports both countries array and country_temp)
-  const url = `${baseUrl}/api/blogs?filters[slug][$eq]=${slug}&populate[poll][populate]=options&populate[images]=*&populate[countries]=*`;
+  // Fetch by slug only, then filter by country (supports both country and country_temp)
+  const url = `${baseUrl}/api/blogs?filters[slug][$eq]=${slug}&populate[poll][populate]=options&populate[images]=*&populate[country]=*`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
@@ -158,22 +158,18 @@ export const fetchBlogPost = async (
 
     const data = await res.json();
 
-    // Filter to match the country (check both countries array and country_temp)
+    // Filter to match the country (check both country and country_temp)
     const filteredData = data.data.filter((item: BlogPostResponse) => {
-      const countrySlugs =
-        item.attributes.countries?.data?.map(
-          (country) => country.attributes.slug,
-        ) || [];
-
-      const matchesCountriesArray = countrySlugs.some(
-        (slug) => slug.toLowerCase() === countrySlug.toLowerCase(),
-      );
-
-      const matchesCountryTemp =
-        item.attributes.country_temp?.toLowerCase() ===
-        countrySlug.toLowerCase();
-
-      return matchesCountriesArray || matchesCountryTemp;
+      const countrySlugFromRelation = item.attributes.country?.data?.attributes?.slug;
+      
+      const matchesCountry = 
+        countrySlugFromRelation?.toLowerCase() === countrySlug.toLowerCase();
+      
+      const matchesCountryTemp = 
+        !countrySlugFromRelation && 
+        item.attributes.country_temp?.toLowerCase() === countrySlug.toLowerCase();
+      
+      return matchesCountry || matchesCountryTemp;
     });
 
     if (filteredData.length === 0) {
@@ -236,7 +232,7 @@ export const fetchBlogPost = async (
 // TODO: as it gets bigger limit to 3 or 4 posts only
 export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
   // const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&pagination[page]=1&pagination[pageSize]=3&populate[images]=*&populate[category]=*`;
-  const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[countries]=*&populate[tags]=*`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[country]=*&populate[tags]=*`;
 
   try {
     // const res = await fetch(url, { next: { revalidate: 604800 } }); // it caches for a week
@@ -278,10 +274,7 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
           item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
-        countries:
-          item.attributes.countries?.data?.map(
-            (country) => country.attributes.name,
-          ) || [],
+        country: item.attributes.country?.data?.attributes?.name,
         tags:
           item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
         views: item.attributes.views,
@@ -307,7 +300,7 @@ export const fetchLatestBlogPostsClient = async (): Promise<
     return null;
   }
 
-  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[countries]=*&populate[tags]=*`;
+  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[country]=*&populate[tags]=*`;
 
   try {
     const res = await fetch(url, {
@@ -352,10 +345,7 @@ export const fetchLatestBlogPostsClient = async (): Promise<
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url ||
           "/placeholder-image.jpg",
-        countries:
-          item.attributes.countries?.data?.map(
-            (country) => country.attributes.name,
-          ) || [],
+        country: item.attributes.country?.data?.attributes?.name,
         tags:
           item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
         views: item.attributes.views,
