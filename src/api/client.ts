@@ -357,7 +357,7 @@ export const fetchLatestBlogPostsClient = async (): Promise<
 export const fetchCountriesWithContinents = async (): Promise<
   Destination[] | null
 > => {
-  const url = `${process.env.STRAPI_URL}/api/countries?fields[0]=name&fields[1]=continent`;
+  const url = `${process.env.STRAPI_URL}/api/countries?filters[publishedAt][$notNull]=true&fields[0]=name&fields[1]=continent`;
   try {
     // const res = await fetch(url, { next: { revalidate: 604800 } }); // its cached for a week
     const res = await fetch(url, {
