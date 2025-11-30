@@ -24,12 +24,9 @@ const ChronicleContent = () => {
       url = `/lifestyle/${blogPost.slug}`;
       countryToUse = "lifestyle";
     } else {
-      // Use country first, fallback to country_temp
+      // Use country for URL generation
       if (blogPost.country) {
         countryToUse = blogPost.country;
-        url = `/${countryToUse.toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
-      } else if (blogPost.country_temp) {
-        countryToUse = blogPost.country_temp;
         url = `/${countryToUse.toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
       } else {
         countryToUse = "";

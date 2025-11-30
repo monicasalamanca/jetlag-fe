@@ -35,9 +35,8 @@ const YouMightAlsoLike = ({
     const tagsToUse =
       blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
 
-    // Use country first, fallback to country_temp
-    const countryToUse =
-      blogPost.country || blogPost.country_temp || "Lifestyle";
+    // Use country for display name
+    const countryToUse = blogPost.country || "Lifestyle";
 
     // Generate the correct URL based on lifestyle vs country
     let url = "";
@@ -45,8 +44,6 @@ const YouMightAlsoLike = ({
       url = `/lifestyle/${blogPost.slug}`;
     } else if (blogPost.country) {
       url = `/${blogPost.country.toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
-    } else if (blogPost.country_temp) {
-      url = `/${blogPost.country_temp.toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
     } else {
       url = `/unknown/${blogPost.slug}`;
     }

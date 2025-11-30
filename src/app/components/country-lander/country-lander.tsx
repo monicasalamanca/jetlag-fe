@@ -90,8 +90,8 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
 
   // Helper function to convert BlogPost to CardProps format
   const blogToCardProps = (blog: BlogPost) => {
-    // Use country first, fallback to country_temp
-    const countryName = blog.country || blog.country_temp || "Unknown";
+    // Use country for display name
+    const countryName = blog.country || "Unknown";
 
     // Generate the correct URL based on lifestyle vs country
     let url = "";

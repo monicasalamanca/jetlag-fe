@@ -140,7 +140,7 @@ export const fetchBlogPost = async (
   const token =
     process.env.STRAPI_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
-  // Fetch by slug only, then filter by country (supports both country and country_temp)
+  // Fetch by slug only, then filter by country
   const url = `${baseUrl}/api/blogs?filters[slug][$eq]=${slug}&populate[poll][populate]=options&populate[images]=*&populate[country]=*`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
@@ -158,20 +158,13 @@ export const fetchBlogPost = async (
 
     const data = await res.json();
 
-    // Filter to match the country (check both country and country_temp)
+    // Filter to match the country by slug
     const filteredData = data.data.filter((item: BlogPostResponse) => {
       const countrySlugFromRelation =
         item.attributes.country?.data?.attributes?.slug;
-
-      const matchesCountry =
-        countrySlugFromRelation?.toLowerCase() === countrySlug.toLowerCase();
-
-      const matchesCountryTemp =
-        !countrySlugFromRelation &&
-        item.attributes.country_temp?.toLowerCase() ===
-          countrySlug.toLowerCase();
-
-      return matchesCountry || matchesCountryTemp;
+      return (
+        countrySlugFromRelation?.toLowerCase() === countrySlug.toLowerCase()
+      );
     });
 
     if (filteredData.length === 0) {
@@ -281,7 +274,6 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
           item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
         views: item.attributes.views,
         lifestyle: item.attributes.lifestyle || false,
-        country_temp: item.attributes.country_temp,
       };
     });
   } catch (error) {
@@ -352,7 +344,6 @@ export const fetchLatestBlogPostsClient = async (): Promise<
           item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
         views: item.attributes.views,
         lifestyle: item.attributes.lifestyle || false,
-        country_temp: item.attributes.country_temp,
       };
     });
   } catch (error) {
