@@ -160,15 +160,17 @@ export const fetchBlogPost = async (
 
     // Filter to match the country (check both country and country_temp)
     const filteredData = data.data.filter((item: BlogPostResponse) => {
-      const countrySlugFromRelation = item.attributes.country?.data?.attributes?.slug;
-      
-      const matchesCountry = 
+      const countrySlugFromRelation =
+        item.attributes.country?.data?.attributes?.slug;
+
+      const matchesCountry =
         countrySlugFromRelation?.toLowerCase() === countrySlug.toLowerCase();
-      
-      const matchesCountryTemp = 
-        !countrySlugFromRelation && 
-        item.attributes.country_temp?.toLowerCase() === countrySlug.toLowerCase();
-      
+
+      const matchesCountryTemp =
+        !countrySlugFromRelation &&
+        item.attributes.country_temp?.toLowerCase() ===
+          countrySlug.toLowerCase();
+
       return matchesCountry || matchesCountryTemp;
     });
 

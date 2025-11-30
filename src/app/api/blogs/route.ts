@@ -77,7 +77,7 @@ export async function GET(request: NextRequest) {
     // Check both country and country_temp (migration support)
     const filteredBlogs = allBlogs.filter((blog: BlogPost) => {
       // First check if country matches (primary)
-      const matchesCountry = 
+      const matchesCountry =
         blog.country?.toLowerCase() === countrySlug.toLowerCase();
 
       // Fallback to country_temp only if country is not set

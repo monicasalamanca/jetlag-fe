@@ -36,7 +36,8 @@ const YouMightAlsoLike = ({
       blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
 
     // Use country first, fallback to country_temp
-    const countryToUse = blogPost.country || blogPost.country_temp || "Lifestyle";
+    const countryToUse =
+      blogPost.country || blogPost.country_temp || "Lifestyle";
 
     // Generate the correct URL based on lifestyle vs country
     let url = "";
