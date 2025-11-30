@@ -170,6 +170,7 @@ export type BlogPostResponse = {
     likes: number;
     views: number;
     lifestyle?: boolean;
+    country_temp?: string;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
@@ -191,6 +192,7 @@ export type BlogPost = {
   publishedAt: string;
   imageUrl: string;
   countries: string[]; // Processed country names from the relational data
+  country_temp?: string; // Temporary single country field
   slug: string;
   tags: string[]; // Processed tag names from the relational data
 };

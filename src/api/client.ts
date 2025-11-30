@@ -261,6 +261,7 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
           item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
         views: item.attributes.views,
         lifestyle: item.attributes.lifestyle || false,
+        country_temp: item.attributes.country_temp,
       };
     });
   } catch (error) {
@@ -334,6 +335,7 @@ export const fetchLatestBlogPostsClient = async (): Promise<
           item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
         views: item.attributes.views,
         lifestyle: item.attributes.lifestyle || false,
+        country_temp: item.attributes.country_temp,
       };
     });
   } catch (error) {
