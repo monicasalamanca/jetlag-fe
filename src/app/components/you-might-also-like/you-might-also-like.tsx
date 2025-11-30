@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { fetchLatestBlogPostsClient } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
-import { getBlogCanonicalUrl } from "@/app/utils/canonicalUrl";
 import { trackCardClick } from "@/app/utils/analytics";
 import CardThree from "@/components/cards/card-three/card-three";
 
@@ -35,18 +34,24 @@ const YouMightAlsoLike = ({
   const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
     const tagsToUse =
       blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
+
+    // Support migration: use countries[0], fallback to country_temp, then "Unknown"
     const countryToUse =
-      blogPost.countries.length > 0 ? blogPost.countries[0] : "Unknown";
+      blogPost.countries.length > 0
+        ? blogPost.countries[0]
+        : blogPost.country_temp || "Lifestyle";
 
     // Generate the correct URL based on lifestyle vs country
-    const url = getBlogCanonicalUrl(
-      blogPost.slug,
-      blogPost.lifestyle ? undefined : countryToUse,
-      blogPost.lifestyle,
-    ).replace(
-      process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com",
-      "",
-    );
+    let url = "";
+    if (blogPost.lifestyle) {
+      url = `/lifestyle/${blogPost.slug}`;
+    } else if (blogPost.countries.length > 0) {
+      url = `/${blogPost.countries[0].toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
+    } else if (blogPost.country_temp) {
+      url = `/${blogPost.country_temp.toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
+    } else {
+      url = `/unknown/${blogPost.slug}`;
+    }
 
     return {
       title: blogPost.title,
