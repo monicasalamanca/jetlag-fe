@@ -14,89 +14,95 @@ import s from "./lifestyle-lander.module.scss";
 
 const quickFacts = [
   {
-    id: 3,
-    label: "Ramen",
-    description:
-      "A hearty noodle soup with Chinese-style wheat noodles served in a flavorful broth (like miso, soy sauce, or pork-based tonkotsu), topped with ingredients like sliced pork (chashu), soft-boiled egg, green onions, and nori.",
-    icon: "faUtensils",
+    "id": 1,
+    "label": "Wi-Fi First",
+    "description": "Every decision—café, Airbnb, coworking space—starts with one critical question: how fast is the Wi-Fi? Nomad life runs on internet speed, not coffee strength.",
+    "icon": "faWifi"
   },
   {
-    id: 4,
-    label: "Okonomiyaki",
-    description:
-      "Often called “Japanese savory pancakes,” okonomiyaki is made with cabbage, flour, eggs, and various toppings like pork belly, seafood, or cheese. It’s cooked on a griddle and topped with okonomiyaki sauce, mayo, bonito flakes, and seaweed powder.",
-    icon: "faUtensils",
+    "id": 2,
+    "label": "Visa Hopping",
+    "description": "Border runs, visa extensions, and 90-day resets become second nature. Your passport gets more stamps than your fridge door.",
+    "icon": "faPassport"
   },
   {
-    id: 5,
-    label: "language",
-    description:
-      "Japanese uses three scripts—Hiragana, Katakana, and Kanji—often in one sentence! Hiragana is for native words, Katakana for foreign ones, and Kanji adds meaning (and challenge). No alphabet song here—just vibes and memorization.",
-    icon: "faLanguage",
+    "id": 3,
+    "label": "Global Friendships",
+    "description": "You build deep friendships with people you’ve known for 48 hours… and struggle to remember time zones well enough to call family.",
+    "icon": "faUsers"
   },
   {
-    id: 6,
-    label: "currency",
-    description:
-      "Japan’s currency is the **yen (¥)**, and while it’s high-tech in many ways, cash is still king! Don’t be surprised if that tiny ramen shop doesn’t take cards. Pro tip: ATMs in convenience stores almost always work with foreign cards.",
-    icon: "faMoneyBill",
+    "id": 4,
+    "label": "Flexible Workspaces",
+    "description": "Your office might be a beach café, a night market, or the quiet corner of a WeWork. Comfort becomes optional—productivity doesn’t.",
+    "icon": "faLaptopCode"
   },
   {
-    id: 7,
-    label: "greetings",
-    description:
-      "Instead of handshakes, Japanese people usually greet each other with a bow—**the deeper the bow, the more respectful**. A simple nod is fine for travelers, but if you master the bow + a friendly 'konnichiwa' (hello), you’re golden!",
-    icon: "faHands",
+    "id": 5,
+    "label": "Minimalist Vibes",
+    "description": "You become a pro at living out of a suitcase. If it doesn’t fit in your 7kg carry-on, it probably doesn’t make the cut.",
+    "icon": "faSuitcaseRolling"
   },
   {
-    id: 8,
-    label: "Etiquette",
-    description:
-      "Slurping your noodles is polite. Talking on your phone in public transport? Not so much. **Japanese etiquette is all about being mindful and quiet**—so enjoy the peaceful vibe, but keep your inner loud tourist in check!",
-    icon: "faPersonPraying",
+    "id": 6,
+    "label": "Cost of Living Mastery",
+    "description": "You know the price of a latte in Chiang Mai, Medellín, and Lisbon—but couldn’t tell anyone what it costs in your home country anymore.",
+    "icon": "faMoneyBillWave"
   },
   {
-    id: 9,
-    label: "transportation",
-    description:
-      "Japan’s trains are so punctual that if one’s late by even a minute, the conductor apologizes.\n**The Shinkansen (bullet train)** is a must-ride: fast, smooth, and futuristic.\nJust don’t eat, talk loudly, or take calls in the quiet car — it’s sacred.",
-    icon: "faTrainSubway",
+    "id": 7,
+    "label": "Time Zone Tetris",
+    "description": "Your calendar becomes a puzzle of overlapping time zones. One meeting in LA, another in Berlin, and you’re somewhere in between.",
+    "icon": "faClock"
   },
   {
-    id: 10,
-    label: "tipping",
-    description:
-      "Tipping in Japan is not expected — and often politely refused.\nGood service is the standard, not something extra you pay for.\nTrying to tip might even cause confusion, so just say “arigatou!” with a smile.",
-    icon: "faHandHoldingDollar",
+    "id": 8,
+    "label": "Language Hacks",
+    "description": "You develop the uncanny ability to master the essentials in any language: hello, thank you, and 'one more beer, please.'",
+    "icon": "faLanguage"
   },
   {
-    id: 11,
-    label: "dinning customs",
-    description:
-      "Before eating, say “Itadakimasu” (I humbly receive). After? “Gochisousama” (thank you for the meal).\n**Don’t stick chopsticks upright in rice** — it’s a funeral symbol. And passing food chopstick-to-chopstick? Also a big no-no!",
-    icon: "faUtensils",
+    "id": 9,
+    "label": "Café Connoisseur",
+    "description": "You can instantly identify which cafés have power outlets, quiet tables, and staff who won’t glare when you open your laptop.",
+    "icon": "faCoffee"
   },
   {
-    id: 12,
-    label: "weather & seasons",
-    description:
-      "Japan has four distinct seasons, and locals really celebrate them! Spring is for cherry blossoms (sakura), summer is hot and festival-packed, autumn is all red maple leaves, and winter brings serious snow up north.\nPack accordingly—and don’t miss seasonal snacks!",
-    icon: "faCloudSun",
+    "id": 10,
+    "label": "Weather Roulette",
+    "description": "You chase sunshine, but you’ll always end up somewhere during monsoon season at least once. It’s a rite of passage.",
+    "icon": "faSun"
   },
   {
-    id: 14,
-    label: "festivals",
-    description:
-      "From the neon-crazy Tanabata festival to lantern-lit Obon, Japan has hundreds of festivals (called matsuri) year-round.\nExpect traditional clothes, firework shows, dancing in the streets, and more food stalls than your stomach can handle.",
-    icon: "faStar",
+    "id": 11,
+    "label": "Local SIM Savvy",
+    "description": "You’ve become a SIM-card-switching machine. ESIMs, data packs, roaming tricks—you’ve mastered them all.",
+    "icon": "faSimCard"
   },
   {
-    id: 15,
-    label: "Bathhouse Culture",
-    description:
-      "Japan’s love for a good soak is legendary. Public bathhouses (sento) and natural hot springs (onsen) are part of everyday life.\nYou’ll bathe before getting in, leave your swimsuit behind, and emerge completely zen.\nP.S. Tattoos may be an issue — check first!",
-    icon: "faBath",
+    "id": 12,
+    "label": "Cultural Chameleon",
+    "description": "You adapt to new cultures quickly—eating when locals eat, greeting how locals greet, and removing shoes when everyone else does.",
+    "icon": "faGlobeAsia"
   },
+  {
+    "id": 13,
+    "label": "Nomad Health Reality",
+    "description": "Gyms change monthly, your diet changes weekly, and sleep schedules… are a suggestion. But you learn to make it work.",
+    "icon": "faHeartbeat"
+  },
+  {
+    "id": 14,
+    "label": "Freedom vs Stability",
+    "description": "You gain freedom but sacrifice routine. One day you’re at a rooftop pool, the next you’re hunting for a quiet corner to take a Zoom call.",
+    "icon": "faBalanceScale"
+  },
+  {
+    "id": 15,
+    "label": "Community Everywhere",
+    "description": "Meetups, coworking spaces, WhatsApp groups—there’s always a tribe waiting for you. Nomads find each other like magnets.",
+    "icon": "faHandshake"
+  }
 ];
 
 const cardStyles = ["whiteBg", "colourBg"] as const;
@@ -130,20 +136,26 @@ const LifestyleLander = () => {
 
   // Function to map API BlogPost to CardProps format
   const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
-    const tagsToUse =
-      blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
-    const countryToUse =
-      blogPost.countries.length > 0 ? blogPost.countries[0] : "Unknown";
-
-    // Generate the correct URL based on lifestyle vs country
-    const url = getBlogCanonicalUrl(
-      blogPost.slug,
-      blogPost.lifestyle ? undefined : countryToUse,
-      blogPost.lifestyle,
-    ).replace(
-      process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com",
-      "",
-    );
+    const tagsToUse = blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
+    let url = "";
+    let countryToUse = "";
+    if (blogPost.lifestyle) {
+      url = `/lifestyle/${blogPost.slug}`;
+      countryToUse = "lifestyle";
+    } else {
+      if (!Array.isArray(blogPost.countries) || blogPost.countries.length === 0) {
+        if (blogPost.country_temp) {
+          countryToUse = blogPost.country_temp;
+          url = `/${countryToUse}/${blogPost.slug}`;
+        } else {
+          countryToUse = "";
+          url = `/${blogPost.slug}`;
+        }
+      } else {
+        countryToUse = blogPost.countries[0];
+        url = `/${countryToUse}/${blogPost.slug}`;
+      }
+    }
 
     return {
       title: blogPost.title,
