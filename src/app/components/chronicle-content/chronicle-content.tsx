@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { fetchLatestBlogPostsClient } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
-import { getBlogCanonicalUrl } from "@/app/utils/canonicalUrl";
 import Hero from "../hero/hero";
 import CardOne from "../cards/card-one/card-one";
 import QuizContainer from "@/app/components/quiz/quiz-container";
@@ -17,14 +16,18 @@ const ChronicleContent = () => {
 
   // Function to map API BlogPost to CardProps format
   const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
-    const tagsToUse = blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
+    const tagsToUse =
+      blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
     let url = "";
     let countryToUse = "";
     if (blogPost.lifestyle) {
       url = `/lifestyle/${blogPost.slug}`;
       countryToUse = "lifestyle";
     } else {
-      if (!Array.isArray(blogPost.countries) || blogPost.countries.length === 0) {
+      if (
+        !Array.isArray(blogPost.countries) ||
+        blogPost.countries.length === 0
+      ) {
         if (blogPost.country_temp) {
           countryToUse = blogPost.country_temp;
           url = `/${countryToUse}/${blogPost.slug}`;
