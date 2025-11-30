@@ -170,7 +170,6 @@ export type BlogPostResponse = {
     likes: number;
     views: number;
     lifestyle?: boolean;
-    country_temp?: string;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
@@ -200,7 +199,6 @@ export type BlogPost = {
   publishedAt: string;
   imageUrl: string;
   country?: string; // Single country from oneToMany relationship
-  country_temp?: string; // Fallback for migration
   slug: string;
   tags: string[]; // Processed tag names from the relational data
 };

@@ -69,23 +69,12 @@ export async function GET(request: NextRequest) {
         item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
       country: item.attributes.country?.data?.attributes?.name,
       tags: item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
-      country_temp: item.attributes.country_temp,
       lifestyle: item.attributes.lifestyle || false,
     }));
 
     // Filter for specific country content
-    // Check both country and country_temp (migration support)
     const filteredBlogs = allBlogs.filter((blog: BlogPost) => {
-      // First check if country matches (primary)
-      const matchesCountry =
-        blog.country?.toLowerCase() === countrySlug.toLowerCase();
-
-      // Fallback to country_temp only if country is not set
-      const matchesCountryTemp =
-        !blog.country &&
-        blog.country_temp?.toLowerCase() === countrySlug.toLowerCase();
-
-      return matchesCountry || matchesCountryTemp;
+      return blog.country?.toLowerCase() === countrySlug.toLowerCase();
     });
 
     return NextResponse.json(filteredBlogs);
