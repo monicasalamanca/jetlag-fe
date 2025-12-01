@@ -247,36 +247,22 @@ const LifestyleLander = () => {
       return quickFactCards;
     }
 
-    const blogCards = [
-      {
+    // Dynamically create blog cards based on available blogs
+    const blogCards = blogs.map((blog, index) => {
+      // Alternate between CardOne and CardFive for variety
+      const isCardOne = index % 2 === 0;
+      const color = index % 2 === 0 ? "blue" : "orange";
+
+      return {
         type: "blog",
-        id: "blog-1",
-        component: blogs[1] ? (
-          <CardOne key="blog-1" blog={blogs[1]} color="blue" />
-        ) : null,
-      },
-      {
-        type: "blog",
-        id: "blog-2",
-        component: blogs[5] ? (
-          <CardOne key="blog-2" blog={blogs[5]} color="orange" />
-        ) : null,
-      },
-      {
-        type: "blog",
-        id: "blog-3",
-        component: blogs[11] ? (
-          <CardFive key="blog-3" blog={blogs[11]} />
-        ) : null,
-      },
-      {
-        type: "blog",
-        id: "blog-4",
-        component: blogs[14] ? (
-          <CardFive key="blog-4" blog={blogs[14]} />
-        ) : null,
-      },
-    ].filter((card) => card.component !== null); // Filter out null components
+        id: `blog-${index}`,
+        component: isCardOne ? (
+          <CardOne key={`blog-${index}`} blog={blog} color={color} />
+        ) : (
+          <CardFive key={`blog-${index}`} blog={blog} />
+        ),
+      };
+    });
 
     return [...quickFactCards, ...blogCards];
   }, [blogs, loading]);
