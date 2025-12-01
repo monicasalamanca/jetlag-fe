@@ -49,6 +49,7 @@ const CTAComponent = ({
             <h3>{title}</h3>
             <SubscribeForm
               buttonName={buttonText}
+              showName={true}
               showIcon={true}
               trackEventName="cta-download-guide"
               variant="link-style"
@@ -63,6 +64,7 @@ const CTAComponent = ({
             <span>{title}</span>
             <SubscribeForm
               buttonName={buttonText}
+              showName={true}
               showIcon={true}
               trackEventName="cta-download-guide"
               variant="link-style"

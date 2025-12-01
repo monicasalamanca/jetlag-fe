@@ -226,6 +226,7 @@ const PollComponent: FC<PollProps> = ({
                   <p className={s.ctaDescription}>{poll.ctaDescription}</p>
                   <SubscribeForm
                     buttonName={poll.ctaButtonText}
+                    showName={true}
                     showIcon={false}
                     trackEventName="poll"
                     pollStyling={true}

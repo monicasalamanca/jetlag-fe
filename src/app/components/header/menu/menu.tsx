@@ -105,6 +105,11 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
           </NavLink>
         </li>
         <li>
+          <NavLink href="/lifestyle" name="lifestyle">
+            Lifestyle
+          </NavLink>
+        </li>
+        <li>
           <NavLink href="/about-us" name="about us">
             About Us
           </NavLink>
@@ -113,7 +118,8 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
           <li className={s.subscribe}>
             <SubscribeForm
               buttonName="Subscribe"
-              showIcon={false}
+              showName={false}
+              showIcon={true}
               trackEventName="desktopMenu"
             />
           </li>

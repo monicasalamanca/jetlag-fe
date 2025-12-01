@@ -36,6 +36,7 @@ const Footer = () => {
               <li>
                 <SubscribeForm
                   buttonName="Subscribe"
+                  showName={true}
                   showIcon={false}
                   trackEventName="footerDesktopMenu"
                 />
@@ -111,6 +112,7 @@ const Footer = () => {
         <div className={s.footerLinks}>
           <SubscribeForm
             buttonName="Subscribe"
+            showName={true}
             showIcon={false}
             trackEventName="footerMobileMenu"
           />

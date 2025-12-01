@@ -191,7 +191,11 @@ const LifestyleLander = () => {
         setLoading(true);
         const blogData = await fetchLatestBlogPostsClient();
         if (blogData) {
-          const mappedBlogs = blogData.map(mapBlogPostToCardProps);
+          // Filter only lifestyle blogs
+          const lifestyleBlogs = blogData.filter(
+            (blog) => blog.lifestyle === true,
+          );
+          const mappedBlogs = lifestyleBlogs.map(mapBlogPostToCardProps);
           setBlogs(mappedBlogs);
         }
       } catch (error) {
