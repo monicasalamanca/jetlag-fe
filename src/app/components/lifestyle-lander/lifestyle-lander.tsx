@@ -223,7 +223,7 @@ const LifestyleLander = () => {
 
   // Combine all cards into one array
   const allCards = useMemo(() => {
-    if (loading || blogs.length === 0) {
+    if (loading) {
       return [];
     }
 
@@ -241,6 +241,11 @@ const LifestyleLander = () => {
         />
       ),
     }));
+
+    // If there are no lifestyle blogs, just return quick facts
+    if (blogs.length === 0) {
+      return quickFactCards;
+    }
 
     const blogCards = [
       {
