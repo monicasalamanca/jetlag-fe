@@ -191,7 +191,11 @@ const LifestyleLander = () => {
         setLoading(true);
         const blogData = await fetchLatestBlogPostsClient();
         if (blogData) {
-          const mappedBlogs = blogData.map(mapBlogPostToCardProps);
+          // Filter only lifestyle blogs
+          const lifestyleBlogs = blogData.filter(
+            (blog) => blog.lifestyle === true,
+          );
+          const mappedBlogs = lifestyleBlogs.map(mapBlogPostToCardProps);
           setBlogs(mappedBlogs);
         }
       } catch (error) {
@@ -219,7 +223,7 @@ const LifestyleLander = () => {
 
   // Combine all cards into one array
   const allCards = useMemo(() => {
-    if (loading || blogs.length === 0) {
+    if (loading) {
       return [];
     }
 
@@ -237,6 +241,11 @@ const LifestyleLander = () => {
         />
       ),
     }));
+
+    // If there are no lifestyle blogs, just return quick facts
+    if (blogs.length === 0) {
+      return quickFactCards;
+    }
 
     const blogCards = [
       {

@@ -14,11 +14,7 @@ import {
 } from "react";
 import Modal from "../modal/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEnvelope,
-  faMessage,
-  faPaperPlane,
-} from "@fortawesome/free-regular-svg-icons";
+import { faEnvelope, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { trackFormSubmission } from "@/app/utils/analytics";
@@ -119,6 +115,7 @@ type SubscriptionSuccessCallback = () => void | Promise<void>;
  */
 interface SubscribeFormProps {
   buttonName: string;
+  showName: boolean;
   showIcon: boolean;
   trackEventName?: string;
   /**
@@ -150,6 +147,7 @@ interface SubscribeFormProps {
 const SubscribeForm: FC<SubscribeFormProps> = memo(
   ({
     buttonName,
+    showName,
     showIcon,
     trackEventName,
     variant,
@@ -432,10 +430,10 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
           onClick={openModal}
           className={buttonClass}
         >
-          {buttonName}
+          {showName && buttonName}
           {showIcon && (
             <FontAwesomeIcon
-              icon={customIcon || faMessage}
+              icon={customIcon || faEnvelope}
               className={s.icon}
             />
           )}

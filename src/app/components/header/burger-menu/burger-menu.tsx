@@ -138,6 +138,17 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                 </Link>
               </li>
               <li>
+                <FontAwesomeIcon icon={faEnvelope} className={s.icon} />
+                <Link
+                  aria-label="Read all our lifestyle articles"
+                  href="/lifestyle"
+                  rel="canonical"
+                  onClick={closeMenu}
+                >
+                  Lifestyle
+                </Link>
+              </li>
+              <li>
                 <FontAwesomeIcon icon={faUsers} className={s.icon} />
                 <Link
                   aria-label="Read more about us"
@@ -153,6 +164,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                   <FontAwesomeIcon icon={faInbox} className={s.icon} />
                   <SubscribeForm
                     buttonName="Subscribe"
+                    showName={true}
                     showIcon={false}
                     trackEventName="mobileMenu"
                   />
