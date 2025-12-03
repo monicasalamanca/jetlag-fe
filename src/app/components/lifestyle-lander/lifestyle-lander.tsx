@@ -4,7 +4,6 @@ import { useMemo, useState, useEffect } from "react";
 import Hero from "../hero/hero";
 import QuickFactCard from "../country-facts-card/card/card";
 import CardOne from "../cards/card-one/card-one";
-import CardFive from "../cards/card-five/card-five";
 import { fetchLatestBlogPostsClient } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
@@ -249,18 +248,12 @@ const LifestyleLander = () => {
 
     // Dynamically create blog cards based on available blogs
     const blogCards = blogs.map((blog, index) => {
-      // Alternate between CardOne and CardFive for variety
-      const isCardOne = index % 2 === 0;
       const color = index % 2 === 0 ? "blue" : "orange";
 
       return {
         type: "blog",
         id: `blog-${index}`,
-        component: isCardOne ? (
-          <CardOne key={`blog-${index}`} blog={blog} color={color} />
-        ) : (
-          <CardFive key={`blog-${index}`} blog={blog} />
-        ),
+        component: <CardOne key={`blog-${index}`} blog={blog} color={color} />,
       };
     });
 
