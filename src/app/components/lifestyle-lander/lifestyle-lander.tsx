@@ -16,105 +16,105 @@ const quickFacts = [
     id: 1,
     label: "Wi-Fi First",
     description:
-      "Every decision—café, Airbnb, coworking space—starts with one critical question: how fast is the Wi-Fi? Nomad life runs on internet speed, not coffee strength.",
+      "Every choice starts with the same question: How fast is the Wi-Fi?.",
     icon: "faWifi",
   },
   {
     id: 2,
     label: "Visa Hopping",
     description:
-      "Border runs, visa extensions, and 90-day resets become second nature. Your passport gets more stamps than your fridge door.",
+      "Know your limits before you book. Some countries allow extensions. Others want you out in 30 or 90 days. It affects where and how you rent. Don’t land without a plan.",
     icon: "faPassport",
   },
   {
     id: 3,
     label: "Global Friendships",
     description:
-      "You build deep friendships with people you’ve known for 48 hours… and struggle to remember time zones well enough to call family.",
+      "You meet people in one country, work with them in another, and bump into them again two continents later. If you are going to be global, so should your network.",
     icon: "faUsers",
   },
   {
     id: 4,
     label: "Flexible Workspaces",
     description:
-      "Your office might be a beach café, a night market, or the quiet corner of a WeWork. Comfort becomes optional—productivity doesn’t.",
+      "One month, your condo has a workspace. The next, you’re back at the quiet café down the street. Will the Wi-Fi hold up? Does it change your budget? Flexibility still demands consistency.",
     icon: "faLaptopCode",
   },
   {
     id: 5,
     label: "Minimalist Vibes",
     description:
-      "You become a pro at living out of a suitcase. If it doesn’t fit in your 7kg carry-on, it probably doesn’t make the cut.",
+      "Master the 40L life. If you don’t use it, lose it. Checked bags go missing. Dead weight just slows you down.",
     icon: "faSuitcaseRolling",
   },
   {
     id: 6,
     label: "Cost of Living Mastery",
     description:
-      "You know the price of a latte in Chiang Mai, Medellín, and Lisbon—but couldn’t tell anyone what it costs in your home country anymore.",
+      "You land in Bogotá and catch yourself converting pesos to baht. At some point, your brain stops thinking in terms of your home currency.",
     icon: "faMoneyBillWave",
   },
   {
     id: 7,
     label: "Time Zone Tetris",
     description:
-      "Your calendar becomes a puzzle of overlapping time zones. One meeting in LA, another in Berlin, and you’re somewhere in between.",
+      "Your calendar will become a puzzle of overlapping time zones. You’re in KL. One client’s in LA. Another’s in Berlin. Your work schedule is not linear.",
     icon: "faClock",
   },
   {
     id: 8,
     label: "Language Hacks",
     description:
-      "You develop the uncanny ability to master the essentials in any language: hello, thank you, and 'one more beer, please.'",
+      "New country, new word list. Learn the top 100. You don’t need Google Translate and hand signals for every conversation.'",
     icon: "faLanguage",
   },
   {
     id: 9,
     label: "Café Connoisseur",
     description:
-      "You can instantly identify which cafés have power outlets, quiet tables, and staff who won’t glare when you open your laptop.",
+      "Skip the cowork cafes and influencer hotspots. Find the quiet spot next to your apartment. Spend money there. The locals will notice.",
     icon: "faCoffee",
   },
   {
     id: 10,
     label: "Weather Roulette",
     description:
-      "You chase sunshine, but you’ll always end up somewhere during monsoon season at least once. It’s a rite of passage.",
+      "Chasing sun sounds easy until you land in peak monsoon by accident. Check seasons, not just flight deals. Every nomad learns this the wet way.",
     icon: "faSun",
   },
   {
     id: 11,
     label: "Local SIM Savvy",
     description:
-      "You’ve become a SIM-card-switching machine. ESIMs, data packs, roaming tricks—you’ve mastered them all.",
+      "It’s 2025. Stop searching for local SIM card spots. Just get an eSIM like everyone else.",
     icon: "faSimCard",
   },
   {
     id: 12,
     label: "Cultural Chameleon",
     description:
-      "You adapt to new cultures quickly—eating when locals eat, greeting how locals greet, and removing shoes when everyone else does.",
+      "Monkey see, monkey do. Watch first, follow fast. The quicker you adapt, the smoother everything else runs. Your network and net worth will benefit.",
     icon: "faGlobeAsia",
   },
   {
     id: 13,
     label: "Nomad Health Reality",
     description:
-      "Gyms change monthly, your diet changes weekly, and sleep schedules… are a suggestion. But you learn to make it work.",
+      "Your gym membership is going to be month-to-month. Your diet changes with the countries. Your sleep schedule might too. There are trade offs. Focusing on health is not a negotiation.",
     icon: "faHeartbeat",
   },
   {
     id: 14,
     label: "Freedom vs Stability",
     description:
-      "You gain freedom but sacrifice routine. One day you’re at a rooftop pool, the next you’re hunting for a quiet corner to take a Zoom call.",
+      "Some confuse location freedom with permanent vacation. Those people don’t last. Build structure you can take with you.",
     icon: "faBalanceScale",
   },
   {
     id: 15,
     label: "Community Everywhere",
     description:
-      "Meetups, coworking spaces, WhatsApp groups—there’s always a tribe waiting for you. Nomads find each other like magnets.",
+      "Meetups, coworking spaces, WhatsApp groups. Nomads find each other. Whatever you are into, you'll find it if you look.",
     icon: "faHandshake",
   },
 ];
