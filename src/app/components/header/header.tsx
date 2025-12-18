@@ -1,8 +1,9 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { FC } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { Destination, GroupedCountries } from "@/api/types";
 
 import s from "./header.module.scss";
@@ -32,13 +33,15 @@ const Header: FC<{ destinations: Destination[] | null }> = ({
 
   return (
     <header className={s.header}>
-      <Image
-        src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1761689951/blog-assets/Logo_a0elnn.png`}
-        width={222}
-        height={63}
-        alt="The Jet Lag Chronicles Logo"
-        loading="lazy"
-      />
+      <Link href="/">
+        <Image
+          src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1761689951/blog-assets/Logo_a0elnn.png`}
+          width={222}
+          height={63}
+          alt="The Jet Lag Chronicles Logo"
+          loading="lazy"
+        />
+      </Link>
       <BurgerMenu destinations={groupedByContinent} />
       <Menu destinations={groupedByContinent} />
     </header>
