@@ -48,11 +48,6 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
   return (
     <nav className={s.container}>
       <ul>
-        <li>
-          <NavLink href="/" name="home">
-            Home
-          </NavLink>
-        </li>
         <li
           ref={menuRef}
           className={s.dropdown}

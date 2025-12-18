@@ -5,7 +5,6 @@ import {
   faBars,
   faEnvelope,
   faGlobe,
-  faHouse,
   faInbox,
   faPaperPlane,
   faUsers,
@@ -73,17 +72,6 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                 <button className={s.closeBtn} onClick={closeMenu}>
                   <FontAwesomeIcon icon={faXmark} className={s.icon} />
                 </button>
-              </li>
-              <li>
-                <FontAwesomeIcon icon={faHouse} className={s.icon} />
-                <Link
-                  aria-label="Go to home page"
-                  href="/"
-                  onClick={closeMenu}
-                  rel="canonical"
-                >
-                  Home
-                </Link>
               </li>
               <li className={s.destinationSection}>
                 <div className={s.destinationsWrapper}>
