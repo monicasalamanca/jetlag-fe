@@ -61,7 +61,7 @@ const WhatYouWillFind = () => {
             <div className={s.wrapper}>
               <h3>Community engagement</h3>
               <p className={s.desc}>
-                Polls, quizzes, and community input to keep it engaging
+                Interactive quizzes and community input to keep it engaging
               </p>
             </div>
           </div>

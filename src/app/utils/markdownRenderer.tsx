@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { JSX, useMemo, useCallback } from "react";
 import CTAComponent from "@/components/cta-component/cta-component";
-import { SafePoll } from "@/app/components/poll";
 
 // Type definitions for marked tokens for marked tokens
 interface MarkedToken {
@@ -30,7 +29,6 @@ marked.use({
 // Constants for better maintainability
 const PATTERNS = {
   CTA: /\[CTA\s+(.*?)\]/, // Matches [CTA type="..." title="..." link="..." button="..."]
-  POLL: /\[POLL\]/, // Matches simple [POLL] marker
   FAQ: /\*\*(FAQ|FAQs)\*\*/, // Matches **FAQ** or **FAQs**
 } as const;
 
@@ -46,33 +44,10 @@ const CTA_CONFIG = {
 
 interface CustomMarkdownRendererProps {
   markdown: string;
-  poll?: {
-    ctaButtonText: string;
-    ctaDescription: string;
-    ctaTitle: string;
-    title: string;
-    question: string;
-    options: Array<{ id: number; label: string; votes: number }>;
-    onVote?: (optionId: number) => void;
-    cta?: {
-      title: string;
-      description: string;
-      highlightText?: string;
-      buttonText: string;
-      buttonIcon?: string;
-      onCtaClick?: (pollData?: {
-        optionId: number;
-        timestamp: number;
-        pollQuestion: string;
-        optionText: string;
-      }) => void;
-    };
-  };
 }
 
 export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
   markdown,
-  poll,
 }) => {
   // Memoize processed markdown to avoid recalculation on every render
   const processedMarkdown = useMemo(() => {
@@ -217,40 +192,6 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
     [parseAttributes],
   );
 
-  const handlePollContent = useCallback(
-    (text: string, idx: number): JSX.Element | null => {
-      if (!PATTERNS.POLL.test(text) || !poll) return null;
-
-      const pollData = {
-        id: 1,
-        slug: "markdown-poll",
-        question: poll.question,
-        status: "live" as const,
-        ctaTitle: poll.ctaTitle,
-        ctaDescription: poll.ctaDescription,
-        ctaButtonText: poll.ctaButtonText,
-        options: poll.options.map((option) => ({
-          id: option.id,
-          label: option.label,
-          votes: option.votes,
-        })),
-      };
-
-      return (
-        <SafePoll
-          key={idx}
-          poll={pollData}
-          title={poll.title}
-          simulateVotes={true}
-          onVote={(optionId: number) => {
-            poll.onVote?.(optionId);
-          }}
-        />
-      );
-    },
-    [poll],
-  );
-
   const renderToken = useCallback(
     (
       token: MarkedToken,
@@ -259,7 +200,6 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
       handlers?: {
         handleFAQContent: (text: string, idx: number) => JSX.Element | null;
         handleCTAContent: (text: string, idx: number) => JSX.Element | null;
-        handlePollContent: (text: string, idx: number) => JSX.Element | null;
       },
     ): JSX.Element | null => {
       switch (token.type) {
@@ -350,10 +290,6 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
             // Check for CTA pattern
             const ctaElement = handlers.handleCTAContent(text, idx);
             if (ctaElement) return ctaElement;
-
-            // Check for Poll pattern
-            const pollElement = handlers.handlePollContent(text, idx);
-            if (pollElement) return pollElement;
           }
 
           // Render regular paragraph
@@ -400,9 +336,8 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
     () => ({
       handleFAQContent,
       handleCTAContent,
-      handlePollContent,
     }),
-    [handleFAQContent, handleCTAContent, handlePollContent],
+    [handleFAQContent, handleCTAContent],
   );
 
   return (

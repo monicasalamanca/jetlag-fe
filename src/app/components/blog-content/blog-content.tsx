@@ -123,7 +123,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
         </div>
       </header>
       <section className={s.postContent}>
-        <CustomMarkdownRenderer markdown={post.content} poll={post.poll} />
+        <CustomMarkdownRenderer markdown={post.content} />
       </section>
     </article>
   );

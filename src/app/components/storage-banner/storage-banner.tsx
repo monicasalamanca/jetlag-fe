@@ -18,7 +18,7 @@ interface StorageBannerProps {
 
 const StorageBanner: FC<StorageBannerProps> = ({
   title = "✈️ Heads up, traveler!",
-  body = "We don’t use cookies 🍪 (yet). Just a sprinkle of localStorage 🧠 to remember your poll votes and keep things running smoothly. No tracking. No creepy stuff. Just good vibes and smoother travels through the blog 🌍.",
+  body = "We don't use cookies 🍪 (yet). Just a sprinkle of localStorage 🧠 to remember your preferences and keep things running smoothly. No tracking. No creepy stuff. Just good vibes and smoother travels through the blog 🌍.",
   primaryButtonText = "Got it!",
   secondaryButtonText = "Tell me more",
   privacyPolicyUrl = "/privacy-policy",

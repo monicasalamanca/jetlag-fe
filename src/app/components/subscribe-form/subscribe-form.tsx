@@ -35,7 +35,7 @@ import s from "./subscribe-form.module.scss";
  */
 const DEFAULT_CONFIGS = {
   MODAL_CLOSE_DELAY: 5000, // Increased to 5 seconds to show success message
-  LOCAL_STORAGE_KEY: "hasSubscribedToDownload", // Used by polls for vote conversion and CTA messaging
+  LOCAL_STORAGE_KEY: "hasSubscribedToDownload", // Used for subscription status
   FORM_VALIDATION: {
     EMAIL_MAX_LENGTH: 120,
     EMAIL_MIN_LENGTH: 10,
@@ -119,7 +119,7 @@ interface SubscribeFormProps {
   showIcon: boolean;
   trackEventName?: string;
   /**
-   * Button variant - replaces pollStyling and useCtaTypeAStyling
+   * Button variant configuration
    * @default "default"
    */
   variant?: ButtonVariant;
@@ -128,8 +128,6 @@ interface SubscribeFormProps {
   customIcon?: IconDefinition;
 
   // Legacy props (deprecated but maintained for backward compatibility)
-  /** @deprecated Use variant="download-guide" instead */
-  pollStyling?: boolean;
   /** @deprecated Use variant="link-style" instead */
   useCtaTypeAStyling?: boolean;
 }
@@ -155,7 +153,7 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
     onSubscriptionSuccess,
     customIcon,
     // Legacy props
-    pollStyling = false,
+
     useCtaTypeAStyling = false,
   }): ReactNode => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -190,61 +188,6 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
       () => config || defaultConfig,
       [config, defaultConfig],
     );
-
-    /**
-     * Convert simulated votes to real API calls after successful subscription
-     * This function checks localStorage for any simulated poll votes and converts them to real votes
-     */
-    const castSimulatedVoteAsReal = async () => {
-      try {
-        const votedPolls = localStorage.getItem("votedPolls");
-        if (!votedPolls) return;
-
-        const parsedVotedPolls = JSON.parse(votedPolls);
-
-        // Process each voted poll
-        for (const [pollId, vote] of Object.entries(parsedVotedPolls)) {
-          const voteRecord = vote as {
-            optionId: number;
-            timestamp: number;
-            isSimulated: boolean;
-          };
-
-          // Only convert simulated votes to real votes
-          if (voteRecord.isSimulated) {
-            try {
-              // Import the poll API function
-              const { castPollVote } = await import("@/api/poll");
-
-              // Cast the real vote
-              await castPollVote(parseInt(pollId), {
-                optionId: voteRecord.optionId,
-                metadata: {
-                  timestamp: Date.now(),
-                },
-              });
-
-              // Update the vote record to mark it as real
-              parsedVotedPolls[pollId] = {
-                ...voteRecord,
-                isSimulated: false,
-                convertedTimestamp: Date.now(),
-              };
-            } catch (error) {
-              console.error(
-                `Failed to convert simulated vote for poll ${pollId}:`,
-                error,
-              );
-            }
-          }
-        }
-
-        // Save the updated vote records
-        localStorage.setItem("votedPolls", JSON.stringify(parsedVotedPolls));
-      } catch (error) {
-        console.error("Failed to cast simulated votes as real:", error);
-      }
-    };
 
     /**
      * Enhanced form change handler with strict typing and optimized with useCallback
@@ -300,15 +243,10 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
             setIsSuccess(true);
             setIsError(false);
 
-            // Store subscription status for poll system
+            // Store subscription status
             try {
               localStorage.setItem(DEFAULT_CONFIGS.LOCAL_STORAGE_KEY, "true");
-              // Note: For MVP, we keep SubscribeForm visible everywhere
-              // Only polls use this localStorage to show "Vote counted!" message
               // Server handles duplicate email prevention
-
-              // Cast real vote if user had previously voted in simulation mode
-              await castSimulatedVoteAsReal();
             } catch (error) {
               console.warn("Failed to store subscription status:", error);
             }
@@ -359,12 +297,6 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
       }
 
       // Handle legacy props with deprecation warnings
-      if (pollStyling) {
-        console.warn(
-          'SubscribeForm: pollStyling prop is deprecated. Use variant="download-guide" instead.',
-        );
-        return "download-guide";
-      }
 
       if (useCtaTypeAStyling) {
         console.warn(
@@ -374,7 +306,7 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
       }
 
       return "default";
-    }, [variant, pollStyling, useCtaTypeAStyling]);
+    }, [variant, useCtaTypeAStyling]);
 
     // Memoized button class for performance optimization
     const buttonClass = useMemo((): string => {
