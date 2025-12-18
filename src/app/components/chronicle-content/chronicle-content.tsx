@@ -6,7 +6,6 @@ import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
 import Hero from "../hero/hero";
 import CardOne from "../cards/card-one/card-one";
-import QuizContainer from "@/app/components/quiz/quiz-container";
 
 import s from "./chronicle-content.module.scss";
 
@@ -97,7 +96,6 @@ const ChronicleContent = () => {
           )}
         </div>
       </section>
-      <QuizContainer quizId={1} />
     </main>
   );
 };
