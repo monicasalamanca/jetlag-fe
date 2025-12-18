@@ -6,7 +6,6 @@ import { faCalendar, faClock } from "@fortawesome/free-regular-svg-icons";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Post } from "@/api/types";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
-import LikeButton from "@/app/components/blog-like-button/blog-like-button";
 import { CustomMarkdownRenderer } from "@/app/utils/markdownRenderer";
 
 import s from "./blog-content.module.scss";
@@ -80,7 +79,6 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
             <FontAwesomeIcon icon={faClock} className={s.icon} />
             <p>8 min read</p>
           </div>
-          <LikeButton blogId={post.id} initialLikes={post.likes || 0} />
         </div>
         <h1>{post.title}</h1>
         <div className={s.socialMedia}>

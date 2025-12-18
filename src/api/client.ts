@@ -116,7 +116,6 @@ export const fetchBlogPostFromLifestyle = async (
         description,
         content,
         publishedAt: item.attributes.publishedAt,
-        likes: item.attributes.likes,
         views: item.attributes.views,
         imageUrl:
           item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
@@ -193,7 +192,6 @@ export const fetchBlogPost = async (
         description,
         content,
         publishedAt: item.attributes.publishedAt,
-        likes: item.attributes.likes,
         views: item.attributes.views,
         imageUrl:
           item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
@@ -263,7 +261,6 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
         description,
         content,
         publishedAt: item.attributes.publishedAt,
-        likes: item.attributes.likes,
         slug: item.attributes.slug,
         imageUrl:
           item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
@@ -332,7 +329,6 @@ export const fetchLatestBlogPostsClient = async (): Promise<
         description,
         content,
         publishedAt: item.attributes.publishedAt,
-        likes: item.attributes.likes,
         slug: item.attributes.slug,
         imageUrl:
           item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||

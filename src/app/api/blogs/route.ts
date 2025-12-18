@@ -60,7 +60,6 @@ export async function GET(request: NextRequest) {
       description: item.attributes.description,
       content: item.attributes.content,
       publishedAt: item.attributes.publishedAt,
-      likes: item.attributes.likes,
       slug: item.attributes.slug,
       imageUrl:
         item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail

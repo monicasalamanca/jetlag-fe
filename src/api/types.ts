@@ -167,7 +167,6 @@ export type BlogPostResponse = {
     slug: string;
     description: string;
     content: string;
-    likes: number;
     views: number;
     lifestyle?: boolean;
     createdAt: string;
@@ -193,7 +192,6 @@ export type BlogPost = {
   title: string;
   description: string;
   content: string;
-  likes: number;
   views: number;
   lifestyle?: boolean;
   publishedAt: string;
@@ -210,7 +208,6 @@ export type Post = {
   description: string;
   content: string;
   publishedAt: string;
-  likes: number;
   views: number;
   imageUrl?: string;
   poll?: Poll;

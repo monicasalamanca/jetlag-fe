@@ -28,7 +28,6 @@
   .latestChronicles,
   .trending,
   .mostPopular,
-  .mostLiked,
   .mostViewed {
     padding: 24px 16px;
 
@@ -44,20 +43,6 @@
       @media only screen and (min-width: 600px) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-      }
-    }
-  }
-
-  .mostLiked {
-    .cardWrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-
-      @media only screen and (min-width: 600px) {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
       }
     }
   }
