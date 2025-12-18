@@ -140,7 +140,7 @@ export const fetchBlogPost = async (
     process.env.STRAPI_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
   // Fetch by slug only, then filter by country
-  const url = `${baseUrl}/api/blogs?filters[slug][$eq]=${slug}&populate[poll][populate]=options&populate[images]=*&populate[country]=*`;
+  const url = `${baseUrl}/api/blogs?filters[slug][$eq]=${slug}&populate[images]=*&populate[country]=*`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
@@ -173,7 +173,6 @@ export const fetchBlogPost = async (
     const data2 = { data: filteredData };
 
     return data2.data.map((item: BlogPostResponse) => {
-      const pollData = item.attributes.poll?.data;
       const content = sanitizeInternalUrls(item.attributes.content || "");
       const description = sanitizeInternalUrls(
         item.attributes.description || "",
@@ -197,21 +196,6 @@ export const fetchBlogPost = async (
           item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
-        poll: pollData
-          ? {
-              id: pollData.id,
-              slug: pollData.attributes.slug,
-              question: pollData.attributes.question,
-              options: pollData.attributes.options.map((option) => ({
-                id: option.id,
-                label: option.label,
-                votes: option.votes,
-              })),
-              ctaTitle: pollData.attributes.ctaTitle,
-              ctaDescription: pollData.attributes.ctaDescription,
-              ctaButtonText: pollData.attributes.ctaButtonText,
-            }
-          : null,
       };
     });
   } catch (error) {

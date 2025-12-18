@@ -57,10 +57,7 @@ const WhyTrustUs = () => {
               </div>
               <div className={s.cardContent}>
                 <h3>Community-driven</h3>
-                <p>
-                  Polls, quizzes, and guides shaped by expats and nomads
-                  worldwide.
-                </p>
+                <p>Quizzes and guides shaped by expats and nomads worldwide.</p>
               </div>
             </div>
           </div>

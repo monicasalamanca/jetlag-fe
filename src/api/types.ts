@@ -126,40 +126,6 @@ export type DeepInfo = {
   image: string;
 };
 
-export type PollOption = {
-  id: number;
-  label: string;
-  votes: number;
-};
-
-export type Poll = {
-  id: number;
-  title: string;
-  question: string;
-  options: PollOption[];
-  ctaTitle: string;
-  ctaDescription: string;
-  ctaButtonText: string;
-};
-
-export type PollResponse = {
-  data: {
-    id: number;
-    attributes: {
-      question: string;
-      slug: string;
-      status: string;
-      createdAt: string;
-      updatedAt: string;
-      publishedAt: string;
-      options: PollOption[];
-      ctaTitle: string;
-      ctaDescription: string;
-      ctaButtonText: string;
-    };
-  };
-};
-
 export type BlogPostResponse = {
   id: number;
   attributes: {
@@ -183,7 +149,6 @@ export type BlogPostResponse = {
         };
       };
     };
-    poll?: PollResponse;
   };
 };
 
@@ -210,7 +175,6 @@ export type Post = {
   publishedAt: string;
   views: number;
   imageUrl?: string;
-  poll?: Poll;
 };
 
 export type Destination = {
