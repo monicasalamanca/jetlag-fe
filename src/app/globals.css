@@ -17,6 +17,7 @@
   --color-amber-light: #fef3c7; /* Light amber background */
   --color-purple: #8b5cf6; /* High contrast purple */
   --color-purple-light: #f3e8ff; /* Light purple background */
+  --color-primary-orange: #ff6b35;
 
   --background-light: #f6faff;
 
@@ -40,48 +41,6 @@
   /* Fonts */
   --font-primary: "Roboto", "Helvetica Neue", "Helvetica", arial, sans-serif;
   --font-secondary: "Open Sans", sans-serif;
-
-  /* Quiz Component Variables */
-  --quiz-primary-orange: #ff6b35;
-  --quiz-primary-blue: var(--primary); /* Using existing primary blue */
-  --quiz-accent-green: #2ecc71;
-  --quiz-accent-red: #e74c3c;
-  --quiz-sand-beige: #f5f3f0;
-  --quiz-dark-gray: var(--dark); /* Using existing dark color */
-  --quiz-light-gray: var(--gray-200); /* Using existing gray-200 */
-
-  /* Quiz Gradients */
-  --quiz-gradient-sunset: linear-gradient(
-    135deg,
-    #ff6b35 0%,
-    #f39c12 50%,
-    #e91e63 100%
-  );
-  --quiz-gradient-ocean: linear-gradient(
-    135deg,
-    var(--primary) 0%,
-    var(--primary-dark) 50%,
-    var(--primary-dark) 100%
-  );
-  --quiz-gradient-success: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-  --quiz-gradient-error: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-
-  /* Quiz Shadows */
-  --quiz-shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
-  --quiz-shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
-  --quiz-shadow-heavy: 0 8px 32px rgba(0, 0, 0, 0.2);
-
-  /* Quiz Border Radius */
-  --quiz-radius-small: 8px;
-  --quiz-radius-medium: 16px;
-  --quiz-radius-large: 24px;
-
-  /* Quiz Typography */
-  --quiz-font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  --quiz-font-weight-normal: 400;
-  --quiz-font-weight-medium: 500;
-  --quiz-font-weight-semibold: 600;
-  --quiz-font-weight-bold: 700;
 
   /* Font Colors */
   --primary-font-dark: #374151;

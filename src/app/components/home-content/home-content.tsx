@@ -9,7 +9,6 @@ import CardOne from "@/components/cards/card-one/card-one";
 import CardTwo from "@/components/cards/card-two/card-two";
 import CardThree from "@/components/cards/card-three/card-three";
 import CardFive from "@/components/cards/card-five/card-five";
-import QuizContainer from "@/components/quiz/quiz-container";
 
 import s from "./home-content.module.scss";
 
@@ -139,7 +138,6 @@ const HomeContent = () => {
               </div>
             </div>
           </section>
-          <QuizContainer quizId={2} />
           <section className={s.trending}>
             <div className={s.wrapper}>
               <h2>Trending</h2>
