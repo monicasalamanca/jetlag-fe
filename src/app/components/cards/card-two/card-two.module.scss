@@ -1,12 +1,14 @@
+@import "@/styles/tokens";
+
 .container {
-  color: var(--primary-font-dark);
+  color: $color-text-dark;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: 8px;
-  background-color: var(--white);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
+  border-radius: $radius-sm;
+  background-color: $color-white;
+  box-shadow: $shadow-sm;
+  border-radius: $radius-md;
   overflow: hidden;
 
   .imageWrapper {
@@ -26,15 +28,15 @@
 
     .readTime {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      border-radius: 90px;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      padding: 4px 16px;
-      background-color: var(--white);
-      color: var(--primary-font-dark);
+      top: $space-lg;
+      right: $space-lg;
+      border-radius: $radius-pill;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      line-height: $line-height-tight;
+      padding: $space-xs $space-lg;
+      background-color: $color-white;
+      color: $color-text-dark;
 
       .icon {
         width: 14px;
@@ -46,45 +48,45 @@
     .bottomInfo {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: $space-sm;
       width: calc(100% - 32px);
       position: absolute;
-      bottom: 16px;
-      left: 16px;
+      bottom: $space-lg;
+      left: $space-lg;
 
       .tag {
         width: fit-content;
-        background-color: #dbe9fe;
-        color: var(--color-blue);
-        border-radius: 90px;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 20px;
-        padding: 4px 16px;
-        color: var(--white);
+        background-color: $color-blue-light;
+        color: $color-blue;
+        border-radius: $radius-pill;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        line-height: $line-height-tight;
+        padding: $space-xs $space-lg;
+        color: $color-white;
 
         &.blue {
-          background-color: rgba(36, 99, 235, 1);
+          background-color: $color-blue;
         }
         &.green {
-          background-color: rgba(6, 150, 104, 0.8);
+          background-color: $color-green-alpha;
         }
         &.purple {
-          background-color: rgba(124, 58, 237, 0.8);
+          background-color: $color-purple-alpha;
         }
         &.orange {
-          background-color: rgba(217, 119, 7, 0.8);
+          background-color: $color-orange-alpha;
         }
         &.red {
-          background-color: rgba(220, 38, 37, 0.8);
+          background-color: $color-red-alpha;
         }
       }
 
       h3 {
-        color: var(--white);
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 28px;
+        color: $color-white;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        line-height: $line-height-loose;
       }
     }
   }
@@ -93,52 +95,52 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 16px;
-    gap: 16px;
+    padding: $space-lg;
+    gap: $space-lg;
 
     .topContent {
       display: flex;
-      gap: 16px;
+      gap: $space-lg;
 
       .country {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 20px;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        line-height: $line-height-tight;
 
         .icon {
-          margin-right: 8px;
+          margin-right: $space-sm;
 
           &.blue {
-            color: #2463eb;
+            color: $color-blue;
           }
           &.green {
-            color: #069668;
+            color: $color-green;
           }
           &.purple {
-            color: #7c3aed;
+            color: $color-purple;
           }
           &.orange {
-            color: #d97707;
+            color: $color-orange;
           }
           &.red {
-            color: #dc2625;
+            color: $color-red;
           }
         }
       }
 
       .date {
-        color: var(--primary-font-dark);
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 20px;
+        color: $color-text-dark;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        line-height: $line-height-tight;
       }
     }
 
     p {
-      color: var(--primary-font-dark);
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 22px;
+      color: $color-text-dark;
+      font-size: $font-size-base;
+      font-weight: $font-weight-normal;
+      line-height: $line-height-base;
     }
   }
 }
@@ -158,12 +160,12 @@
     transform: translateY(-2px);
 
     .container {
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      box-shadow: $shadow-md;
     }
   }
 
   &:focus {
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid $color-blue;
     outline-offset: 2px;
   }
 

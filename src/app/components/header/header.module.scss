@@ -1,12 +1,14 @@
+@import "@/styles/tokens";
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  background-color: var(--white);
-  border-bottom: 1px solid rgb(222, 221, 221);
+  padding: $space-lg;
+  background-color: $color-white;
+  border-bottom: 1px solid $color-gray-border-light;
 
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: $breakpoint-tablet) {
     width: 768px;
     margin: 0 auto;
     align-items: flex-end;

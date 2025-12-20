@@ -1,5 +1,7 @@
+@import "@/styles/tokens";
+
 .container {
-  background-color: var(--light-gray-bg);
+  background-color: $color-neutral-50;
 
   .masonryGridSection {
     display: flex;

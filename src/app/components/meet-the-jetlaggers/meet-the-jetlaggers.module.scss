@@ -1,6 +1,8 @@
+@import "@/styles/tokens";
+
 .section {
-  background-color: var(--gray-50);
-  color: var(--primary-font-dark);
+  background-color: $color-neutral-50;
+  color: $color-neutral-900;
 }
 
 .container {
@@ -22,7 +24,7 @@
   .iconWrapper {
     width: 60px;
     height: 60px;
-    background-color: var(--color-amber-light);
+    background-color: $color-amber-light;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -30,7 +32,7 @@
     margin: 0 auto 24px;
 
     .cameraIcon {
-      color: var(--color-amber);
+      color: $color-amber;
       font-size: 28px;
     }
   }
@@ -38,7 +40,7 @@
   .title {
     font-size: 48px;
     font-weight: 700;
-    color: var(--dark);
+    color: $color-neutral-900;
 
     @media only screen and (max-width: 767px) {
       font-size: 32px;
@@ -64,17 +66,17 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: var(--gray-100);
+    background: $color-neutral-100;
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: var(--gray-300);
+    background: $color-neutral-300;
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: var(--gray-400);
+    background: $color-neutral-400;
   }
 }
 

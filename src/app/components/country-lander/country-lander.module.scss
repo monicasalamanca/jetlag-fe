@@ -1,20 +1,22 @@
+@import "@/styles/tokens";
+
 .container {
-  background-color: var(--light-gray-bg);
+  background-color: $color-light-gray-bg;
 
   .countryIntro {
-    background-color: var(--white);
-    padding: 32px 16px;
+    background-color: $color-white;
+    padding: $space-2xl $space-lg;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: $space-xl;
 
     p {
-      color: var(--text-color);
-      font-size: 16px;
-      line-height: 24px;
-      font-weight: 500;
+      color: $color-text;
+      font-size: $font-size-base;
+      line-height: $line-height-relaxed;
+      font-weight: $font-weight-medium;
 
-      @media only screen and (min-width: 768px) {
+      @media only screen and (min-width: $breakpoint-tablet) {
         width: 600px;
         margin: 0 auto;
       }
@@ -24,23 +26,23 @@
   .masonryGridSection {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 24px 16px;
+    gap: $space-lg;
+    padding: $space-xl $space-lg;
 
     .column {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: $space-lg;
       width: 100%;
     }
 
-    @media only screen and (min-width: 600px) {
+    @media only screen and (min-width: $breakpoint-mobile) {
       flex-direction: row;
       width: 600px;
       margin: 0 auto;
     }
 
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: $breakpoint-tablet) {
       flex-direction: row;
       width: 768px;
       margin: 0 auto;

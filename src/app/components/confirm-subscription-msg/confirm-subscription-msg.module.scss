@@ -1,10 +1,12 @@
+@import "@/styles/tokens";
+
 .container {
   display: flex;
   align-items: center;
   width: 100%;
   height: calc(100vh - 291px);
   padding: 24px;
-  color: var(--black);
+  color: $color-black;
   margin: 0 auto;
 
   @media only screen and (min-width: 768px) {
@@ -20,11 +22,11 @@
     font-size: 24px;
     font-weight: 700;
     text-align: center;
-    color: var(--primary-font-dark);
+    color: $color-neutral-900;
   }
 
   p {
-    color: var(--primary-font-dark);
+    color: $color-neutral-900;
     text-align: center;
     font-size: 14px;
     padding: 0 22px;

@@ -1,90 +1,42 @@
-:root {
-  /* --background: #ffffff;
-  --foreground: #ffffff; */
-  --light-gray-bg: var(--gray-50); /* Using existing gray-50 */
-  --white: #ffffff;
-  --black: #111827;
-  --text-color: #333333;
-  --color-blue: var(
-    --primary
-  ); /* Using existing primary blue instead of separate blue */
-  --color-blue-medium: #0c90e9;
-  --color-blue-light: var(--primary-light); /* Using existing primary-light */
-  --color-bright-green: #22c55e; /* Better contrast green */
-  --color-dark-bright-green: #16a34a; /* Higher contrast dark green */
-  --color-bright-green-light: #dcfce7; /* Light background variant */
-  --color-amber: #f59e0b; /* High contrast amber/orange */
-  --color-amber-light: #fef3c7; /* Light amber background */
-  --color-purple: #8b5cf6; /* High contrast purple */
-  --color-purple-light: #f3e8ff; /* Light purple background */
-  --color-primary-orange: #ff6b35;
+/* ============================================
+   Global CSS - Base Styles Only
+   ============================================
+   
+   Design tokens are in: src/app/styles/_tokens.scss
+   Use SCSS tokens for all component styling.
+   
+   This file contains only:
+   - CSS resets
+   - Base element styles
+   - Font declarations
+   - Global animations
+   ============================================ */
 
-  --background-light: #f6faff;
+/* ============================================
+   CSS Reset & Base Styles
+   ============================================ */
 
-  /* Primary Colors */
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
-  --primary-light: #60a5fa;
-
-  /* Background Colors */
-  --gray-50: #f9f9f9;
-  --blue-50: #eff6ff;
-  --gray-200: #e5e5e5;
-  --gray-300: #d1d5db;
-
-  /* Text Colors */
-  --dark: #1a1a1a;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #666666;
-
-  /* Fonts */
-  --font-primary: "Roboto", "Helvetica Neue", "Helvetica", arial, sans-serif;
-  --font-secondary: "Open Sans", sans-serif;
-
-  /* Font Colors */
-  --primary-font-dark: #374151;
-  --font-dark-gray: var(
-    --gray-500
-  ); /* Using existing gray-500 #6b7280 -> #4b5563 similar */
-  --font-gray: var(
-    --gray-400
-  ); /* Using existing gray-400 #9ca3af -> #9ba3af very similar */
-  --super-light-gray: #f3f4f6;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    --foreground: #ededed;
-  }
-} */
 
 html,
 body {
-  /* display: flex;
-  flex-direction: column; */
   max-width: 100vw;
-  /* height: 100vh;
-  height: 100dvh; */
-  /* overflow-x: hidden; */
   cursor: auto !important;
-  /* animation: meshAnimation 20s ease-in-out infinite alternate; */
 }
 
-/* styles/meshGradient.css */
-@keyframes meshAnimation {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
+body {
+  background-color: #ffffff;
 }
 
+/* ============================================
+   Typography
+   ============================================ */
+
+/* Headings use Poppins font family */
 h1,
 h2,
 h3,
@@ -96,6 +48,7 @@ h6 {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Body text and interactive elements use Source Sans 3 */
 body,
 a,
 button,
@@ -110,24 +63,42 @@ p {
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  background-color: var(--white);
-}
-
-.noSroll {
-  overflow: hidden;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+/* ============================================
+   Links
+   ============================================ */
 
 a {
   color: inherit;
   text-decoration: none;
 }
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+.noSroll {
+  overflow: hidden;
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+
+@keyframes meshAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* ============================================
+   Dark Mode Support (Optional)
+   ============================================ */
 
 @media (prefers-color-scheme: dark) {
   html {

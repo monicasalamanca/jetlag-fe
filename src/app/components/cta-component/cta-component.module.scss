@@ -1,18 +1,20 @@
+@import "@/styles/tokens";
+
 .containerTypeA {
-  border-left: 5px solid #db2974;
-  padding: 16px;
+  border-left: 5px solid $color-pink;
+  padding: $space-lg;
   border-radius: 5px;
 
   h3 {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
     font-style: italic;
   }
 
   a {
-    color: var(--color-blue-light);
-    font-size: 16px;
-    font-weight: 500;
+    color: $color-blue-light;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
     line-height: calc(24 / 16);
     text-decoration: none;
 
@@ -21,7 +23,7 @@
     }
 
     &:hover {
-      color: var(--color-blue-medium);
+      color: $color-blue-medium;
     }
   }
 }
@@ -31,20 +33,14 @@
     color: transparent;
     margin-right: 5px;
     text-shadow:
-      0 0 var(--black),
+      0 0 $color-black,
       0.06em 0 0 rgba(255, 255, 255, 0.7),
       0 0.05em 0 rgba(255, 255, 255, 0.7),
       -0.06em 0 0 rgba(255, 255, 255, 0.7);
 
     background-image:
-      linear-gradient(
-        transparent calc(100% - 0.45em),
-        var(--color-blue-light) 0
-      ),
-      linear-gradient(
-        transparent calc(100% - 0.45em),
-        var(--color-blue-light) 0
-      );
+      linear-gradient(transparent calc(100% - 0.45em), $color-blue-light 0),
+      linear-gradient(transparent calc(100% - 0.45em), $color-blue-light 0);
     background-repeat: no-repeat;
     background-size:
       0px 100%,
@@ -53,9 +49,9 @@
   }
 
   a {
-    color: var(--color-blue-medium);
-    font-size: 16px;
-    font-weight: 500;
+    color: $color-blue-medium;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
     line-height: calc(24 / 16);
     text-decoration: none;
 
@@ -64,7 +60,7 @@
     }
 
     &:hover {
-      color: var(--color-blue-medium);
+      color: $color-blue-medium;
     }
   }
 }

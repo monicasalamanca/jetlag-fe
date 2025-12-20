@@ -1,3 +1,5 @@
+@import "@/styles/tokens";
+
 .container {
   display: flex;
   flex-direction: column;
@@ -5,8 +7,8 @@
   margin: 0 auto;
   padding: 32px 16px;
   gap: 16px;
-  background-color: var(--light-gray-bg);
-  color: var(--primary-font-dark);
+  background-color: $color-neutral-50;
+  color: $color-neutral-900;
 
   @media only screen and (min-width: 768px) {
     width: 768px;

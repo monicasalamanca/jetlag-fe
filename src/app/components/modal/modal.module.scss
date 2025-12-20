@@ -1,3 +1,5 @@
+@import "@/styles/tokens";
+
 .backdrop {
   position: fixed;
   top: 0;
@@ -7,15 +9,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $shadow-overlay;
   backdrop-filter: blur(4px);
   z-index: 50;
 
   .modalContent {
     position: relative;
-    background-color: var(--background-light);
-    padding: 64px 32px 16px;
-    border-radius: 8px;
+    background-color: $color-neutral-50;
+    padding: $space-4xl $space-2xl $space-lg;
+    border-radius: $radius-sm;
     box-shadow:
       0 4px 6px rgba(0, 0, 0, 0.1),
       0 1px 3px rgba(0, 0, 0, 0.06);
@@ -28,11 +30,11 @@
 
     .closeButton {
       position: absolute;
-      top: 16px;
-      right: 16px;
+      top: $space-lg;
+      right: $space-lg;
       cursor: pointer;
       background-color: transparent;
-      color: var(--black);
+      color: $color-black;
       border: 0;
 
       .closeIcon {
@@ -45,28 +47,28 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: $space-lg;
 
       h2 {
-        font-size: 24px;
+        font-size: $font-size-xl;
         font-weight: 600;
       }
     }
 
     .modalBody {
-      margin-bottom: 16px;
+      margin-bottom: $space-lg;
 
       p {
-        font-size: 16px;
-        line-height: 24px;
-        font-weight: 400;
+        font-size: $font-size-base;
+        line-height: $line-height-relaxed;
+        font-weight: $font-weight-normal;
       }
     }
 
     .modalFooter {
       display: flex;
       justify-content: flex-end;
-      gap: 16px;
+      gap: $space-lg;
     }
   }
 }
