@@ -1,6 +1,8 @@
+@import "@/styles/tokens";
+
 .section {
-  background-color: var(--white);
-  color: var(--primary-font-dark);
+  background-color: $color-white;
+  color: $color-neutral-900;
 }
 
 .container {
@@ -27,7 +29,7 @@
   .iconWrapper {
     width: 60px;
     height: 60px;
-    background-color: var(--color-bright-green-light);
+    background-color: $color-bright-green-light;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -35,7 +37,7 @@
     margin: 0 auto 24px;
 
     .lockIcon {
-      color: var(--color-bright-green);
+      color: $color-bright-green;
       font-size: 28px;
     }
   }
@@ -58,7 +60,7 @@
   .checkIconWrapper {
     width: 32px;
     height: 32px;
-    background-color: var(--color-bright-green-light);
+    background-color: $color-bright-green-light;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -67,7 +69,7 @@
     margin-top: 4px;
 
     .checkIcon {
-      color: var(--color-dark-bright-green);
+      color: $color-dark-bright-green;
       font-size: 16px;
     }
   }
@@ -77,11 +79,11 @@
       font-size: 18px;
       font-weight: 700;
       margin-bottom: 8px;
-      color: var(--dark);
+      color: $color-neutral-900;
     }
 
     p {
-      color: var(--gray-500);
+      color: $color-neutral-500;
       line-height: 24px;
       font-size: 16px;
     }

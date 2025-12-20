@@ -1,6 +1,8 @@
+@import "@/styles/tokens";
+
 .footer {
-  background-color: var(--black);
-  padding: 24px 16px 16px;
+  background-color: $color-black;
+  padding: $space-xl $space-lg $space-lg;
   gap: 6px;
   display: flex;
   flex-direction: column;
@@ -8,16 +10,16 @@
   .mobileFooter {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: $space-lg;
 
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: $breakpoint-tablet) {
       display: none;
     }
 
     .followUsLinks {
       display: flex;
-      gap: 16px;
-      margin: 12px 0;
+      gap: $space-lg;
+      margin: $space-md 0;
 
       .followLink {
         display: flex;
@@ -30,31 +32,31 @@
     }
 
     .footerLinks {
-      color: var(--font-gray);
+      color: $color-text-gray;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      font-size: 14px;
+      gap: $space-sm;
+      font-size: $font-size-sm;
 
       .links {
         display: flex;
-        gap: 12px;
+        gap: $space-md;
         cursor: pointer;
       }
     }
 
     .privacyPolicy,
     .termsOfService {
-      color: var(--font-gray);
+      color: $color-text-gray;
       display: flex;
-      gap: 12px;
+      gap: $space-md;
     }
   }
 
   .desktopFooter {
     display: none;
 
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: $breakpoint-tablet) {
       display: flex;
       width: 768px;
       margin: 0 auto;
@@ -65,16 +67,16 @@
     .top {
       display: flex;
       justify-content: space-between;
-      gap: 16px;
+      gap: $space-lg;
       width: 100%;
-      padding: 32px 24px;
+      padding: $space-2xl $space-xl;
 
       .itemList {
         &:first-child {
           flex: 0 0 250px;
 
           p {
-            color: var(--color-blue-light);
+            color: $color-blue-business;
             opacity: 0.7;
           }
         }
@@ -87,15 +89,15 @@
         }
 
         h3 {
-          color: var(--white);
-          font-weight: 700;
-          font-size: 18px;
-          margin-bottom: 8px;
+          color: $color-white;
+          font-weight: $font-weight-bold;
+          font-size: $font-size-lg;
+          margin-bottom: $space-sm;
         }
 
         p {
-          font-size: 14px;
-          color: var(--font-gray);
+          font-size: $font-size-sm;
+          color: $color-text-gray;
         }
 
         ul {
@@ -104,17 +106,17 @@
           margin: 0;
           display: flex;
           flex-direction: column;
-          gap: 4px;
+          gap: $space-xs;
 
           li {
             &:last-child {
-              margin-top: 16px;
-              color: var(--color-white);
+              margin-top: $space-lg;
+              color: $color-white;
             }
 
             a {
-              font-size: 14px;
-              color: var(--font-gray);
+              font-size: $font-size-sm;
+              color: $color-text-gray;
               text-decoration: none;
               cursor: pointer;
             }
@@ -123,8 +125,8 @@
 
         .followUsLinks {
           display: flex;
-          gap: 8px;
-          margin: 12px 0;
+          gap: $space-sm;
+          margin: $space-md 0;
 
           .followLink {
             display: flex;
@@ -132,7 +134,7 @@
             .icon {
               width: 16px;
               height: 16px;
-              color: var(--font-gray);
+              color: $color-text-gray;
             }
           }
         }
@@ -143,10 +145,10 @@
       width: 100%;
       display: flex;
       justify-content: center;
-      padding: 16px;
-      font-size: 12px;
-      color: var(--font-gray);
-      border-top: 1px solid var(--font-gray);
+      padding: $space-lg;
+      font-size: $font-size-xs;
+      color: $color-text-gray;
+      border-top: 1px solid $color-text-gray;
     }
   }
 }

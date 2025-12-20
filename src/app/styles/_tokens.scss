@@ -1,0 +1,238 @@
+// ============================================
+// Design Tokens for The Jet Lag Chronicles
+// ============================================
+//
+// Usage: Import this file at the top of any SCSS module:
+// @import "../../styles/tokens";
+//
+// Then use tokens like: color: $color-blue;
+// Never hardcode values - always use tokens.
+// ============================================
+
+// ============================================
+// COLOR TOKENS
+// ============================================
+
+// Brand Colors - Primary Blue
+$color-blue: #2463eb;
+$color-blue-light: #dbe9fe;
+$color-blue-lighter: #eef6ff;
+$color-blue-bg: rgba(130, 184, 255, 0.2);
+$color-blue-medium: #3a78fc;
+$color-blue-medium-alt: #3a83f5;
+$color-blue-bright: #0c90e9;
+$color-blue-sky: #309aff;
+$color-blue-dark: #1d4ed8;
+$color-blue-business: #60a5fa;
+$color-blue-darker: #2563eb;
+
+// Brand Colors - Teal/Cyan
+$color-teal: #1bc4f3;
+$color-teal-bg: rgba(47, 193, 230, 0.2);
+$color-teal-dark: #09b5d5;
+
+// Brand Colors - Green
+$color-green: #069668;
+$color-green-alpha: rgba(6, 150, 104, 0.8);
+$color-green-medium: #03956a;
+$color-green-teal: #0f9387;
+$color-green-mint: #84d8bd;
+$color-green-light: #e2f0f3;
+$color-green-success-bg: rgb(139, 181, 73, 0.2);
+$color-bright-green: #00aa00;
+$color-bright-green-light: #ecfcf4;
+$color-bright-green-bg: rgba(0, 121, 2, 0.2);
+$color-dark-bright-green: #007902;
+
+// Brand Colors - Red/Pink
+$color-red: #dc2625;
+$color-red-alpha: rgba(220, 38, 37, 0.8);
+$color-red-light: #fde2e1;
+$color-red-error-bg: rgb(181, 73, 116, 0.2);
+$color-pink: #db2974;
+$color-pink-bright: #e8489b;
+
+// Brand Colors - Purple
+$color-purple: #7c3aed;
+$color-purple-alpha: rgba(124, 58, 237, 0.8);
+$color-purple-light: #ece9fe;
+$color-purple-medium: #7a3ced;
+$color-purple-bright: #8e5cf3;
+$color-purple-dark: #3f5aeb;
+
+// Brand Colors - Orange/Amber
+$color-orange: #d97707;
+$color-orange-alpha: rgba(217, 119, 7, 0.8);
+$color-orange-light: #fef2c7;
+$color-orange-bright: #f87415;
+$color-amber: #f59e0b;
+$color-amber-light: #fef3c7;
+$color-amber-medium: #f49d08;
+$color-primary-orange: #ea580c;
+$color-orange-deep: #e95612;
+
+// Brand Colors - Yellow
+$color-yellow-light: #fefbeb;
+
+// Neutral Colors (Gray Scale)
+$color-white: #ffffff;
+$color-black: #111827;
+
+// Neutral Scale (light to dark)
+$color-neutral-50: #f9fafb;
+$color-neutral-100: #f3f4f6;
+$color-neutral-200: #e5e7eb;
+$color-neutral-300: #d1d5db;
+$color-neutral-400: #9ca3af;
+$color-neutral-500: #6b7280;
+$color-neutral-600: #4b5563;
+$color-neutral-700: #374151;
+$color-neutral-800: #1f2937;
+$color-neutral-900: #111827;
+
+// Additional Neutral Grays
+$color-gray-light: #a2a2a2;
+$color-gray-medium: #888;
+$color-gray-dark: #666;
+$color-gray-border: #bebebe;
+$color-gray-border-light: rgb(222, 221, 221);
+$color-gray-border-lighter: rgb(233, 231, 231);
+
+// Legacy aliases (deprecated - use neutral scale above)
+$color-light-gray-bg: $color-neutral-50;
+$color-text: #333333;
+$color-text-dark: $color-neutral-700;
+$color-text-gray: #9ba3af;
+
+// Semantic Colors
+$color-primary: $color-blue;
+$color-secondary: $color-green;
+$color-accent: $color-red;
+
+// ============================================
+// SPACING TOKENS
+// ============================================
+
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 12px;
+$space-lg: 16px;
+$space-xl: 24px;
+$space-2xl: 32px;
+$space-3xl: 48px;
+$space-4xl: 64px;
+
+// ============================================
+// TYPOGRAPHY TOKENS
+// ============================================
+
+// Font Families
+$font-family-primary:
+  "Poppins", "Helvetica Neue", "Helvetica", arial, sans-serif;
+$font-family-secondary:
+  "Source Sans 3", "Helvetica Neue", "Helvetica", "Open Sans", arial, sans-serif;
+
+// Font Sizes
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-base: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 20px;
+$font-size-2xl: 32px;
+$font-size-3xl: 42px;
+
+// Font Weights
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+$font-weight-bolder: 900;
+
+// Line Heights
+$line-height-tight: 20px;
+$line-height-base: 22px;
+$line-height-relaxed: 24px;
+$line-height-loose: 28px;
+$line-height-heading: 40px;
+
+// ============================================
+// BORDER RADIUS TOKENS
+// ============================================
+
+$radius-sm: 8px;
+$radius-md: 16px;
+$radius-pill: 90px;
+
+// ============================================
+// SHADOW TOKENS
+// ============================================
+
+$shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 8px 16px rgba(0, 0, 0, 0.15);
+$shadow-overlay: rgba(0, 0, 0, 0.5);
+
+// ============================================
+// GRADIENT TOKENS
+// ============================================
+
+// Primary Blue Gradients
+$gradient-blue-primary: linear-gradient(
+  90deg,
+  rgb(57, 121, 253),
+  rgb(27, 196, 244)
+);
+$gradient-blue-hover: linear-gradient(
+  180deg,
+  rgba(57, 121, 253, 1) 0%,
+  rgba(27, 196, 244, 1) 100%
+);
+
+// Country/Facts Card Gradients
+$gradient-blue-card: linear-gradient(
+  180deg,
+  rgba(58, 131, 245, 1) 0%,
+  rgba(9, 181, 213, 1) 100%
+);
+$gradient-pink-card: linear-gradient(
+  180deg,
+  rgba(219, 41, 116, 1) 0%,
+  rgba(233, 86, 18, 1) 100%
+);
+$gradient-orange-card: linear-gradient(
+  180deg,
+  rgba(244, 157, 8, 1) 0%,
+  rgba(248, 116, 21, 1) 100%
+);
+$gradient-green-card: linear-gradient(
+  180deg,
+  rgba(3, 149, 106, 1) 0%,
+  rgba(15, 147, 135, 1) 100%
+);
+$gradient-purple-card: linear-gradient(
+  180deg,
+  rgba(122, 60, 237, 1) 0%,
+  rgba(63, 90, 235, 1) 100%
+);
+$gradient-purple-pink-card: linear-gradient(
+  180deg,
+  rgba(142, 92, 243, 1) 0%,
+  rgba(232, 72, 155, 1) 100%
+);
+
+// ============================================
+// BREAKPOINTS (for reference)
+// ============================================
+// Use in media queries like:
+// @media only screen and (min-width: $breakpoint-tablet)
+
+$breakpoint-mobile: 600px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+// ============================================
+// Z-INDEX TOKENS
+// ============================================
+
+$z-index-base: 1;
+$z-index-dropdown: 10;
+$z-index-modal: 100;
+$z-index-overlay: 1000;

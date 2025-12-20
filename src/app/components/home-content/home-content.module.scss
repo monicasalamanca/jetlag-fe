@@ -1,27 +1,29 @@
+@import "@/styles/tokens";
+
 .container {
   .latestBlogPosts {
     display: none;
   }
 
-  background-color: var(--light-gray-bg);
+  background-color: $color-light-gray-bg;
 
   .wrapper {
     width: 100%;
 
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: $breakpoint-tablet) {
       width: 768px;
       margin: 0 auto;
-      margin-top: 48px;
-      margin-bottom: 48px;
+      margin-top: $space-3xl;
+      margin-bottom: $space-3xl;
     }
 
     h2 {
-      color: var(--primary-font-dark);
-      font-size: 32px;
-      font-weight: 700;
+      color: $color-text-dark;
+      font-size: $font-size-2xl;
+      font-weight: $font-weight-bold;
       text-align: center;
-      padding: 16px 0 24px;
-      line-height: 40px;
+      padding: $space-lg 0 $space-xl;
+      line-height: $line-height-heading;
     }
   }
 
@@ -29,18 +31,18 @@
   .trending,
   .mostPopular,
   .mostViewed {
-    padding: 24px 16px;
+    padding: $space-xl $space-lg;
 
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: $breakpoint-tablet) {
       padding: 0;
     }
 
     .cardWrapper {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: $space-lg;
 
-      @media only screen and (min-width: 600px) {
+      @media only screen and (min-width: $breakpoint-mobile) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
       }
@@ -51,9 +53,9 @@
     .cardWrapper {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: $space-lg;
 
-      @media only screen and (min-width: 768px) {
+      @media only screen and (min-width: $breakpoint-tablet) {
         display: grid;
       }
     }

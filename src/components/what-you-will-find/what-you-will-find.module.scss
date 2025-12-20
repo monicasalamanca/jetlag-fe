@@ -1,8 +1,10 @@
+@import "@/styles/tokens";
+
 .section {
   padding: 80px 0;
-  background-color: var(--light-gray-bg);
+  background-color: $color-neutral-50;
   text-align: center;
-  color: var(--primary-font-dark);
+  color: $color-neutral-900;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -39,9 +41,9 @@
 }
 
 .bottomText {
-  // background-color: var(--light-gray-bg);
+  // background-color: $color-neutral-50;
   padding: 32px 16px;
-  color: var(--primary-font-dark);
+  color: $color-neutral-900;
   font-size: 16px;
   font-weight: 500;
   line-height: 21px;
@@ -63,7 +65,7 @@
 
 .card {
   padding: 16px;
-  background-color: var(--white);
+  background-color: $color-white;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -74,7 +76,7 @@
     width: 65px;
     height: 65px;
     border-radius: 50%;
-    background-color: var(--gray-200);
+    background-color: $color-neutral-200;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -118,18 +120,18 @@
   font-size: 24px;
 
   &.blue {
-    color: var(--primary);
+    color: $color-blue;
   }
 
   &.cyan {
-    color: var(--color-blue-medium);
+    color: $color-blue-medium;
   }
 
   &.green {
-    color: var(--color-dark-bright-green);
+    color: $color-dark-bright-green;
   }
 
   &.yellow {
-    color: var(--color-primary-orange);
+    color: $color-primary-orange;
   }
 }

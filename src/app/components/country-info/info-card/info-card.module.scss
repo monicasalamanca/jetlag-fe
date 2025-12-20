@@ -1,9 +1,11 @@
+@import "@/styles/tokens";
+
 .container {
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 24px 16px;
-  background-color: var(--white);
+  background-color: $color-white;
   border-radius: 12px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
@@ -26,22 +28,22 @@
 
     &.lightBlueBgList {
       li {
-        background-color: #eef6ff;
-        color: #3a78fc;
+        background-color: $color-blue-lighter;
+        color: $color-blue-medium;
       }
     }
 
     &.lightTealBgList {
       li {
-        background-color: #ffffff;
-        color: #1bc4f3;
+        background-color: $color-white;
+        color: $color-teal;
       }
     }
 
     &.lightGreenBgList {
       li {
-        background-color: #ecfcf4;
-        color: var(--text-color);
+        background-color: $color-bright-green-light;
+        color: $color-neutral-700;
       }
     }
 

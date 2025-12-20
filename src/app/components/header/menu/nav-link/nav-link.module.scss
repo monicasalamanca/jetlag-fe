@@ -1,14 +1,16 @@
+@import "@/styles/tokens";
+
 a.defaultLink {
-  color: #374151;
+  color: $color-text-dark;
 
   &:hover {
-    color: #9ba3af;
-    color: #0c90e9;
+    color: $color-text-gray;
+    color: $color-blue-bright;
   }
 }
 
 a.activeLink {
-  color: #3a78fc;
-  font-weight: 500;
-  border-bottom: 2px solid #3a78fc;
+  color: $color-blue-medium;
+  font-weight: $font-weight-medium;
+  border-bottom: 2px solid $color-blue-medium;
 }

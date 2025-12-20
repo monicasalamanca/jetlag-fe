@@ -1,5 +1,7 @@
+@import "@/styles/tokens";
+
 .container {
-  background-color: var(--light-gray-bg);
+  background-color: $color-neutral-50;
 
   .wrapper {
     width: 100%;
@@ -12,7 +14,7 @@
     }
 
     h2 {
-      color: var(--primary-font-dark);
+      color: $color-neutral-900;
       font-size: 32px;
       font-weight: 700;
       text-align: center;

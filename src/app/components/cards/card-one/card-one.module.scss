@@ -1,12 +1,14 @@
+@import "@/styles/tokens";
+
 .container {
-  color: var(--primary-font-dark);
+  color: $color-text-dark;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: 8px;
-  background-color: var(--white);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
+  border-radius: $radius-sm;
+  background-color: $color-white;
+  box-shadow: $shadow-sm;
+  border-radius: $radius-md;
   overflow: hidden;
 
   .imageWrapper {
@@ -26,35 +28,35 @@
 
     .topTag {
       position: absolute;
-      top: 8px;
-      right: 8px;
-      border-radius: 90px;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      padding: 4px 16px;
-      background-color: var(--white);
-      color: var(--primary-font-dark);
+      top: $space-sm;
+      right: $space-sm;
+      border-radius: $radius-pill;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      line-height: $line-height-tight;
+      padding: $space-xs $space-lg;
+      background-color: $color-white;
+      color: $color-text-dark;
 
       .icon {
         width: 14px;
         height: 14px;
-        margin-right: 4px;
+        margin-right: $space-xs;
 
         &.blue {
-          color: #2463eb;
+          color: $color-blue;
         }
         &.green {
-          color: #069668;
+          color: $color-green;
         }
         &.purple {
-          color: #7c3aed;
+          color: $color-purple;
         }
         &.orange {
-          color: #d97707;
+          color: $color-orange;
         }
         &.red {
-          color: #dc2625;
+          color: $color-red;
         }
       }
     }
@@ -64,93 +66,93 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 16px;
-    gap: 16px;
+    padding: $space-lg;
+    gap: $space-lg;
 
     h3 {
-      color: var(--primary-font-dark);
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 28px;
+      color: $color-text-dark;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      line-height: $line-height-loose;
     }
 
     p {
-      color: var(--primary-font-dark);
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 22px;
+      color: $color-text-dark;
+      font-size: $font-size-base;
+      font-weight: $font-weight-normal;
+      line-height: $line-height-base;
     }
 
     .tags {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: $space-sm;
 
       .tag {
-        background-color: #dbe9fe;
-        color: var(--color-blue);
-        border-radius: 90px;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 20px;
-        padding: 4px 16px;
+        background-color: $color-blue-light;
+        color: $color-blue;
+        border-radius: $radius-pill;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        line-height: $line-height-tight;
+        padding: $space-xs $space-lg;
 
         &.blue {
-          color: #2463eb;
-          background-color: #dbe9fe;
+          color: $color-blue;
+          background-color: $color-blue-light;
         }
         &.green {
-          color: #069668;
-          background-color: #e2f0f3;
+          color: $color-green;
+          background-color: $color-green-light;
         }
         &.purple {
-          color: #7c3aed;
-          background-color: #ece9fe;
+          color: $color-purple;
+          background-color: $color-purple-light;
         }
         &.orange {
-          color: #d97707;
-          background-color: #fef2c7;
+          color: $color-orange;
+          background-color: $color-orange-light;
         }
         &.red {
-          color: #dc2625;
-          background-color: #fde2e1;
+          color: $color-red;
+          background-color: $color-red-light;
         }
       }
 
       .date {
-        color: var(--primary-font-dark);
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 20px;
+        color: $color-text-dark;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        line-height: $line-height-tight;
       }
     }
 
     .bottomInfo {
       display: flex;
       justify-content: space-between;
-      gap: 8px;
+      gap: $space-sm;
 
       .country,
       .readTime {
         .icon {
           width: 14px;
           height: 14px;
-          margin-right: 4px;
+          margin-right: $space-xs;
 
           &.blue {
-            color: #2463eb;
+            color: $color-blue;
           }
           &.green {
-            color: #069668;
+            color: $color-green;
           }
           &.purple {
-            color: #7c3aed;
+            color: $color-purple;
           }
           &.orange {
-            color: #d97707;
+            color: $color-orange;
           }
           &.red {
-            color: #dc2625;
+            color: $color-red;
           }
         }
       }
@@ -172,14 +174,14 @@
     transform: translateY(-2px);
 
     .container {
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      box-shadow: $shadow-md;
     }
   }
 
   &:focus {
-    outline: 2px solid var(--primary-blue);
+    outline: 2px solid $color-primary;
     outline-offset: 2px;
-    border-radius: 16px;
+    border-radius: $radius-md;
   }
 
   &:active {
