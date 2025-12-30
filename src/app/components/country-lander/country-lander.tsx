@@ -276,8 +276,24 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
     <main className={s.container}>
       <Hero
         srcImage="/japan-hero_iedol6.jpg"
-        headline={`${name} Travel & Living Guide`}
-        shortDescription={tagline}
+        headline={
+          name.toLowerCase() === "thailand"
+            ? "Which Thai Island Makes Sense In 2026?"
+            : `${name} Travel & Living Guide`
+        }
+        shortDescription={
+          name.toLowerCase() === "thailand"
+            ? "What it really costs to live on Thailand’s islands. Rent, food, transport, visas, and the hidden expenses that drain newcomers fast."
+            : tagline
+        }
+        ctaProps={
+          name.toLowerCase() === "thailand"
+            ? {
+                buttonText: "Download the Free Guide",
+                tags: ["free guide", "thailand"],
+              }
+            : undefined
+        }
       />
       {showComingSoon && <ComingSoonSection countryName={name} />}
       <section className={s.countryIntro}>

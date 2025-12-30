@@ -296,8 +296,14 @@ const LifestyleLander = () => {
     <main className={s.container}>
       <Hero
         srcImage="/lifestyle_xbqxgn.jpg"
-        headline="Live Anywhere. Work Everywhere. Love the Journey."
-        shortDescription="Digital nomads. Expats. Travel lovers."
+        headline={"Which Thai Island Makes Sense In 2026?"}
+        shortDescription={
+          "What it really costs to live on Thailand’s islands. Rent, food, transport, visas, and the hidden expenses that drain newcomers fast."
+        }
+        ctaProps={{
+          buttonText: "Download the Free Guide",
+          tags: ["free guide", "thailand"],
+        }}
       />
       {loading ? (
         <section className={s.masonryGridSection}>

@@ -49,8 +49,14 @@ export default function About() {
 
       <Hero
         srcImage="/aboutus-hero_vpxp49.jpg"
-        headline="About Jet Lag Chronicles"
-        shortDescription="Empowering Expats and Digital Nomads to Find Their Perfect Destination"
+        headline={"Which Thai Island Makes Sense In 2026?"}
+        shortDescription={
+          "What it really costs to live on Thailand’s islands. Rent, food, transport, visas, and the hidden expenses that drain newcomers fast."
+        }
+        ctaProps={{
+          buttonText: "Download the Free Guide",
+          tags: ["free guide", "thailand"],
+        }}
       />
       <AboutUsContent />
       <WhatYouWillFind />

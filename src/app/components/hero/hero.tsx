@@ -1,15 +1,39 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import SubscribeForm from "../subscribe-form/subscribe-form";
 
 import s from "./hero.module.scss";
 
-const Hero: FC<{
+interface ctaProps {
+  tags?: string[];
+  buttonText: string;
+  customIcon?: IconDefinition;
+  subscribeConfig?: {
+    apiEndpoint: string;
+    modal: {
+      title: string;
+      description: string;
+    };
+  };
+}
+
+interface HeroProps {
   srcImage: string;
   headline: string;
   shortDescription: string;
-}> = ({ srcImage, headline, shortDescription }) => {
+  ctaProps?: ctaProps;
+}
+
+const Hero = ({
+  srcImage,
+  headline,
+  shortDescription,
+  ctaProps,
+}: HeroProps) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -38,8 +62,41 @@ const Hero: FC<{
         blurDataURL={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/e_blur:100,q_10,w_10/blog-assets${srcImage}`}
       />
       <div className={s.heroContent}>
-        <h1>{headline}</h1>
-        <p>{shortDescription}</p>
+        <div className={s.wrapper}>
+          {ctaProps && ctaProps.tags && (
+            <div className={s.tags}>
+              {ctaProps.tags.slice(0, 2).map((tag, index) => (
+                <span key={index} className={s.tag}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+          <h1>{headline}</h1>
+          <p>{shortDescription}</p>
+          {ctaProps && (
+            <div className={s.ctaButton}>
+              <SubscribeForm
+                buttonName={ctaProps.buttonText}
+                showName={true}
+                showIcon={true}
+                trackEventName="hero-download-guide"
+                variant="link-style"
+                config={
+                  ctaProps.subscribeConfig || {
+                    apiEndpoint: "/api/subscribe-to-download",
+                    modal: {
+                      title: "Get Your Free Guide",
+                      description:
+                        "Enter your email to download your Thailand Island guide instantly",
+                    },
+                  }
+                }
+                customIcon={ctaProps.customIcon || faDownload}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

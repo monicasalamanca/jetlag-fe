@@ -25,6 +25,7 @@ $color-blue-sky: #309aff;
 $color-blue-dark: #1d4ed8;
 $color-blue-business: #60a5fa;
 $color-blue-darker: #2563eb;
+$color-blue-600: #2563eb;
 
 // Brand Colors - Teal/Cyan
 $color-teal: #1bc4f3;
@@ -43,6 +44,7 @@ $color-bright-green: #00aa00;
 $color-bright-green-light: #ecfcf4;
 $color-bright-green-bg: rgba(0, 121, 2, 0.2);
 $color-dark-bright-green: #007902;
+$color-green-600: #16a34a;
 
 // Brand Colors - Red/Pink
 $color-red: #dc2625;
@@ -51,6 +53,7 @@ $color-red-light: #fde2e1;
 $color-red-error-bg: rgb(181, 73, 116, 0.2);
 $color-pink: #db2974;
 $color-pink-bright: #e8489b;
+$color-pink-600: #db2777;
 
 // Brand Colors - Purple
 $color-purple: #7c3aed;
@@ -59,6 +62,7 @@ $color-purple-light: #ece9fe;
 $color-purple-medium: #7a3ced;
 $color-purple-bright: #8e5cf3;
 $color-purple-dark: #3f5aeb;
+$color-purple-600: #9333ea;
 
 // Brand Colors - Orange/Amber
 $color-orange: #d97707;
@@ -127,10 +131,8 @@ $space-4xl: 64px;
 // ============================================
 
 // Font Families
-$font-family-primary:
-  "Poppins", "Helvetica Neue", "Helvetica", arial, sans-serif;
-$font-family-secondary:
-  "Source Sans 3", "Helvetica Neue", "Helvetica", "Open Sans", arial, sans-serif;
+$font-family-primary: "Poppins", "Helvetica Neue", "Helvetica", arial, sans-serif;
+$font-family-secondary: "Source Sans 3", "Helvetica Neue", "Helvetica", "Open Sans", arial, sans-serif;
 
 // Font Sizes
 $font-size-xs: 12px;
@@ -148,11 +150,14 @@ $font-weight-bold: 700;
 $font-weight-bolder: 900;
 
 // Line Heights
+$line-height-xs: 16px;
 $line-height-tight: 20px;
 $line-height-base: 22px;
 $line-height-relaxed: 24px;
 $line-height-loose: 28px;
+$line-height-heading-tight: 36px;
 $line-height-heading: 40px;
+$line-height-heading-loose: 48px;
 
 // ============================================
 // BORDER RADIUS TOKENS
@@ -175,48 +180,32 @@ $shadow-overlay: rgba(0, 0, 0, 0.5);
 // ============================================
 
 // Primary Blue Gradients
-$gradient-blue-primary: linear-gradient(
-  90deg,
-  rgb(57, 121, 253),
-  rgb(27, 196, 244)
-);
-$gradient-blue-hover: linear-gradient(
-  180deg,
-  rgba(57, 121, 253, 1) 0%,
-  rgba(27, 196, 244, 1) 100%
-);
+$gradient-blue-primary: linear-gradient(90deg,
+    rgb(57, 121, 253),
+    rgb(27, 196, 244));
+$gradient-blue-hover: linear-gradient(180deg,
+    rgba(57, 121, 253, 1) 0%,
+    rgba(27, 196, 244, 1) 100%);
 
 // Country/Facts Card Gradients
-$gradient-blue-card: linear-gradient(
-  180deg,
-  rgba(58, 131, 245, 1) 0%,
-  rgba(9, 181, 213, 1) 100%
-);
-$gradient-pink-card: linear-gradient(
-  180deg,
-  rgba(219, 41, 116, 1) 0%,
-  rgba(233, 86, 18, 1) 100%
-);
-$gradient-orange-card: linear-gradient(
-  180deg,
-  rgba(244, 157, 8, 1) 0%,
-  rgba(248, 116, 21, 1) 100%
-);
-$gradient-green-card: linear-gradient(
-  180deg,
-  rgba(3, 149, 106, 1) 0%,
-  rgba(15, 147, 135, 1) 100%
-);
-$gradient-purple-card: linear-gradient(
-  180deg,
-  rgba(122, 60, 237, 1) 0%,
-  rgba(63, 90, 235, 1) 100%
-);
-$gradient-purple-pink-card: linear-gradient(
-  180deg,
-  rgba(142, 92, 243, 1) 0%,
-  rgba(232, 72, 155, 1) 100%
-);
+$gradient-blue-card: linear-gradient(180deg,
+    rgba(58, 131, 245, 1) 0%,
+    rgba(9, 181, 213, 1) 100%);
+$gradient-pink-card: linear-gradient(180deg,
+    rgba(219, 41, 116, 1) 0%,
+    rgba(233, 86, 18, 1) 100%);
+$gradient-orange-card: linear-gradient(180deg,
+    rgba(244, 157, 8, 1) 0%,
+    rgba(248, 116, 21, 1) 100%);
+$gradient-green-card: linear-gradient(180deg,
+    rgba(3, 149, 106, 1) 0%,
+    rgba(15, 147, 135, 1) 100%);
+$gradient-purple-card: linear-gradient(180deg,
+    rgba(122, 60, 237, 1) 0%,
+    rgba(63, 90, 235, 1) 100%);
+$gradient-purple-pink-card: linear-gradient(180deg,
+    rgba(142, 92, 243, 1) 0%,
+    rgba(232, 72, 155, 1) 100%);
 
 // ============================================
 // BREAKPOINTS (for reference)

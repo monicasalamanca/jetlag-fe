@@ -105,10 +105,14 @@ const HomeContent = () => {
     <main className={s.container}>
       <Hero
         srcImage="/home-hero_apo3zo.jpg"
-        headline={"Find Your Perfect City for Your Nomadic Lifestyle!"}
+        headline={"Which Thai Island Makes Sense In 2026?"}
         shortDescription={
-          "Discover your next destination with our curated guides for digital nomads and expats"
+          "What it really costs to live on Thailand’s islands. Rent, food, transport, visas, and the hidden expenses that drain newcomers fast."
         }
+        ctaProps={{
+          buttonText: "Download the Free Guide",
+          tags: ["free guide", "thailand"],
+        }}
       />
       {loading ? (
         <section className={s.latestChronicles}>
