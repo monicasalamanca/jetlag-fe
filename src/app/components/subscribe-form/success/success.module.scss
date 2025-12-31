@@ -1,4 +1,4 @@
-@import "@/styles/tokens";
+@use "@/styles/tokens" as *;
 
 .container {
   padding: 0 16px;
@@ -34,7 +34,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
+    text-emphasis-color: transparent;
 
     .rocketIcon {
       // color: rgba(57, 121, 253, 1);

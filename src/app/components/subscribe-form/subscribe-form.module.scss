@@ -1,4 +1,4 @@
-@import "@/styles/tokens";
+@use "@/styles/tokens" as *;
 
 // Base button class with shared properties
 .baseButton {
