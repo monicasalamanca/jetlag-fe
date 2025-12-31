@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
+// import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import SubscribeForm from "../subscribe-form/subscribe-form";
+// import SubscribeForm from "../subscribe-form/subscribe-form";
+import { trackLinkClick } from "@/app/utils/analytics";
 
 import s from "./hero.module.scss";
 
@@ -75,26 +77,42 @@ const Hero = ({
           <h1>{headline}</h1>
           <p>{shortDescription}</p>
           {ctaProps && (
-            <div className={s.ctaButton}>
-              <SubscribeForm
-                buttonName={ctaProps.buttonText}
-                showName={true}
-                showIcon={true}
-                trackEventName="hero-download-guide"
-                variant="link-style"
-                config={
-                  ctaProps.subscribeConfig || {
-                    apiEndpoint: "/api/subscribe-to-download",
-                    modal: {
-                      title: "Get Your Free Guide",
-                      description:
-                        "Enter your email to download your Thailand Island guide instantly",
-                    },
-                  }
-                }
-                customIcon={ctaProps.customIcon || faDownload}
-              />
-            </div>
+            <Link
+              href="https://thejetlagchronicles.kit.com/subscribe"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.ctaButton}
+              onClick={() => {
+                trackLinkClick({
+                  url: "https://thejetlagchronicles.kit.com/subscribe",
+                  text: ctaProps.buttonText,
+                  location: window.location.pathname,
+                  link_type: "external",
+                });
+              }}
+            >
+              {ctaProps.buttonText}
+            </Link>
+            // <div className={s.ctaButton}>
+            //   <SubscribeForm
+            //     buttonName={ctaProps.buttonText}
+            //     showName={true}
+            //     showIcon={true}
+            //     trackEventName="hero-download-guide"
+            //     variant="link-style"
+            //     config={
+            //       ctaProps.subscribeConfig || {
+            //         apiEndpoint: "/api/subscribe-to-download",
+            //         modal: {
+            //           title: "Get Your Free Guide",
+            //           description:
+            //             "Enter your email to download your Thailand Island guide instantly",
+            //         },
+            //       }
+            //     }
+            //     customIcon={ctaProps.customIcon || faDownload}
+            //   />
+            // </div>
           )}
         </div>
       </div>
