@@ -74,8 +74,14 @@ const ChronicleContent = () => {
     <main className={s.container}>
       <Hero
         srcImage="/grocerytime_ihgtnt.jpg"
-        headline="Discover inpiring travel stories, tips and guides"
-        shortDescription="Find your perfect destination tailored to your lifestyle"
+        headline={"Which Thai Island Makes Sense In 2026?"}
+        shortDescription={
+          "What it really costs to live on Thailand’s islands. Rent, food, transport, visas, and the hidden expenses that drain newcomers fast."
+        }
+        ctaProps={{
+          buttonText: "Download the Free Guide",
+          tags: ["free guide", "thailand"],
+        }}
       />
       <section className={s.latestChronicles}>
         <div className={s.wrapper}>

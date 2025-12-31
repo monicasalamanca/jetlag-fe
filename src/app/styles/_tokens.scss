@@ -25,6 +25,7 @@ $color-blue-sky: #309aff;
 $color-blue-dark: #1d4ed8;
 $color-blue-business: #60a5fa;
 $color-blue-darker: #2563eb;
+$color-blue-600: #2563eb;
 
 // Brand Colors - Teal/Cyan
 $color-teal: #1bc4f3;
@@ -43,6 +44,7 @@ $color-bright-green: #00aa00;
 $color-bright-green-light: #ecfcf4;
 $color-bright-green-bg: rgba(0, 121, 2, 0.2);
 $color-dark-bright-green: #007902;
+$color-green-600: #16a34a;
 
 // Brand Colors - Red/Pink
 $color-red: #dc2625;
@@ -51,6 +53,7 @@ $color-red-light: #fde2e1;
 $color-red-error-bg: rgb(181, 73, 116, 0.2);
 $color-pink: #db2974;
 $color-pink-bright: #e8489b;
+$color-pink-600: #db2777;
 
 // Brand Colors - Purple
 $color-purple: #7c3aed;
@@ -59,6 +62,7 @@ $color-purple-light: #ece9fe;
 $color-purple-medium: #7a3ced;
 $color-purple-bright: #8e5cf3;
 $color-purple-dark: #3f5aeb;
+$color-purple-600: #9333ea;
 
 // Brand Colors - Orange/Amber
 $color-orange: #d97707;
@@ -148,11 +152,14 @@ $font-weight-bold: 700;
 $font-weight-bolder: 900;
 
 // Line Heights
+$line-height-xs: 16px;
 $line-height-tight: 20px;
 $line-height-base: 22px;
 $line-height-relaxed: 24px;
 $line-height-loose: 28px;
+$line-height-heading-tight: 36px;
 $line-height-heading: 40px;
+$line-height-heading-loose: 48px;
 
 // ============================================
 // BORDER RADIUS TOKENS

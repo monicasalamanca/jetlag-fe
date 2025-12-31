@@ -23,9 +23,7 @@
 
   .heroContent {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: $space-md;
+    align-items: center;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -38,8 +36,11 @@
       justify-content: center;
     }
 
-    h1,
-    p {
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: $space-md;
       width: 100%;
 
       @media only screen and (min-width: $breakpoint-tablet) {
@@ -50,16 +51,78 @@
       }
     }
 
+    .tags {
+      display: flex;
+      gap: $space-sm;
+
+      .tag {
+        padding: $space-xs $space-lg;
+        border-radius: $radius-pill;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        line-height: $line-height-xs;
+        text-transform: capitalize;
+
+        &:nth-child(1) {
+          background: linear-gradient(
+            to right,
+            $color-purple-600,
+            $color-pink-600
+          );
+        }
+
+        &:nth-child(2) {
+          background: linear-gradient(
+            to right,
+            $color-green-600,
+            $color-blue-600
+          );
+        }
+      }
+    }
+
     h1 {
-      font-size: $font-size-3xl;
+      font-size: $font-size-2xl;
       font-weight: $font-weight-bolder;
+      line-height: $line-height-heading-tight;
       text-transform: capitalize;
+
+      @media only screen and (min-width: $breakpoint-tablet) {
+        font-size: $font-size-3xl;
+        line-height: $line-height-heading-loose;
+      }
     }
 
     p {
       font-size: $font-size-base;
       line-height: $line-height-relaxed;
       font-weight: $font-weight-normal;
+    }
+
+    .ctaButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      padding: $space-sm $space-xl;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-medium;
+      border-radius: $radius-pill;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(to right, $color-blue-darker, $color-purple);
+
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $color-blue-dark,
+          $color-purple-dark
+        );
+      }
+
+      .icon {
+        margin-right: $space-sm;
+      }
     }
   }
 }

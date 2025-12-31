@@ -176,8 +176,9 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
         apiEndpoint: "/api/subscribe",
         modal: {
           title: "Subscribe for the Cool Stuff Only",
-          description:
-            "Think of it like a travel mixtape: curated tips, digital freebies, and zero nonsense. Just pop in your email and we'll take it from there.",
+          description: "",
+          // description:
+          //   "Think of it as a travel mixtape. urated tips, digital freebies, zero nonsense. Drop your email and we’ll handle the rest.",
         },
       }),
       [],

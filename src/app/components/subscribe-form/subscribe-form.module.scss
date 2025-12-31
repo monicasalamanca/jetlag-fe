@@ -13,16 +13,16 @@
   text-align: left;
 
   .icon {
-    width: 14px;
-    height: 14px;
-    margin-left: 8px;
+    width: $font-size-sm;
+    height: $font-size-sm;
+    margin-left: $space-sm;
   }
 }
 
 .contactUsButton {
   @extend .baseButton;
   background-color: transparent;
-  font-size: 14px;
+  font-size: $font-size-sm;
   color: $color-blue-business;
   opacity: 0.8;
 
@@ -36,13 +36,13 @@
   @extend .baseButton;
   background: $color-blue;
   color: $color-white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: $space-md $space-xl;
+  border-radius: $radius-sm;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: $space-sm;
   box-shadow: 0 2px 4px rgba(59, 130, 246, 0.15);
   text-align: center; // Override base for this variant
 
@@ -62,26 +62,26 @@
     outline-offset: 2px;
   }
 
-  @media only screen and (max-width: 768px) {
-    padding: 10px 20px;
-    font-size: 13px;
+  @media only screen and (max-width: $breakpoint-tablet) {
+    padding: $space-md $space-xl;
+    font-size: $font-size-xs;
   }
 }
 
 .linkStyleButton {
   @extend .baseButton;
   background-color: transparent;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: calc(24 / 16);
-  color: $color-blue-light;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-relaxed;
+  color: $color-white;
   text-decoration: none;
-  opacity: 0.8;
+  // opacity: 0.8;
 
-  &:hover {
-    color: $color-blue-medium;
-    opacity: 1;
-  }
+  // &:hover {
+  //   color: $color-blue-medium;
+  //   opacity: 1;
+  // }
 }
 
 // Legacy class name for backward compatibility
@@ -90,8 +90,8 @@
 }
 
 .contactFormTitle {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: $font-size-base;
+  font-weight: $font-weight-bold;
   text-align: center;
   color: $color-neutral-900;
 }
@@ -99,16 +99,17 @@
 .contactFormDescription {
   color: $color-neutral-900;
   text-align: center;
-  font-size: 14px;
-  padding: 0 22px;
-  margin: 16px 0 24px;
+  font-size: $font-size-base;
+  line-height: $line-height-xs;
+  padding: 0 $line-height-base;
+  // margin: $space-sm 0 $space-lg;
 }
 
 .formContainer {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 0 16px;
+  gap: $space-lg;
+  padding: 0 $space-lg;
 
   .inputWrapper {
     position: relative;
@@ -117,17 +118,17 @@
 
     .formInput {
       width: 100%;
-      padding: 8px 8px 8px 40px;
+      padding: $space-sm $space-sm $space-sm 40px;
       border: 1px solid $color-neutral-400;
-      border-radius: 0.375rem;
+      border-radius: $radius-sm;
       background-color: $color-white;
-      font-size: 16px;
+      font-size: $font-size-base;
       color: $color-neutral-900;
       outline: none;
       transition:
         box-shadow 0.2s ease-in-out,
         border-color 0.2s ease-in-out;
-      line-height: 22px;
+      line-height: $line-height-base;
 
       &:focus {
         border-color: $color-blue;
@@ -137,10 +138,10 @@
 
     .icon {
       position: absolute;
-      top: 12px;
-      left: 16px;
-      width: 16px;
-      height: 16px;
+      top: $space-md;
+      left: $space-lg;
+      width: $space-lg;
+      height: $space-lg;
       color: $color-blue-medium;
     }
   }
@@ -148,27 +149,23 @@
   .submitButton {
     width: 100%;
     color: $color-white;
-    padding: 12px;
+    padding: $space-md;
     border: none;
-    border-radius: 8px;
+    border-radius: $radius-sm;
     transition:
       background-color 0.2s ease-in-out,
       transform 0.2s ease-in-out,
       box-shadow 0.2s ease-in-out;
     cursor: pointer;
-    // font-weight: 600;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
     background: $color-blue-medium;
     background: $gradient-blue-primary;
     box-shadow: 0 2px 4px rgba(59, 130, 246, 0.15);
 
     &:hover {
       background: $color-blue-dark;
-      background: linear-gradient(
-        180deg,
-        rgba(57, 121, 253, 1) 0%,
-        rgba(27, 196, 244, 1) 100%
-      );
-      // transform: translateY(-1px);
+      background: $gradient-blue-hover;
       box-shadow: 0 4px 8px rgba(59, 130, 246, 0.25);
     }
 
@@ -183,27 +180,27 @@
     }
 
     .icon {
-      margin-left: 8px;
+      margin-left: $space-sm;
     }
   }
 
   .header {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    padding: 16px;
+    gap: $space-lg;
+    padding: $space-lg;
     display: none;
 
     .headerItem {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: $space-sm;
 
       .imgWrapper {
         border-radius: 50%;
         cursor: pointer;
-        padding: 10px;
+        padding: $space-md;
         display: flex;
         justify-content: center;
 
@@ -222,8 +219,8 @@
         }
 
         .icon {
-          width: 20px;
-          height: 20px;
+          width: $font-size-xl;
+          height: $font-size-xl;
 
           &.worldIcon {
             color: $color-blue;
@@ -240,8 +237,8 @@
       }
 
       h3 {
-        font-size: 14px;
-        font-weight: 500;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
         color: $color-neutral-600;
       }
     }
@@ -250,12 +247,12 @@
   .footer {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
+    gap: $space-sm;
+    margin-top: $space-sm;
 
     p {
-      font-size: 12px;
-      font-weight: 500;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
       color: $color-neutral-600;
       width: 100%;
       text-align: center;
@@ -269,7 +266,7 @@
       .link {
         border-radius: 50%;
         cursor: pointer;
-        padding: 10px;
+        padding: $space-md;
         display: flex;
         justify-content: center;
         background-color: $color-blue-bg;
@@ -288,8 +285,8 @@
 
         .icon {
           color: $color-blue;
-          width: 20px;
-          height: 20px;
+          width: $font-size-xl;
+          height: $font-size-xl;
           transition: color 0.2s ease-in-out;
         }
       }
