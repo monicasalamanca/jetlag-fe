@@ -1,9 +1,9 @@
+@use "@/styles/tokens" as *;
+
 .noScroll {
   overflow: hidden !important;
   height: 100vh;
 }
-
-@import "@/styles/tokens";
 
 .burgerMenu {
   display: block;

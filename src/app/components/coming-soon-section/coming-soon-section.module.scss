@@ -1,4 +1,4 @@
-@import "@/styles/tokens";
+@use "@/styles/tokens" as *;
 
 .comingSoonSection {
   background-color: $color-light-gray-bg;

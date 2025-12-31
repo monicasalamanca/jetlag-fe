@@ -1,4 +1,4 @@
-@import "@/styles/tokens";
+@use "@/styles/tokens" as *;
 
 .section {
   background-color: $color-neutral-50;

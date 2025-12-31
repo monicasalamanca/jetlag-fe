@@ -1,12 +1,15 @@
-@import "@/styles/tokens";
+@use "@/styles/tokens" as *;
 
 .containerTypeA {
-  border-left: 5px solid $color-pink;
+  background: linear-gradient(to right, $color-green-600, $color-blue-600);
+  // border-left: 5px solid $color-pink;
   padding: $space-lg;
   border-radius: 5px;
+  color: $color-white;
+  box-shadow: $shadow-lg;
 
   h3 {
-    font-size: $font-size-xl;
+    font-size: $font-size-xl-base;
     font-weight: $font-weight-bold;
     font-style: italic;
   }
