@@ -108,6 +108,8 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
           <Link
             key={idx}
             href={token.href || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               color: "#0000",
               textShadow:
