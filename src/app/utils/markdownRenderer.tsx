@@ -113,7 +113,7 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
               textShadow:
                 "0 0 #111827, .06em 0 #ffffffb3, 0 .05em #ffffffb3, -.06em 0 #ffffffb3",
               backgroundImage:
-                "linear-gradient(#0000 calc(100% - .55em), #00d8ff 0), linear-gradient(#0000 calc(100% - .55em), #00d8ff 0)",
+                "linear-gradient(#0000 calc(100% - .55em), #ffeb00 0), linear-gradient(#0000 calc(100% - .55em), #ffeb00 0)",
               backgroundRepeat: "no-repeat",
               backgroundSize: "0 100%, 100% 100%",
               marginRight: "5px",
