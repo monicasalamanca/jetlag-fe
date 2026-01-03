@@ -169,6 +169,7 @@
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     transform: translateY(-2px);
@@ -179,7 +180,7 @@
   }
 
   &:focus {
-    outline: 2px solid $color-primary;
+    outline: none;
     outline-offset: 2px;
     border-radius: $radius-md;
   }
