@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prepare": "husky install",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "NEXT_DEBUG=1 next build && next start",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepare": "husky",
+    "audit:rendering": "tsx scripts/audit-rendering.ts",
+    "audit:rendering:verbose": "tsx scripts/audit-rendering.ts --verbose"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -36,6 +38,7 @@
     "lint-staged": "^15.5.1",
     "prettier": "^3.5.3",
     "sass": "^1.84.0",
+    "tsx": "^4.19.2",
     "typescript": "^5"
   },
   "lint-staged": {
