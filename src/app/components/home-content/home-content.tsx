@@ -84,11 +84,11 @@ const HomeContent = () => {
         if (blogData) {
           const mappedBlogs = blogData.map(mapBlogPostToCardProps);
 
-          // Exclude first 4 blogs (used in Latest Stories) from shuffling
-          const blogsForShuffling = mappedBlogs.slice(4); // Skip first 4 blogs
+          // Exclude first 6 blogs (used in Latest Stories) from shuffling
+          const blogsForShuffling = mappedBlogs.slice(6); // Skip first 6 blogs
           const dailyShuffled = getDailyShuffledBlogs(blogsForShuffling);
 
-          setBlogs(mappedBlogs); // Keep original order for "Latest Stories" (indexes 0-3)
+          setBlogs(mappedBlogs); // Keep original order for "Latest Stories" (indexes 0-5)
           setShuffledBlogs(dailyShuffled); // Use shuffled remaining blogs for other sections (no duplicates)
         }
       } catch (error) {
@@ -122,52 +122,66 @@ const HomeContent = () => {
         </section>
       ) : (
         <>
-          <section className={s.latestChronicles}>
-            <div className={s.wrapper}>
-              <h2>Latest Stories</h2>
-              <div className={s.cardWrapper}>
-                {blogs[0] && <CardOne blog={blogs[0]} color="blue" />}
-                {blogs[1] && <CardOne blog={blogs[1]} color="green" />}
-                {blogs[2] && <CardOne blog={blogs[2]} color="red" />}
-                {blogs[3] && <CardOne blog={blogs[3]} color="purple" />}
+          {blogs.length >= 6 && (
+            <section className={s.latestChronicles}>
+              <div className={s.wrapper}>
+                <h2>Latest Stories</h2>
+                <div className={s.cardWrapper}>
+                  <CardOne blog={blogs[0]} color="blue" />
+                  <CardOne blog={blogs[1]} color="green" />
+                  <CardOne blog={blogs[2]} color="red" />
+                  <CardOne blog={blogs[3]} color="purple" />
+                  <CardOne blog={blogs[4]} color="blue" />
+                  <CardOne blog={blogs[5]} color="green" />
+                </div>
               </div>
-            </div>
-          </section>
-          <section className={s.mostViewed}>
-            <div className={s.wrapper}>
-              <h2>Most Viewed</h2>
-              <div className={s.cardWrapper}>
-                {shuffledBlogs[0] && <CardFive blog={shuffledBlogs[0]} />}
-                {shuffledBlogs[1] && <CardFive blog={shuffledBlogs[1]} />}
+            </section>
+          )}
+          {shuffledBlogs.length >= 6 && (
+            <section className={s.mostViewed}>
+              <div className={s.wrapper}>
+                <h2>Most Viewed</h2>
+                <div className={s.cardWrapper}>
+                  <CardFive blog={shuffledBlogs[0]} />
+                  <CardFive blog={shuffledBlogs[1]} />
+                  <CardFive blog={shuffledBlogs[2]} />
+                  <CardFive blog={shuffledBlogs[3]} />
+                  <CardFive blog={shuffledBlogs[4]} />
+                  <CardFive blog={shuffledBlogs[5]} />
+                </div>
               </div>
-            </div>
-          </section>
-          <section className={s.trending}>
-            <div className={s.wrapper}>
-              <h2>Trending</h2>
-              <div className={s.cardWrapper}>
-                {shuffledBlogs[2] && (
-                  <CardTwo blog={shuffledBlogs[2]} color="red" />
-                )}
-                {shuffledBlogs[3] && (
-                  <CardTwo blog={shuffledBlogs[3]} color="green" />
-                )}
+            </section>
+          )}
+          {shuffledBlogs.length >= 12 && (
+            <section className={s.trending}>
+              <div className={s.wrapper}>
+                <h2>Trending</h2>
+                <div className={s.cardWrapper}>
+                  <CardTwo blog={shuffledBlogs[6]} color="red" />
+                  <CardTwo blog={shuffledBlogs[7]} color="green" />
+                  <CardTwo blog={shuffledBlogs[8]} color="blue" />
+                  <CardTwo blog={shuffledBlogs[9]} color="purple" />
+                  <CardTwo blog={shuffledBlogs[10]} color="red" />
+                  <CardTwo blog={shuffledBlogs[11]} color="green" />
+                </div>
               </div>
-            </div>
-          </section>
-          <section className={s.mostPopular}>
-            <div className={s.wrapper}>
-              <h2>Most Popular</h2>
-              <div className={s.cardWrapper}>
-                {shuffledBlogs[4] && (
-                  <CardThree blog={shuffledBlogs[4]} color="purple" />
-                )}
-                {shuffledBlogs[5] && (
-                  <CardThree blog={shuffledBlogs[5]} color="blue" />
-                )}
+            </section>
+          )}
+          {shuffledBlogs.length >= 18 && (
+            <section className={s.mostPopular}>
+              <div className={s.wrapper}>
+                <h2>Most Popular</h2>
+                <div className={s.cardWrapper}>
+                  <CardThree blog={shuffledBlogs[12]} color="purple" />
+                  <CardThree blog={shuffledBlogs[13]} color="blue" />
+                  <CardThree blog={shuffledBlogs[14]} color="green" />
+                  <CardThree blog={shuffledBlogs[15]} color="red" />
+                  <CardThree blog={shuffledBlogs[16]} color="purple" />
+                  <CardThree blog={shuffledBlogs[17]} color="blue" />
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          )}
         </>
       )}
     </main>
