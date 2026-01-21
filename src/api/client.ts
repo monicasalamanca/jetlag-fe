@@ -10,6 +10,8 @@ import {
   SlugForLifestyle,
   SlugWithCountry,
   SlugsResponseForLifestyle,
+  Guide,
+  GuideResponse,
 } from "./types";
 import {
   sanitizeInternalUrls,
@@ -552,6 +554,78 @@ export const fetchBlogsByCountry = async (
     return blogs;
   } catch (error) {
     console.error(`Error fetching blogs for ${countrySlug}: `, error);
+    return null;
+  }
+};
+
+// Client-side version to fetch all guides
+// this is used for the guides page
+export const fetchGuidesClient = async (): Promise<Guide[] | null> => {
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  if (!baseUrl) {
+    console.error("NEXT_PUBLIC_STRAPI_URL is not defined");
+    return null;
+  }
+
+  const url = `${baseUrl}/api/guides?sort=publishedAt:desc&populate=coverImage`;
+
+  try {
+    const res = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      console.error("Failed to fetch guides (client): ", res.statusText);
+      return null;
+    }
+
+    const data = await res.json();
+
+    if (!data.data || data.data.length === 0) {
+      return [];
+    }
+
+    return data.data.map((item: GuideResponse) => {
+      const coverImageData = item.attributes.coverImage?.data;
+
+      return {
+        id: item.id,
+        title: item.attributes.title,
+        slug: item.attributes.slug,
+        description: item.attributes.description,
+        createdAt: item.attributes.createdAt,
+        updatedAt: item.attributes.updatedAt,
+        publishedAt: item.attributes.publishedAt,
+        type: item.attributes.type,
+        pageCount: item.attributes.pageCount,
+        priceCents: item.attributes.priceCents,
+        originalPriceCents: item.attributes.originalPriceCents,
+        currency: item.attributes.currency,
+        coverImage: coverImageData
+          ? {
+              url:
+                coverImageData.attributes.formats?.small?.url ||
+                coverImageData.attributes.formats?.medium?.url ||
+                coverImageData.attributes.url,
+              width:
+                coverImageData.attributes.formats?.small?.width ||
+                coverImageData.attributes.width,
+              height:
+                coverImageData.attributes.formats?.small?.height ||
+                coverImageData.attributes.height,
+              formats: coverImageData.attributes.formats,
+              alternativeText: coverImageData.attributes.alternativeText,
+            }
+          : null,
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching guides (client): ", error);
     return null;
   }
 };
