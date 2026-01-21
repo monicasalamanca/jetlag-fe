@@ -1,0 +1,89 @@
+@use "@/styles/tokens" as *;
+
+.container {
+  .latestBlogPosts {
+    display: none;
+  }
+
+  background-color: $color-light-gray-bg;
+
+  .wrapper {
+    width: 100%;
+
+    @media only screen and (min-width: $breakpoint-tablet) {
+      width: 768px;
+      margin: 0 auto;
+      margin-top: $space-3xl;
+      margin-bottom: $space-3xl;
+    }
+
+    h2 {
+      color: $color-text-dark;
+      font-size: $font-size-2xl;
+      font-weight: $font-weight-bold;
+      text-align: center;
+      padding: $space-lg 0 $space-xl;
+      line-height: $line-height-heading;
+    }
+  }
+
+  .latestChronicles,
+  .trending,
+  .mostPopular,
+  .mostViewed {
+    padding: $space-xl $space-lg;
+
+    @media only screen and (min-width: $breakpoint-tablet) {
+      padding: 0;
+    }
+
+    .cardWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: $space-lg;
+
+      @media only screen and (min-width: $breakpoint-mobile) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+
+  .mostViewed {
+    .cardWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: $space-lg;
+
+      @media only screen and (min-width: $breakpoint-tablet) {
+        display: grid;
+      }
+    }
+  }
+
+  .loading,
+  .error,
+  .empty {
+    text-align: center;
+    padding: $space-2xl;
+    font-size: $font-size-lg;
+    color: $color-text-dark;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .error {
+    color: $color-red;
+  }
+
+  .loading {
+    color: $color-neutral-500;
+  }
+
+  .empty {
+    color: $color-neutral-500;
+    font-style: italic;
+  }
+}

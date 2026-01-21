@@ -229,3 +229,69 @@ export type SlugForLifestyle = {
   slug: string;
   updatedAt: string;
 };
+
+// Guide types
+export type GuideResponse = {
+  id: number;
+  attributes: {
+    title: string;
+    slug: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    type: string;
+    pageCount: number;
+    priceCents: number | null;
+    originalPriceCents: number | null;
+    currency: string;
+    coverImage?: {
+      data: {
+        id: number;
+        attributes: {
+          name: string;
+          alternativeText: string | null;
+          caption: string | null;
+          width: number;
+          height: number;
+          formats: Formats;
+          hash: string;
+          ext: string;
+          mime: string;
+          size: number;
+          url: string;
+          previewUrl: string | null;
+          provider: string;
+          provider_metadata: {
+            public_id: string;
+            resource_type: string;
+          };
+          createdAt: string;
+          updatedAt: string;
+        };
+      } | null;
+    };
+  };
+};
+
+export type Guide = {
+  id: number;
+  title: string;
+  slug: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  type: string;
+  pageCount: number;
+  priceCents: number | null;
+  originalPriceCents: number | null;
+  currency: string;
+  coverImage?: {
+    url: string;
+    width: number;
+    height: number;
+    formats?: Record<string, { url: string; width: number; height: number }>;
+    alternativeText?: string | null;
+  } | null;
+};

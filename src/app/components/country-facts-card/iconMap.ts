@@ -85,6 +85,8 @@ import {
   faHeartbeat,
   faBalanceScale,
   faEnvelope,
+  faDollarSign,
+  faMapLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 
 // import { faCalendar, faCommentDots } from "@fortawesome/free-regular-svg-icons";
@@ -181,5 +183,7 @@ export const iconMap: Record<string, IconDefinition> = {
   faHeartbeat,
   faBalanceScale,
   faEnvelope,
+  faDollarSign,
+  faMapLocationDot,
   // brands
 };
