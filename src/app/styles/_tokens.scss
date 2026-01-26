@@ -26,6 +26,8 @@ $color-blue-dark: #1d4ed8;
 $color-blue-business: #60a5fa;
 $color-blue-darker: #2563eb;
 $color-blue-600: #2563eb;
+$color-blue-very-light: #e6f0fa;
+$color-blue-very-light-alt: #c1e1f8;
 
 // Brand Colors - Teal/Cyan
 $color-teal: #1bc4f3;
@@ -39,6 +41,8 @@ $color-green-medium: #03956a;
 $color-green-teal: #0f9387;
 $color-green-mint: #84d8bd;
 $color-green-light: #e2f0f3;
+$color-green-lighter: #b7fa88;
+$color-green-lightest: #f7fdf1;
 $color-green-success-bg: rgb(139, 181, 73, 0.2);
 $color-bright-green: #00aa00;
 $color-bright-green-light: #ecfcf4;
@@ -48,6 +52,7 @@ $color-green-600: #16a34a;
 
 // Brand Colors - Red/Pink
 $color-red: #dc2625;
+$color-red-bright: #f04645;
 $color-red-alpha: rgba(220, 38, 37, 0.8);
 $color-red-light: #fde2e1;
 $color-red-error-bg: rgb(181, 73, 116, 0.2);
@@ -175,7 +180,8 @@ $radius-pill: 90px;
 // ============================================
 
 $shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.1);
-$shadow-md: 0 8px 16px rgba(0, 0, 0, 0.15);
+// $shadow-sm: 0 8px 16px rgba(0, 0, 0, 0.2);
+$shadow-md: 0 8px 16px rgba(0, 0, 0, 0.2);
 $shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
 $shadow-overlay: rgba(0, 0, 0, 0.5);
 
@@ -206,6 +212,11 @@ $gradient-pink-card: linear-gradient(
   rgba(219, 41, 116, 1) 0%,
   rgba(233, 86, 18, 1) 100%
 );
+$gradient-pink-card-horizontal: linear-gradient(
+  90deg,
+  rgba(219, 41, 116, 1) 0%,
+  rgba(233, 86, 18, 1) 100%
+);
 $gradient-orange-card: linear-gradient(
   180deg,
   rgba(244, 157, 8, 1) 0%,
@@ -225,6 +236,31 @@ $gradient-purple-pink-card: linear-gradient(
   180deg,
   rgba(142, 92, 243, 1) 0%,
   rgba(232, 72, 155, 1) 100%
+);
+$gradient-purple-pink-card-horizontal: linear-gradient(
+  90deg,
+  rgba(142, 92, 243, 1) 0%,
+  rgba(232, 72, 155, 1) 100%
+);
+$gradient-green-yellow-card: linear-gradient(
+  90deg,
+  rgba(174, 248, 119, 1) 0%,
+  rgba(251, 244, 139, 1) 100%
+);
+$gradient-green-yellow-card-diagonal: linear-gradient(
+  135deg,
+  rgba(174, 248, 119, 1) 0%,
+  rgba(251, 244, 139, 1) 100%
+);
+$gradient-red-orange-diagonal: linear-gradient(
+  135deg,
+  rgba(240, 70, 69, 1) 0%,
+  rgba(251, 145, 63, 1) 100%
+);
+$gradient-red-orange-diagonal-hover: linear-gradient(
+  315deg,
+  rgba(240, 70, 69, 1) 0%,
+  rgba(251, 145, 63, 1) 100%
 );
 
 // ============================================
