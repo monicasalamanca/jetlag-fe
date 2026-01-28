@@ -21,15 +21,13 @@ const SpecificGuidesLander = ({ guide }: SpecificGuidesLanderProps) => {
   // Future improvement: Update child components to accept guide prop
 
   console.log("Specific Guide Lander received guide:", guide);
-  //   console.log("Guide slug:", slug);
-  //   console.log("Guide type:", type);
 
   return (
     <main className={s.container}>
       <GuidePresentation guide={guide} />
       <IsThisGuideForYou guide={guide} />
-      <WhatsInside />
-      <PreviewSamplePages />
+      <WhatsInside guide={guide} />
+      <PreviewSamplePages guide={guide} />
       <SalesSection />
       <PromoteBundlesSection />
       <FAQ />
