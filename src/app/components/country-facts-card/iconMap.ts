@@ -94,6 +94,7 @@ import {
   faTag,
   faLayerGroup,
   faRotate,
+  faShieldHalved,
 } from "@fortawesome/free-solid-svg-icons";
 
 // import { faCalendar, faCommentDots } from "@fortawesome/free-regular-svg-icons";
@@ -199,5 +200,6 @@ export const iconMap: Record<string, IconDefinition> = {
   faTag,
   faLayerGroup,
   faRotate,
+  faShieldHalved,
   // brands
 };
