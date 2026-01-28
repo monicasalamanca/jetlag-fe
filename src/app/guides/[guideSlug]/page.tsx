@@ -102,7 +102,7 @@ const SpecificGuideLanderPage = async ({ params }: Props) => {
         ]}
       />
 
-      <SpecificGuidesLander slug={cleanSlug} type={guideType} guide={guide} />
+      <SpecificGuidesLander guide={guide} />
     </>
   );
 };

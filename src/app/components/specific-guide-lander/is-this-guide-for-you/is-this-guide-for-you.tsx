@@ -1,68 +1,65 @@
 // generate simple empty react component
 "use client";
 
+import { DetailedGuide } from "@/api/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import s from "./is-this-guide-for-you.module.scss";
 
-const IsThisGuideForYou = () => {
+interface GuidePresentationProps {
+  guide: DetailedGuide;
+}
+
+const IsThisGuideForYou = ({ guide }: GuidePresentationProps) => {
+  // Hide section if both arrays are empty or missing
+  if (
+    (!guide.whoFor || guide.whoFor.length === 0) &&
+    (!guide.whoNotFor || guide.whoNotFor.length === 0)
+  ) {
+    return null;
+  }
+
   return (
     <section className={s.isThisGuideForYou}>
       <div className={s.wrapper}>
         <h2>Is This Guide For You?</h2>
         <div className={s.points}>
-          <div className={s.perfectForPoints}>
-            <div className={s.title}>
-              <FontAwesomeIcon className={s.icon} icon={faCheck} />
-              <h3>Perfect For</h3>
-            </div>
-            <div className={s.pointsList}>
-              <div>
+          {guide.whoFor && guide.whoFor.length > 0 && (
+            <div className={s.perfectForPoints}>
+              <div className={s.title}>
                 <FontAwesomeIcon className={s.icon} icon={faCheck} />
-                <p>Individuals planning to move to Thailand</p>
+                <h3>Perfect For</h3>
               </div>
-              <div>
-                <FontAwesomeIcon className={s.icon} icon={faCheck} />
-                <p>Expats seeking in-depth island living info</p>
-              </div>
-              <div>
-                <FontAwesomeIcon className={s.icon} icon={faCheck} />
-                <p>Long-term travelers wanting local insights</p>
-              </div>
-              <div>
-                <FontAwesomeIcon className={s.icon} icon={faCheck} />
-                <p>Digital nomads exploring Thailand&apos;s islands</p>
+              <div className={s.pointsList}>
+                {guide.whoFor.map((item) => (
+                  <div key={item.id}>
+                    <FontAwesomeIcon className={s.icon} icon={faCheck} />
+                    <p>{item.whoFor}</p>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-          <div className={s.notForPoints}>
-            <div className={s.title}>
-              <FontAwesomeIcon
-                className={s.icon + " " + s.notForIcon}
-                icon={faXmark}
-              />
-              <h3>Not For</h3>
-            </div>
-            <div className={s.pointsList}>
-              <div>
-                <FontAwesomeIcon className={s.icon} icon={faXmark} />
-                <p>Budget travelers on a tight budget</p>
+          )}
+          {guide.whoNotFor && guide.whoNotFor.length > 0 && (
+            <div className={s.notForPoints}>
+              <div className={s.title}>
+                <FontAwesomeIcon
+                  className={s.icon + " " + s.notForIcon}
+                  icon={faXmark}
+                />
+                <h3>Not For</h3>
               </div>
-              <div>
-                <FontAwesomeIcon className={s.icon} icon={faXmark} />
-                <p>Short-term tourists visiting for a week</p>
-              </div>
-              <div>
-                <FontAwesomeIcon className={s.icon} icon={faXmark} />
-                <p>Travelers seeking only luxury options</p>
-              </div>
-              <div>
-                <FontAwesomeIcon className={s.icon} icon={faXmark} />
-                <p>Individuals uninterested in Thailand</p>
+              <div className={s.pointsList}>
+                {guide.whoNotFor.map((item) => (
+                  <div key={item.id}>
+                    <FontAwesomeIcon className={s.icon} icon={faXmark} />
+                    <p>{item.whoNotFor}</p>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

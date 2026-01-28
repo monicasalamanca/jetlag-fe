@@ -12,28 +12,22 @@ import GuidePresentation from "./guide-presentation/guide-presentation";
 import s from "./specific-guide-lander.module.scss";
 
 interface SpecificGuidesLanderProps {
-  slug: string;
-  type: "single" | "bundle";
   guide: DetailedGuide; // Passed from server component
 }
 
-const SpecificGuidesLander = ({
-  slug,
-  type,
-  guide,
-}: SpecificGuidesLanderProps) => {
+const SpecificGuidesLander = ({ guide }: SpecificGuidesLanderProps) => {
   // TODO: Pass guide data to child components to display real data
   // Currently child components use hardcoded data
   // Future improvement: Update child components to accept guide prop
 
   console.log("Specific Guide Lander received guide:", guide);
-  console.log("Guide slug:", slug);
-  console.log("Guide type:", type);
+  //   console.log("Guide slug:", slug);
+  //   console.log("Guide type:", type);
 
   return (
     <main className={s.container}>
-      <GuidePresentation />
-      <IsThisGuideForYou />
+      <GuidePresentation guide={guide} />
+      <IsThisGuideForYou guide={guide} />
       <WhatsInside />
       <PreviewSamplePages />
       <SalesSection />
