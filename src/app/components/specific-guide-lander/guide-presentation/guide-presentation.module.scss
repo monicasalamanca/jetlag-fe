@@ -1,0 +1,202 @@
+@use "@/styles/tokens" as *;
+
+.guidePresentation {
+  margin-bottom: calc($space-3xl + $space-xl);
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: $space-lg;
+    width: 100%;
+
+    @media only screen and (min-width: $breakpoint-tablet) {
+      width: 768px;
+      margin: 0 auto;
+      margin-top: $space-3xl;
+      margin-bottom: $space-3xl;
+    }
+  }
+
+  .guideMainInfo {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+    height: auto;
+    padding: $space-lg;
+    color: $color-text-dark;
+
+    .icon {
+      height: 16px;
+      width: 16px;
+    }
+
+    .updated {
+      border-radius: $radius-pill;
+      width: fit-content;
+      padding: $space-xs $space-md;
+      box-shadow: $shadow-sm;
+      background: $gradient-green-yellow-card;
+      font-weight: $font-weight-bold;
+      align-items: center;
+      display: flex;
+
+      .icon {
+        margin-right: $space-sm;
+      }
+    }
+
+    h2 {
+      padding: 0;
+      font-size: $font-size-xl;
+      line-height: $line-height-loose;
+      font-weight: $font-weight-bolder;
+      text-align: left;
+    }
+
+    p {
+      font-size: $font-size-base;
+      line-height: $line-height-relaxed;
+      font-weight: $font-weight-medium;
+      text-align: left;
+    }
+
+    .guideInfoBits {
+      display: flex;
+      flex-direction: row;
+      gap: $space-2xl;
+
+      .infoBitWrapper {
+        display: flex;
+        flex-direction: row;
+        gap: $space-sm;
+
+        .iconWrapper {
+          padding: $space-md;
+          border-radius: $radius-sm;
+          background: $gradient-purple-pink-card-horizontal;
+          box-shadow: $shadow-sm;
+          height: fit-content;
+          width: fit-content;
+          display: flex;
+          align-items: center;
+
+          .icon {
+            color: $color-white;
+          }
+        }
+
+        div {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .label {
+          font-size: $font-size-sm;
+          font-weight: $font-weight-medium;
+          color: $color-text-dark;
+          line-height: $line-height-xs;
+        }
+
+        .value {
+          font-size: $font-size-base;
+          font-weight: $font-weight-bold;
+          color: $color-text;
+          line-height: $line-height-base;
+        }
+      }
+    }
+
+    .ctaWrapper {
+      display: flex;
+      gap: $space-md;
+
+      .ctaButton,
+      .ctaButtonOptions {
+        padding: $space-md $space-lg;
+        border-radius: $radius-sm;
+        box-shadow: $shadow-sm;
+        background: $gradient-blue-primary;
+        font-size: $font-size-base;
+        font-weight: $font-weight-bold;
+        outline: none;
+        border: none;
+        width: fit-content;
+
+        &:hover {
+          cursor: pointer;
+          background: $gradient-blue-hover;
+        }
+      }
+
+      .ctaButtonOptions {
+        background: $color-white;
+        color: $color-blue;
+        border: 1px solid $color-blue;
+
+        &:hover {
+          cursor: pointer;
+          background: $color-blue-very-light;
+        }
+      }
+    }
+  }
+
+  .guideCoverImage {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    min-height: 240px;
+    width: 100%;
+
+    .image {
+      border-radius: $radius-sm;
+      box-shadow: $shadow-md;
+      width: auto;
+      height: fit-content;
+      object-fit: cover;
+
+      @media only screen and (min-width: $breakpoint-mobile) {
+        height: unset;
+      }
+    }
+
+    .imageGuideTag {
+      position: absolute;
+      bottom: -24px;
+      left: -24px;
+      display: flex;
+      width: fit-content;
+      padding: $space-xl;
+      background: $gradient-green-yellow-card-diagonal;
+      border-radius: $radius-sm;
+      box-shadow: $shadow-sm;
+      align-items: center;
+      border: 3px solid $color-white;
+
+      .icon {
+        height: 16px;
+        width: 16px;
+        margin-right: $space-sm;
+        border-radius: $radius-pill;
+        border: none;
+        box-shadow: $shadow-sm;
+        padding: $space-md;
+        background: $color-white;
+        color: $color-bright-green;
+      }
+
+      div {
+        p {
+          font-size: $font-size-sm;
+          color: $color-text-dark;
+          line-height: $line-height-tight;
+          text-align: left;
+
+          &:first-child {
+            font-weight: $font-weight-bold;
+          }
+        }
+      }
+    }
+  }
+}

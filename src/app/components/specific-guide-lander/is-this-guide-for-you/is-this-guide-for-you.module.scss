@@ -1,0 +1,116 @@
+@use "@/styles/tokens" as *;
+
+.isThisGuideForYou {
+  margin-top: $space-3xl;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+
+    @media only screen and (min-width: $breakpoint-tablet) {
+      width: 768px;
+      margin: 0 auto;
+      margin-top: $space-3xl;
+      margin-bottom: $space-3xl;
+    }
+
+    .points {
+      display: grid;
+      gap: $space-lg;
+      grid-template-columns: 1fr 1fr;
+      color: $color-text-dark;
+
+      .perfectForPoints,
+      .notForPoints {
+        padding: $space-xl;
+        border-radius: $radius-md;
+        border: 3px solid $color-white;
+        box-shadow: $shadow-sm;
+
+        .title {
+          display: flex;
+          align-items: center;
+          margin-bottom: $space-lg;
+
+          h3 {
+            font-size: $font-size-xl-base;
+            font-weight: $font-weight-bold;
+          }
+
+          .icon {
+            height: 16px;
+            width: 16px;
+            margin-right: $space-md;
+            border-radius: $radius-pill;
+            border: none;
+            box-shadow: $shadow-sm;
+            padding: $space-md;
+            background: $color-white;
+            color: $color-bright-green;
+
+            &.notForIcon {
+              color: $color-red-bright;
+            }
+          }
+        }
+
+        .pointsList {
+          div {
+            display: flex;
+            align-items: center;
+            margin-bottom: $space-md;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+
+            .icon {
+              height: 10px;
+              width: 10px;
+              margin-right: $space-sm;
+              border-radius: $radius-pill;
+              border: none;
+              padding: $space-xs;
+              background: $color-white;
+              color: $color-bright-green;
+            }
+            p {
+              text-align: left;
+            }
+          }
+        }
+      }
+
+      .perfectForPoints {
+        background: $gradient-green-yellow-card-diagonal;
+
+        .pointsList {
+          div {
+            .icon {
+              background: $color-black;
+              color: $color-green-lighter;
+            }
+          }
+        }
+      }
+
+      .notForPoints {
+        background: $gradient-red-orange-diagonal;
+        color: $color-white;
+
+        .pointsList {
+          div {
+            .icon {
+              color: $color-red-bright;
+            }
+            p {
+              color: $color-white;
+            }
+          }
+        }
+      }
+    }
+  }
+}
