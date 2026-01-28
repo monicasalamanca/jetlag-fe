@@ -20,7 +20,10 @@ function useTrackPostView(blogId: number) {
   }, [blogId]);
 }
 
-const BlogContent: FC<{ post: Post }> = ({ post }) => {
+const BlogContent: FC<{ post: Post; readingTimeMins?: number }> = ({
+  post,
+  readingTimeMins,
+}) => {
   useTrackPostView(post.id);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
@@ -77,7 +80,7 @@ const BlogContent: FC<{ post: Post }> = ({ post }) => {
           </div>
           <div className={s.blogDetail}>
             <FontAwesomeIcon icon={faClock} className={s.icon} />
-            <p>8 min read</p>
+            <p>{readingTimeMins || 8} min read</p>
           </div>
         </div>
         <h1>{post.title}</h1>

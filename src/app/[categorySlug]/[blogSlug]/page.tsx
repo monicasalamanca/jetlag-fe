@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${formattedTitle} - Post Not Found`,
       description:
         "The blog post you're looking for could not be found. Explore our other travel stories and destination guides.",
-      url: `https://thejetlagchronicles.com/${categorySlug}/${blogSlug}`,
+      url: `${SITE_CONFIG.url}/${categorySlug}/${blogSlug}`,
     });
   }
 
@@ -50,8 +50,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return createMetadata({
     title: cleanTitle,
     description,
-    url: `https://thejetlagchronicles.com/${categorySlug}/${blogSlug}`,
-    image: post.imageUrl || `https://thejetlagchronicles.com/country-og.jpg`,
+    url: `${SITE_CONFIG.url}/${categorySlug}/${blogSlug}`,
+    image: post.imageUrl || `${SITE_CONFIG.url}/country-og.jpg`,
     type: "article",
     publishedTime: post.publishedAt,
     authors: ["The Jet Lag Chronicles"],
@@ -137,7 +137,7 @@ const BlogPostPage = async ({ params }: Props) => {
         article={articleData}
       />
 
-      <BlogContent post={post} />
+      <BlogContent post={post} readingTimeMins={articleData.readingTimeMins} />
 
       <YouMightAlsoLike
         currentBlogSlug={blogSlug}

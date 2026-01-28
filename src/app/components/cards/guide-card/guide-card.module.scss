@@ -43,7 +43,7 @@
       .guideType {
         display: flex;
         background: linear-gradient(to right, #ec4899, #f43f5e);
-        color: white;
+        color: $color-white;
         padding: 0.25rem 0.75rem;
         border-radius: 9999px;
         font-size: 0.875rem;
@@ -104,16 +104,18 @@
         color: transparent;
       }
 
-      .readMoreBtn {
+      .viewGuideBtn {
         background: linear-gradient(to right, #3b82f6, #a855f7);
-        color: white;
-        padding: 8px 24px;
+        color: $color-white;
+        width: 100%;
+        padding: $space-sm $space-md;
         border-radius: 8px;
-        font-weight: 500;
+        border: none;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-base;
         transition: all 0.15s;
-        box-shadow:
-          0 10px 15px -3px rgb(0 0 0 / 0.1),
-          0 4px 6px -4px rgb(0 0 0 / 0.1);
+        box-shadow: $shadow-sm;
+        cursor: pointer;
 
         &:hover {
           background: linear-gradient(to right, #a855f7, #3b82f6);
@@ -135,13 +137,11 @@
     box-shadow 0.2s ease-in-out;
   -webkit-tap-highlight-color: transparent;
 
-  &:hover {
-    // transform: translateY(-2px);
-
-    .container {
-      box-shadow: $shadow-md;
-    }
-  }
+  // &:hover {
+  //   .container {
+  //     // box-shadow: $shadow-md;
+  //   }
+  // }
 
   &:focus {
     outline: none;

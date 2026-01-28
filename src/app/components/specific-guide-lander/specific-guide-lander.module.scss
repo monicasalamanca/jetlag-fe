@@ -29,3 +29,20 @@
     text-align: center;
   }
 }
+
+.loading,
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: $space-2xl;
+  font-size: $font-size-lg;
+  color: $color-text;
+  text-align: center;
+}
+
+.error {
+  color: $color-red;
+  font-weight: $font-weight-bold;
+}

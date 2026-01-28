@@ -1,143 +1,108 @@
-// import type { Metadata } from "next";
-// import { fetchBlogPost } from "@/api/client";
-// import { notFound } from "next/navigation";
-// import { createMetadata } from "@/app/utils/metadata";
-// import PageSchemas from "../../../../components/seo/PageSchemas";
-// import { SITE_CONFIG } from "../../../../lib/seo/schema/config";
-// import { toWordCount } from "../../../../lib/seo/schema/utils";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { fetchGuideBySlugAndType } from "@/api/client";
 import SpecificGuidesLander from "@/app/components/specific-guide-lander/specific-guide-lander";
+import PageSchemas from "../../../../components/seo/PageSchemas";
+import { SITE_CONFIG } from "../../../../lib/seo/schema/config";
+import { createMetadata } from "@/app/utils/metadata";
 
 type Props = {
-  params: Promise<{ categorySlug: string; blogSlug: string }>;
+  params: Promise<{ guideSlug: string }>;
 };
 
-// export async function generateMetadata({ params }: Props): Promise<Metadata> {
-// const { categorySlug, blogSlug } = await params;
-// const postArray = await fetchBlogPost(categorySlug, blogSlug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { guideSlug } = await params;
+  const decodedSlug = decodeURIComponent(guideSlug);
+  const cleanSlug = decodedSlug.split("?")[0].split("&")[0];
 
-// if (!postArray || postArray.length === 0) {
-//   const formattedTitle = blogSlug
-//     .replace(/-/g, " ")
-//     .replace(/\b\w/g, (l) => l.toUpperCase());
-//   return createMetadata({
-//     title: `${formattedTitle} - Post Not Found`,
-//     description:
-//       "The blog post you're looking for could not be found. Explore our other travel stories and destination guides.",
-//     url: `https://thejetlagchronicles.com/${categorySlug}/${blogSlug}`,
-//   });
-// }
+  const isBundleGuide =
+    cleanSlug.includes("-bundle") || cleanSlug.includes("playbook");
+  const guideType: "single" | "bundle" = isBundleGuide ? "bundle" : "single";
 
-// const post = postArray[0];
+  const guide = await fetchGuideBySlugAndType(cleanSlug, guideType);
 
-// Format country name for better readability
-// const countryName = categorySlug
-//   .replace(/-/g, " ")
-//   .replace(/\b\w/g, (l) => l.toUpperCase());
+  if (!guide) {
+    return createMetadata({
+      title: "Guide Not Found",
+      description: "The guide you're looking for could not be found.",
+      url: `${SITE_CONFIG.url}/guides/${cleanSlug}`,
+    });
+  }
 
-// Clean, concise title with country prefix for better GA tracking
-// const baseTitle =
-//   post.title ||
-//   blogSlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+  const firstSamplePage = guide.samplePages?.[0];
+  const imageUrl =
+    firstSamplePage?.attributes?.url || `${SITE_CONFIG.url}/country-og.jpg`;
 
-// const cleanTitle = `${countryName}: ${baseTitle}`;
-
-// const description =
-//   post.description ||
-//   post.content?.slice(0, 160) ||
-//   `Read this authentic travel story from The Jet Lag Chronicles about ${categorySlug.replace(/-/g, " ")}.`;
-
-// return createMetadata({
-//   title: cleanTitle,
-//   description,
-//   url: `https://thejetlagchronicles.com/${categorySlug}/${blogSlug}`,
-//   image: post.imageUrl || `https://thejetlagchronicles.com/country-og.jpg`,
-//   type: "article",
-//   publishedTime: post.publishedAt,
-//   authors: ["The Jet Lag Chronicles"],
-//   tags: [categorySlug.replace(/-/g, " ")],
-// });
-// }
+  return createMetadata({
+    title: guide.title,
+    description: guide.description,
+    url: `${SITE_CONFIG.url}/guides/${cleanSlug}`,
+    image: imageUrl,
+    type: "website",
+  });
+}
 
 const SpecificGuideLanderPage = async ({ params }: Props) => {
-  console.log(params);
-  // const { categorySlug, blogSlug } = await params;
-  // const postArray = await fetchBlogPost(categorySlug, blogSlug);
+  const { guideSlug } = await params;
 
-  // if (!postArray || postArray.length === 0) return notFound();
+  // Decode URL encoding and clean the slug by removing any query parameters
+  const decodedSlug = decodeURIComponent(guideSlug);
+  const cleanSlug = decodedSlug.split("?")[0].split("&")[0];
 
-  // const post = postArray[0];
+  // Determine the guide type based on the slug pattern
+  // Bundles typically have "-bundle" or "playbook" in their slug
+  const isBundleGuide =
+    cleanSlug.includes("-bundle") || cleanSlug.includes("playbook");
+  const guideType: "single" | "bundle" = isBundleGuide ? "bundle" : "single";
 
-  // Format country name for breadcrumbs
-  // const countryName = categorySlug;
-  // .replace(/-/g, " ")
-  // .replace(/\b\w/g, (l) => l.toUpperCase());
+  // Fetch guide data from API for SEO and metadata
+  const guide = await fetchGuideBySlugAndType(cleanSlug, guideType);
 
-  // Clean title for schema
-  // const baseTitle =
-  //   post.title ||
-  //   blogSlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+  if (!guide) return notFound();
 
-  // Transform post data for article schema
-  // const articleData = {
-  //   url: `${SITE_CONFIG.url}/${categorySlug}/${blogSlug}`,
-  //   slug: blogSlug,
-  //   title: baseTitle,
-  //   description:
-  //     post.description ||
-  //     post.content?.slice(0, 160) ||
-  //     `Read this authentic travel story from The Jet Lag Chronicles about ${categorySlug.replace(/-/g, " ")}.`,
-  //   cover: {
-  //     url: post.imageUrl || `${SITE_CONFIG.url}/country-og.jpg`,
-  //     width: 1200,
-  //     height: 630,
-  //     alt: baseTitle,
-  //   },
-  //   tags: [categorySlug.replace(/-/g, " ")],
-  //   categories: [countryName],
-  //   readingTimeMins: Math.ceil(toWordCount(post.content) / 200), // ~200 words per minute
-  //   wordCount: toWordCount(post.content),
-  //   country: countryName,
-  //   datePublished: post.publishedAt || new Date().toISOString(),
-  //   dateModified: post.publishedAt || new Date().toISOString(),
-  //   author: {
-  //     name: SITE_CONFIG.defaultAuthor.name,
-  //     url: `${SITE_CONFIG.url}/about-us`,
-  //   },
-  // };
+  // Use real guide data for SEO
+  const guideTitle = guide.title;
+  const guideDescription = guide.description;
+
+  // Use first sample page image if available, otherwise use default
+  const firstSamplePage = guide.samplePages?.[0];
+  const guideImage =
+    firstSamplePage?.attributes?.url || `${SITE_CONFIG.url}/country-og.jpg`;
+  const guideImageWidth = firstSamplePage?.attributes?.width || 1200;
+  const guideImageHeight = firstSamplePage?.attributes?.height || 630;
 
   return (
     <>
-      {/* Blog Post SEO Schemas */}
-      {/* <PageSchemas
+      {/* Guide Page SEO Schemas */}
+      <PageSchemas
         page={{
-          url: `${SITE_CONFIG.url}/${categorySlug}/${blogSlug}`,
-          title: baseTitle,
-          description: articleData.description,
+          url: `${SITE_CONFIG.url}/guides/${cleanSlug}`,
+          title: guideTitle,
+          description: guideDescription,
           lang: "en",
           image: {
-            url: articleData.cover.url,
-            width: articleData.cover.width,
-            height: articleData.cover.height,
-            alt: articleData.cover.alt,
+            url: guideImage,
+            width: guideImageWidth,
+            height: guideImageHeight,
+            alt: guideTitle,
           },
         }}
         breadcrumbs={[
           { name: "Home", item: SITE_CONFIG.url, position: 1 },
           {
-            name: countryName,
-            item: `${SITE_CONFIG.url}/${categorySlug}`,
+            name: "Guides",
+            item: `${SITE_CONFIG.url}/guides`,
             position: 2,
           },
           {
-            name: baseTitle,
-            item: `${SITE_CONFIG.url}/${categorySlug}/${blogSlug}`,
+            name: guideTitle,
+            item: `${SITE_CONFIG.url}/guides/${cleanSlug}`,
             position: 3,
           },
         ]}
-        article={articleData}
-      /> */}
+      />
 
-      <SpecificGuidesLander />
+      <SpecificGuidesLander slug={cleanSlug} type={guideType} guide={guide} />
     </>
   );
 };
