@@ -658,7 +658,7 @@ export const fetchGuideBySlugAndType = async (
       ? "populate[includedInBundles]=*"
       : "populate[bundleIncludes]=*";
 
-  const url = `${baseUrl}/api/guides?filters[slug][$eq]=${slug}&populate[format]=*&populate[whoFor]=*&populate[whoNotFor]=*&populate[whatsInside]=*&populate[samplePages]=*&${typeSpecificPopulate}`;
+  const url = `${baseUrl}/api/guides?filters[slug][$eq]=${slug}&populate[coverImage]=*&populate[format]=*&populate[whoFor]=*&populate[whoNotFor]=*&populate[whatsInside]=*&populate[samplePages]=*&${typeSpecificPopulate}`;
 
   try {
     const res = await fetch(url, {
@@ -684,6 +684,7 @@ export const fetchGuideBySlugAndType = async (
     }
 
     const item: DetailedGuideResponse = data.data[0];
+    const coverImageData = item.attributes.coverImage.data;
 
     return {
       id: item.id,
@@ -700,6 +701,20 @@ export const fetchGuideBySlugAndType = async (
       currency: item.attributes.currency,
       isFeatured: item.attributes.isFeatured,
       isLifestyle: item.attributes.isLifestyle,
+      coverImage: {
+        url:
+          coverImageData.attributes.formats?.small?.url ||
+          coverImageData.attributes.formats?.medium?.url ||
+          coverImageData.attributes.url,
+        width:
+          coverImageData.attributes.formats?.small?.width ||
+          coverImageData.attributes.width,
+        height:
+          coverImageData.attributes.formats?.small?.height ||
+          coverImageData.attributes.height,
+        formats: coverImageData.attributes.formats,
+        alternativeText: coverImageData.attributes.alternativeText,
+      },
       format: item.attributes.format || [],
       whoFor: item.attributes.whoFor || [],
       whoNotFor: item.attributes.whoNotFor || [],

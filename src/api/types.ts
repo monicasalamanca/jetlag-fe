@@ -245,7 +245,7 @@ export type GuideResponse = {
     priceCents: number | null;
     originalPriceCents: number | null;
     currency: string;
-    coverImage?: {
+    coverImage: {
       data: {
         id: number;
         attributes: {
@@ -269,7 +269,7 @@ export type GuideResponse = {
           createdAt: string;
           updatedAt: string;
         };
-      } | null;
+      };
     };
   };
 };
@@ -287,13 +287,13 @@ export type Guide = {
   priceCents: number | null;
   originalPriceCents: number | null;
   currency: string;
-  coverImage?: {
+  coverImage: {
     url: string;
     width: number;
     height: number;
     formats?: Record<string, { url: string; width: number; height: number }>;
     alternativeText?: string | null;
-  } | null;
+  };
 };
 
 // Detailed Guide types for specific guide pages
@@ -402,6 +402,13 @@ export type DetailedGuide = {
   currency: string;
   isFeatured: boolean;
   isLifestyle: boolean;
+  coverImage: {
+    url: string;
+    width: number;
+    height: number;
+    formats?: Record<string, { url: string; width: number; height: number }>;
+    alternativeText?: string | null;
+  };
   format: GuideFormat[];
   whoFor: GuideWhoFor[];
   whoNotFor: GuideWhoNotFor[];
@@ -429,6 +436,32 @@ export type DetailedGuideResponse = {
     currency: string;
     isFeatured: boolean;
     isLifestyle: boolean;
+    coverImage: {
+      data: {
+        id: number;
+        attributes: {
+          name: string;
+          alternativeText: string | null;
+          caption: string | null;
+          width: number;
+          height: number;
+          formats: Formats;
+          hash: string;
+          ext: string;
+          mime: string;
+          size: number;
+          url: string;
+          previewUrl: string | null;
+          provider: string;
+          provider_metadata: {
+            public_id: string;
+            resource_type: string;
+          };
+          createdAt: string;
+          updatedAt: string;
+        };
+      };
+    };
     format: GuideFormat[];
     whoFor: GuideWhoFor[];
     whoNotFor: GuideWhoNotFor[];
