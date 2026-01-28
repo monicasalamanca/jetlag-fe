@@ -1,5 +1,6 @@
 "use client";
 
+import { DetailedGuide } from "@/api/types";
 import FAQ from "./faq/faq";
 import IsThisGuideForYou from "./is-this-guide-for-you/is-this-guide-for-you";
 import WhatsInside from "./whats-inside/whats-inside";
@@ -10,31 +11,24 @@ import GuidePresentation from "./guide-presentation/guide-presentation";
 
 import s from "./specific-guide-lander.module.scss";
 
-const SpecificGuidesLander = () => {
-  //   useEffect(() => {
-  //     const loadGuides = async () => {
-  //       try {
-  //         setLoading(true);
-  //         setError(null);
-  //         const fetchedGuides = await fetchGuidesClient();
+interface SpecificGuidesLanderProps {
+  slug: string;
+  type: "single" | "bundle";
+  guide: DetailedGuide; // Passed from server component
+}
 
-  //         if (fetchedGuides) {
-  //           setGuides(fetchedGuides);
-  //         } else {
-  //           setGuides([]);
-  //           setError("No guides available at the moment.");
-  //         }
-  //       } catch (err) {
-  //         console.error("Error loading guides:", err);
-  //         setError("Failed to load guides. Please try again later.");
-  //         setGuides([]);
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
+const SpecificGuidesLander = ({
+  slug,
+  type,
+  guide,
+}: SpecificGuidesLanderProps) => {
+  // TODO: Pass guide data to child components to display real data
+  // Currently child components use hardcoded data
+  // Future improvement: Update child components to accept guide prop
 
-  //     loadGuides();
-  //   }, []);
+  console.log("Specific Guide Lander received guide:", guide);
+  console.log("Guide slug:", slug);
+  console.log("Guide type:", type);
 
   return (
     <main className={s.container}>

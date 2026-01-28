@@ -12,6 +12,8 @@ import {
   SlugsResponseForLifestyle,
   Guide,
   GuideResponse,
+  DetailedGuide,
+  DetailedGuideResponse,
 } from "./types";
 import {
   sanitizeInternalUrls,
@@ -626,6 +628,88 @@ export const fetchGuidesClient = async (): Promise<Guide[] | null> => {
     });
   } catch (error) {
     console.error("Error fetching guides (client): ", error);
+    return null;
+  }
+};
+
+/**
+ * Fetch a specific guide by slug and type
+ * Used for the specific guide landing page
+ *
+ * @param slug - The guide slug from the URL
+ * @param type - The guide type ("single" or "bundle")
+ * @returns A DetailedGuide object or null if not found/error
+ */
+export const fetchGuideBySlugAndType = async (
+  slug: string,
+  type: "single" | "bundle",
+): Promise<DetailedGuide | null> => {
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  if (!baseUrl) {
+    console.error("NEXT_PUBLIC_STRAPI_URL is not defined");
+    return null;
+  }
+
+  // Build the populate parameter based on type
+  const typeSpecificPopulate =
+    type === "single"
+      ? "populate[includedInBundles]=*"
+      : "populate[bundleIncludes]=*";
+
+  const url = `${baseUrl}/api/guides?filters[slug][$eq]=${slug}&populate[format]=*&populate[whoFor]=*&populate[whoNotFor]=*&populate[whatsInside]=*&populate[samplePages]=*&${typeSpecificPopulate}`;
+
+  try {
+    const res = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      console.error(
+        `Failed to fetch guide (${slug}, ${type}): `,
+        res.statusText,
+      );
+      return null;
+    }
+
+    const data = await res.json();
+
+    if (!data.data || data.data.length === 0) {
+      console.error(`No guide found for slug: ${slug}`);
+      return null;
+    }
+
+    const item: DetailedGuideResponse = data.data[0];
+
+    return {
+      id: item.id,
+      title: item.attributes.title,
+      slug: item.attributes.slug,
+      description: item.attributes.description,
+      createdAt: item.attributes.createdAt,
+      updatedAt: item.attributes.updatedAt,
+      publishedAt: item.attributes.publishedAt,
+      type: item.attributes.type,
+      pageCount: item.attributes.pageCount,
+      priceCents: item.attributes.priceCents,
+      originalPriceCents: item.attributes.originalPriceCents,
+      currency: item.attributes.currency,
+      isFeatured: item.attributes.isFeatured,
+      isLifestyle: item.attributes.isLifestyle,
+      format: item.attributes.format || [],
+      whoFor: item.attributes.whoFor || [],
+      whoNotFor: item.attributes.whoNotFor || [],
+      whatsInside: item.attributes.whatsInside || [],
+      samplePages: item.attributes.samplePages?.data || [],
+      includedInBundles: item.attributes.includedInBundles?.data,
+      bundleIncludes: item.attributes.bundleIncludes?.data,
+    };
+  } catch (error) {
+    console.error(`Error fetching guide (${slug}, ${type}): `, error);
     return null;
   }
 };

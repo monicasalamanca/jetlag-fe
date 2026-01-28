@@ -23,21 +23,9 @@ const GuideCard: React.FC<GuideCardProps> = ({ guide }) => {
     // });
   };
 
-  // Format price for display
-  const formatPrice = (price: number | null, type: string) => {
-    if (type.toLowerCase() === "free" || price === null || price === 0) {
-      return "$0";
-    }
-    return `$${price}`;
-  };
-
-  const originalPrice = guide.originalPriceCents
-    ? formatPrice(guide.originalPriceCents, guide.type)
-    : null;
-
   return (
     <Link
-      href={`/guides/${guide.slug}`}
+      href={`/guides/${guide.slug}&type=${guide.type}`}
       className={s.cardLink}
       onClick={handleCardClick}
       rel="canonical"
@@ -65,12 +53,7 @@ const GuideCard: React.FC<GuideCardProps> = ({ guide }) => {
             <p>{guide.description}</p>
           </div>
           <div className={s.bottomContent}>
-            <h3 className={s.price}>
-              {originalPrice && (
-                <span className={s.originalPrice}>{originalPrice}</span>
-              )}
-            </h3>
-            <div className={s.readMoreBtn}>Read More</div>
+            <button className={s.viewGuideBtn}>View Guide</button>
           </div>
         </div>
       </div>

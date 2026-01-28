@@ -295,3 +295,152 @@ export type Guide = {
     alternativeText?: string | null;
   } | null;
 };
+
+// Detailed Guide types for specific guide pages
+export type GuideFormat = {
+  id: number;
+  type: string;
+  lemonSqueezyUrl: string;
+};
+
+export type GuideWhoFor = {
+  id: number;
+  whoFor: string;
+};
+
+export type GuideWhoNotFor = {
+  id: number;
+  whoNotFor: string;
+};
+
+export type GuideWhatsInside = {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+};
+
+export type GuideSamplePageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+  provider_metadata: {
+    public_id: string;
+    resource_type: string;
+  };
+};
+
+export type GuideSamplePageAttributes = {
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    small?: GuideSamplePageFormat;
+    thumbnail?: GuideSamplePageFormat;
+    [key: string]: GuideSamplePageFormat | undefined;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: {
+    public_id: string;
+    resource_type: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type GuideSamplePage = {
+  id: number;
+  attributes: GuideSamplePageAttributes;
+};
+
+export type GuideBundleOrSingle = {
+  id: number;
+  attributes: {
+    title: string;
+    slug: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    type: string;
+    pageCount: number;
+    priceCents: number | null;
+    originalPriceCents: number | null;
+    currency: string;
+    isFeatured: boolean;
+    isLifestyle: boolean;
+  };
+};
+
+export type DetailedGuide = {
+  id: number;
+  title: string;
+  slug: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  type: "single" | "bundle";
+  pageCount: number;
+  priceCents: number | null;
+  originalPriceCents: number | null;
+  currency: string;
+  isFeatured: boolean;
+  isLifestyle: boolean;
+  format: GuideFormat[];
+  whoFor: GuideWhoFor[];
+  whoNotFor: GuideWhoNotFor[];
+  whatsInside: GuideWhatsInside[];
+  samplePages: GuideSamplePage[];
+  // Only for "single" type
+  includedInBundles?: GuideBundleOrSingle[];
+  // Only for "bundle" type
+  bundleIncludes?: GuideBundleOrSingle[];
+};
+
+export type DetailedGuideResponse = {
+  id: number;
+  attributes: {
+    title: string;
+    slug: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    type: "single" | "bundle";
+    pageCount: number;
+    priceCents: number | null;
+    originalPriceCents: number | null;
+    currency: string;
+    isFeatured: boolean;
+    isLifestyle: boolean;
+    format: GuideFormat[];
+    whoFor: GuideWhoFor[];
+    whoNotFor: GuideWhoNotFor[];
+    whatsInside: GuideWhatsInside[];
+    samplePages: {
+      data: GuideSamplePage[];
+    };
+    includedInBundles?: {
+      data: GuideBundleOrSingle[];
+    };
+    bundleIncludes?: {
+      data: GuideBundleOrSingle[];
+    };
+  };
+};
