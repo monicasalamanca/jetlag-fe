@@ -59,6 +59,7 @@ $color-red-error-bg: rgb(181, 73, 116, 0.2);
 $color-pink: #db2974;
 $color-pink-bright: #e8489b;
 $color-pink-600: #db2777;
+$color-pink-light: #fbf4fb;
 
 // Brand Colors - Purple
 $color-purple: #7c3aed;
@@ -68,6 +69,8 @@ $color-purple-medium: #7a3ced;
 $color-purple-bright: #8e5cf3;
 $color-purple-dark: #3f5aeb;
 $color-purple-600: #9333ea;
+// generate new color #E9D5FF
+$color-purple-lightest: #f5f3ff;
 
 // Brand Colors - Orange/Amber
 $color-orange: #d97707;
@@ -241,6 +244,11 @@ $gradient-purple-pink-card-horizontal: linear-gradient(
   90deg,
   rgba(142, 92, 243, 1) 0%,
   rgba(232, 72, 155, 1) 100%
+);
+$gradient-purple-pink-card-horizontal-hover: linear-gradient(
+  90deg,
+  rgba(232, 72, 155, 1) 0,
+  rgba(142, 92, 243, 1) 100%
 );
 $gradient-green-yellow-card: linear-gradient(
   90deg,

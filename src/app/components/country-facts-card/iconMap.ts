@@ -90,6 +90,10 @@ import {
   faFilePdf,
   faDownload,
   faCheck,
+  faLock,
+  faTag,
+  faLayerGroup,
+  faRotate,
 } from "@fortawesome/free-solid-svg-icons";
 
 // import { faCalendar, faCommentDots } from "@fortawesome/free-regular-svg-icons";
@@ -191,5 +195,9 @@ export const iconMap: Record<string, IconDefinition> = {
   faFilePdf,
   faDownload,
   faCheck,
+  faLock,
+  faTag,
+  faLayerGroup,
+  faRotate,
   // brands
 };

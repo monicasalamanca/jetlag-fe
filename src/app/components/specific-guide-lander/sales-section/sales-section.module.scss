@@ -1,0 +1,185 @@
+@use "@/styles/tokens" as *;
+
+.saleSection {
+  .wrapper {
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    gap: $space-xl;
+    width: 100%;
+
+    @media only screen and (min-width: $breakpoint-tablet) {
+      width: 768px;
+      margin: 0 auto;
+      margin-top: calc($space-3xl + $space-xl);
+      margin-bottom: calc($space-3xl + $space-xl);
+    }
+
+    .saleInfo {
+      flex: 1;
+      padding: $space-xl;
+
+      h2 {
+        padding-top: 0;
+        padding-bottom: $space-md;
+      }
+
+      h2,
+      p {
+        text-align: left;
+      }
+
+      .guideInfoBits {
+        display: flex;
+        flex-direction: column;
+        gap: $space-md;
+        margin-top: $space-xl;
+
+        .infoBitWrapper {
+          display: flex;
+          flex-direction: row;
+          gap: $space-sm;
+
+          .iconWrapper {
+            padding: $space-md;
+            border-radius: $radius-sm;
+            background: $gradient-purple-pink-card-horizontal;
+            box-shadow: $shadow-sm;
+            height: fit-content;
+            width: fit-content;
+            display: flex;
+            align-items: center;
+
+            .icon {
+              color: $color-white;
+            }
+          }
+
+          div {
+            display: flex;
+            flex-direction: column;
+          }
+
+          .label {
+            font-size: $font-size-base;
+            font-weight: $font-weight-bold;
+            color: $color-neutral-700;
+            line-height: $line-height-base;
+          }
+
+          .value {
+            font-size: $font-size-sm;
+            font-weight: $font-weight-medium;
+            color: $color-neutral-600;
+            line-height: $line-height-base;
+          }
+        }
+      }
+
+      .bottom {
+        display: flex;
+        margin-top: $space-md;
+
+        p {
+          font-size: $font-size-xs;
+          color: $color-gray-medium;
+
+          &:first-child {
+            margin-right: $space-md;
+          }
+
+          .icon {
+            margin-right: $space-xs;
+            color: $color-blue-sky;
+          }
+        }
+      }
+    }
+
+    .pricingCard {
+      flex: 1;
+      border-radius: $radius-md;
+      box-shadow: $shadow-md;
+      padding: $space-xl;
+
+      .priceTag {
+        background: $gradient-blue-primary;
+        padding: $space-lg;
+        border-radius: $radius-md;
+
+        p,
+        h3 {
+          color: $color-white;
+        }
+
+        p {
+          font-size: $font-size-xs;
+          font-weight: $font-weight-medium;
+          line-height: $line-height-xs;
+
+          &:first-child {
+            font-weight: $font-weight-bold;
+          }
+        }
+
+        h3 {
+          font-size: $font-size-3xl;
+          font-weight: $font-weight-bold;
+          line-height: $line-height-heading-loose;
+          text-align: center;
+        }
+      }
+
+      .whatsIncluded {
+        margin: $space-md 0;
+
+        h3 {
+          font-size: $font-size-xs;
+          font-weight: $font-weight-bold;
+          color: $color-text-dark;
+          margin-bottom: $space-sm;
+        }
+
+        & > p {
+          font-size: $font-size-sm;
+          line-height: $line-height-relaxed;
+          text-align: left;
+          color: $color-gray-dark;
+
+          .icon {
+            margin-right: $space-sm;
+            color: $color-bright-green;
+          }
+        }
+      }
+
+      .ctaButton {
+        font-size: $font-size-base;
+        font-weight: $font-weight-bold;
+        background: $gradient-blue-primary;
+        width: 100%;
+        padding: $space-md $space-lg;
+        border-radius: $radius-sm;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+          background: $gradient-blue-hover;
+        }
+      }
+
+      p.communityText {
+        font-size: $font-size-xs;
+        line-height: $line-height-xs;
+        color: $color-gray-medium;
+        padding: 0 $space-md;
+        text-align: center;
+        margin-top: $space-md;
+
+        .icon {
+          margin-right: $space-sm;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,212 @@
+@use "@/styles/tokens" as *;
+
+.promoteBundleSection {
+  .wrapper {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+
+    @media only screen and (min-width: $breakpoint-tablet) {
+      width: 768px;
+      margin: 0 auto;
+      margin-top: calc($space-3xl * 2);
+      margin-bottom: $space-3xl;
+    }
+
+    .pill {
+      border-radius: $radius-pill;
+      width: fit-content;
+      padding: $space-xs $space-md;
+      box-shadow: $shadow-sm;
+      background: $gradient-green-yellow-card;
+      font-weight: $font-weight-bold;
+      align-items: center;
+      display: flex;
+      color: $color-black;
+      margin: 0 auto;
+
+      .icon {
+        margin-right: $space-sm;
+      }
+    }
+
+    h2 {
+      padding: $space-lg 0;
+    }
+
+    .bundlesWrapper {
+      max-width: 1024px;
+      margin: 0 auto;
+      width: 100%;
+      margin-top: $space-xl;
+
+      .bundleScroll {
+        gap: 24px;
+        padding-bottom: 16px;
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+
+        // Show scrollbar
+        &::-webkit-scrollbar {
+          height: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: $color-neutral-200;
+          border-radius: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: $color-purple-bright;
+          border-radius: 4px;
+
+          &:hover {
+            background: $color-purple-600;
+          }
+        }
+
+        // For Firefox
+        scrollbar-width: thin;
+        scrollbar-color: $color-purple-bright $color-neutral-200;
+
+        .bundleCard {
+          min-width: 340px;
+          max-width: 340px;
+          flex-shrink: 0;
+          scroll-snap-align: start;
+
+          border: 1px solid $color-purple-bright;
+          padding: $space-xl;
+          border-radius: $radius-md;
+          box-shadow: $shadow-sm;
+          display: flex;
+          flex-direction: column;
+          gap: $space-sm;
+
+          .bundleType {
+            background-image: $gradient-purple-pink-card;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-align: left;
+            font-weight: $font-weight-bold;
+
+            .icon {
+              color: $color-purple-bright;
+              margin-right: $space-xs;
+            }
+          }
+
+          h3,
+          p {
+            text-align: left;
+          }
+
+          h3 {
+            color: $color-text-dark;
+            font-size: $font-size-xl-base;
+            font-weight: $font-weight-bold;
+            line-height: $line-height-heading-tight;
+          }
+
+          p {
+            color: $color-gray-dark;
+            font-size: $font-size-base;
+            line-height: $line-height-tight;
+            font-weight: $font-weight-medium;
+          }
+
+          .includes {
+            background: $color-pink-light;
+            border: 0.5px solid $color-purple-600;
+            margin-top: $space-md;
+            border-radius: $space-sm;
+            padding: $space-sm;
+
+            h4 {
+              color: $color-neutral-600;
+              font-size: $font-size-sm;
+              font-weight: $font-weight-bold;
+              text-align: left;
+              padding: $space-sm $space-md;
+              text-transform: uppercase;
+            }
+
+            .includesPills {
+              span {
+                background-color: $color-white;
+                border: 2px solid $color-gray-light;
+                border-radius: $space-lg;
+                padding: $space-xs $space-sm;
+                margin: $space-xs;
+                font-size: $font-size-sm;
+                color: $color-text-dark;
+                display: inline-block;
+              }
+
+              // Color variant classes for city pills
+              .pill--purple {
+                border-color: #8b5cf6;
+              }
+
+              .pill--pink {
+                border-color: #ec4899;
+              }
+
+              .pill--orange {
+                border-color: #fa7315;
+              }
+
+              .pill--teal {
+                border-color: #14b8a6;
+              }
+            }
+          }
+          .pricing {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .originalPrice {
+              background-image: $gradient-purple-pink-card;
+              background-clip: text;
+              -webkit-background-clip: text;
+              color: transparent;
+              font-size: $font-size-2xl;
+              font-weight: $font-weight-bold;
+            }
+
+            .pages {
+              color: $color-neutral-600;
+            }
+          }
+
+          .ctaButton {
+            background: $gradient-purple-pink-card-horizontal;
+            color: $color-white;
+            border: none;
+            padding: $space-md $space-lg;
+            font-size: $font-size-base;
+            font-weight: $font-weight-bold;
+            border-radius: $space-sm;
+            width: 100%;
+            cursor: pointer;
+
+            &:hover {
+              background: $gradient-purple-pink-card-horizontal-hover;
+            }
+
+            .icon {
+              margin-left: $space-sm;
+              color: $color-white;
+            }
+          }
+        }
+      }
+    }
+  }
+}
