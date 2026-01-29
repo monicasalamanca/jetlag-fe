@@ -16,9 +16,13 @@
     .contentsGrid {
       display: grid;
       gap: $space-lg;
+      padding: 0 $space-lg;
+      margin-bottom: $space-2xl;
 
       @media (min-width: 768px) {
         grid-template-columns: repeat(2, 1fr);
+        padding: 0;
+        margin-bottom: 0;
       }
 
       .card {

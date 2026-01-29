@@ -17,10 +17,19 @@
     }
 
     .points {
-      display: grid;
-      gap: $space-lg;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
+      padding: 0 $space-lg;
+      margin-bottom: $space-2xl;
       color: $color-text-dark;
+      gap: $space-lg;
+
+      @media only screen and (min-width: $breakpoint-mobile) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 0;
+        margin-bottom: 0;
+      }
 
       .perfectForPoints,
       .notForPoints {

@@ -8,11 +8,14 @@
     margin: 0 auto;
     text-align: center;
     width: 100%;
+    padding: 0 $space-lg;
+    margin-bottom: $space-3xl;
 
     @media only screen and (min-width: $breakpoint-tablet) {
       width: 768px;
       margin: 0 auto;
       margin-top: calc($space-3xl * 2);
+      padding: 0;
       margin-bottom: $space-3xl;
     }
 
@@ -110,7 +113,7 @@
             color: $color-text-dark;
             font-size: $font-size-xl-base;
             font-weight: $font-weight-bold;
-            line-height: $line-height-heading-tight;
+            line-height: $line-height-loose;
           }
 
           p {
@@ -126,6 +129,7 @@
             margin-top: $space-md;
             border-radius: $space-sm;
             padding: $space-sm;
+            flex: 1;
 
             h4 {
               color: $color-neutral-600;
