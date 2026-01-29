@@ -13,9 +13,15 @@ import s from "./guide-presentation.module.scss";
 
 interface GuidePresentationProps {
   guide: DetailedGuide;
+  onCtaFlip?: () => void;
+  onCtaOptions?: () => void;
 }
 
-const GuidePresentation = ({ guide }: GuidePresentationProps) => {
+const GuidePresentation = ({
+  guide,
+  onCtaFlip,
+  onCtaOptions,
+}: GuidePresentationProps) => {
   return (
     <section className={s.guidePresentation}>
       <div className={s.wrapper}>
@@ -58,9 +64,11 @@ const GuidePresentation = ({ guide }: GuidePresentationProps) => {
             </div>
           </div>
           <div className={s.ctaWrapper}>
-            <button className={s.ctaButton}>Flip through real pages</button>
+            <button className={s.ctaFlipButton} onClick={onCtaFlip}>
+              Flip through real pages
+            </button>
             {guide.type === "single" && (
-              <button className={s.ctaButtonOptions}>
+              <button className={s.ctaButtonOptions} onClick={onCtaOptions}>
                 View Bundle Options
               </button>
             )}

@@ -18,6 +18,13 @@
     max-width: 1024px;
     margin: 0 auto;
     width: 100%;
+    padding: 0 $space-lg;
+    margin-bottom: $space-3xl;
+
+    @media only screen and (min-width: $breakpoint-tablet) {
+      padding: 0;
+      margin-bottom: 0;
+    }
   }
 
   .imageScroll {

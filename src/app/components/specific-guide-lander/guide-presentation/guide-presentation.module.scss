@@ -1,10 +1,12 @@
 @use "@/styles/tokens" as *;
 
 .guidePresentation {
-  margin-bottom: calc($space-3xl + $space-xl);
+  margin-bottom: calc($space-2xl + $space-xl);
+
   .wrapper {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    padding: $space-lg;
     justify-content: space-between;
     gap: $space-lg;
     width: 100%;
@@ -14,6 +16,7 @@
       margin: 0 auto;
       margin-top: $space-3xl;
       margin-bottom: $space-3xl;
+      flex-direction: row;
     }
   }
 
@@ -22,8 +25,12 @@
     flex-direction: column;
     gap: $space-xl;
     height: auto;
-    padding: $space-lg;
+    // padding: $space-lg;
     color: $color-text-dark;
+
+    @media only screen and (min-width: $breakpoint-tablet) {
+      padding: $space-lg;
+    }
 
     .icon {
       height: 16px;
@@ -47,7 +54,7 @@
 
     h2 {
       padding: 0;
-      font-size: $font-size-xl;
+      font-size: $font-size-2xl;
       line-height: $line-height-loose;
       font-weight: $font-weight-bolder;
       text-align: left;
@@ -110,7 +117,7 @@
       display: flex;
       gap: $space-md;
 
-      .ctaButton,
+      .ctaFlipButton,
       .ctaButtonOptions {
         padding: $space-md $space-lg;
         border-radius: $radius-sm;
@@ -163,7 +170,7 @@
     .imageGuideTag {
       position: absolute;
       bottom: -24px;
-      left: -24px;
+      left: 20px;
       display: flex;
       width: fit-content;
       padding: $space-xl;
@@ -172,6 +179,10 @@
       box-shadow: $shadow-sm;
       align-items: center;
       border: 3px solid $color-white;
+
+      @media only screen and (min-width: $breakpoint-tablet) {
+        left: -24px;
+      }
 
       .icon {
         height: 16px;

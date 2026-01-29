@@ -4,15 +4,18 @@
   .wrapper {
     height: auto;
     display: flex;
-    flex-direction: row;
     gap: $space-xl;
     width: 100%;
+    flex-direction: column;
+    padding: 0 $space-lg;
+    margin-bottom: calc($space-3xl + $space-xl);
 
     @media only screen and (min-width: $breakpoint-tablet) {
+      flex-direction: row;
+      padding: 0;
       width: 768px;
       margin: 0 auto;
       margin-top: calc($space-3xl + $space-xl);
-      margin-bottom: calc($space-3xl + $space-xl);
     }
 
     .saleInfo {
