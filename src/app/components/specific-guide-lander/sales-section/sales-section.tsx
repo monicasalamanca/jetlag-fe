@@ -1,5 +1,6 @@
 // generate a simple component that displays a sales section with a title, description, and a call-to-action button using React and TypeScript.
 import React from "react";
+import { DetailedGuide } from "@/api/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleCheck,
@@ -13,20 +14,29 @@ import {
 
 import s from "./sales-section.module.scss";
 
-const SalesSection: React.FC = () => {
+interface PreviewSamplePagesProps {
+  guide: DetailedGuide;
+}
+
+const SalesSection = ({ guide }: PreviewSamplePagesProps) => {
   return (
     <section className={s.saleSection}>
       <div className={s.wrapper}>
         <div className={s.saleInfo}>
-          <h2>Get your Bangkok Living Guide Today</h2>
-          <p>Everything you need to confidently move to and live in Bangkok.</p>
+          <h2>{`Get your ${guide.type === "single" ? "Single" : "Bundle"} Guide Today`}</h2>
+          <p>
+            Everything you need to confidently move to and thrive in your new
+            destination.
+          </p>
           <div className={s.guideInfoBits}>
             <div className={s.infoBitWrapper}>
               <div className={s.iconWrapper}>
                 <FontAwesomeIcon className={s.icon} icon={faFilePdf} />
               </div>
               <div>
-                <div className={s.label}>87 pages of actionable content</div>
+                <div className={s.label}>
+                  {guide.pageCount} pages of actionable content
+                </div>
                 <div className={s.value}>Real insights and practical tips</div>
               </div>
             </div>
@@ -35,7 +45,9 @@ const SalesSection: React.FC = () => {
                 <FontAwesomeIcon icon={faDownload} className={s.icon} />
               </div>
               <div>
-                <div className={s.label}>Instant PDF Download</div>
+                <div className={s.label}>
+                  Instant {guide.format[0].type.toUpperCase()} Download
+                </div>
                 <div className={s.value}>Access Immediately After Purchase</div>
               </div>
             </div>
@@ -63,18 +75,18 @@ const SalesSection: React.FC = () => {
         <div className={s.pricingCard}>
           <div className={s.priceTag}>
             <p>One-Time Payment</p>
-            <h3>$29</h3>
+            <h3>${guide.originalPriceCents}</h3>
             <p>No subscription, pay once, own forever</p>
           </div>
           <div className={s.whatsIncluded}>
             <h3>What&apos;s Included</h3>
             <p>
               <FontAwesomeIcon icon={faCircleCheck} className={s.icon} />
-              87 pages of actionable content
+              {guide.pageCount} pages of actionable content
             </p>
             <p>
               <FontAwesomeIcon icon={faCircleCheck} className={s.icon} />
-              Instant PDF Download
+              Instant {guide.format[0].type.toUpperCase()} Download
             </p>
             <p>
               <FontAwesomeIcon icon={faCircleCheck} className={s.icon} />
@@ -85,7 +97,9 @@ const SalesSection: React.FC = () => {
               Works Offline on all devices
             </p>
           </div>
-          <button className={s.ctaButton}>Buy This Guide - $29</button>
+          <button className={s.ctaButton}>
+            Buy This Guide - ${guide.originalPriceCents}
+          </button>
           <p className={s.communityText}>
             <FontAwesomeIcon icon={faUsers} className={s.icon} />
             Join our community of expats and digital nomads who&apos;ve used our

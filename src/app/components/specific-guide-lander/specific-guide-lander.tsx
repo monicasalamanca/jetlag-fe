@@ -16,10 +16,6 @@ interface SpecificGuidesLanderProps {
 }
 
 const SpecificGuidesLander = ({ guide }: SpecificGuidesLanderProps) => {
-  // TODO: Pass guide data to child components to display real data
-  // Currently child components use hardcoded data
-  // Future improvement: Update child components to accept guide prop
-
   console.log("Specific Guide Lander received guide:", guide);
 
   return (
@@ -28,8 +24,8 @@ const SpecificGuidesLander = ({ guide }: SpecificGuidesLanderProps) => {
       <IsThisGuideForYou guide={guide} />
       <WhatsInside guide={guide} />
       <PreviewSamplePages guide={guide} />
-      <SalesSection />
-      <PromoteBundlesSection />
+      <SalesSection guide={guide} />
+      {guide.type === "single" && <PromoteBundlesSection guide={guide} />}
       <FAQ />
     </main>
   );
