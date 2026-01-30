@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Hero from "@/components/hero/hero";
 import AboutUsContent from "@/components/about-us-content/about-us-content";
-import WhatYouWillFind from "../../components/what-you-will-find/what-you-will-find";
+import WhatYouWillFind from "@/components/what-you-will-find/what-you-will-find";
 import OurMission from "@/components/our-mission/our-mission";
 import WhoWeAre from "@/components/who-we-are/who-we-are";
 import WhyTrustUs from "@/components/why-trust-us/why-trust-us";

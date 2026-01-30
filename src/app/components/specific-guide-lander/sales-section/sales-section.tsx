@@ -1,4 +1,4 @@
-// generate a simple component that displays a sales section with a title, description, and a call-to-action button using React and TypeScript.
+import Link from "next/link";
 import React from "react";
 import { DetailedGuide } from "@/api/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -97,9 +97,9 @@ const SalesSection = ({ guide }: PreviewSamplePagesProps) => {
               Works Offline on all devices
             </p>
           </div>
-          <button className={s.ctaButton}>
+          <Link href={guide.format[0].lemonSqueezyUrl} className={s.ctaLink}>
             Buy This Guide - ${guide.originalPriceCents}
-          </button>
+          </Link>
           <p className={s.communityText}>
             <FontAwesomeIcon icon={faUsers} className={s.icon} />
             Join our community of expats and digital nomads who&apos;ve used our
