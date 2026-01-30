@@ -1,0 +1,323 @@
+@import "@/app/styles/tokens";
+
+.container {
+  width: 100%;
+  max-width: 768px;
+  margin: $space-xl auto;
+  padding: 0 $space-lg;
+}
+
+.formWrapper {
+  background: $color-white;
+  border-radius: $radius-md;
+  padding: $space-3xl $space-2xl;
+}
+
+.title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $color-black;
+  margin-bottom: $space-md;
+  text-align: center;
+  font-family: $font-family-primary;
+  line-height: $line-height-heading;
+}
+
+.description {
+  font-size: $font-size-base;
+  color: $color-gray-dark;
+  margin-bottom: $space-2xl;
+  text-align: center;
+  line-height: $line-height-relaxed;
+  font-family: $font-family-secondary;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+}
+
+// Honeypot field (hidden from users, visible to bots)
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.inputAndButtonWrapper {
+  display: flex;
+  gap: $space-md;
+
+  @media only screen and (max-width: $breakpoint-mobile) {
+    flex-direction: column;
+  }
+
+  .inputWrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .formInput {
+    width: 100%;
+    padding: $space-lg $space-lg $space-lg $space-3xl;
+    border: 2px solid $color-neutral-200;
+    border-radius: $radius-sm;
+    font-size: $font-size-base;
+    font-family: $font-family-secondary;
+    color: $color-text;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $color-blue;
+      box-shadow: 0 0 0 3px rgba(36, 99, 235, 0.1);
+    }
+
+    &::placeholder {
+      color: $color-neutral-400;
+    }
+
+    &:disabled {
+      background-color: $color-neutral-100;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+
+  .inputIcon {
+    position: absolute;
+    left: $space-lg;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $color-neutral-400;
+    font-size: $font-size-lg;
+    pointer-events: none;
+  }
+
+  .submitButton {
+    background: $gradient-blue-primary;
+    color: $color-white;
+    padding: $space-lg $space-2xl;
+    border: none;
+    border-radius: $radius-sm;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-md;
+
+    &:hover:not(:disabled) {
+      background: $gradient-blue-hover;
+      box-shadow: 0 4px 12px rgba(36, 99, 235, 0.3);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      background: $color-neutral-300;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  .buttonIcon {
+    font-size: $font-size-base;
+  }
+
+  .errorWrapper {
+    background: $color-red-light;
+    border: 1px solid rgba(220, 38, 37, 0.3);
+    border-radius: $radius-sm;
+    padding: $space-lg;
+    text-align: center;
+  }
+
+  .errorMessage {
+    color: $color-red;
+    font-size: $font-size-sm;
+    margin-bottom: $space-md;
+    font-weight: $font-weight-medium;
+    font-family: $font-family-secondary;
+  }
+
+  .retryButton {
+    background: transparent;
+    color: $color-red;
+    border: 2px solid $color-red;
+    padding: $space-sm $space-xl;
+    border-radius: $radius-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    font-family: $font-family-primary;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: $color-red;
+      color: $color-white;
+    }
+  }
+}
+
+.footer {
+  text-align: center;
+  padding-top: $space-lg;
+  border-top: 1px solid $color-neutral-200;
+}
+
+.footerText {
+  font-size: $font-size-sm;
+  color: $color-gray-dark;
+  margin-bottom: $space-md;
+  font-family: $font-family-secondary;
+}
+
+// Success state styles
+.successWrapper {
+  text-align: center;
+  padding: $space-2xl $space-lg;
+}
+
+.successIcon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto $space-xl;
+  background: $gradient-green-card;
+  color: $color-white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  box-shadow: $shadow-md;
+}
+
+.successTitle {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $color-black;
+  margin-bottom: $space-lg;
+  font-family: $font-family-primary;
+}
+
+.successMessage {
+  font-size: $font-size-lg;
+  color: $color-gray-dark;
+  line-height: $line-height-relaxed;
+  margin-bottom: $space-2xl;
+  font-family: $font-family-secondary;
+}
+
+.socialMediaPrompt {
+  margin-top: $space-2xl;
+  padding-top: $space-2xl;
+  border-top: 1px solid $color-neutral-200;
+}
+
+.socialText {
+  font-size: $font-size-base;
+  color: $color-gray-dark;
+  margin-bottom: $space-lg;
+  font-family: $font-family-secondary;
+}
+
+.socialMediaWrapper {
+  display: flex;
+  justify-content: center;
+  gap: $space-lg;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: $color-neutral-100;
+  color: $color-text;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: $color-blue;
+    color: $color-white;
+    transform: translateY(-2px);
+  }
+}
+
+.socialIcon {
+  font-size: $font-size-xl;
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-tablet) {
+  .container {
+    margin: $space-2xl auto;
+  }
+
+  .formWrapper {
+    padding: $space-2xl $space-xl;
+  }
+
+  .description {
+    font-size: $font-size-sm;
+  }
+
+  .inputAndButtonWrapper {
+    .formInput {
+      //   padding: $space-md $space-md $space-md $space-2xl;
+      font-size: $font-size-sm;
+    }
+
+    .submitButton {
+      padding: $space-md $space-xl;
+      font-size: $font-size-base;
+    }
+  }
+
+  .successTitle {
+    font-size: $font-size-xl-base;
+  }
+
+  .successMessage {
+    font-size: $font-size-base;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .container {
+    margin: $space-xl auto;
+    padding: 0 $space-md;
+  }
+
+  .formWrapper {
+    padding: $space-xl $space-lg;
+  }
+
+  .description {
+    font-size: $font-size-sm;
+  }
+
+  .successIcon {
+    width: 70px;
+    height: 70px;
+    font-size: 2.5rem;
+  }
+
+  .successTitle {
+    font-size: $font-size-xl;
+  }
+
+  .successMessage {
+    font-size: $font-size-sm;
+  }
+}
