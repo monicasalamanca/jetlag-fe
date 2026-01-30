@@ -14,7 +14,9 @@
       flex-direction: row;
       padding: 0;
       width: 768px;
-      margin: 0 auto;
+      // margin: 0 auto;
+      margin-left: auto;
+      margin-right: auto;
       margin-top: calc($space-3xl + $space-xl);
     }
 
@@ -156,11 +158,13 @@
         }
       }
 
-      .ctaButton {
+      .ctaLink {
+        display: flex;
+        justify-content: center;
+        width: 100%;
         font-size: $font-size-base;
         font-weight: $font-weight-bold;
         background: $gradient-blue-primary;
-        width: 100%;
         padding: $space-md $space-lg;
         border-radius: $radius-sm;
         border: none;

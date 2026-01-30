@@ -334,7 +334,7 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
               key={idx}
               style={{
                 border: "none",
-                borderTop: "2px solid var(--gray-400)",
+                borderTop: "1.5px solid #9ca3af",
                 margin: "16px 0",
                 width: "100%",
               }}
