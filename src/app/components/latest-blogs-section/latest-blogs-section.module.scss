@@ -1,0 +1,37 @@
+@use "@/styles/tokens" as *;
+
+.latestBlogs {
+  background-color: $color-light-gray-bg;
+  padding: $space-xl $space-lg;
+
+  .wrapper {
+    width: 100%;
+
+    @media only screen and (min-width: $breakpoint-tablet) {
+      width: 768px;
+      margin: 0 auto;
+      // margin-top: $space-3xl;
+      margin-bottom: $space-3xl;
+    }
+
+    h2 {
+      color: $color-text-dark;
+      font-size: $font-size-2xl;
+      font-weight: $font-weight-bold;
+      text-align: center;
+      padding: $space-lg 0 $space-xl;
+      line-height: $line-height-heading;
+    }
+
+    .cardWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: $space-lg;
+
+      @media only screen and (min-width: $breakpoint-mobile) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}

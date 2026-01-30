@@ -13,6 +13,10 @@ import {
   SlugWithCountry,
 } from "@/api/types";
 
+// Pages to exclude from sitemap.xml (e.g., conversion pages, utility pages)
+// Add more paths as needed for future exclusions
+const EXCLUDED_ROUTES = ["/thank-you"];
+
 export async function GET() {
   try {
     const postsFromCountries = await fetchAllBlogSlugsFromCountries();
@@ -23,6 +27,7 @@ export async function GET() {
       process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com";
 
     const staticRoutes = ["", "about-us", "blog"]
+      .filter((path) => !EXCLUDED_ROUTES.includes(`/${path}`))
       .map(
         (path) => `
 <url>
