@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { JSX, useMemo, useCallback } from "react";
 import CTAComponent from "@/components/cta-component/cta-component";
+import GoogleAdUnit from "@/app/components/google-ad-unit/google-ad-unit";
 
 // Type definitions for marked tokens for marked tokens
 interface MarkedToken {
@@ -30,6 +31,7 @@ marked.use({
 const PATTERNS = {
   CTA: /\[CTA\s+(.*?)\]/, // Matches [CTA type="..." title="..." link="..." button="..."]
   FAQ: /\*\*(FAQ|FAQs)\*\*/, // Matches **FAQ** or **FAQs**
+  AD: /\[Ad\]/, // Matches [Ad]
 } as const;
 
 const CTA_CONFIG = {
@@ -208,6 +210,14 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
     [parseAttributes],
   );
 
+  const handleAdContent = useCallback(
+    (text: string, idx: number): JSX.Element | null => {
+      if (!PATTERNS.AD.test(text)) return null;
+      return <GoogleAdUnit key={idx} />;
+    },
+    [],
+  );
+
   const renderToken = useCallback(
     (
       token: MarkedToken,
@@ -216,6 +226,7 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
       handlers?: {
         handleFAQContent: (text: string, idx: number) => JSX.Element | null;
         handleCTAContent: (text: string, idx: number) => JSX.Element | null;
+        handleAdContent: (text: string, idx: number) => JSX.Element | null;
       },
     ): JSX.Element | null => {
       switch (token.type) {
@@ -303,6 +314,10 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
             const faqElement = handlers.handleFAQContent(text, idx);
             if (faqElement) return faqElement;
 
+            // Check for Ad pattern
+            const adElement = handlers.handleAdContent(text, idx);
+            if (adElement) return adElement;
+
             // Check for CTA pattern
             const ctaElement = handlers.handleCTAContent(text, idx);
             if (ctaElement) return ctaElement;
@@ -352,8 +367,9 @@ export const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
     () => ({
       handleFAQContent,
       handleCTAContent,
+      handleAdContent,
     }),
-    [handleFAQContent, handleCTAContent],
+    [handleFAQContent, handleCTAContent, handleAdContent],
   );
 
   return (
