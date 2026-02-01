@@ -106,11 +106,11 @@
 
 .cardImage {
   width: 100%;
-  height: -webkit-fill-available;
+  height: -webkit-stretch;
   // firefox fallback
   height: -moz-available;
   // standard fallback
-  height: fill-available;
+  height: stretch;
   object-fit: cover;
 }
 
