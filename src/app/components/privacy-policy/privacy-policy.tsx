@@ -16,36 +16,44 @@ const PrivacyPolicyComponent = () => {
       <ul>
         <li>
           <h2>What We Collect</h2>
-          <p>
-            We collect a limited amount of information, including:
-            <hr />• Personal information you voluntarily provide, such as your
-            name and email address when you subscribe to our newsletter,
-            download a guide, or contact us.
-            <hr />• Basic technical data, like IP address, browser type, device
-            information, and pages visited.
-            <hr />• Cookies and similar technologies, which help the site
-            function properly, measure performance, and display ads.
-            <hr />
-            No nuclear codes. No social insurance numbers. No drama.
-          </p>
+          <p>We collect a limited amount of information, including:</p>
+          <ul>
+            <li>
+              Personal information you voluntarily provide, such as your name
+              and email address when you subscribe to our newsletter, download a
+              guide, or contact us.
+            </li>
+            <li>
+              Basic technical data, like IP address, browser type, device
+              information, and pages visited.
+            </li>
+            <li>
+              Cookies and similar technologies, which help the site function
+              properly, measure performance, and display ads.
+            </li>
+          </ul>
+          <p>No nuclear codes. No social insurance numbers. No drama.</p>
         </li>
         <li>
           <h2>Cookies, Ads, and Tracking (The Important Part)</h2>
-          <p>
-            We use cookies and similar technologies for a few reasons:
-            <hr />• To understand how people use the site so we can improve it.
-            <hr />• To remember preferences and consent choices.
-            <hr />• To display advertising through Google AdSense.
-          </p>
+          <p>We use cookies and similar technologies for a few reasons:</p>
+          <ul>
+            <li>To understand how people use the site so we can improve it.</li>
+            <li>To remember preferences and consent choices.</li>
+            <li>To display advertising through Google AdSense.</li>
+          </ul>
         </li>
         <li>
           <h2>Google AdSense</h2>
           <p>
             We use Google AdSense to display ads on some pages. Google may use
             cookies or similar technologies to:
-            <hr />• Show ads based on visits to this and other websites.
-            <hr />• Measure ad performance and prevent fraud.
-            <hr />
+          </p>
+          <ul>
+            <li>Show ads based on visits to this and other websites.</li>
+            <li>Measure ad performance and prevent fraud.</li>
+          </ul>
+          <p>
             Google’s use of advertising cookies enables it and its partners to
             serve ads based on users’ browsing behavior across the web.
           </p>
@@ -56,51 +64,61 @@ const PrivacyPolicyComponent = () => {
         </li>
         <li>
           <h2>Consent and Your Choices</h2>
+          <ul>
+            <li>
+              Ads and analytics are not loaded until you give consent, where
+              required by law.
+            </li>
+            <li>
+              You can accept or decline cookies through our cookie notice.
+            </li>
+            <li>
+              You can adjust your browser settings to block or delete cookies at
+              any time, though some site features may not work as intended.
+            </li>
+          </ul>
           <p>
-            <hr />• Ads and analytics are not loaded until you give consent,
-            where required by law.
-            <hr />• You can accept or decline cookies through our cookie notice.
-            <hr />• You can adjust your browser settings to block or delete
-            cookies at any time, though some site features may not work as
-            intended.
-            <hr />
             Using the site after consenting means you’re okay with this setup.
             Not consenting means fewer cookies, fewer ads, and the same content.
           </p>
         </li>
         <li>
           <h2>What We Do With Your Information</h2>
-          <p>
-            We use collected information to:
-            <hr />• Improve site performance and content.
-            <hr />• Communicate with you if you opted in.
-            <hr />• Keep the site secure and functioning.
-            <hr />• Display ads and measure their performance.
-            <hr />
-            We do not sell your personal data. Ever.
-          </p>
+          <p>We use collected information to:</p>
+          <ul>
+            <li>Improve site performance and content.</li>
+            <li>Communicate with you if you opted in.</li>
+            <li>Keep the site secure and functioning.</li>
+            <li>Display ads and measure their performance.</li>
+          </ul>
+          <p>We do not sell your personal data. Ever.</p>
         </li>
         <li>
           <h2>Who Sees Your Information</h2>
+          <p>Your data may be processed by:</p>
+          <ul>
+            <li>Us (obviously).</li>
+            <li>
+              Trusted third-party services that help keep the site running
+              (analytics, email tools, advertising platforms like Google
+              AdSense).
+            </li>
+          </ul>
           <p>
-            Your data may be processed by:
-            <hr />• Us (obviously).
-            <hr />• Trusted third-party services that help keep the site running
-            (analytics, email tools, advertising platforms like Google AdSense).
-            <hr />
             If required by law, we may disclose information to authorities,
             though we won’t do it enthusiastically.
           </p>
         </li>
         <li>
           <h2>Your Rights (Yes, You Have Them)</h2>
+          <p>Depending on where you live, you may have the right to:</p>
+          <ul>
+            <li>Request access to your data.</li>
+            <li>Ask us to correct or delete it.</li>
+            <li>Withdraw consent at any time.</li>
+            <li>Unsubscribe from emails with one click and zero guilt.</li>
+          </ul>
           <p>
-            Depending on where you live, you may have the right to:
-            <hr />• Request access to your data.
-            <hr />• Ask us to correct or delete it.
-            <hr />• Withdraw consent at any time.
-            <hr />• Unsubscribe from emails with one click and zero guilt.
-            <hr />
             To exercise any of these rights, contact us using the details below.
           </p>
         </li>

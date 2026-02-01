@@ -37,6 +37,29 @@
         font-size: 16px;
         line-height: 22px;
         font-weight: 400;
+        margin: 12px 0;
+
+        button {
+          color: black;
+          text-decoration: solid underline;
+          cursor: pointer;
+
+          &:hover {
+            cursor: pointer;
+            color: black;
+            text-decoration: dotted underline;
+          }
+        }
+      }
+
+      ul {
+        gap: 0;
+        list-style-type: disc;
+        margin-left: 42px;
+
+        li {
+          padding: 0 12px;
+        }
       }
     }
   }
