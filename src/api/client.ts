@@ -536,7 +536,7 @@ export const fetchBlogsByCountry = async (
   countrySlug: string,
 ): Promise<BlogPost[] | null> => {
   try {
-    const url = `/api/blogs?country=${countrySlug}`;
+    const url = `/api/blogs?filters[country][slug][$eq]=${countrySlug}`;
 
     const res = await fetch(url, {
       cache: "no-store",
@@ -551,7 +551,22 @@ export const fetchBlogsByCountry = async (
     }
 
     const blogs = await res.json();
-    return blogs;
+    return blogs.data.map((item: BlogPostResponse) => ({
+      id: item.id,
+      title: item.attributes.title,
+      slug: item.attributes.slug,
+      content: item.attributes.content,
+      createdAt: item.attributes.createdAt,
+      updatedAt: item.attributes.updatedAt,
+      publishedAt: item.attributes.publishedAt,
+      country: item.attributes.country?.data
+        ? {
+            id: item.attributes.country.data.id,
+            slug: item.attributes.country.data.attributes.slug,
+            name: item.attributes.country.data.attributes.name,
+          }
+        : null,
+    }));
   } catch (error) {
     console.error(`Error fetching blogs for ${countrySlug}: `, error);
     return null;
