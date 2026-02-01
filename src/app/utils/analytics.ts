@@ -123,7 +123,7 @@ export const trackFormSubmission = ({
   });
 };
 
-// Track card clicks (for blog cards) with enhanced data
+// Track card clicks (for blog cards and guide cards) with enhanced data
 export const trackCardClick = ({
   cardTitle,
   cardCategory,
