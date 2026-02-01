@@ -399,7 +399,8 @@ export const postContactUs = async (data: ContactUsInfo): Promise<boolean> => {
 export const fetchAllBlogSlugsFromCountries = async (): Promise<
   SlugWithCountry[] | null
 > => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[publishedAt][$notNull]=true&fields[0]=slug&fields[1]=updatedAt&populate[countries][fields][0]=slug`;
+  // Populate the singular `country` relation (blogs belong to one country)
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[publishedAt][$notNull]=true&fields[0]=slug&fields[1]=updatedAt&populate[country][fields][0]=slug`;
 
   try {
     const res = await fetch(url, {
@@ -426,7 +427,7 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
       return null;
     }
 
-    // Handle many-to-many relationship - flatten blogs by countries
+    // Flatten blogs by their single country relation
     const blogSlugs: SlugWithCountry[] = [];
     data.data.forEach(
       (item: {
@@ -434,20 +435,17 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
         attributes: {
           slug: string;
           updatedAt: string;
-          countries?: { data: { attributes: { slug: string } }[] };
+          country?: { data?: { attributes: { slug: string } } };
         };
       }) => {
-        if (item.attributes.countries?.data) {
-          item.attributes.countries.data.forEach(
-            (country: { attributes: { slug: string } }) => {
-              blogSlugs.push({
-                id: item.id,
-                slug: item.attributes.slug,
-                updatedAt: item.attributes.updatedAt,
-                countrySlug: country.attributes.slug,
-              });
-            },
-          );
+        const countryData = item.attributes.country?.data;
+        if (countryData) {
+          blogSlugs.push({
+            id: item.id,
+            slug: item.attributes.slug,
+            updatedAt: item.attributes.updatedAt,
+            countrySlug: countryData.attributes.slug,
+          });
         }
       },
     );
