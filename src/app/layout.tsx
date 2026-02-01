@@ -4,6 +4,7 @@ import { Roboto, Poppins, Source_Sans_3 } from "next/font/google";
 import HeaderWrapper from "@/components/headerWrapper/headerWrapper";
 import Footer from "@/components/footer/footer";
 import AnalyticsPageView from "./components/analytics-page-view";
+import AdsenseScript from "./components/adsense-script";
 import SiteSchemas from "../../components/seo/SiteSchemas";
 import SeoDebugTools from "../../components/seo/SeoDebugTools";
 
@@ -117,6 +118,7 @@ export default function RootLayout({
         <GoogleAnalytics
           gaId={process.env.NEXT_PUBLIC_GA_ID || "G-E04G0053EJ"}
         />
+        <AdsenseScript />
         <AnalyticsPageView />
         <HeaderWrapper />
         {children}
