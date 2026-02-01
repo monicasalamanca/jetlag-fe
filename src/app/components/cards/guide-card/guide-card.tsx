@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Guide } from "@/api/types";
-// import { trackCardClick } from "@/app/utils/analytics";
+import { trackCardClick } from "@/app/utils/analytics";
 
 import s from "./guide-card.module.scss";
 
@@ -15,12 +15,12 @@ interface GuideCardProps {
 const GuideCard: React.FC<GuideCardProps> = ({ guide }) => {
   const handleCardClick = () => {
     // Track card click analytics when ready
-    // trackCardClick({
-    //   cardTitle: guide.title,
-    //   cardCategory: guide.type,
-    //   cardType: "GuideCard",
-    //   location: window.location.pathname,
-    // });
+    trackCardClick({
+      cardTitle: guide.title,
+      cardCategory: guide.type,
+      cardType: "GuideCard",
+      location: window.location.pathname,
+    });
   };
 
   return (
