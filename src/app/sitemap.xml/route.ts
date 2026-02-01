@@ -26,7 +26,13 @@ export async function GET() {
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com";
 
-    const staticRoutes = ["", "about-us", "blog"]
+    const staticRoutes = [
+      "",
+      "about-us",
+      "blog",
+      "privacy-policy",
+      "terms-of-service",
+    ]
       .filter((path) => !EXCLUDED_ROUTES.includes(`/${path}`))
       .map(
         (path) => `
@@ -104,6 +110,9 @@ ${dynamicLifestyleRoutes}
       status: 200,
       headers: {
         "Content-Type": "application/xml",
+        // Cache sitemap for 1 day in the CDN
+        "Cache-Control":
+          "public, max-age=0, s-maxage=86400, stale-while-revalidate=3600",
       },
     });
   } catch (error) {
