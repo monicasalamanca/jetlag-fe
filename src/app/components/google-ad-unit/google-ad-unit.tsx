@@ -43,15 +43,29 @@ const GoogleAdUnit: React.FC<GoogleAdUnitProps> = ({
       adsenseScriptInjected = true;
     }
 
-    // Push ad to AdSense queue
-    try {
-      if (adRef.current && !adPushed.current) {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        adPushed.current = true;
+    // Wait for both the script to load and DOM to be ready before pushing
+    const pushAd = () => {
+      try {
+        if (adRef.current && !adPushed.current) {
+          // Ensure the element has dimensions before pushing
+          const rect = adRef.current.getBoundingClientRect();
+          if (rect.width > 0 || rect.height > 0) {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+            adPushed.current = true;
+          } else {
+            // Retry after a short delay if element not ready
+            setTimeout(pushAd, 100);
+          }
+        }
+      } catch (error) {
+        console.error("AdSense error:", error);
       }
-    } catch (error) {
-      console.error("AdSense error:", error);
-    }
+    };
+
+    // Delay to ensure DOM is fully rendered
+    const timer = setTimeout(pushAd, 100);
+
+    return () => clearTimeout(timer);
   }, [adClient]);
 
   // Don't render on server
