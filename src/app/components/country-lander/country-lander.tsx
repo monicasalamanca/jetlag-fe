@@ -57,7 +57,7 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
 
       try {
         // First, try to fetch blogs for the current country
-        const countrySlug = country.name.toLowerCase();
+        const countrySlug = country.slug;
 
         const blogs = await fetchBlogsByCountry(countrySlug);
 
