@@ -3,8 +3,10 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
+  faBookOpen,
   faEnvelope,
   faGlobe,
+  faHeartPulse,
   faInbox,
   faPaperPlane,
   faUsers,
@@ -115,6 +117,17 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                   ))}
               </li>
               <li>
+                <FontAwesomeIcon icon={faBookOpen} className={s.icon} />
+                <Link
+                  aria-label="Access all our guides"
+                  href="/guides"
+                  rel="canonical"
+                  onClick={closeMenu}
+                >
+                  Guides
+                </Link>
+              </li>
+              <li>
                 <FontAwesomeIcon icon={faPaperPlane} className={s.icon} />
                 <Link
                   aria-label="Read all our chronicles"
@@ -126,7 +139,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                 </Link>
               </li>
               <li>
-                <FontAwesomeIcon icon={faEnvelope} className={s.icon} />
+                <FontAwesomeIcon icon={faHeartPulse} className={s.icon} />
                 <Link
                   aria-label="Read all our lifestyle articles"
                   href="/lifestyle"

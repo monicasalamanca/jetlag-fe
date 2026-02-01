@@ -18,8 +18,6 @@ interface SpecificGuidesLanderProps {
 }
 
 const SpecificGuidesLander = ({ guide }: SpecificGuidesLanderProps) => {
-  console.log("Specific Guide Lander received guide:", guide);
-
   // Refs for scroll targets
   const previewSamplePagesRef = useRef<HTMLElement>(null);
   const promoteBundlesSectionRef = useRef<HTMLElement>(null);
