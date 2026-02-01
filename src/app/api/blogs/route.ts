@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BlogPost, BlogPostResponse } from "@/api/types";
+import { BlogPostResponse } from "@/api/types";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -15,7 +15,9 @@ export async function GET(request: NextRequest) {
   const strapiUrl =
     process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
   const baseUrl = strapiUrl || "https://jetlag-be-production.up.railway.app";
-  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[country]=*&populate[tags]=*`;
+
+  // Build Strapi filter for country - filter by the country relation's slug
+  const url = `${baseUrl}/api/blogs?filters[country][slug][$eq]=${countrySlug}&sort=publishedAt:desc&populate[images]=*&populate[country]=*&populate[tags]=*&pagination[pageSize]=100`;
 
   try {
     // Server-side can access all environment variables
@@ -53,8 +55,8 @@ export async function GET(request: NextRequest) {
 
     const blogData = await res.json();
 
-    // Transform the data
-    const allBlogs = blogData.data.map((item: BlogPostResponse) => ({
+    // Transform the data - Strapi already filtered by country, so no need to filter again
+    const blogs = blogData.data.map((item: BlogPostResponse) => ({
       id: item.id,
       title: item.attributes.title,
       description: item.attributes.description,
@@ -71,12 +73,7 @@ export async function GET(request: NextRequest) {
       lifestyle: item.attributes.lifestyle || false,
     }));
 
-    // Filter for specific country content
-    const filteredBlogs = allBlogs.filter((blog: BlogPost) => {
-      return blog.country?.toLowerCase() === countrySlug.toLowerCase();
-    });
-
-    return NextResponse.json(filteredBlogs);
+    return NextResponse.json(blogs);
   } catch (error) {
     console.error(`Error fetching blogs for ${countrySlug}: `, error);
     return NextResponse.json(
