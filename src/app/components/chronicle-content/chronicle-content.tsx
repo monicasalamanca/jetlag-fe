@@ -5,7 +5,7 @@ import { fetchLatestBlogPostsClient } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
 import Hero from "../hero/hero";
-import CardOne from "../cards/card-one/card-one";
+import CardThree from "../cards/card-three/card-three";
 
 import s from "./chronicle-content.module.scss";
 
@@ -91,11 +91,10 @@ const ChronicleContent = () => {
           ) : (
             <div className={s.cardWrapper}>
               {blogs.slice(0, 8).map((blog, index) => (
-                <CardOne
+                <CardThree
                   key={blog.slug}
                   blog={blog}
                   color={colors[index % colors.length]}
-                  position={index + 1}
                 />
               ))}
             </div>
