@@ -59,7 +59,16 @@
         }
       }
 
-      .readTime {
+      // .readTime {
+      //   border-radius: 90px;
+      //   font-size: 14px;
+      //   font-weight: 500;
+      //   line-height: 20px;
+      //   padding: 4px 16px;
+      //   background-color: $color-white;
+      //   color: $color-neutral-900;
+      // }
+      .date {
         border-radius: 90px;
         font-size: 14px;
         font-weight: 500;
@@ -77,7 +86,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 16px;
-  gap: 16px;
+  gap: 8px;
 
   .country {
     font-size: 14px;
@@ -119,12 +128,12 @@
     line-height: 22px;
   }
 
-  .date {
-    color: $color-neutral-900;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-  }
+  // .date {
+  //   color: $color-neutral-900;
+  //   font-size: 14px;
+  //   font-weight: 500;
+  //   line-height: 20px;
+  // }
 }
 
 // Clickable card styles

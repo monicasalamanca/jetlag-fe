@@ -69,7 +69,8 @@ const CardThree: FC<{ blog: CardProps; color: string }> = ({ blog, color }) => {
             <div className={`${s.tag} ${getColourClassNames(color)}`}>
               {blog.tags && blog.tags.length > 0 ? blog.tags[0] : "Travel"}
             </div>
-            <div className={s.readTime}>{`${blog.readTime} read`}</div>
+            {/* <div className={s.readTime}>{`${blog.readTime} read`}</div> */}
+            <div className={s.date}>{blog.date}</div>
           </div>
         </div>
         <div className={s.content}>
@@ -82,9 +83,9 @@ const CardThree: FC<{ blog: CardProps; color: string }> = ({ blog, color }) => {
           </div>
           <h3>{blog.title}</h3>
           <p>{blog.description}</p>
-          <div className={s.bottomInfo}>
+          {/* <div className={s.bottomInfo}>
             <div className={s.date}>{blog.date}</div>
-          </div>
+          </div> */}
         </div>
       </div>
     </Link>
