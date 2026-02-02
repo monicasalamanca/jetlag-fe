@@ -5,10 +5,10 @@ import { fetchLatestBlogPostsClient } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
 import Hero from "@/components/hero/hero";
-import CardOne from "@/components/cards/card-one/card-one";
-import CardTwo from "@/components/cards/card-two/card-two";
+// import CardOne from "@/components/cards/card-one/card-one";
+// import CardTwo from "@/components/cards/card-two/card-two";
 import CardThree from "@/components/cards/card-three/card-three";
-import CardFive from "@/components/cards/card-five/card-five";
+// import CardFive from "@/components/cards/card-five/card-five";
 
 import s from "./home-content.module.scss";
 
