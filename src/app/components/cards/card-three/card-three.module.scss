@@ -78,6 +78,28 @@
         color: $color-neutral-900;
       }
     }
+
+    .sectionIcon {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background-color: rgba(62, 62, 62, 0.6);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: $shadow-sm;
+      font-size: 18px;
+      // transition: transform 0.2s ease-in-out;
+
+      @media only screen and (min-width: 600px) {
+        // width: 44px;
+        // height: 44px;
+        font-size: 20px;
+      }
+    }
   }
 }
 
@@ -92,6 +114,7 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
+    text-transform: capitalize;
 
     .icon {
       margin-right: 8px;
