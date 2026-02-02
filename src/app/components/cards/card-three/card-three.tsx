@@ -5,13 +5,34 @@ import React, { FC } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLocationDot,
+  faBolt,
+  faEye,
+  faFire,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import { CardProps } from "../card.types";
 import { trackCardClick } from "@/app/utils/analytics";
 
 import s from "./card-three.module.scss";
 
-const CardThree: FC<{ blog: CardProps; color: string }> = ({ blog, color }) => {
+type SectionType = "latest" | "mostViewed" | "trending" | "mostPopular";
+
+interface CardThreeProps {
+  blog: CardProps;
+  color: string;
+  section?: SectionType;
+}
+
+const CardThree: FC<CardThreeProps> = ({ blog, color, section }) => {
+  // Section icon and color mapping
+  const sectionConfig = {
+    latest: { icon: faBolt, color: "#3B82F6" },
+    mostViewed: { icon: faEye, color: "#06B6D4" },
+    trending: { icon: faFire, color: "#F59E0B" },
+    mostPopular: { icon: faStar, color: "#EAB308" },
+  };
   const getColourClassNames = (color: string) => {
     switch (color) {
       case "blue":
@@ -69,8 +90,16 @@ const CardThree: FC<{ blog: CardProps; color: string }> = ({ blog, color }) => {
             <div className={`${s.tag} ${getColourClassNames(color)}`}>
               {blog.tags && blog.tags.length > 0 ? blog.tags[0] : "Travel"}
             </div>
-            <div className={s.readTime}>{`${blog.readTime} read`}</div>
+            <div className={s.date}>{blog.date}</div>
           </div>
+          {section && sectionConfig[section] && (
+            <div className={s.sectionIcon}>
+              <FontAwesomeIcon
+                icon={sectionConfig[section].icon}
+                style={{ color: sectionConfig[section].color }}
+              />
+            </div>
+          )}
         </div>
         <div className={s.content}>
           <div className={s.country}>
@@ -82,9 +111,6 @@ const CardThree: FC<{ blog: CardProps; color: string }> = ({ blog, color }) => {
           </div>
           <h3>{blog.title}</h3>
           <p>{blog.description}</p>
-          <div className={s.bottomInfo}>
-            <div className={s.date}>{blog.date}</div>
-          </div>
         </div>
       </div>
     </Link>

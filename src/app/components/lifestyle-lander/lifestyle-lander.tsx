@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect } from "react";
 import Hero from "../hero/hero";
 import QuickFactCard from "../country-facts-card/card/card";
-import CardOne from "../cards/card-one/card-one";
+import CardThree from "../cards/card-three/card-three";
 import { fetchLatestBlogPostsClient } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
@@ -253,7 +253,9 @@ const LifestyleLander = () => {
       return {
         type: "blog",
         id: `blog-${index}`,
-        component: <CardOne key={`blog-${index}`} blog={blog} color={color} />,
+        component: (
+          <CardThree key={`blog-${index}`} blog={blog} color={color} />
+        ),
       };
     });
 

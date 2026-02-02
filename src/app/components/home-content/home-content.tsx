@@ -5,10 +5,7 @@ import { fetchLatestBlogPostsClient } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
 import Hero from "@/components/hero/hero";
-import CardOne from "@/components/cards/card-one/card-one";
-import CardTwo from "@/components/cards/card-two/card-two";
 import CardThree from "@/components/cards/card-three/card-three";
-import CardFive from "@/components/cards/card-five/card-five";
 
 import s from "./home-content.module.scss";
 
@@ -127,12 +124,12 @@ const HomeContent = () => {
               <div className={s.wrapper}>
                 <h2>Latest Stories</h2>
                 <div className={s.cardWrapper}>
-                  <CardOne blog={blogs[0]} color="blue" />
-                  <CardOne blog={blogs[1]} color="green" />
-                  <CardOne blog={blogs[2]} color="red" />
-                  <CardOne blog={blogs[3]} color="purple" />
-                  <CardOne blog={blogs[4]} color="blue" />
-                  <CardOne blog={blogs[5]} color="green" />
+                  <CardThree blog={blogs[0]} color="blue" section="latest" />
+                  <CardThree blog={blogs[1]} color="green" section="latest" />
+                  <CardThree blog={blogs[2]} color="red" section="latest" />
+                  <CardThree blog={blogs[3]} color="purple" section="latest" />
+                  <CardThree blog={blogs[4]} color="blue" section="latest" />
+                  <CardThree blog={blogs[5]} color="green" section="latest" />
                 </div>
               </div>
             </section>
@@ -142,12 +139,36 @@ const HomeContent = () => {
               <div className={s.wrapper}>
                 <h2>Most Viewed</h2>
                 <div className={s.cardWrapper}>
-                  <CardFive blog={shuffledBlogs[0]} />
-                  <CardFive blog={shuffledBlogs[1]} />
-                  <CardFive blog={shuffledBlogs[2]} />
-                  <CardFive blog={shuffledBlogs[3]} />
-                  <CardFive blog={shuffledBlogs[4]} />
-                  <CardFive blog={shuffledBlogs[5]} />
+                  <CardThree
+                    blog={shuffledBlogs[0]}
+                    color="red"
+                    section="mostViewed"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[1]}
+                    color="green"
+                    section="mostViewed"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[2]}
+                    color="blue"
+                    section="mostViewed"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[3]}
+                    color="purple"
+                    section="mostViewed"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[4]}
+                    color="red"
+                    section="mostViewed"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[5]}
+                    color="green"
+                    section="mostViewed"
+                  />
                 </div>
               </div>
             </section>
@@ -157,12 +178,36 @@ const HomeContent = () => {
               <div className={s.wrapper}>
                 <h2>Trending</h2>
                 <div className={s.cardWrapper}>
-                  <CardTwo blog={shuffledBlogs[6]} color="red" />
-                  <CardTwo blog={shuffledBlogs[7]} color="green" />
-                  <CardTwo blog={shuffledBlogs[8]} color="blue" />
-                  <CardTwo blog={shuffledBlogs[9]} color="purple" />
-                  <CardTwo blog={shuffledBlogs[10]} color="red" />
-                  <CardTwo blog={shuffledBlogs[11]} color="green" />
+                  <CardThree
+                    blog={shuffledBlogs[6]}
+                    color="red"
+                    section="trending"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[7]}
+                    color="green"
+                    section="trending"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[8]}
+                    color="blue"
+                    section="trending"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[9]}
+                    color="purple"
+                    section="trending"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[10]}
+                    color="red"
+                    section="trending"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[11]}
+                    color="green"
+                    section="trending"
+                  />
                 </div>
               </div>
             </section>
@@ -172,12 +217,36 @@ const HomeContent = () => {
               <div className={s.wrapper}>
                 <h2>Most Popular</h2>
                 <div className={s.cardWrapper}>
-                  <CardThree blog={shuffledBlogs[12]} color="purple" />
-                  <CardThree blog={shuffledBlogs[13]} color="blue" />
-                  <CardThree blog={shuffledBlogs[14]} color="green" />
-                  <CardThree blog={shuffledBlogs[15]} color="red" />
-                  <CardThree blog={shuffledBlogs[16]} color="purple" />
-                  <CardThree blog={shuffledBlogs[17]} color="blue" />
+                  <CardThree
+                    blog={shuffledBlogs[12]}
+                    color="purple"
+                    section="mostPopular"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[13]}
+                    color="blue"
+                    section="mostPopular"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[14]}
+                    color="green"
+                    section="mostPopular"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[15]}
+                    color="red"
+                    section="mostPopular"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[16]}
+                    color="purple"
+                    section="mostPopular"
+                  />
+                  <CardThree
+                    blog={shuffledBlogs[17]}
+                    color="blue"
+                    section="mostPopular"
+                  />
                 </div>
               </div>
             </section>
