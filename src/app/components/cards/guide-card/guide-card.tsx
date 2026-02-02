@@ -43,8 +43,10 @@ const GuideCard: React.FC<GuideCardProps> = ({ guide }) => {
         </div>
         <div className={s.content}>
           <div className={s.topContent}>
-            <div className={s.guideType}>
-              <div className={s.purple}>{guide.type}</div>
+            <div
+              className={`${s.guideType} ${guide.type === "single" ? s.single : s.bundle}`}
+            >
+              <div>{guide.type}</div>
             </div>
             <div className={s.pages}>{guide.pageCount} pages</div>
           </div>
