@@ -5,7 +5,7 @@ import { fetchLatestBlogPostsClient } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
 import { trackCardClick } from "@/app/utils/analytics";
-import CardThree from "@/components/cards/card-three/card-three";
+import TinyBlogCard from "./tiny-blog-card";
 
 import s from "./you-might-also-like.module.scss";
 
@@ -105,7 +105,7 @@ const YouMightAlsoLike = ({
     trackCardClick({
       cardTitle: blog.title,
       cardCategory: blog.country,
-      cardType: "CardThree-YouMightAlsoLike",
+      cardType: "TinyBlogCard-YouMightAlsoLike",
       location: window.location.pathname,
       cardPosition: position,
     });
@@ -227,17 +227,11 @@ const YouMightAlsoLike = ({
         <h2>You Might Also Like</h2>
         <div className={s.cardWrapper}>
           {displayCards.map((blog, index) => (
-            <div
-              key={`${blog.slug}-${index}`} // Use index to handle duplicates
+            <TinyBlogCard
+              key={`${blog.slug}-${index}`}
+              blog={blog}
               onClick={() => handleRelatedCardClick(blog, index + 1)}
-            >
-              <CardThree
-                blog={blog}
-                color={
-                  ["purple", "blue", "green", "red"][index % 4] || "purple"
-                }
-              />
-            </div>
+            />
           ))}
         </div>
       </div>
