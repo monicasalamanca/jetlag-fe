@@ -42,13 +42,21 @@
 
       .guideType {
         display: flex;
-        background: linear-gradient(to right, #ec4899, #f43f5e);
+        // background: linear-gradient(to right, #ec4899, #f43f5e);
         color: $color-white;
         padding: 0.25rem 0.75rem;
         border-radius: 9999px;
         font-size: 0.875rem;
         line-height: 1.25rem;
         font-weight: 500;
+
+        &.bundle {
+          background: linear-gradient(to right, #ec4899, #f43f5e);
+        }
+
+        &.single {
+          background: linear-gradient(to right, #3a83f6, #05b6d4);
+        }
 
         h3 {
           color: $color-white;
@@ -136,12 +144,6 @@
     transform 0.2s ease-in-out,
     box-shadow 0.2s ease-in-out;
   -webkit-tap-highlight-color: transparent;
-
-  // &:hover {
-  //   .container {
-  //     // box-shadow: $shadow-md;
-  //   }
-  // }
 
   &:focus {
     outline: none;
