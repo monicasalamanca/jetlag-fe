@@ -1,9 +1,11 @@
 // Google Analytics Configuration
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-E04G0053EJ";
 
-// Check if Google Analytics is available
+// Check if Google Analytics is available and not on localhost
 const isGAAvailable = (): boolean => {
-  return typeof window !== "undefined" && !!window.gtag;
+  if (typeof window === "undefined") return false;
+  if (window.location && window.location.hostname === "localhost") return false;
+  return !!window.gtag;
 };
 
 // Enhanced event tracking with better error handling
