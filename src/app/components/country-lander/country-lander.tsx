@@ -8,10 +8,7 @@ import Hero from "../hero/hero";
 import QuickFactCard from "../country-facts-card/card/card";
 import InfoCard from "../country-facts-card/info-card/info-card";
 import ComingSoonSection from "../coming-soon-section/coming-soon-section";
-import CardOne from "../cards/card-one/card-one";
-import CardTwo from "../cards/card-two/card-two";
 import CardThree from "../cards/card-three/card-three";
-import CardFive from "../cards/card-five/card-five";
 import { Country, BlogPost } from "@/api/types";
 import { fetchBlogsByCountry } from "@/api/client";
 
@@ -174,59 +171,20 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
           }))
         : [];
 
-    // Add blog cards for any country that has blogs - mix of different card types
+    // Add blog cards for any country that has blogs - using CardThree only
     const blogCards =
       blogData.length > 0
         ? blogData.map((blog, index) => {
             const cardProps = blogToCardProps(blog);
             const color = getColour(index, name);
 
-            // Cycle through different card types for variety
-            const cardType = index % 4;
-            let cardComponent;
-
-            switch (cardType) {
-              case 0:
-                cardComponent = (
-                  <CardOne
-                    key={`blog-${blog.id}`}
-                    blog={cardProps}
-                    color={color}
-                  />
-                );
-                break;
-              case 1:
-                cardComponent = (
-                  <CardTwo
-                    key={`blog-${blog.id}`}
-                    blog={cardProps}
-                    color={color}
-                  />
-                );
-                break;
-              case 2:
-                cardComponent = (
-                  <CardThree
-                    key={`blog-${blog.id}`}
-                    blog={cardProps}
-                    color={color}
-                  />
-                );
-                break;
-              case 3:
-                cardComponent = (
-                  <CardFive key={`blog-${blog.id}`} blog={cardProps} />
-                );
-                break;
-              default:
-                cardComponent = (
-                  <CardOne
-                    key={`blog-${blog.id}`}
-                    blog={cardProps}
-                    color={color}
-                  />
-                );
-            }
+            const cardComponent = (
+              <CardThree
+                key={`blog-${blog.id}`}
+                blog={cardProps}
+                color={color}
+              />
+            );
 
             return {
               type: "blog",
