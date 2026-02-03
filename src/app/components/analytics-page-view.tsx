@@ -7,8 +7,9 @@ import {
   trackScrollDepth,
   trackTimeOnPage,
 } from "@/app/utils/analytics";
+import { ConsentGate } from "@/components/storage-banner"; // ✨ NEW
 
-export default function AnalyticsPageView() {
+function AnalyticsPageViewInner() {
   const pathname = usePathname();
   const startTime = useRef<number>(0);
   const scrollDepthTracked = useRef<Set<number>>(new Set());
@@ -86,4 +87,12 @@ export default function AnalyticsPageView() {
   }, [pathname]);
 
   return null;
+}
+
+export default function AnalyticsPageView() {
+  return (
+    <ConsentGate>
+      <AnalyticsPageViewInner />
+    </ConsentGate>
+  );
 }

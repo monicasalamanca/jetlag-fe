@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import ContactForm from "../contact-form/contact-form";
 import { trackLinkClick } from "@/app/utils/analytics";
+import { PrivacySettingsLink } from "../storage-banner";
+import SubscribeForm from "../subscribe-form/subscribe-form";
 
 import s from "./footer.module.scss";
-import SubscribeForm from "../subscribe-form/subscribe-form";
 
 const Footer = () => {
   const handleTwitterClick = () => {
@@ -68,6 +69,12 @@ const Footer = () => {
                 >
                   Terms of Service
                 </Link>
+              </li>
+              <li>
+                <PrivacySettingsLink
+                  text="Privacy Settings"
+                  className={s.quickLink}
+                />
               </li>
               <li>
                 <ContactForm buttonName="Contact Us" showIcon />
@@ -149,6 +156,7 @@ const Footer = () => {
             >
               Terms of Service
             </Link>
+            <PrivacySettingsLink text="Privacy Settings" />
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ import SiteSchemas from "../../components/seo/SiteSchemas";
 import SeoDebugTools from "../../components/seo/SeoDebugTools";
 
 import "./globals.css";
-import { StorageBanner } from "./components/storage-banner";
+import { StorageBanner, ConsentGate } from "./components/storage-banner";
 
 const roboto = Roboto({
   adjustFontFallback: false,
@@ -115,9 +115,11 @@ export default function RootLayout({
         {/* Development-only debug tools */}
         {process.env.NODE_ENV === "development" && <SeoDebugTools />}
 
-        <GoogleAnalytics
-          gaId={process.env.NEXT_PUBLIC_GA_ID || "G-E04G0053EJ"}
-        />
+        <ConsentGate>
+          <GoogleAnalytics
+            gaId={process.env.NEXT_PUBLIC_GA_ID || "G-E04G0053EJ"}
+          />
+        </ConsentGate>
         <AdsenseScript />
         <AnalyticsPageView />
         <HeaderWrapper />

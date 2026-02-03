@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { ConsentGate } from "../storage-banner";
 import s from "./google-ad-unit.module.scss";
+
+const ADSENSE_CLIENT_ID =
+  process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-1354578788955507";
 
 interface GoogleAdUnitProps {
   adSlot?: string;
@@ -10,9 +14,6 @@ interface GoogleAdUnitProps {
   fullWidthResponsive?: boolean;
 }
 
-// Global flag to track if AdSense script has been injected
-let adsenseScriptInjected = false;
-
 // Extend Window interface for AdSense
 declare global {
   interface Window {
@@ -20,12 +21,16 @@ declare global {
   }
 }
 
-const GoogleAdUnit: React.FC<GoogleAdUnitProps> = ({
+/**
+ * Inner component that only renders when consent is given
+ * Assumes AdSense script is already loaded globally by AdsenseScript component
+ */
+function AdUnitInner({
   adSlot = "2730891803",
-  adClient = "ca-pub-1354578788955507",
+  adClient = ADSENSE_CLIENT_ID,
   adFormat = "auto",
   fullWidthResponsive = true,
-}) => {
+}: GoogleAdUnitProps) {
   const adRef = useRef<HTMLModElement>(null);
   const adPushed = useRef(false);
 
@@ -33,20 +38,17 @@ const GoogleAdUnit: React.FC<GoogleAdUnitProps> = ({
     // Only run on client side
     if (typeof window === "undefined") return;
 
-    // Inject AdSense script only once per page
-    if (!adsenseScriptInjected) {
-      const script = document.createElement("script");
-      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClient}`;
-      script.async = true;
-      script.crossOrigin = "anonymous";
-      document.head.appendChild(script);
-      adsenseScriptInjected = true;
-    }
-
-    // Wait for both the script to load and DOM to be ready before pushing
+    // Wait for AdSense script to load and DOM to be ready before pushing
     const pushAd = () => {
       try {
         if (adRef.current && !adPushed.current) {
+          // Check if AdSense script is loaded
+          if (typeof window.adsbygoogle === "undefined") {
+            // Script not loaded yet, retry
+            setTimeout(pushAd, 100);
+            return;
+          }
+
           // Ensure the element has dimensions before pushing
           const rect = adRef.current.getBoundingClientRect();
           if (rect.width > 0 || rect.height > 0) {
@@ -58,11 +60,11 @@ const GoogleAdUnit: React.FC<GoogleAdUnitProps> = ({
           }
         }
       } catch (error) {
-        console.error("AdSense error:", error);
+        console.error("[AdSense] Error initializing ad unit:", error);
       }
     };
 
-    // Delay to ensure DOM is fully rendered
+    // Delay to ensure DOM is fully rendered and script loaded
     const timer = setTimeout(pushAd, 100);
 
     return () => clearTimeout(timer);
@@ -85,6 +87,21 @@ const GoogleAdUnit: React.FC<GoogleAdUnitProps> = ({
         data-full-width-responsive={fullWidthResponsive.toString()}
       />
     </div>
+  );
+}
+
+// Main component that wraps with ConsentGate
+const GoogleAdUnit: React.FC<GoogleAdUnitProps> = (props) => {
+  return (
+    <ConsentGate
+      fallback={
+        <div className={s.adContainer}>
+          <div className={s.adPlaceholder}>Ad space</div>
+        </div>
+      }
+    >
+      <AdUnitInner {...props} />
+    </ConsentGate>
   );
 };
 
