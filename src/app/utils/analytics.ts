@@ -1,3 +1,5 @@
+import { hasAcceptedConsent } from "@/app/components/storage-banner/consent-utils";
+
 // Google Analytics Configuration
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-E04G0053EJ";
 
@@ -5,6 +7,10 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-E04G0053EJ";
 const isGAAvailable = (): boolean => {
   if (typeof window === "undefined") return false;
   if (window.location && window.location.hostname === "localhost") return false;
+
+  // ✨ NEW: Check consent before using analytics
+  if (!hasAcceptedConsent()) return false;
+
   return !!window.gtag;
 };
 

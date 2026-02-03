@@ -6,7 +6,7 @@ const PrivacyPolicyComponent = () => {
     <div className={s.container}>
       <h1>Privacy Policy</h1>
 
-      <p>Last Updated: Feb, 1, 2026</p>
+      <p>Last Updated: Feb, 2, 2026</p>
       <p>
         Alright, here’s the deal. We respect your privacy. That said, if you’re
         on the internet in 2025, some level of tracking exists. We aim to be
@@ -38,20 +38,62 @@ const PrivacyPolicyComponent = () => {
           <h2>Cookies, Ads, and Tracking (The Important Part)</h2>
           <p>We use cookies and similar technologies for a few reasons:</p>
           <ul>
+            <li>To keep the site functioning properly.</li>
             <li>To understand how people use the site so we can improve it.</li>
-            <li>To remember preferences and consent choices.</li>
-            <li>To display advertising through Google AdSense.</li>
+            <li>To display advertising and measure its performance.</li>
           </ul>
+          <p>
+            Some of these are essential. Some are optional. We don’t load the
+            optional ones unless you say it’s okay.
+          </p>
+        </li>
+        <li>
+          <h2>Your Privacy Choices</h2>
+          <p>We use cookies and local storage for two purposes:</p>
+          <ul>
+            <li>
+              <strong>Essential:</strong> Required to keep the site working.
+              These are always on and cannot be disabled.
+            </li>
+            <li>
+              <strong>Optional:</strong> Measure ad performance and prevent
+              fraud.
+            </li>
+          </ul>
+          <p>
+            When you visit the site, you’ll see a consent banner that lets you:
+          </p>
+          <ul>
+            <li>Accept all optional cookies</li>
+            <li>Reject all optional cookies</li>
+            <li>Learn more before deciding</li>
+          </ul>
+          <p>
+            Your choice is stored for <strong>180 days</strong>, after which we
+            may ask again.
+          </p>
+          <p>
+            You can change your decision at any time by clicking{" "}
+            <strong>“Privacy settings”</strong> in the site footer.
+          </p>
+          <p>
+            <strong>Current consent version: </strong>1.0
+          </p>
+          <p>
+            If your browser blocks storage (for example, private browsing
+            modes), we’ll apply your choice only for the current session and may
+            ask again next time.
+          </p>
         </li>
         <li>
           <h2>Google AdSense</h2>
           <p>
-            We use Google AdSense to display ads on some pages. Google may use
-            cookies or similar technologies to:
+            We use Google AdSense to display ads on some pages. If you consent,
+            Google may use cookies or similar technologies to:
           </p>
           <ul>
-            <li>Show ads based on visits to this and other websites.</li>
-            <li>Measure ad performance and prevent fraud.</li>
+            <li>Show ads based on visits to this and other websites</li>
+            <li>Measure ad performance and prevent fraud</li>
           </ul>
           <p>
             Google’s use of advertising cookies enables it and its partners to
@@ -59,27 +101,18 @@ const PrivacyPolicyComponent = () => {
           </p>
           <p>
             You can learn more about how Google handles data here:
-            https://policies.google.com/technologies/ads
+            <a
+              href="https://policies.google.com/technologies/ads"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://policies.google.com/technologies/ads
+            </a>
           </p>
-        </li>
-        <li>
-          <h2>Consent and Your Choices</h2>
-          <ul>
-            <li>
-              Ads and analytics are not loaded until you give consent, where
-              required by law.
-            </li>
-            <li>
-              You can accept or decline cookies through our cookie notice.
-            </li>
-            <li>
-              You can adjust your browser settings to block or delete cookies at
-              any time, though some site features may not work as intended.
-            </li>
-          </ul>
           <p>
-            Using the site after consenting means you’re okay with this setup.
-            Not consenting means fewer cookies, fewer ads, and the same content.
+            If you reject optional cookies, ads may still appear, but they will
+            be less personalized or limited, depending on your region and
+            applicable laws.
           </p>
         </li>
         <li>
@@ -89,7 +122,7 @@ const PrivacyPolicyComponent = () => {
             <li>Improve site performance and content.</li>
             <li>Communicate with you if you opted in.</li>
             <li>Keep the site secure and functioning.</li>
-            <li>Display ads and measure their performance.</li>
+            <li>Display ads and measure their performance (with consent).</li>
           </ul>
           <p>We do not sell your personal data. Ever.</p>
         </li>

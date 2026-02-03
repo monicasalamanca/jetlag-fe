@@ -15,6 +15,28 @@
     animation: slideOut 0.3s ease forwards;
   }
 
+  // Settings mode (modal overlay)
+  &.settingsMode {
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease forwards;
+
+    &.hiding {
+      animation: fadeOut 0.3s ease forwards;
+    }
+
+    .banner {
+      max-width: 700px;
+      margin: 0;
+      animation: scaleIn 0.3s ease forwards;
+    }
+  }
+
   @media only screen and (max-width: 768px) {
     padding: 12px;
   }
@@ -72,11 +94,66 @@
   }
 }
 
+.essentialInfo {
+  font-size: 13px;
+  color: $color-neutral-400;
+  margin: 12px 0 0 0;
+  padding: 8px 12px;
+  background: rgba(249, 250, 251, 0.8);
+  border-left: 3px solid $color-blue;
+  border-radius: 4px;
+  line-height: 1.4;
+
+  strong {
+    color: $color-neutral-900;
+    font-weight: 600;
+  }
+
+  @media only screen and (max-width: 768px) {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+.fallbackMessage {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: rgba(253, 246, 178, 0.3);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 6px;
+  font-size: 13px;
+  color: $color-neutral-900;
+  line-height: 1.4;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 12px;
+    padding: 8px 10px;
+    margin-top: 12px;
+  }
+}
+
+.fallbackIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: rgb(217, 119, 6);
+  margin-top: 2px;
+
+  @media only screen and (max-width: 768px) {
+    width: 14px;
+    height: 14px;
+  }
+}
+
 .actions {
   display: flex;
   gap: 12px;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;
@@ -154,6 +231,22 @@
   }
 }
 
+.rejectButton {
+  background: transparent;
+  color: rgb(239, 68, 68);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+
+  &:hover {
+    color: rgb(220, 38, 38);
+    border-color: rgba(239, 68, 68, 0.5);
+    background: rgba(254, 242, 242, 0.5);
+  }
+
+  &:active {
+    background: rgba(254, 242, 242, 0.8);
+  }
+}
+
 // Animations
 @keyframes slideIn {
   from {
@@ -174,6 +267,35 @@
   to {
     opacity: 0;
     transform: translateY(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
