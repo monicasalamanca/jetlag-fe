@@ -14,6 +14,8 @@ import {
   GuideResponse,
   DetailedGuide,
   DetailedGuideResponse,
+  LifestyleSpotlightCard,
+  LifestyleSpotlightResponse,
 } from "./types";
 import {
   sanitizeInternalUrls,
@@ -724,5 +726,81 @@ export const fetchGuideBySlugAndType = async (
   } catch (error) {
     console.error(`Error fetching guide (${slug}, ${type}): `, error);
     return null;
+  }
+};
+
+/**
+ * Fetch lifestyle spotlight cards for the homepage
+ * Used to display 3 featured lifestyle cards on the home page
+ *
+ * @returns An array of 3 LifestyleSpotlightCard objects
+ * @throws Error if the fetch fails or data is invalid (to trigger Next.js error boundary)
+ */
+export const fetchLifestyleSpotlightCards = async (): Promise<
+  LifestyleSpotlightCard[]
+> => {
+  // 🧪 TEST ERROR: Uncomment to test error boundary
+  const ENABLE_TEST_ERROR = false; // Set to false to disable test error
+
+  if (ENABLE_TEST_ERROR) {
+    throw new Error("TEST: Error boundary is working!");
+  }
+
+  const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token =
+    process.env.STRAPI_READ_API_TOKEN ||
+    process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  if (!baseUrl) {
+    throw new Error("STRAPI_URL is not defined");
+  }
+
+  const url = `${baseUrl}/api/home-pages?populate[lifestyleSpotlight][fields][0]=title&populate[lifestyleSpotlight][fields][1]=slug&populate[lifestyleSpotlight][fields][2]=lifestyle&populate[lifestyleSpotlight][populate][country][fields][0]=name&populate[lifestyleSpotlight][populate][tags][fields][0]=name&populate[lifestyleSpotlight][populate][images]=*`;
+
+  try {
+    const res = await fetch(url, {
+      next: { revalidate: 604800 }, // Revalidate once per week (7 days)
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(
+        `Failed to fetch lifestyle spotlight cards: ${res.statusText}`,
+      );
+    }
+
+    const data: LifestyleSpotlightResponse = await res.json();
+
+    if (!data.data || data.data.length === 0) {
+      throw new Error("No home page data found");
+    }
+
+    const homePageData = data.data[0];
+    const spotlightBlogs =
+      homePageData.attributes.lifestyleSpotlight?.data || [];
+
+    if (spotlightBlogs.length === 0) {
+      throw new Error("No lifestyle spotlight blogs found");
+    }
+
+    // Map the response to LifestyleSpotlightCard format
+    return spotlightBlogs.map((blog) => ({
+      id: blog.id,
+      title: blog.attributes.title,
+      slug: blog.attributes.slug,
+      lifestyle: blog.attributes.lifestyle,
+      countryName: blog.attributes.country?.data?.attributes?.name || null,
+      tags: blog.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
+      imageUrl:
+        blog.attributes.images?.data?.[0]?.attributes?.formats?.small?.url ||
+        blog.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
+        blog.attributes.images?.data?.[0]?.attributes?.url ||
+        "/placeholder-image.jpg",
+    }));
+  } catch (error) {
+    console.error("Error fetching lifestyle spotlight cards:", error);
+    throw error; // Re-throw to trigger Next.js error boundary
   }
 };

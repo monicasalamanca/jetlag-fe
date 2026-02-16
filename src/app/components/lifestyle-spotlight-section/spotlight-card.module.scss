@@ -1,0 +1,139 @@
+@use "@/styles/tokens" as *;
+
+.card {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: $radius-md;
+  background-color: $color-white;
+  box-shadow: $shadow-sm;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-md;
+  }
+
+  &:focus-visible {
+    outline: 3px solid $color-blue;
+    outline-offset: 2px;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: $color-neutral-100;
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: $space-lg $space-lg $space-xl;
+    background-color: $shadow-overlay;
+    text-align: left;
+  }
+}
+
+.card--primary .imageWrapper {
+  height: 209px;
+
+  @media only screen and (min-width: $breakpoint-mobile) {
+    height: 100%;
+  }
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    height: 434px;
+  }
+
+  .badge {
+    background-color: $color-purple;
+  }
+}
+
+.card--secondary .imageWrapper {
+  //   height: 300px;
+  height: 209px;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    height: 209px;
+  }
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+
+  .card:hover & {
+    transform: scale(1.05);
+  }
+}
+
+.badge {
+  position: absolute;
+  top: $space-lg;
+  left: $space-lg;
+  padding: $space-sm $space-lg;
+  color: $color-white;
+  font-family: $font-family-primary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  border-radius: $radius-pill;
+  box-shadow: $shadow-sm;
+  z-index: $z-index-dropdown;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    padding: $space-xs $space-sm;
+    top: $space-lg;
+    left: $space-lg;
+  }
+}
+
+// Secondary card badge colors based on position
+.badge--position1 {
+  background-color: $color-green;
+}
+
+.badge--position2 {
+  background-color: $color-orange;
+}
+
+.title {
+  position: absolute;
+  bottom: $space-lg;
+  left: $space-lg;
+  margin: 0;
+  font-family: $font-family-primary;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  color: $color-white;
+
+  .card--primary & {
+    font-size: $font-size-xl;
+
+    @media only screen and (min-width: $breakpoint-tablet) {
+      font-size: $font-size-xl-base;
+      width: calc(100% - 32px);
+    }
+  }
+
+  .card--secondary & {
+    font-size: $font-size-lg;
+
+    @media only screen and (min-width: $breakpoint-tablet) {
+      font-size: $font-size-xl;
+    }
+  }
+}

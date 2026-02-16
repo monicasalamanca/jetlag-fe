@@ -477,3 +477,70 @@ export type DetailedGuideResponse = {
     };
   };
 };
+
+// Lifestyle Spotlight types for homepage
+export type LifestyleSpotlightBlogResponse = {
+  id: number;
+  attributes: {
+    title: string;
+    slug: string;
+    lifestyle: boolean;
+    country: {
+      data: {
+        id: number;
+        attributes: {
+          name: string;
+        };
+      } | null;
+    };
+    tags: {
+      data: {
+        id: number;
+        attributes: {
+          name: string;
+        };
+      }[];
+    };
+    images?: {
+      data?: Array<{
+        id: number;
+        attributes: {
+          url: string;
+          alternativeText?: string | null;
+          width?: number;
+          height?: number;
+          formats?: {
+            small?: Format;
+            medium?: Format;
+            large?: Format;
+            thumbnail?: Format;
+          };
+        };
+      }>;
+    };
+  };
+};
+
+export type LifestyleSpotlightResponse = {
+  data: {
+    id: number;
+    attributes: {
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+      lifestyleSpotlight: {
+        data: LifestyleSpotlightBlogResponse[];
+      };
+    };
+  }[];
+};
+
+export type LifestyleSpotlightCard = {
+  id: number;
+  title: string;
+  slug: string;
+  lifestyle: boolean;
+  countryName: string | null;
+  tags: string[];
+  imageUrl: string;
+};

@@ -3,6 +3,7 @@ import HomeContent from "@/components/home-content/home-content";
 import { createMetadata } from "@/app/utils/metadata";
 import PageSchemas from "../../components/seo/PageSchemas";
 import { SITE_CONFIG } from "../../lib/seo/schema/config";
+import { fetchLifestyleSpotlightCards } from "@/api/client";
 
 export const metadata: Metadata = createMetadata({
   title: "The Jet Lag Chronicles | Authentic Travel Stories and Guides",
@@ -13,6 +14,9 @@ export const metadata: Metadata = createMetadata({
 });
 
 const Home = async () => {
+  // Fetch lifestyle spotlight cards for the homepage
+  const lifestyleSpotlightCards = await fetchLifestyleSpotlightCards();
+
   return (
     <>
       {/* Homepage SEO Schemas */}
@@ -33,7 +37,7 @@ const Home = async () => {
         breadcrumbs={[{ name: "Home", item: SITE_CONFIG.url, position: 1 }]}
       />
 
-      <HomeContent />
+      <HomeContent lifestyleSpotlightCards={lifestyleSpotlightCards} />
     </>
   );
 };
