@@ -2,14 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { fetchLatestBlogPostsClient } from "@/api/client";
-import { BlogPost } from "@/api/types";
+import { BlogPost, LifestyleSpotlightCard } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
 import Hero from "@/components/hero/hero";
 import CardThree from "@/components/cards/card-three/card-three";
+import LifestyleSpotlightSection from "@/app/components/lifestyle-spotlight-section/lifestyle-spotlight-section";
 
 import s from "./home-content.module.scss";
 
-const HomeContent = () => {
+interface HomeContentProps {
+  lifestyleSpotlightCards: LifestyleSpotlightCard[];
+}
+
+const HomeContent = ({ lifestyleSpotlightCards }: HomeContentProps) => {
   const [blogs, setBlogs] = useState<CardProps[]>([]);
   const [shuffledBlogs, setShuffledBlogs] = useState<CardProps[]>([]);
   const [loading, setLoading] = useState(true);
@@ -111,6 +116,8 @@ const HomeContent = () => {
           tags: ["free guide", "thailand"],
         }}
       />
+      {/* Lifestyle Spotlight Section */}
+      <LifestyleSpotlightSection blogs={lifestyleSpotlightCards} />
       {loading ? (
         <section className={s.latestChronicles}>
           <div className={s.wrapper}>

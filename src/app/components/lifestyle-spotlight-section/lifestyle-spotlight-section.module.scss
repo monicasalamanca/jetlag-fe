@@ -1,0 +1,63 @@
+@use "@/styles/tokens" as *;
+
+.spotlightSection {
+  width: 100%;
+  padding-top: $space-4xl;
+  background-color: $color-neutral-50;
+  padding: $space-xl $space-lg;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    width: 768px;
+    margin: auto;
+    padding: 0;
+    padding-top: $space-4xl;
+  }
+}
+
+.container {
+  //   max-width: 1440px;
+  margin: 0 auto;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    // width: 768px;
+    // margin: 48px auto;
+    // border: 1px solid red;
+  }
+}
+
+.grid {
+  display: grid;
+  row-gap: $space-lg;
+  grid-template-columns: 1fr;
+
+  @media only screen and (min-width: $breakpoint-mobile) {
+    grid-template-columns: 3fr 2fr;
+    column-gap: $space-lg;
+    row-gap: 0;
+  }
+}
+
+.primaryCard {
+  width: 100%;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    grid-row: 1 / span 2;
+  }
+}
+
+.secondaryCards {
+  display: grid;
+  row-gap: $space-lg;
+  grid-template-columns: 1fr;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    grid-template-columns: 1fr 1fr;
+    column-gap: $space-lg;
+  }
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    grid-template-columns: 1fr;
+    row-gap: $space-lg;
+    column-gap: 0;
+  }
+}
