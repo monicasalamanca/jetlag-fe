@@ -97,6 +97,9 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code", // Add your actual Google verification code
   },
+  other: {
+    "agd-partner-manual-verification": "",
+  },
 };
 
 export default function RootLayout({
