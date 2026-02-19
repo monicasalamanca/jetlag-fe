@@ -2,19 +2,28 @@
 
 import { useEffect, useState } from "react";
 import { fetchLatestBlogPostsClient } from "@/api/client";
-import { BlogPost, LifestyleSpotlightCard } from "@/api/types";
+import {
+  BlogPost,
+  LifestyleSpotlightCard,
+  TrendingThisWeekCard,
+} from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
 import Hero from "@/components/hero/hero";
 import CardThree from "@/components/cards/card-three/card-three";
 import LifestyleSpotlightSection from "@/app/components/lifestyle-spotlight-section/lifestyle-spotlight-section";
+import TrendingThisWeekSection from "@/app/components/trending-this-week-section/trending-this-week-section";
 
 import s from "./home-content.module.scss";
 
 interface HomeContentProps {
   lifestyleSpotlightCards: LifestyleSpotlightCard[];
+  trendingThisWeekCards: TrendingThisWeekCard[];
 }
 
-const HomeContent = ({ lifestyleSpotlightCards }: HomeContentProps) => {
+const HomeContent = ({
+  lifestyleSpotlightCards,
+  trendingThisWeekCards,
+}: HomeContentProps) => {
   const [blogs, setBlogs] = useState<CardProps[]>([]);
   const [shuffledBlogs, setShuffledBlogs] = useState<CardProps[]>([]);
   const [loading, setLoading] = useState(true);
@@ -118,6 +127,10 @@ const HomeContent = ({ lifestyleSpotlightCards }: HomeContentProps) => {
       />
       {/* Lifestyle Spotlight Section */}
       <LifestyleSpotlightSection blogs={lifestyleSpotlightCards} />
+
+      {/* Trending This Week Section */}
+      <TrendingThisWeekSection trendingThisWeekCards={trendingThisWeekCards} />
+
       {loading ? (
         <section className={s.latestChronicles}>
           <div className={s.wrapper}>
@@ -175,45 +188,6 @@ const HomeContent = ({ lifestyleSpotlightCards }: HomeContentProps) => {
                     blog={shuffledBlogs[5]}
                     color="green"
                     section="mostViewed"
-                  />
-                </div>
-              </div>
-            </section>
-          )}
-          {shuffledBlogs.length >= 12 && (
-            <section className={s.trending}>
-              <div className={s.wrapper}>
-                <h2>Trending</h2>
-                <div className={s.cardWrapper}>
-                  <CardThree
-                    blog={shuffledBlogs[6]}
-                    color="red"
-                    section="trending"
-                  />
-                  <CardThree
-                    blog={shuffledBlogs[7]}
-                    color="green"
-                    section="trending"
-                  />
-                  <CardThree
-                    blog={shuffledBlogs[8]}
-                    color="blue"
-                    section="trending"
-                  />
-                  <CardThree
-                    blog={shuffledBlogs[9]}
-                    color="purple"
-                    section="trending"
-                  />
-                  <CardThree
-                    blog={shuffledBlogs[10]}
-                    color="red"
-                    section="trending"
-                  />
-                  <CardThree
-                    blog={shuffledBlogs[11]}
-                    color="green"
-                    section="trending"
                   />
                 </div>
               </div>

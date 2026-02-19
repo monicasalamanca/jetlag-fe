@@ -1,0 +1,152 @@
+@use "@/styles/tokens" as *;
+
+.trendingSection {
+  width: 100%;
+  padding: $space-xl $space-lg 0;
+  background-color: $color-neutral-50;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    width: 768px;
+    margin: auto;
+    padding: $space-4xl 0 0;
+  }
+}
+
+// ── Section Header ──────────────────────────────────────────────────────────
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  margin-bottom: $space-xl;
+}
+
+.fireIcon {
+  color: $color-orange-bright;
+  font-size: $font-size-xl;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: $font-family-primary;
+  font-size: $font-size-xl-base;
+  font-weight: $font-weight-bold;
+  color: $color-neutral-900;
+  line-height: 1.2;
+}
+
+// ── Grid Layout ─────────────────────────────────────────────────────────────
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+
+  @media only screen and (min-width: $breakpoint-mobile) {
+    flex-direction: row;
+  }
+}
+
+// ── Card ─────────────────────────────────────────────────────────────────────
+// Horizontal layout: image thumbnail on the left, white content panel on the right.
+
+.card {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  overflow: hidden;
+  border-radius: $radius-md;
+  background-color: $color-white;
+  box-shadow: $shadow-sm;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  @media only screen and (min-width: $breakpoint-mobile) {
+    flex: 1;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-md;
+
+    .image {
+      transform: scale(1.05);
+    }
+  }
+
+  &:focus-visible {
+    outline: 3px solid $color-orange-bright;
+    outline-offset: 2px;
+  }
+}
+
+// ── Image (left column) ───────────────────────────────────────────────────────
+
+.imageWrapper {
+  position: relative;
+  flex: 0 0 42%;
+  overflow: hidden;
+  background-color: $color-neutral-200;
+  min-height: 140px;
+
+  @media only screen and (min-width: $breakpoint-mobile) {
+    min-height: 160px;
+  }
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+// ── Content panel (right column) ──────────────────────────────────────────────
+
+.cardContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: $space-sm;
+  padding: $space-lg $space-lg;
+  background-color: $color-white;
+}
+
+// ── Trending Label ────────────────────────────────────────────────────────────
+
+.trendingLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-xs;
+  color: $color-orange-bright;
+  font-family: $font-family-primary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.trendingIcon {
+  font-size: 11px;
+}
+
+// ── Card Title ────────────────────────────────────────────────────────────────
+
+.cardTitle {
+  margin: 0;
+  font-family: $font-family-primary;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-sm;
+  line-height: 1.4;
+  color: $color-neutral-900;
+
+  @media only screen and (min-width: $breakpoint-mobile) {
+    font-size: $font-size-base;
+  }
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    font-size: $font-size-lg;
+  }
+}
