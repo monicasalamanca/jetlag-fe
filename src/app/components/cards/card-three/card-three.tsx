@@ -73,7 +73,7 @@ const CardThree: FC<CardThreeProps> = ({ blog, color, section }) => {
     <Link
       href={generateBlogUrl()}
       className={s.cardLink}
-      onClick={handleCardClick}
+      onPointerDown={handleCardClick}
       rel="canonical"
     >
       <div className={s.container}>

@@ -56,4 +56,15 @@
       }
     }
   }
+
+  .emptyState {
+    text-align: center;
+    padding: $space-3xl $space-lg;
+    color: $color-neutral-500;
+
+    p {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-medium;
+    }
+  }
 }
