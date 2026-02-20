@@ -212,28 +212,40 @@ export const fetchBlogPost = async (
   }
 };
 
-// gets all the latest blog posts
-// this is used for the home page
-// TODO: as it gets bigger limit to 3 or 4 posts only
-export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
-  // const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&pagination[page]=1&pagination[pageSize]=3&populate[images]=*&populate[category]=*`;
-  const url = `${process.env.STRAPI_URL}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[country]=*&populate[tags]=*`;
+// Gets the latest blog posts — used server-side with ISR (2-day revalidation).
+// Throws on error to trigger the Next.js error boundary.
+export const fetchLatestBlogPosts = async (): Promise<BlogPost[]> => {
+  // throw new Error("fetchLatestBlogPosts is not implemented yet"); // Placeholder to prevent accidental usage before implementation
+  const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token =
+    process.env.STRAPI_READ_API_TOKEN ||
+    process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  if (!baseUrl) {
+    throw new Error("STRAPI_URL is not configured");
+  }
+
+  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[country]=*&populate[tags]=*`;
 
   try {
-    // const res = await fetch(url, { next: { revalidate: 604800 } }); // it caches for a week
     const res = await fetch(url, {
-      cache: "no-store",
+      next: { revalidate: 172800 }, // ISR: revalidate every 2 days
       headers: {
-        Authorization: `Bearer ${process.env.STRAPI_READ_API_TOKEN}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
     if (!res.ok) {
-      console.error("Failed to fetch the latest blog posts: ", res.statusText);
-      return null;
+      throw new Error(
+        `Failed to fetch the latest blog posts: ${res.status} ${res.statusText}`,
+      );
     }
 
     const data = await res.json();
+
+    if (!data.data || !Array.isArray(data.data)) {
+      throw new Error("Invalid response format from blog posts API");
+    }
 
     return data.data.map((item: BlogPostResponse) => {
       const content = sanitizeInternalUrls(item.attributes.content || "");
@@ -257,7 +269,8 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
         imageUrl:
           item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
+          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url ||
+          "/placeholder-image.jpg",
         country: item.attributes.country?.data?.attributes?.name,
         tags:
           item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
@@ -266,8 +279,8 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[] | null> => {
       };
     });
   } catch (error) {
-    console.error("Error fetching the latests blog posts: ", error);
-    return null;
+    console.error("Error fetching the latest blog posts:", error);
+    throw error; // Re-throw to trigger Next.js error boundary
   }
 };
 
