@@ -1,11 +1,9 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo } from "react";
 import Hero from "../hero/hero";
 import QuickFactCard from "../country-facts-card/card/card";
 import CardThree from "../cards/card-three/card-three";
-import { fetchLatestBlogPostsClient } from "@/api/client";
-import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
 
 import s from "./lifestyle-lander.module.scss";
@@ -143,69 +141,7 @@ const getColour = (index: number, seed: string = "") => {
   return colourStyle[colourIndex];
 };
 
-const LifestyleLander = () => {
-  const [blogs, setBlogs] = useState<CardProps[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  // Function to map API BlogPost to CardProps format
-  const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
-    const tagsToUse =
-      blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
-    let url = "";
-    let countryToUse = "";
-    if (blogPost.lifestyle) {
-      url = `/lifestyle/${blogPost.slug}`;
-      countryToUse = "lifestyle";
-    } else {
-      // Use country for URL generation
-      if (blogPost.country) {
-        countryToUse = blogPost.country;
-        url = `/${countryToUse.toLowerCase().replace(/\s+/g, "-")}/${blogPost.slug}`;
-      } else {
-        countryToUse = "";
-        url = `/${blogPost.slug}`;
-      }
-    }
-
-    return {
-      title: blogPost.title,
-      description: blogPost.description || "",
-      thumbnail: blogPost.imageUrl || "/placeholder-image.jpg",
-      tags: tagsToUse,
-      date: new Date(blogPost.publishedAt).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      }),
-      country: countryToUse,
-      readTime: "5 mins",
-      slug: blogPost.slug,
-      url: url,
-    };
-  };
-
-  useEffect(() => {
-    const getBlogs = async () => {
-      try {
-        setLoading(true);
-        const blogData = await fetchLatestBlogPostsClient();
-        if (blogData) {
-          // Filter only lifestyle blogs
-          const lifestyleBlogs = blogData.filter(
-            (blog) => blog.lifestyle === true,
-          );
-          const mappedBlogs = lifestyleBlogs.map(mapBlogPostToCardProps);
-          setBlogs(mappedBlogs);
-        }
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getBlogs();
-  }, []);
-
+const LifestyleLander = ({ blogs }: { blogs: CardProps[] }) => {
   // Seeded random function for deterministic shuffling
   const seededRandom = (seed: string) => {
     let hash = 0;
@@ -222,10 +158,6 @@ const LifestyleLander = () => {
 
   // Combine all cards into one array
   const allCards = useMemo(() => {
-    if (loading) {
-      return [];
-    }
-
     const quickFactCards = quickFacts.map((fact, index) => ({
       type: "quickFact",
       id: fact.id,
@@ -260,7 +192,7 @@ const LifestyleLander = () => {
     });
 
     return [...quickFactCards, ...blogCards];
-  }, [blogs, loading]);
+  }, [blogs]);
 
   // Filter and shuffle cards with deterministic randomization
   const filteredCards = useMemo(() => {
@@ -307,23 +239,16 @@ const LifestyleLander = () => {
           tags: ["free guide", "thailand"],
         }}
       />
-      {loading ? (
-        <section className={s.masonryGridSection}>
-          <div>Loading...</div>
-        </section>
-      ) : (
-        <section className={s.masonryGridSection}>
-          {/* {filteredCards.map((card: any) => card.component)} */}
-          <div className={s.column}>
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {firstHalf.map((card: any) => card.component)}
-          </div>
-          <div className={s.column}>
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {secondHalf.map((card: any) => card.component)}
-          </div>
-        </section>
-      )}
+      <section className={s.masonryGridSection}>
+        <div className={s.column}>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {firstHalf.map((card: any) => card.component)}
+        </div>
+        <div className={s.column}>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {secondHalf.map((card: any) => card.component)}
+        </div>
+      </section>
     </main>
   );
 };
