@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import LifestyleLander from "@/components/lifestyle-lander/lifestyle-lander";
 import { createMetadata } from "@/app/utils/metadata";
 import PageSchemas from "../../../components/seo/PageSchemas";
-import { SITE_CONFIG } from "../../../lib/seo/schema/config";
+import { SITE_URL } from "../../../lib/seo/schema/utils";
+import { fetchLatestBlogPosts } from "@/api/client";
+import { BlogPost } from "@/api/types";
+import { CardProps } from "@/app/components/cards/card.types";
+
+// ISR: revalidate the lifestyle listing page every 2 days
+export const revalidate = 172800;
 
 export const metadata: Metadata = createMetadata({
   title: "Digital Nomad Lifestyle",
@@ -12,13 +18,41 @@ export const metadata: Metadata = createMetadata({
   image: "https://thejetlagchronicles.com/lifestyle-og.jpg",
 });
 
-const LifestylePage = () => {
+const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
+  const tagsToUse =
+    blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
+
+  const url = `/lifestyle/${blogPost.slug}`;
+
+  return {
+    title: blogPost.title,
+    description: blogPost.description,
+    thumbnail: blogPost.imageUrl || "/placeholder-image.jpg",
+    tags: tagsToUse,
+    date: new Date(blogPost.publishedAt).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }),
+    country: "lifestyle",
+    readTime: "5 mins",
+    slug: blogPost.slug,
+    url,
+  };
+};
+
+export default async function LifestylePage() {
+  const allPosts = await fetchLatestBlogPosts();
+  const blogs: CardProps[] = allPosts
+    .filter((post) => post.lifestyle === true)
+    .map(mapBlogPostToCardProps);
+
   return (
     <>
       {/* Lifestyle Page SEO Schemas */}
       <PageSchemas
         page={{
-          url: `${SITE_CONFIG.url}/lifestyle`,
+          url: `${SITE_URL}/lifestyle`,
           title: "Digital Nomad Lifestyle",
           description:
             "Discover the digital nomad lifestyle with The Jet Lag Chronicles. Learn about remote work, location independence, and creating a sustainable nomadic lifestyle.",
@@ -31,18 +65,12 @@ const LifestylePage = () => {
           },
         }}
         breadcrumbs={[
-          { name: "Home", item: SITE_CONFIG.url, position: 1 },
-          {
-            name: "Lifestyle",
-            item: `${SITE_CONFIG.url}/lifestyle`,
-            position: 2,
-          },
+          { name: "Home", item: SITE_URL, position: 1 },
+          { name: "Lifestyle", item: `${SITE_URL}/lifestyle`, position: 2 },
         ]}
       />
 
-      <LifestyleLander />
+      <LifestyleLander blogs={blogs} />
     </>
   );
-};
-
-export default LifestylePage;
+}
