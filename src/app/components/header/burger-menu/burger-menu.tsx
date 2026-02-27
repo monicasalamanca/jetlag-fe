@@ -12,7 +12,11 @@ import {
   faUsers,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import {
+  faFacebookF,
+  faInstagram,
+  faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 import { GroupedCountries } from "@/api/types";
 import ContactForm from "@/components/contact-form/contact-form";
 import SubscribeForm from "../../subscribe-form/subscribe-form";
@@ -187,6 +191,26 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                   onClick={closeMenu}
                 >
                   <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
+                </a>
+                <a
+                  aria-label="Follow us on Facebook"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={s.followLink}
+                  href="https://www.facebook.com/thejetlaggersfb"
+                  onClick={closeMenu}
+                >
+                  <FontAwesomeIcon icon={faFacebookF} className={s.icon} />
+                </a>
+                <a
+                  aria-label="Follow us on Instagram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={s.followLink}
+                  href="https://www.instagram.com/thejetlaggers_ig"
+                  onClick={closeMenu}
+                >
+                  <FontAwesomeIcon icon={faInstagram} className={s.icon} />
                 </a>
               </div>
             </footer>

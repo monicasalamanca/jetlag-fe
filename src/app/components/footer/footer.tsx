@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import {
+  faFacebookF,
+  faInstagram,
+  faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 import ContactForm from "../contact-form/contact-form";
 import { trackLinkClick } from "@/app/utils/analytics";
 import { PrivacySettingsLink } from "../storage-banner";
@@ -15,6 +19,24 @@ const Footer = () => {
     trackLinkClick({
       url: "https://x.com/thejetLaggers_X",
       text: "Twitter/X Follow Link",
+      location: "Footer",
+      link_type: "social",
+    });
+  };
+
+  const handleFacebookClick = () => {
+    trackLinkClick({
+      url: "https://www.facebook.com/thejetlaggersfb",
+      text: "Facebook Follow Link",
+      location: "Footer",
+      link_type: "social",
+    });
+  };
+
+  const handleInstagramClick = () => {
+    trackLinkClick({
+      url: "https://www.instagram.com/thejetlaggers_ig",
+      text: "Instagram Follow Link",
       location: "Footer",
       link_type: "social",
     });
@@ -93,6 +115,24 @@ const Footer = () => {
               >
                 <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
               </a>
+              <a
+                className={s.followLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.facebook.com/thejetlaggersfb"
+                onClick={handleFacebookClick}
+              >
+                <FontAwesomeIcon icon={faFacebookF} className={s.icon} />
+              </a>
+              <a
+                className={s.followLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.instagram.com/thejetlaggers_ig"
+                onClick={handleInstagramClick}
+              >
+                <FontAwesomeIcon icon={faInstagram} className={s.icon} />
+              </a>
             </div>
           </div>
         </div>
@@ -113,6 +153,26 @@ const Footer = () => {
               onClick={handleTwitterClick}
             >
               <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
+            </a>
+            <a
+              aria-label="Follow us on Facebook"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.followLink}
+              href="https://www.facebook.com/thejetlaggersfb"
+              onClick={handleFacebookClick}
+            >
+              <FontAwesomeIcon icon={faFacebookF} className={s.icon} />
+            </a>
+            <a
+              aria-label="Follow us on Instagram"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.followLink}
+              href="https://www.instagram.com/thejetlaggers_ig"
+              onClick={handleInstagramClick}
+            >
+              <FontAwesomeIcon icon={faInstagram} className={s.icon} />
             </a>
           </div>
         </div>

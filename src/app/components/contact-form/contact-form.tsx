@@ -12,7 +12,11 @@ import {
   faUser,
 } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import {
+  faFacebookF,
+  faInstagram,
+  faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 import { postContactUs } from "@/api/client";
 import { trackFormSubmission, trackLinkClick } from "@/app/utils/analytics";
 
@@ -202,6 +206,26 @@ const ContactForm: FC<{
                     onClick={handleTwitterClick}
                   >
                     <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
+                  </Link>
+                  <Link
+                    aria-label="Go to the jet lag chronicles facebook account"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.facebook.com/thejetlaggersfb"
+                    className={s.link}
+                    onClick={handleTwitterClick}
+                  >
+                    <FontAwesomeIcon icon={faFacebookF} className={s.icon} />
+                  </Link>
+                  <Link
+                    aria-label="Go to the jet lag chronicles instagram account"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.instagram.com/thejetlaggers_ig"
+                    className={s.link}
+                    onClick={handleTwitterClick}
+                  >
+                    <FontAwesomeIcon icon={faInstagram} className={s.icon} />
                   </Link>
                 </div>
               </footer>

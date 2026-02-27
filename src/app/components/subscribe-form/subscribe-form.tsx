@@ -16,7 +16,11 @@ import Modal from "../modal/modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import {
+  faFacebookF,
+  faInstagram,
+  faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 import { trackFormSubmission } from "@/app/utils/analytics";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
@@ -431,6 +435,24 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
                       className={s.link}
                     >
                       <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
+                    </Link>
+                    <Link
+                      aria-label="Go to the jet lag chronicles facebook account"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href="https://www.facebook.com/thejetlaggersfb"
+                      className={s.link}
+                    >
+                      <FontAwesomeIcon icon={faFacebookF} className={s.icon} />
+                    </Link>
+                    <Link
+                      aria-label="Go to the jet lag chronicles instagram account"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href="https://www.instagram.com/thejetlaggers_ig"
+                      className={s.link}
+                    >
+                      <FontAwesomeIcon icon={faInstagram} className={s.icon} />
                     </Link>
                   </div>
                 </footer>
