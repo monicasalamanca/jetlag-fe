@@ -13,7 +13,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import {
+  faFacebookF,
+  faInstagram,
+  faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 import { trackFormSubmission } from "@/app/utils/analytics";
 
 import s from "./inline-subscribe-form.module.scss";
@@ -246,6 +250,30 @@ const InlineSubscribeForm: FC<InlineSubscribeFormProps> = memo(
                   className={s.socialLink}
                 >
                   <FontAwesomeIcon icon={faXTwitter} className={s.socialIcon} />
+                </Link>
+                <Link
+                  aria-label="Go to the jet lag chronicles facebook account"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.facebook.com/thejetlaggersfb"
+                  className={s.socialLink}
+                >
+                  <FontAwesomeIcon
+                    icon={faFacebookF}
+                    className={s.socialIcon}
+                  />
+                </Link>
+                <Link
+                  aria-label="Go to the jet lag chronicles instagram account"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.instagram.com/thejetlaggers_ig"
+                  className={s.socialLink}
+                >
+                  <FontAwesomeIcon
+                    icon={faInstagram}
+                    className={s.socialIcon}
+                  />
                 </Link>
               </div>
             </div>

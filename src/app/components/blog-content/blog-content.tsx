@@ -3,7 +3,6 @@
 import { FC, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock } from "@fortawesome/free-regular-svg-icons";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Post } from "@/api/types";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { CustomMarkdownRenderer } from "@/app/utils/markdownRenderer";
@@ -26,16 +25,12 @@ const BlogContent: FC<{ post: Post; readingTimeMins?: number }> = ({
 }) => {
   useTrackPostView(post.id);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
-  const [shareUrl, setShareUrl] = useState("");
-  const [shareText, setShareText] = useState("");
 
   useEffect(() => {
     // check if the code is running in the browser
     if (typeof window !== "undefined") {
       // Detect mobile device
       setIsMobileDevice(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent));
-      setShareUrl(encodeURIComponent(window.location.href));
-      setShareText(encodeURIComponent(post.title));
     }
   }, [post]);
 
@@ -84,8 +79,8 @@ const BlogContent: FC<{ post: Post; readingTimeMins?: number }> = ({
           </div>
         </div>
         <h1>{post.title}</h1>
-        <div className={s.socialMedia}>
-          {isMobileDevice ? (
+        {isMobileDevice && (
+          <div className={s.socialMedia}>
             <button
               aria-label="Share this article using your device's share menu"
               onClick={handleShare}
@@ -93,37 +88,8 @@ const BlogContent: FC<{ post: Post; readingTimeMins?: number }> = ({
             >
               <FontAwesomeIcon icon={faShareNodes} className={s.icon} />
             </button>
-          ) : (
-            <>
-              <a
-                aria-label="Share this article on Twitter"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`}
-              >
-                <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
-              </a>
-              {/* <a
-                aria-label="Share this article on Facebook"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
-              >
-                <FontAwesomeIcon icon={faFacebook} className={s.icon} />
-              </a>
-              <a
-                aria-label="Share this article on LinkedIn"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}`}
-              >
-                <FontAwesomeIcon icon={faLinkedin} className={s.icon} />
-              </a> */}
-
-              {/* <FontAwesomeIcon icon={faHeart} className={s.icon} /> */}
-            </>
-          )}
-        </div>
+          </div>
+        )}
       </header>
       <section className={s.postContent}>
         <CustomMarkdownRenderer markdown={post.content} />
