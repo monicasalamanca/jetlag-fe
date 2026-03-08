@@ -1,8 +1,9 @@
+"use client";
+
 import { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBars,
   faBookOpen,
   faChevronDown,
   faEnvelope,
@@ -11,7 +12,6 @@ import {
   faInbox,
   faPaperPlane,
   faUsers,
-  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebookF,
@@ -21,6 +21,7 @@ import {
 import { GroupedCountries } from "@/api/types";
 import ContactForm from "@/components/contact-form/contact-form";
 import SubscribeForm from "../../subscribe-form/subscribe-form";
+import AnimatedBurgerIcon from "./animated-burger-icon";
 
 import s from "./burger-menu.module.scss";
 
@@ -75,183 +76,179 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
         className={s.burgerButton}
         onClick={toggleMenu}
       >
-        <FontAwesomeIcon icon={faBars} className={s.icon} />
+        <AnimatedBurgerIcon isOpen={isOpen} />
       </button>
-      {isOpen && (
-        <nav className={`${s.backdrop} ${isOpen ? s.open : ""}`}>
-          <div className={`${s.menuWrapper} ${isOpen ? s.open : ""}`}>
-            <ul>
-              <li className={s.closeMenu}>
-                <button className={s.closeBtn} onClick={closeMenu}>
-                  <FontAwesomeIcon icon={faXmark} className={s.icon} />
-                </button>
-              </li>
-              <li className={s.destinationSection}>
-                <div className={s.destinationsWrapper}>
-                  <FontAwesomeIcon icon={faGlobe} className={s.icon} />
-                  <h2>Destinations</h2>
-                </div>
-                {destinations &&
-                  Object.entries(destinations).map(([continent, countries]) => {
-                    if (countries.length === 0) return null;
-                    const continentId = `continent-${continent}`;
-                    const countriesId = `countries-${continent}`;
-                    const isExpanded = openContinent === continent;
-                    return (
-                      <div className={s.continent} key={continent}>
-                        <button
-                          id={continentId}
-                          type="button"
-                          className={s.continentBtn}
-                          aria-expanded={isExpanded}
-                          aria-controls={countriesId}
-                          onClick={() => toggleContinent(continent)}
-                        >
-                          <span>
-                            {continent.charAt(0).toUpperCase() +
-                              continent.slice(1).toLowerCase()}
-                          </span>
-                          <FontAwesomeIcon
-                            icon={faChevronDown}
-                            className={`${s.caret} ${isExpanded ? s.caretOpen : ""}`}
-                            aria-hidden="true"
-                          />
-                        </button>
-                        <div
-                          id={countriesId}
-                          role="region"
-                          aria-labelledby={continentId}
-                          className={`${s.countriesList} ${isExpanded ? s.countriesListOpen : ""}`}
-                        >
-                          <div className={s.countriesInner}>
-                            <ul>
-                              {countries.map((country) => (
-                                <li key={country}>
-                                  <Link
-                                    aria-label={`Go to ${country} page`}
-                                    href={`/${country}`}
-                                    onClick={closeMenu}
-                                    rel="canonical"
-                                  >
-                                    {country.charAt(0).toUpperCase() +
-                                      country.slice(1)}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                            {countries.length > 4 && (
-                              <Link
-                                aria-label="view all countries"
-                                href="/"
-                                className={s.viewMore}
-                                rel="canonical"
-                              >
-                                View all 20 countries
-                              </Link>
-                            )}
-                          </div>
+      <nav
+        className={`${s.backdrop} ${isOpen ? s.open : ""}`}
+        aria-hidden={!isOpen}
+      >
+        <div className={`${s.menuWrapper} ${isOpen ? s.open : ""}`}>
+          <ul>
+            <li className={s.destinationSection}>
+              <div className={s.destinationsWrapper}>
+                <FontAwesomeIcon icon={faGlobe} className={s.icon} />
+                <h2>Destinations</h2>
+              </div>
+              {destinations &&
+                Object.entries(destinations).map(([continent, countries]) => {
+                  if (countries.length === 0) return null;
+                  const continentId = `continent-${continent}`;
+                  const countriesId = `countries-${continent}`;
+                  const isExpanded = openContinent === continent;
+                  return (
+                    <div className={s.continent} key={continent}>
+                      <button
+                        id={continentId}
+                        type="button"
+                        className={s.continentBtn}
+                        aria-expanded={isExpanded}
+                        aria-controls={countriesId}
+                        onClick={() => toggleContinent(continent)}
+                      >
+                        <span>
+                          {continent.charAt(0).toUpperCase() +
+                            continent.slice(1).toLowerCase()}
+                        </span>
+                        <FontAwesomeIcon
+                          icon={faChevronDown}
+                          className={`${s.caret} ${isExpanded ? s.caretOpen : ""}`}
+                          aria-hidden="true"
+                        />
+                      </button>
+                      <div
+                        id={countriesId}
+                        role="region"
+                        aria-labelledby={continentId}
+                        className={`${s.countriesList} ${isExpanded ? s.countriesListOpen : ""}`}
+                      >
+                        <div className={s.countriesInner}>
+                          <ul>
+                            {countries.map((country) => (
+                              <li key={country}>
+                                <Link
+                                  aria-label={`Go to ${country} page`}
+                                  href={`/${country}`}
+                                  onClick={closeMenu}
+                                  rel="canonical"
+                                >
+                                  {country.charAt(0).toUpperCase() +
+                                    country.slice(1)}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                          {countries.length > 4 && (
+                            <Link
+                              aria-label="view all countries"
+                              href="/"
+                              className={s.viewMore}
+                              rel="canonical"
+                            >
+                              View all 20 countries
+                            </Link>
+                          )}
                         </div>
                       </div>
-                    );
-                  })}
+                    </div>
+                  );
+                })}
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faBookOpen} className={s.icon} />
+              <Link
+                aria-label="Access all our guides"
+                href="/guides"
+                rel="canonical"
+                onClick={closeMenu}
+              >
+                Guides
+              </Link>
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faPaperPlane} className={s.icon} />
+              <Link
+                aria-label="Read all our chronicles"
+                href="/blog"
+                rel="canonical"
+                onClick={closeMenu}
+              >
+                Chronicles
+              </Link>
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faHeartPulse} className={s.icon} />
+              <Link
+                aria-label="Read all our lifestyle articles"
+                href="/lifestyle"
+                rel="canonical"
+                onClick={closeMenu}
+              >
+                Lifestyle
+              </Link>
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faUsers} className={s.icon} />
+              <Link
+                aria-label="Read more about us"
+                href="/about-us"
+                rel="canonical"
+                onClick={closeMenu}
+              >
+                About Us
+              </Link>
+            </li>
+            {!hasAlreadySubscribed && (
+              <li className={s.subscribe}>
+                <FontAwesomeIcon icon={faInbox} className={s.icon} />
+                <SubscribeForm
+                  buttonName="Subscribe"
+                  showName={true}
+                  showIcon={false}
+                  trackEventName="mobileMenu"
+                />
               </li>
-              <li>
-                <FontAwesomeIcon icon={faBookOpen} className={s.icon} />
-                <Link
-                  aria-label="Access all our guides"
-                  href="/guides"
-                  rel="canonical"
-                  onClick={closeMenu}
-                >
-                  Guides
-                </Link>
-              </li>
-              <li>
-                <FontAwesomeIcon icon={faPaperPlane} className={s.icon} />
-                <Link
-                  aria-label="Read all our chronicles"
-                  href="/blog"
-                  rel="canonical"
-                  onClick={closeMenu}
-                >
-                  Chronicles
-                </Link>
-              </li>
-              <li>
-                <FontAwesomeIcon icon={faHeartPulse} className={s.icon} />
-                <Link
-                  aria-label="Read all our lifestyle articles"
-                  href="/lifestyle"
-                  rel="canonical"
-                  onClick={closeMenu}
-                >
-                  Lifestyle
-                </Link>
-              </li>
-              <li>
-                <FontAwesomeIcon icon={faUsers} className={s.icon} />
-                <Link
-                  aria-label="Read more about us"
-                  href="/about-us"
-                  rel="canonical"
-                  onClick={closeMenu}
-                >
-                  About Us
-                </Link>
-              </li>
-              {!hasAlreadySubscribed && (
-                <li className={s.subscribe}>
-                  <FontAwesomeIcon icon={faInbox} className={s.icon} />
-                  <SubscribeForm
-                    buttonName="Subscribe"
-                    showName={true}
-                    showIcon={false}
-                    trackEventName="mobileMenu"
-                  />
-                </li>
-              )}
-              <li>
-                <FontAwesomeIcon icon={faEnvelope} className={s.icon} />
-                <ContactForm buttonName="Contact Us" showIcon={false} />
-              </li>
-            </ul>
-            <footer>
-              <div className={s.followUsLinks}>
-                <a
-                  aria-label="Follow us on x"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={s.followLink}
-                  href="https://x.com/thejetLaggers_X"
-                  onClick={closeMenu}
-                >
-                  <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
-                </a>
-                <a
-                  aria-label="Follow us on Facebook"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={s.followLink}
-                  href="https://www.facebook.com/thejetlaggersfb"
-                  onClick={closeMenu}
-                >
-                  <FontAwesomeIcon icon={faFacebookF} className={s.icon} />
-                </a>
-                <a
-                  aria-label="Follow us on Instagram"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={s.followLink}
-                  href="https://www.instagram.com/thejetlaggers_ig"
-                  onClick={closeMenu}
-                >
-                  <FontAwesomeIcon icon={faInstagram} className={s.icon} />
-                </a>
-              </div>
-            </footer>
-          </div>
-        </nav>
-      )}
+            )}
+            <li>
+              <FontAwesomeIcon icon={faEnvelope} className={s.icon} />
+              <ContactForm buttonName="Contact Us" showIcon={false} />
+            </li>
+          </ul>
+          <footer>
+            <div className={s.followUsLinks}>
+              <a
+                aria-label="Follow us on x"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={s.followLink}
+                href="https://x.com/thejetLaggers_X"
+                onClick={closeMenu}
+              >
+                <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
+              </a>
+              <a
+                aria-label="Follow us on Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={s.followLink}
+                href="https://www.facebook.com/thejetlaggersfb"
+                onClick={closeMenu}
+              >
+                <FontAwesomeIcon icon={faFacebookF} className={s.icon} />
+              </a>
+              <a
+                aria-label="Follow us on Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={s.followLink}
+                href="https://www.instagram.com/thejetlaggers_ig"
+                onClick={closeMenu}
+              >
+                <FontAwesomeIcon icon={faInstagram} className={s.icon} />
+              </a>
+            </div>
+          </footer>
+        </div>
+      </nav>
     </div>
   );
 };
