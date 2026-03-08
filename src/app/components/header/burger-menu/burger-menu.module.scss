@@ -141,6 +141,7 @@
         li {
           display: flex;
           width: 100%;
+          padding: 4px 0;
 
           &.destinationSection {
             flex-direction: column;
@@ -148,6 +149,7 @@
             .destinationsWrapper {
               display: flex;
               flex-direction: row;
+              padding-bottom: $space-xs;
             }
           }
 
