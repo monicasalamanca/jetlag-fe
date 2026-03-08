@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faBookOpen,
+  faChevronDown,
   faEnvelope,
   faGlobe,
   faHeartPulse,
@@ -28,6 +29,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasAlreadySubscribed, setHasAlreadySubscribed] = useState(false);
+  const [openContinent, setOpenContinent] = useState<string | null>(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -57,6 +59,11 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
 
   const closeMenu = () => {
     setIsOpen(false);
+    setOpenContinent(null);
+  };
+
+  const toggleContinent = (continent: string) => {
+    setOpenContinent((prev) => (prev === continent ? null : continent));
   };
 
   return (
@@ -85,40 +92,68 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                   <h2>Destinations</h2>
                 </div>
                 {destinations &&
-                  Object.entries(destinations).map(([continent, countries]) => (
-                    <div className={s.continent} key={continent}>
-                      <div className={s.wrapper}>
-                        <h3>
-                          {continent.charAt(0).toUpperCase() +
-                            continent.slice(1).toLowerCase()}
-                        </h3>
-                        <ul>
-                          {countries.map((country) => (
-                            <li key={country}>
+                  Object.entries(destinations).map(([continent, countries]) => {
+                    if (countries.length === 0) return null;
+                    const continentId = `continent-${continent}`;
+                    const countriesId = `countries-${continent}`;
+                    const isExpanded = openContinent === continent;
+                    return (
+                      <div className={s.continent} key={continent}>
+                        <button
+                          id={continentId}
+                          type="button"
+                          className={s.continentBtn}
+                          aria-expanded={isExpanded}
+                          aria-controls={countriesId}
+                          onClick={() => toggleContinent(continent)}
+                        >
+                          <span>
+                            {continent.charAt(0).toUpperCase() +
+                              continent.slice(1).toLowerCase()}
+                          </span>
+                          <FontAwesomeIcon
+                            icon={faChevronDown}
+                            className={`${s.caret} ${isExpanded ? s.caretOpen : ""}`}
+                            aria-hidden="true"
+                          />
+                        </button>
+                        <div
+                          id={countriesId}
+                          role="region"
+                          aria-labelledby={continentId}
+                          className={`${s.countriesList} ${isExpanded ? s.countriesListOpen : ""}`}
+                        >
+                          <div className={s.countriesInner}>
+                            <ul>
+                              {countries.map((country) => (
+                                <li key={country}>
+                                  <Link
+                                    aria-label={`Go to ${country} page`}
+                                    href={`/${country}`}
+                                    onClick={closeMenu}
+                                    rel="canonical"
+                                  >
+                                    {country.charAt(0).toUpperCase() +
+                                      country.slice(1)}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                            {countries.length > 4 && (
                               <Link
-                                aria-label={`Go to ${country} page`}
-                                href={`/${country}`}
-                                onClick={closeMenu}
+                                aria-label="view all countries"
+                                href="/"
+                                className={s.viewMore}
                                 rel="canonical"
                               >
-                                {country}
+                                View all 20 countries
                               </Link>
-                            </li>
-                          ))}
-                        </ul>
-                        {countries.length > 4 && (
-                          <Link
-                            aria-label="view all countries"
-                            href="/"
-                            className={s.viewMore}
-                            rel="canonical"
-                          >
-                            View all 20 countries
-                          </Link>
-                        )}
+                            )}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
               </li>
               <li>
                 <FontAwesomeIcon icon={faBookOpen} className={s.icon} />
