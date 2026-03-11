@@ -14,7 +14,7 @@ export const metadata: Metadata = createMetadata({
 });
 
 const Home = async () => {
-  const { lifestyleSpotlight, trendingThisWeek } =
+  const { lifestyleSpotlight, trendingThisWeek, theJetLaggersPicks } =
     await fetchHomePageSections();
 
   return (
@@ -40,6 +40,7 @@ const Home = async () => {
       <HomeContent
         lifestyleSpotlightCards={lifestyleSpotlight}
         trendingThisWeekCards={trendingThisWeek}
+        justinsPicksCards={theJetLaggersPicks}
       />
     </>
   );

@@ -24,6 +24,9 @@
 .fireIcon {
   color: $color-orange-bright;
   font-size: $font-size-xl;
+  width: $font-size-xl !important;
+  height: $font-size-xl !important;
+  overflow: visible;
 }
 
 .sectionTitle {
@@ -130,6 +133,9 @@
 
 .trendingIcon {
   font-size: 11px;
+  width: $font-size-xl !important;
+  height: $font-size-xl !important;
+  overflow: visible;
 }
 
 // ── Card Title ────────────────────────────────────────────────────────────────
