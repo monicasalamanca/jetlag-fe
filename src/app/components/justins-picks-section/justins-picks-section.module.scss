@@ -1,0 +1,57 @@
+@use "@/styles/tokens" as *;
+
+// ── Section Container ─────────────────────────────────────────────────────────
+
+.section {
+  width: 100%;
+  padding: $space-3xl $space-lg;
+  background-color: $color-neutral-50;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    width: 768px;
+    margin: auto;
+    padding: $space-4xl 0;
+  }
+}
+
+// ── Section Header ────────────────────────────────────────────────────────────
+
+.header {
+  margin-bottom: $space-xl;
+}
+
+.eyebrow {
+  margin: 0 0 $space-xs;
+  font-family: $font-family-primary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bolder;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  // Blue-to-purple gradient text using design token
+  background: $gradient-purple-card;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  // Fallback for browsers that don't support background-clip: text
+  color: $color-purple;
+}
+
+.subtitle {
+  margin: 0;
+  font-family: $font-family-primary;
+  font-size: $font-size-xl-base;
+  font-weight: $font-weight-bold;
+  color: $color-neutral-900;
+  line-height: 1.2;
+}
+
+// ── Card List ─────────────────────────────────────────────────────────────────
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}

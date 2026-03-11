@@ -18,6 +18,7 @@ import {
   LifestyleSpotlightCard,
   LifestyleSpotlightResponse,
   TrendingThisWeekCard,
+  TheJetLaggersPickCard,
 } from "./types";
 import {
   sanitizeInternalUrls,
@@ -763,7 +764,7 @@ export const fetchHomePageSections =
       throw new Error("STRAPI_URL is not defined");
     }
 
-    const url = `${baseUrl}/api/home-pages?populate[lifestyleSpotlight][fields][0]=title&populate[lifestyleSpotlight][fields][1]=slug&populate[lifestyleSpotlight][fields][2]=lifestyle&populate[lifestyleSpotlight][populate][country][fields][0]=name&populate[lifestyleSpotlight][populate][tags][fields][0]=name&populate[lifestyleSpotlight][populate][images]=*&populate[trendingThisWeek][fields][0]=title&populate[trendingThisWeek][fields][1]=slug&populate[trendingThisWeek][fields][2]=lifestyle&populate[trendingThisWeek][populate][country][fields][0]=name&populate[trendingThisWeek][populate][images]=*`;
+    const url = `${baseUrl}/api/home-pages?populate[lifestyleSpotlight][fields][0]=title&populate[lifestyleSpotlight][fields][1]=slug&populate[lifestyleSpotlight][fields][2]=lifestyle&populate[lifestyleSpotlight][populate][country][fields][0]=name&populate[lifestyleSpotlight][populate][tags][fields][0]=name&populate[lifestyleSpotlight][populate][images]=*&populate[trendingThisWeek][fields][0]=title&populate[trendingThisWeek][fields][1]=slug&populate[trendingThisWeek][fields][2]=lifestyle&populate[trendingThisWeek][populate][country][fields][0]=name&populate[trendingThisWeek][populate][images]=*&populate[theJetLaggersPicks][fields][0]=title&populate[theJetLaggersPicks][fields][1]=slug&populate[theJetLaggersPicks][fields][2]=description&populate[theJetLaggersPicks][fields][3]=lifestyle&populate[theJetLaggersPicks][populate][country][fields][0]=name&populate[theJetLaggersPicks][populate][images][fields][0]=url&populate[theJetLaggersPicks][populate][images][fields][1]=formats`;
 
     try {
       const res = await fetch(url, {
@@ -789,6 +790,7 @@ export const fetchHomePageSections =
 
       const spotlightBlogs = attrs.lifestyleSpotlight?.data || [];
       const trendingBlogs = attrs.trendingThisWeek?.data || [];
+      const picksBlogs = (attrs.theJetLaggersPicks?.data || []).slice(0, 4);
 
       const lifestyleSpotlight: LifestyleSpotlightCard[] = spotlightBlogs.map(
         (blog) => ({
@@ -826,7 +828,21 @@ export const fetchHomePageSections =
         }),
       );
 
-      return { lifestyleSpotlight, trendingThisWeek };
+      const theJetLaggersPicks: TheJetLaggersPickCard[] = picksBlogs.map(
+        (blog) => ({
+          id: blog.id,
+          title: blog.attributes.title,
+          slug: blog.attributes.slug,
+          description: blog.attributes.description,
+          lifestyle: blog.attributes.lifestyle,
+          countryName: blog.attributes.country?.data?.attributes?.name || null,
+          imageUrl:
+            blog.attributes.images?.data?.[0]?.attributes?.formats?.small
+              ?.url || "/placeholder-image.jpg",
+        }),
+      );
+
+      return { lifestyleSpotlight, trendingThisWeek, theJetLaggersPicks };
     } catch (error) {
       console.error("Error fetching homepage spotlight data:", error);
       throw error; // Re-throw to trigger Next.js error boundary
