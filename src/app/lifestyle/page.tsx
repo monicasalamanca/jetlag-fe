@@ -6,6 +6,7 @@ import { SITE_URL } from "../../../lib/seo/schema/utils";
 import { fetchLatestBlogPosts } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/app/components/cards/card.types";
+import SocialFollowSection from "../components/social-follow-section/social-follow-section";
 
 // ISR: revalidate the lifestyle listing page every 2 days
 export const revalidate = 172800;
@@ -71,6 +72,9 @@ export default async function LifestylePage() {
       />
 
       <LifestyleLander blogs={blogs} />
+
+      {/* Social Follow Section */}
+      <SocialFollowSection />
     </>
   );
 }

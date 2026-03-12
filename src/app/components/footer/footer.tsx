@@ -137,7 +137,8 @@ const Footer = () => {
           </div>
         </div>
         <div className={s.bottom}>
-          &copy; 2025 The Jet Lag Chronicles. All rights reserved.
+          &copy; {new Date().getFullYear()} The Jet Lag Chronicles. All rights
+          reserved.
         </div>
       </div>
       <div className={s.mobileFooter}>
@@ -184,7 +185,9 @@ const Footer = () => {
             trackEventName="footerMobileMenu"
           />
           <ContactForm buttonName="Contact Us" showIcon />
-          <div className={s.year}>© 2025 The Jet Lag Chronicles</div>
+          <div className={s.year}>
+            © {new Date().getFullYear()} The Jet Lag Chronicles
+          </div>
           <div className={s.links}>
             <Link
               aria-label="Read our privacy policy"

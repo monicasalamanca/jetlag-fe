@@ -1,0 +1,183 @@
+@use "@/styles/tokens" as *;
+
+// ── Section wrapper ──────────────────────────────────────────────────────────
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+  width: 100%;
+  padding: $space-xl $space-lg;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    flex-direction: row;
+    align-items: center;
+    gap: $space-2xl;
+    width: 768px;
+    margin: 0 auto;
+    padding: $space-4xl 0;
+  }
+}
+
+// ── Left image ───────────────────────────────────────────────────────────────
+
+.imageWrapper {
+  width: 100%;
+  max-width: 340px;
+  align-self: center;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    flex: 0 0 260px;
+    max-width: 260px;
+    align-self: stretch;
+  }
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  border-radius: $radius-md;
+  object-fit: cover;
+  display: block;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// ── Right content ────────────────────────────────────────────────────────────
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+
+  @media only screen and (min-width: $breakpoint-tablet) {
+    flex: 1;
+  }
+}
+
+.title {
+  margin: 0;
+  font-family: $font-family-primary;
+  font-size: $font-size-xl-base;
+  font-weight: $font-weight-bold;
+  color: $color-neutral-900;
+  line-height: 1.25;
+}
+
+.text {
+  margin: 0;
+  font-family: $font-family-secondary;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  color: $color-neutral-700;
+  line-height: 1.6;
+}
+
+// ── CTAs ─────────────────────────────────────────────────────────────────────
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-md;
+}
+
+.ctaLink {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-sm $space-xl;
+  border-radius: $radius-pill;
+  border: 2px solid $color-blue !important;
+  background-color: $color-blue;
+  color: $color-white;
+  font-family: $font-family-primary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    background-color: $color-blue-dark;
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-blue;
+    outline-offset: 2px;
+  }
+}
+
+// ── Social icons ─────────────────────────────────────────────────────────────
+
+.socials {
+  display: flex;
+  gap: $space-md;
+  align-items: center;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 0.75;
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-blue;
+    outline-offset: 3px;
+    border-radius: $radius-sm;
+  }
+}
+
+.socialIcon {
+  width: 20px !important;
+  height: 20px !important;
+  overflow: visible;
+}
+
+// ── ContactForm button override (light background context) ─────────────────
+
+.workWithUsBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-sm $space-xl;
+  border-radius: $radius-pill;
+  background-color: transparent;
+  border: 2px solid $color-blue !important;
+  color: $color-blue !important;
+  font-family: $font-family-primary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  opacity: 1 !important;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    background-color: $color-blue;
+    color: $color-white !important;
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-blue;
+    outline-offset: 2px;
+  }
+}

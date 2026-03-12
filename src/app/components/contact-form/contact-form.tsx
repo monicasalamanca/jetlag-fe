@@ -33,7 +33,8 @@ import s from "./contact-form.module.scss";
 const ContactForm: FC<{
   buttonName: string;
   showIcon: boolean;
-}> = ({ buttonName, showIcon }) => {
+  className?: string;
+}> = ({ buttonName, showIcon, className }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [isFormOpen, setIsFormOpen] = useState(true);
@@ -101,7 +102,7 @@ const ContactForm: FC<{
       <button
         aria-label="contact us"
         onClick={() => setIsOpen(true)}
-        className={s.contactUsButton}
+        className={`${s.contactUsButton}${className ? ` ${className}` : ""}`}
       >
         {buttonName}
         {showIcon && <FontAwesomeIcon icon={faMessage} className={s.icon} />}

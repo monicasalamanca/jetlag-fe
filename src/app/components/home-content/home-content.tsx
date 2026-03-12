@@ -9,6 +9,7 @@ import Hero from "@/components/hero/hero";
 import LifestyleSpotlightSection from "@/app/components/lifestyle-spotlight-section/lifestyle-spotlight-section";
 import TrendingThisWeekSection from "@/app/components/trending-this-week-section/trending-this-week-section";
 import JustinsPicksSection from "@/app/components/justins-picks-section/justins-picks-section";
+import SocialFollowSection from "@/app/components/social-follow-section/social-follow-section";
 
 import s from "./home-content.module.scss";
 
@@ -44,6 +45,9 @@ const HomeContent = ({
 
       {/* Justin's Picks Section */}
       <JustinsPicksSection cards={justinsPicksCards} />
+
+      {/* Social Follow Section */}
+      <SocialFollowSection />
     </main>
   );
 };
