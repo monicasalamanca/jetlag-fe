@@ -4,6 +4,7 @@ import React, { FC } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLocationDot,
@@ -26,6 +27,8 @@ interface CardThreeProps {
 }
 
 const CardThree: FC<CardThreeProps> = ({ blog, color, section }) => {
+  const pathname = usePathname();
+  const isLifestyle = pathname?.startsWith("/lifestyle");
   // Section icon and color mapping
   const sectionConfig = {
     latest: { icon: faBolt, color: "#3B82F6" },
@@ -102,13 +105,15 @@ const CardThree: FC<CardThreeProps> = ({ blog, color, section }) => {
           )}
         </div>
         <div className={s.content}>
-          <div className={s.country}>
-            <FontAwesomeIcon
-              icon={faLocationDot}
-              className={`${s.icon} ${getColourClassNames(color)}`}
-            />
-            {blog.country}
-          </div>
+          {!isLifestyle && (
+            <div className={s.country}>
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                className={`${s.icon} ${getColourClassNames(color)}`}
+              />
+              {blog.country}
+            </div>
+          )}
           <h3>{blog.title}</h3>
           <p>{blog.description}</p>
         </div>

@@ -13,17 +13,14 @@
 
   .imageWrapper {
     position: relative;
-    display: flex;
-    flex-grow: 1;
+    height: 250px;
+    flex-shrink: 0;
+    overflow: hidden;
 
     .image {
       width: 100%;
-      height: 250px;
+      height: 100%;
       object-fit: cover;
-
-      @media only screen and (min-width: 600px) {
-        height: unset;
-      }
     }
 
     .topInfo {
@@ -141,7 +138,6 @@
   color: inherit;
   cursor: pointer;
   display: block;
-  height: 100%;
   transition:
     transform 0.2s ease-in-out,
     box-shadow 0.2s ease-in-out;
@@ -162,9 +158,5 @@
 
   &:active {
     transform: translateY(0);
-  }
-
-  .container {
-    height: 100%;
   }
 }
