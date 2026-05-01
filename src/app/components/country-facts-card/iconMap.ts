@@ -98,6 +98,11 @@ import {
   faBookOpen,
   faHeartPulse,
   faBolt,
+  faDatabase,
+  faCalendar,
+  faMoneyBillTransfer,
+  faBriefcase,
+  faFileContract,
 } from "@fortawesome/free-solid-svg-icons";
 
 // import { faCalendar, faCommentDots } from "@fortawesome/free-regular-svg-icons";
@@ -207,5 +212,10 @@ export const iconMap: Record<string, IconDefinition> = {
   faBookOpen,
   faHeartPulse,
   faBolt,
+  faDatabase,
+  faCalendar,
+  faMoneyBillTransfer,
+  faBriefcase,
+  faFileContract,
   // brands
 };
