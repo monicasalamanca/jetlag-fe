@@ -74,6 +74,29 @@
 
     p {
       color: $color-white;
+
+      a {
+        text-shadow:
+          rgba(255, 255, 255, 0.9) 0px 0px,
+          rgba(255, 255, 255, 0) 0.06em 0px,
+          rgba(255, 255, 255, 0) 0px 0.05em,
+          rgba(255, 255, 255, 0) -0.06em 0px;
+        background-image:
+          linear-gradient(
+            rgba(0, 0, 0, 0) calc(100% - 0.55em),
+            rgba(255, 255, 255, 0.6) 0px
+          ),
+          linear-gradient(
+            rgba(0, 0, 0, 0) calc(100% - 0.55em),
+            rgba(255, 255, 255, 0.6) 0px
+          );
+        background-repeat: no-repeat;
+        background-size:
+          0px 100%,
+          100% 100%;
+        margin-right: 5px;
+        transition: background-size 0.1s ease-in-out;
+      }
     }
 
     &.blue {
@@ -138,5 +161,28 @@
     font-weight: 400;
     line-height: calc(22 / 16);
     color: $color-neutral-100;
+
+    a {
+      text-shadow:
+        rgb(17, 24, 39) 0px 0px,
+        rgba(255, 255, 255, 0.7) 0.06em 0px,
+        rgba(255, 255, 255, 0.7) 0px 0.05em,
+        rgba(255, 255, 255, 0.7) -0.06em 0px;
+      background-image:
+        linear-gradient(
+          rgba(0, 0, 0, 0) calc(100% - 0.55em),
+          rgb(255, 235, 0) 0px
+        ),
+        linear-gradient(
+          rgba(0, 0, 0, 0) calc(100% - 0.55em),
+          rgb(255, 235, 0) 0px
+        );
+      background-repeat: no-repeat;
+      background-size:
+        0px 100%,
+        100% 100%;
+      margin-right: 5px;
+      transition: background-size 0.1s ease-in-out;
+    }
   }
 }
