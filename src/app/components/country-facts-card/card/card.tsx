@@ -4,6 +4,36 @@ import IconImporter from "../iconImporter";
 
 import s from "./card.module.scss";
 
+const renderDescription = (text: string): React.ReactNode[] => {
+  const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    parts.push(
+      <a
+        key={match.index}
+        href={match[2]}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {match[1]}
+      </a>,
+    );
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts;
+};
+
 type QuickFact = {
   label: string;
   description: string;
@@ -19,7 +49,10 @@ const QuickFactCard: React.FC<QuickFact> = ({
   cardStyle,
   colour,
 }) => {
+  const hasLinks = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/.test(description);
+
   const getStyle = (style: string) => {
+    if (hasLinks) return `${s.whiteBg}`;
     switch (style) {
       case "whiteBg":
         return `${s.whiteBg}`;
@@ -54,7 +87,7 @@ const QuickFactCard: React.FC<QuickFact> = ({
     >
       <IconImporter iconName={icon} />
       <h2>{label}</h2>
-      <p>{description}</p>
+      <p>{renderDescription(description)}</p>
     </div>
   );
 };
