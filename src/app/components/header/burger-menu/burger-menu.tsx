@@ -127,7 +127,7 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                               <li key={country}>
                                 <Link
                                   aria-label={`Go to ${country} page`}
-                                  href={`/${country}`}
+                                  href={`/${country.replace(/ /g, "-").toLowerCase()}`}
                                   onClick={closeMenu}
                                   rel="canonical"
                                 >

@@ -77,7 +77,7 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
                                 <li key={country}>
                                   <Link
                                     aria-label={`Read more about ${country}`}
-                                    href={`/${country.replace(" ", "-")}`}
+                                    href={`/${country.replace(/ /g, "-").toLowerCase()}`}
                                     rel="canonical"
                                   >
                                     {capitalize(country)}
