@@ -77,8 +77,7 @@ const DEFAULT_SOCIAL_LINKS: SocialLinkConfig[] = [
   },
 ];
 
-const IMAGE_URL =
-  "https://res.cloudinary.com/jetlagchronicles/image/upload/v1772176092/blog-assets/social-media-follow-us_j7wcya.jpg";
+const IMAGE_URL = `${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1772176092/blog-assets/social-media-follow-us_j7wcya.jpg`;
 const IMAGE_ALT = "The Jet Lag Chronicles team – follow us on social media";
 
 /**
