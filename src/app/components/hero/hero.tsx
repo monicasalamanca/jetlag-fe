@@ -49,19 +49,25 @@ const Hero = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const isFullUrl = srcImage.startsWith("http");
+  const resolvedSrc = isFullUrl
+    ? srcImage
+    : `${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/f_auto,q_auto,w_${isMobile ? "800" : "1200"}/blog-assets${srcImage}`;
+  const blurSrc = isFullUrl
+    ? srcImage.replace("/upload/", "/upload/e_blur:100,q_10,w_10/")
+    : `${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/e_blur:100,q_10,w_10/blog-assets${srcImage}`;
+
   return (
     <section className={s.hero}>
       <Image
         className={s.heroImage}
-        src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/f_auto,q_auto,w_${
-          isMobile ? "800" : "1200"
-        }/blog-assets${srcImage}`}
+        src={resolvedSrc}
         alt="Hero Image"
         fill
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1600px"
         priority
         placeholder="blur"
-        blurDataURL={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/e_blur:100,q_10,w_10/blog-assets${srcImage}`}
+        blurDataURL={blurSrc}
       />
       <div className={s.heroContent}>
         <div className={s.wrapper}>

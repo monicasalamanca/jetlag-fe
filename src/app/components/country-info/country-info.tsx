@@ -44,7 +44,7 @@ const CountryInfo: FC<{
           contrastColor="#EEF6FF"
           title="Food"
           list={foodDishesArray}
-          imageSrc="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741477967/blog-assets/japanese-food_wkydzj.jpg"
+          imageSrc={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1741477967/blog-assets/japanese-food_wkydzj.jpg`}
           imageAltText="Japanese Food Image"
           description={foodDescription}
         />
@@ -54,7 +54,7 @@ const CountryInfo: FC<{
           contrastColor="#EEF6FF"
           title="Religion"
           list={religionsArray}
-          imageSrc="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481408/blog-assets/japanese-religion_g03h0b.jpg"
+          imageSrc={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1741481408/blog-assets/japanese-religion_g03h0b.jpg`}
           imageAltText="Japanese religion Image"
           description={religionDescription}
         />
@@ -64,7 +64,7 @@ const CountryInfo: FC<{
           contrastColor="#ECFCF4"
           title="Culture"
           list={cultureItemsArray}
-          imageSrc="https://res.cloudinary.com/jetlagchronicles/image/upload/v1741481814/blog-assets/japanese-culture_clexsv.jpg"
+          imageSrc={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1741481814/blog-assets/japanese-culture_clexsv.jpg`}
           imageAltText="Japanese culture Image"
           description={cultureDescription}
         />

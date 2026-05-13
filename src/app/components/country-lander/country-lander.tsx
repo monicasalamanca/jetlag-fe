@@ -83,7 +83,7 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
     return notFound();
   }
 
-  const { name, tagline, intro, quickFacts, deepInfo } = country;
+  const { name, tagline, intro, quickFacts, deepInfo, heroImage } = country;
 
   // Helper function to convert BlogPost to CardProps format
   const blogToCardProps = (blog: BlogPost) => {
@@ -233,7 +233,7 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
   return (
     <main className={s.container}>
       <Hero
-        srcImage="/japan-hero_iedol6.jpg"
+        srcImage={heroImage?.url || "/japan-hero_iedol6.jpg"}
         headline={
           name.toLowerCase() === "thailand"
             ? "Which Thai Island Makes Sense In 2026?"

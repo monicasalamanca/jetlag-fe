@@ -54,3 +54,4 @@ OLDsitemap.ts
 **/*.backup.*
 # ignore .vscode mcp
 .vscode/mcp.json
+pnpm-workspace.yaml

@@ -82,6 +82,18 @@ export type CountriesResponse = {
     slug: string;
     quickfacts: QuickFact[];
     deepInfo: DeepInfo[];
+    heroImage?: {
+      data: {
+        id: number;
+        attributes: {
+          url: string;
+          alternativeText: string | null;
+          width: number;
+          height: number;
+          formats: Formats;
+        };
+      } | null;
+    };
   };
 };
 
@@ -94,6 +106,12 @@ export type Country = {
   intro: string;
   quickFacts: QuickFact[];
   deepInfo: DeepInfo[];
+  heroImage?: {
+    url: string;
+    alternativeText: string | null;
+    width?: number;
+    height?: number;
+  } | null;
 };
 
 export type CountryName = {

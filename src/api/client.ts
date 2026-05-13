@@ -39,6 +39,7 @@ export const fetchCountry = async (
     "filters[slug][$eq]": countryName,
     "populate[quickFacts]": "*",
     "populate[deepInfo][populate]": "image",
+    "populate[heroImage]": "*",
   }).toString();
   // const url = `http://localhost:1337/api/countries?filters[slug][$eq]=${countryName}&populate[quickFacts]=*&populate[deepInfo][populate]=image`;
   const url = `${baseUrl}/api/countries?${query}`;
@@ -76,6 +77,17 @@ export const fetchCountry = async (
         keywords: deepInfo.keywords,
         image: deepInfo.image.data.attributes.url,
       })),
+      heroImage: item.attributes.heroImage?.data
+        ? {
+            url:
+              item.attributes.heroImage.data.attributes.formats?.large?.url ||
+              item.attributes.heroImage.data.attributes.url,
+            alternativeText:
+              item.attributes.heroImage.data.attributes.alternativeText,
+            width: item.attributes.heroImage.data.attributes.width,
+            height: item.attributes.heroImage.data.attributes.height,
+          }
+        : null,
     }));
   } catch (error) {
     console.error("Error fetching the page country: ", error);
