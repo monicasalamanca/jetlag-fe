@@ -1,8 +1,6 @@
 /**
  * React component for injecting JSON-LD structured data
  */
-
-import Script from "next/script";
 import { createHash } from "crypto";
 
 interface JsonLdProps {
@@ -78,11 +76,10 @@ export default function JsonLd({ data, fallback = null }: JsonLdProps) {
     const jsonString = JSON.stringify(payload);
 
     return (
-      <Script
+      <script
         id={id}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonString }}
-        strategy="afterInteractive"
       />
     );
   } catch (error) {
