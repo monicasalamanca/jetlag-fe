@@ -2,7 +2,6 @@
  * Site-wide schemas that should be included on all pages
  */
 
-import { useMemo } from "react";
 import JsonLd from "./JsonLd";
 import { buildOrganization, buildWebSite } from "../../lib/seo/schema/builders";
 import type { OrgConfig, SiteConfig } from "../../lib/seo/schema/types";
@@ -32,27 +31,23 @@ export default function SiteSchemas({
   orgOverrides,
   siteOverrides,
 }: SiteSchemasProps = {}) {
-  const organizationSchema = useMemo(() => {
-    try {
-      return buildOrganization(getOrgConfig(orgOverrides));
-    } catch (error) {
-      if (process.env.NODE_ENV === "development") {
-        console.error("Error building organization schema:", error);
-      }
-      return null;
+  let organizationSchema = null;
+  try {
+    organizationSchema = buildOrganization(getOrgConfig(orgOverrides));
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error building organization schema:", error);
     }
-  }, [orgOverrides]);
+  }
 
-  const webSiteSchema = useMemo(() => {
-    try {
-      return buildWebSite(getSiteSchemaConfig(siteOverrides));
-    } catch (error) {
-      if (process.env.NODE_ENV === "development") {
-        console.error("Error building website schema:", error);
-      }
-      return null;
+  let webSiteSchema = null;
+  try {
+    webSiteSchema = buildWebSite(getSiteSchemaConfig(siteOverrides));
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error building website schema:", error);
     }
-  }, [siteOverrides]);
+  }
 
   return (
     <>
