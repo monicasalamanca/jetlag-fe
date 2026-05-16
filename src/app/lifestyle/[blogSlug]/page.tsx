@@ -8,6 +8,8 @@ import { SITE_CONFIG } from "../../../../lib/seo/schema/config";
 import { toWordCount } from "../../../../lib/seo/schema/utils";
 import YouMightAlsoLike from "../../components/you-might-also-like/you-might-also-like";
 
+export const revalidate = 21600;
+
 type Props = {
   params: Promise<{ blogSlug: string }>;
 };

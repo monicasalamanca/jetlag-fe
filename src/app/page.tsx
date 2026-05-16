@@ -5,6 +5,8 @@ import PageSchemas from "../../components/seo/PageSchemas";
 import { SITE_CONFIG } from "../../lib/seo/schema/config";
 import { fetchHomePageSections } from "@/api/client";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = createMetadata({
   title: "The Jet Lag Chronicles | Authentic Travel Stories and Guides",
   description:
