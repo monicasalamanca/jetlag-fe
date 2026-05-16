@@ -27,11 +27,7 @@ const SpotlightCard = ({ blog, position, cardType }: SpotlightCardProps) => {
     ? `/lifestyle/${blog.slug}`
     : `/${blog.countryName?.toLowerCase().replace(/\s+/g, "-")}/${blog.slug}`;
 
-  // Pick a random tag for the badge (if available)
-  const randomTag =
-    blog.tags.length > 0
-      ? blog.tags[Math.floor(Math.random() * blog.tags.length)]
-      : null;
+  const primaryTag = blog.tags.length > 0 ? blog.tags[0] : null;
 
   // Determine heading level based on card type
   const HeadingTag = cardType === "primary" ? "h2" : "h3";
@@ -58,12 +54,12 @@ const SpotlightCard = ({ blog, position, cardType }: SpotlightCardProps) => {
           className={s.image}
           priority={position === 0}
         />
-        {randomTag && (
+        {primaryTag && (
           <span
             className={`${s.badge} ${cardType === "secondary" ? s[`badge--position${position}`] : ""}`}
-            aria-label={`Tag: ${randomTag}`}
+            aria-label={`Tag: ${primaryTag}`}
           >
-            {randomTag}
+            {primaryTag}
           </span>
         )}
         <div className={s.overlay} aria-hidden="true" />
