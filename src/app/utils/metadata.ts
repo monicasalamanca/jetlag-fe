@@ -32,7 +32,7 @@ export function createMetadata({
   const canonicalUrl = normalizeUrl(url);
 
   return {
-    title: fullTitle,
+    title: { absolute: fullTitle },
     description,
     openGraph: {
       title: fullTitle,

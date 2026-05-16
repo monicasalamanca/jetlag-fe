@@ -7,7 +7,6 @@ import AnalyticsPageView from "./components/analytics-page-view";
 import AdsenseScript from "./components/adsense-script";
 import SiteSchemas from "../../components/seo/SiteSchemas";
 import SeoDebugTools from "../../components/seo/SeoDebugTools";
-
 import "./globals.css";
 import { StorageBanner, ConsentGate } from "./components/storage-banner";
 
