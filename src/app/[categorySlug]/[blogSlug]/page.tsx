@@ -94,8 +94,8 @@ const BlogPostPage = async ({ params }: Props) => {
       `Read this authentic travel story from The Jet Lag Chronicles about ${categorySlug.replace(/-/g, " ")}.`,
     cover: {
       url: post.imageUrl || `${SITE_CONFIG.url}/country-og.jpg`,
-      width: 1200,
-      height: 630,
+      width: post.imageWidth || 1200,
+      height: post.imageHeight || 630,
       alt: baseTitle,
     },
     tags: post.tags?.length ? post.tags : [categorySlug.replace(/-/g, " ")],

@@ -145,6 +145,18 @@ export const fetchBlogPostFromLifestyle = async (
           item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
+        imageWidth:
+          item.attributes.images?.data?.[0]?.attributes?.formats?.large
+            ?.width ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.medium
+            ?.width ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.width,
+        imageHeight:
+          item.attributes.images?.data?.[0]?.attributes?.formats?.large
+            ?.height ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.medium
+            ?.height ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.height,
         tags:
           item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
       };
@@ -223,6 +235,18 @@ export const fetchBlogPost = async (
           item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
+        imageWidth:
+          item.attributes.images?.data?.[0]?.attributes?.formats?.large
+            ?.width ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.medium
+            ?.width ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.width,
+        imageHeight:
+          item.attributes.images?.data?.[0]?.attributes?.formats?.large
+            ?.height ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.medium
+            ?.height ||
+          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.height,
         tags:
           item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
       };

@@ -79,8 +79,8 @@ const BlogPostPage = async ({ params }: Props) => {
     description: description,
     cover: {
       url: post.imageUrl || `${SITE_CONFIG.url}/lifestyle-og.jpg`,
-      width: 1200,
-      height: 630,
+      width: post.imageWidth || 1200,
+      height: post.imageHeight || 630,
       alt: title,
     },
     tags: post.tags?.length ? post.tags : ["lifestyle", "digital nomad"],

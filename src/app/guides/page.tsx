@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return createMetadata({
     title: "Travel Guides | The Jet Lag Chronicles",
     description:
-      "Comprehensive travel guides for digital nomads and slow travelers. Discover authentic destinations, practical tips, cost of living insights, and essential information for your adventures.",
+      "Digital nomad and expat guides covering visas, taxes, cost of living, remote work, and life abroad.",
     url: `${SITE_URL}/guides`,
     image: `${SITE_URL}/default-og.jpg`,
   });
@@ -28,7 +28,7 @@ const GuidesPage = async () => {
           url: `${SITE_URL}/guides`,
           title: "Travel Guides | The Jet Lag Chronicles",
           description:
-            "Comprehensive travel guides for digital nomads and slow travelers. Discover authentic destinations, practical tips, cost of living insights, and essential information for your adventures.",
+            "Digital nomad and expat guides covering visas, taxes, cost of living, remote work, and life abroad.",
           lang: "en",
           image: {
             url: `${SITE_URL}/default-og.jpg`,
