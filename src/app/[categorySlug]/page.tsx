@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!country || !country[0]) {
     const formattedName = categorySlug
-      .replace("-", " ")
+      .replace(/-/g, " ")
       .replace(/\b\w/g, (l) => l.toUpperCase());
     return createMetadata({
       title: `${formattedName} Not Found`,
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const countryData = country[0];
   const countryName =
     countryData.name ||
-    categorySlug.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase());
+    categorySlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
 
   return createMetadata({
     title: `${countryName} Travel Guide`,
@@ -53,7 +53,7 @@ const BlogPostPage = async ({ params }: Props) => {
   const countryData = country[0];
   const countryName =
     countryData.name ||
-    categorySlug.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase());
+    categorySlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
 
   return (
     <>
