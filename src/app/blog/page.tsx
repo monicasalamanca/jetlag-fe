@@ -15,8 +15,8 @@ export const metadata: Metadata = createMetadata({
   title: "Travel Chronicles and Guides",
   description:
     "Discover authentic travel stories, destination guides, and practical tips from experienced travelers. Explore our collection of travel chronicles and find inspiration for your next adventure.",
-  url: "https://thejetlagchronicles.com/blog",
-  image: "https://thejetlagchronicles.com/blog-og.jpg",
+  url: `${SITE_URL}/blog`,
+  image: `${SITE_URL}/blog-og.jpg`,
 });
 
 const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
@@ -68,7 +68,7 @@ export default async function Blog() {
             "Discover authentic travel stories, destination guides, and practical tips from experienced travelers. Explore our collection of travel chronicles and find inspiration for your next adventure.",
           lang: "en",
           image: {
-            url: "https://thejetlagchronicles.com/blog-og.jpg",
+            url: `${SITE_URL}/blog-og.jpg`,
             width: 1200,
             height: 630,
             alt: "The Jet Lag Chronicles Blog",

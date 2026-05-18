@@ -7,6 +7,7 @@ import AnalyticsPageView from "./components/analytics-page-view";
 import AdsenseScript from "./components/adsense-script";
 import SiteSchemas from "../../components/seo/SiteSchemas";
 import SeoDebugTools from "../../components/seo/SeoDebugTools";
+import { SITE_CONFIG } from "../../lib/seo/schema/config";
 import "./globals.css";
 import { StorageBanner, ConsentGate } from "./components/storage-banner";
 
@@ -56,16 +57,16 @@ export const metadata: Metadata = {
   authors: [{ name: "The Jet Lag Chronicles" }],
   creator: "The Jet Lag Chronicles",
   publisher: "The Jet Lag Chronicles",
-  metadataBase: new URL("https://thejetlagchronicles.com"),
+  metadataBase: new URL(SITE_CONFIG.url),
   openGraph: {
     title: "The Jet Lag Chronicles",
     description:
       "Discover authentic travel experiences, destination guides, and practical tips from seasoned travelers.",
-    url: "https://thejetlagchronicles.com",
+    url: SITE_CONFIG.url,
     siteName: "The Jet Lag Chronicles",
     images: [
       {
-        url: "https://thejetlagchronicles.com/default-og.jpg",
+        url: `${SITE_CONFIG.url}/default-og.jpg`,
         width: 1200,
         height: 630,
         alt: "The Jet Lag Chronicles OG image",
@@ -79,7 +80,7 @@ export const metadata: Metadata = {
     title: "The Jet Lag Chronicles",
     description:
       "Discover authentic travel experiences, destination guides, and practical tips from seasoned travelers.",
-    images: ["https://thejetlagchronicles.com/default-og.jpg"],
+    images: [`${SITE_CONFIG.url}/default-og.jpg`],
     creator: "@the_jetlaggers",
   },
   robots: {

@@ -15,8 +15,8 @@ export const metadata: Metadata = createMetadata({
   title: "Digital Nomad Lifestyle",
   description:
     "Discover the digital nomad lifestyle with The Jet Lag Chronicles. Learn about remote work, location independence, and creating a sustainable nomadic lifestyle.",
-  url: "https://thejetlagchronicles.com/lifestyle",
-  image: "https://thejetlagchronicles.com/lifestyle-og.jpg",
+  url: `${SITE_URL}/lifestyle`,
+  image: `${SITE_URL}/lifestyle-og.jpg`,
 });
 
 const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
@@ -59,7 +59,7 @@ export default async function LifestylePage() {
             "Discover the digital nomad lifestyle with The Jet Lag Chronicles. Learn about remote work, location independence, and creating a sustainable nomadic lifestyle.",
           lang: "en",
           image: {
-            url: "https://thejetlagchronicles.com/lifestyle-og.jpg",
+            url: `${SITE_URL}/lifestyle-og.jpg`,
             width: 1200,
             height: 630,
             alt: "Digital Nomad Lifestyle",
