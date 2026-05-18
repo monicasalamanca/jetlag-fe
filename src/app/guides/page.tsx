@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { createMetadata } from "@/app/utils/metadata";
-import PageSchemas from "../../../components/seo/PageSchemas";
-import { SITE_URL } from "../../../lib/seo/schema/utils";
-import GuidesLander from "../components/guides-lander/guides-lander";
+import PageSchemas from "@/components/seo/PageSchemas";
+import { SITE_URL } from "@/lib/seo/schema/utils";
+import GuidesLander from "@/components/guides-lander/guides-lander";
+import { fetchGuides } from "@/api/client";
+
+export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
   return createMetadata({
@@ -14,7 +17,9 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-const GuidesPage = () => {
+const GuidesPage = async () => {
+  const guides = await fetchGuides();
+
   return (
     <>
       {/* Page-specific SEO Schemas */}
@@ -42,7 +47,7 @@ const GuidesPage = () => {
         ]}
       />
 
-      <GuidesLander />
+      <GuidesLander guides={guides ?? []} />
     </>
   );
 };

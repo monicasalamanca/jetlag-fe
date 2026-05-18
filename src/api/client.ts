@@ -712,6 +712,69 @@ export const fetchGuidesClient = async (): Promise<Guide[] | null> => {
   }
 };
 
+// Server-side version to fetch all guides (used for the guides page)
+export const fetchGuides = async (): Promise<Guide[] | null> => {
+  const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token =
+    process.env.STRAPI_READ_API_TOKEN ||
+    process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  const url = `${baseUrl}/api/guides?sort=publishedAt:desc&populate=coverImage`;
+
+  try {
+    const res = await fetch(url, {
+      next: { revalidate: 86400 },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!res.ok) {
+      console.error("Failed to fetch guides: ", res.statusText);
+      return null;
+    }
+
+    const data = await res.json();
+
+    if (!data.data || data.data.length === 0) return [];
+
+    return data.data.map((item: GuideResponse) => {
+      const coverImageData = item.attributes.coverImage?.data;
+      return {
+        id: item.id,
+        title: item.attributes.title,
+        slug: item.attributes.slug,
+        description: item.attributes.description,
+        createdAt: item.attributes.createdAt,
+        updatedAt: item.attributes.updatedAt,
+        publishedAt: item.attributes.publishedAt,
+        type: item.attributes.type,
+        pageCount: item.attributes.pageCount,
+        priceCents: item.attributes.priceCents,
+        originalPriceCents: item.attributes.originalPriceCents,
+        currency: item.attributes.currency,
+        coverImage: coverImageData
+          ? {
+              url:
+                coverImageData.attributes.formats?.small?.url ||
+                coverImageData.attributes.formats?.medium?.url ||
+                coverImageData.attributes.url,
+              width:
+                coverImageData.attributes.formats?.small?.width ||
+                coverImageData.attributes.width,
+              height:
+                coverImageData.attributes.formats?.small?.height ||
+                coverImageData.attributes.height,
+              formats: coverImageData.attributes.formats,
+              alternativeText: coverImageData.attributes.alternativeText,
+            }
+          : null,
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching guides: ", error);
+    return null;
+  }
+};
+
 // Slim fetcher for sitemap generation — returns only slug + updatedAt
 export const fetchAllGuideSlugs = async (): Promise<
   { slug: string; updatedAt: string }[] | null
@@ -762,11 +825,13 @@ export const fetchGuideBySlugAndType = async (
   slug: string,
   type: "single" | "bundle",
 ): Promise<DetailedGuide | null> => {
-  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
-  const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+  const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token =
+    process.env.STRAPI_READ_API_TOKEN ||
+    process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
   if (!baseUrl) {
-    console.error("NEXT_PUBLIC_STRAPI_URL is not defined");
+    console.error("STRAPI_URL is not defined");
     return null;
   }
 

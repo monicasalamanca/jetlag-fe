@@ -3,9 +3,9 @@
  */
 
 import JsonLd from "./JsonLd";
-import { buildOrganization, buildWebSite } from "../../lib/seo/schema/builders";
-import type { OrgConfig, SiteConfig } from "../../lib/seo/schema/types";
-import { getOrgConfig, getSiteSchemaConfig } from "../../lib/seo/schema/config";
+import { buildOrganization, buildWebSite } from "@/lib/seo/schema/builders";
+import type { OrgConfig, SiteConfig } from "@/lib/seo/schema/types";
+import { getOrgConfig, getSiteSchemaConfig } from "@/lib/seo/schema/config";
 
 interface SiteSchemasProps {
   orgOverrides?: Partial<OrgConfig>;

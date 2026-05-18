@@ -8,13 +8,13 @@ import {
   buildBreadcrumbList,
   buildBlogPosting,
   buildFAQPage,
-} from "../../lib/seo/schema/builders";
+} from "@/lib/seo/schema/builders";
 import type {
   ImageMeta,
   BreadcrumbItem,
   ArticleMeta,
   FAQItem,
-} from "../../lib/seo/schema/types";
+} from "@/lib/seo/schema/types";
 
 interface PageSchemasProps {
   page: {

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import LifestyleLander from "@/components/lifestyle-lander/lifestyle-lander";
 import { createMetadata } from "@/app/utils/metadata";
-import PageSchemas from "../../../components/seo/PageSchemas";
-import { SITE_URL } from "../../../lib/seo/schema/utils";
+import PageSchemas from "@/components/seo/PageSchemas";
+import { SITE_URL } from "@/lib/seo/schema/utils";
 import { fetchLatestBlogPosts } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/app/components/cards/card.types";
-import SocialFollowSection from "../components/social-follow-section/social-follow-section";
+import SocialFollowSection from "@/components/social-follow-section/social-follow-section";
 
 // ISR: revalidate the lifestyle listing page every 2 days
 export const revalidate = 172800;

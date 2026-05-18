@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { normalizeUrl } from "./canonicalUrl";
-import { SITE_CONFIG } from "../../../lib/seo/schema/config";
+import { SITE_CONFIG } from "@/lib/seo/schema/config";
 
 interface CreateMetadataProps {
   title: string;

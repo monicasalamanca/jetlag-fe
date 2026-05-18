@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import { fetchCountry, fetchBlogsByCountryServer } from "@/api/client";
 import CountryLander from "@/components/country-lander/country-lander";
 import { createMetadata } from "@/app/utils/metadata";
-import PageSchemas from "../../../components/seo/PageSchemas";
-import { SITE_URL } from "../../../lib/seo/schema/utils";
+import PageSchemas from "@/components/seo/PageSchemas";
+import { SITE_URL } from "@/lib/seo/schema/utils";
 
 type Props = {
   params: Promise<{

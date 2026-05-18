@@ -5,9 +5,9 @@ import HeaderWrapper from "@/components/headerWrapper/headerWrapper";
 import Footer from "@/components/footer/footer";
 import AnalyticsPageView from "./components/analytics-page-view";
 import AdsenseScript from "./components/adsense-script";
-import SiteSchemas from "../../components/seo/SiteSchemas";
-import SeoDebugTools from "../../components/seo/SeoDebugTools";
-import { SITE_CONFIG } from "../../lib/seo/schema/config";
+import SiteSchemas from "@/components/seo/SiteSchemas";
+import SeoDebugTools from "@/components/seo/SeoDebugTools";
+import { SITE_CONFIG } from "@/lib/seo/schema/config";
 import "./globals.css";
 import { StorageBanner, ConsentGate } from "./components/storage-banner";
 

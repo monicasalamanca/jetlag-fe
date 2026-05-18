@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { fetchBlogPost } from "@/api/client";
+import { fetchBlogPost, fetchLatestBlogPosts } from "@/api/client";
 import { notFound } from "next/navigation";
 import BlogContent from "@/components/blog-content/blog-content";
 import { createMetadata } from "@/app/utils/metadata";
-import PageSchemas from "../../../../components/seo/PageSchemas";
-import { SITE_CONFIG } from "../../../../lib/seo/schema/config";
-import { toWordCount } from "../../../../lib/seo/schema/utils";
-import YouMightAlsoLike from "../../components/you-might-also-like/you-might-also-like";
+import PageSchemas from "@/components/seo/PageSchemas";
+import { SITE_CONFIG } from "@/lib/seo/schema/config";
+import { toWordCount } from "@/lib/seo/schema/utils";
+import YouMightAlsoLike from "@/components/you-might-also-like/you-might-also-like";
 
 export const revalidate = 21600;
 
@@ -64,7 +64,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const BlogPostPage = async ({ params }: Props) => {
   const { categorySlug, blogSlug } = await params;
-  const postArray = await fetchBlogPost(categorySlug, blogSlug);
+  const [postArray, allBlogs] = await Promise.all([
+    fetchBlogPost(categorySlug, blogSlug),
+    fetchLatestBlogPosts(),
+  ]);
 
   if (!postArray || postArray.length === 0) return notFound();
 
@@ -147,6 +150,7 @@ const BlogPostPage = async ({ params }: Props) => {
         currentBlogSlug={blogSlug}
         currentBlogTags={[categorySlug.replace(/-/g, " ")]}
         currentBlogCountry={countryName}
+        allBlogs={allBlogs ?? []}
       />
     </>
   );

@@ -8,8 +8,8 @@ import WhyTrustUs from "@/components/why-trust-us/why-trust-us";
 import MeetTheJetlaggers from "@/components/meet-the-jetlaggers/meet-the-jetlaggers";
 import OurValues from "@/components/our-values/our-values";
 import { createMetadata } from "@/app/utils/metadata";
-import PageSchemas from "../../../components/seo/PageSchemas";
-import { SITE_CONFIG } from "../../../lib/seo/schema/config";
+import PageSchemas from "@/components/seo/PageSchemas";
+import { SITE_CONFIG } from "@/lib/seo/schema/config";
 
 export const metadata: Metadata = createMetadata({
   title: "About Us",
