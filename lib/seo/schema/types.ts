@@ -105,7 +105,7 @@ export interface WebSite {
     "@type": "Organization";
     name: string;
   };
-  potentialAction: {
+  potentialAction?: {
     "@type": "SearchAction";
     target: {
       "@type": "EntryPoint";

@@ -48,7 +48,7 @@ export function buildOrganization(org: OrgConfig): Organization {
 }
 
 /**
- * Build WebSite schema with search action
+ * Build WebSite schema
  */
 export function buildWebSite(site: SiteConfig): WebSite {
   return clean({
@@ -61,14 +61,6 @@ export function buildWebSite(site: SiteConfig): WebSite {
     publisher: {
       "@type": "Organization" as const,
       name: site.name,
-    },
-    potentialAction: {
-      "@type": "SearchAction" as const,
-      target: {
-        "@type": "EntryPoint" as const,
-        urlTemplate: `${absUrl(site.url)}/search?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string" as const,
     },
   });
 }
