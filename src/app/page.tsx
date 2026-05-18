@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import HomeContent from "@/components/home-content/home-content";
 import { createMetadata } from "@/app/utils/metadata";
-import PageSchemas from "../../components/seo/PageSchemas";
-import { SITE_CONFIG } from "../../lib/seo/schema/config";
+import PageSchemas from "@/components/seo/PageSchemas";
+import { SITE_CONFIG } from "@/lib/seo/schema/config";
 import { fetchHomePageSections } from "@/api/client";
 
 export const revalidate = 3600;

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import NotFound from "@/components/not-found/not-found";
 import { createMetadata } from "@/app/utils/metadata";
-import { SITE_CONFIG } from "../../lib/seo/schema/config";
+import { SITE_CONFIG } from "@/lib/seo/schema/config";
 
 export const metadata: Metadata = createMetadata({
   title: "Page Not Found",

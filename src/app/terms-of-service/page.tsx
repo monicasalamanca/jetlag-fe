@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import TermsOfServiceComponent from "@/components/terms-of-service/terms-of-service";
 import { createMetadata } from "@/app/utils/metadata";
-import PageSchemas from "../../../components/seo/PageSchemas";
-import { SITE_CONFIG } from "../../../lib/seo/schema/config";
+import PageSchemas from "@/components/seo/PageSchemas";
+import { SITE_CONFIG } from "@/lib/seo/schema/config";
 
 export const metadata: Metadata = createMetadata({
   title: "Terms of Service",

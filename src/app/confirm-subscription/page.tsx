@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import ConfirmSubscriptionMsg from "@/components/confirm-subscription-msg/confirm-subscription-msg";
 import { createMetadata } from "@/app/utils/metadata";
-import PageSchemas from "../../../components/seo/PageSchemas";
-import { SITE_CONFIG } from "../../../lib/seo/schema/config";
+import PageSchemas from "@/components/seo/PageSchemas";
+import { SITE_CONFIG } from "@/lib/seo/schema/config";
 
 export const metadata: Metadata = createMetadata({
   title: "Subscription Confirmed",

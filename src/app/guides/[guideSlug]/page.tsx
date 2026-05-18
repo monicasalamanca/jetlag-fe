@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { fetchGuideBySlugAndType } from "@/api/client";
 import SpecificGuidesLander from "@/app/components/specific-guide-lander/specific-guide-lander";
-import PageSchemas from "../../../../components/seo/PageSchemas";
-import { SITE_CONFIG } from "../../../../lib/seo/schema/config";
+import PageSchemas from "@/components/seo/PageSchemas";
+import { SITE_CONFIG } from "@/lib/seo/schema/config";
 import { createMetadata } from "@/app/utils/metadata";
 
 type Props = {

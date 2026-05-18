@@ -25,7 +25,8 @@
       "@/styles/*": ["app/styles/*"],
       "@/api/*": ["api/*"],
       "@/utils/*": ["app/utils/*"],
-      "@/tokens/*": ["app/styles/tokens/*"]
+      "@/tokens/*": ["app/styles/tokens/*"],
+      "@/lib/*": ["lib/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

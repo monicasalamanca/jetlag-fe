@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { fetchLatestBlogPostsClient } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
 import { trackCardClick } from "@/app/utils/analytics";
@@ -13,6 +11,7 @@ interface YouMightAlsoLikeProps {
   currentBlogSlug: string;
   currentBlogTags?: string[];
   currentBlogCountry?: string;
+  allBlogs: BlogPost[];
 }
 
 interface BlogPriority {
@@ -26,10 +25,8 @@ const YouMightAlsoLike = ({
   currentBlogSlug,
   currentBlogTags = [],
   currentBlogCountry,
+  allBlogs,
 }: YouMightAlsoLikeProps) => {
-  const [relatedBlogs, setRelatedBlogs] = useState<CardProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
   // Function to map API BlogPost to CardProps format
   const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
     const tagsToUse =
@@ -111,113 +108,73 @@ const YouMightAlsoLike = ({
     });
   };
 
-  useEffect(() => {
-    // Get daily seed for consistent daily selection
-    const getDailySeed = () => {
-      const today = new Date().toDateString(); // "Mon Oct 15 2025"
-      return today.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    };
+  const getDailySeed = () => {
+    const today = new Date().toDateString();
+    return today.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  };
 
-    // Select 4 blogs with prioritization - always return up to 4 blogs
-    const selectRelatedBlogs = (
-      eligibleBlogs: CardProps[],
-      allBlogs: CardProps[],
-      currentTags: string[],
-      currentCountry?: string,
-    ): CardProps[] => {
-      // Start with eligible blogs (excluding current and oldest 4)
-      let blogsToUse = eligibleBlogs;
+  const selectRelatedBlogs = (
+    eligibleBlogs: CardProps[],
+    allMapped: CardProps[],
+    currentTags: string[],
+    currentCountry?: string,
+  ): CardProps[] => {
+    let blogsToUse = eligibleBlogs;
 
-      // If we don't have enough eligible blogs, expand to include oldest blogs (but still exclude current)
-      if (blogsToUse.length < 4) {
-        blogsToUse = allBlogs.filter((blog) => blog.slug !== currentBlogSlug);
-      }
+    if (blogsToUse.length < 4) {
+      blogsToUse = allMapped.filter((blog) => blog.slug !== currentBlogSlug);
+    }
 
-      // If still not enough (edge case), duplicate some blogs to reach 4
-      while (blogsToUse.length > 0 && blogsToUse.length < 4) {
-        blogsToUse = [
-          ...blogsToUse,
-          ...blogsToUse.slice(0, 4 - blogsToUse.length),
-        ];
-      }
+    while (blogsToUse.length > 0 && blogsToUse.length < 4) {
+      blogsToUse = [
+        ...blogsToUse,
+        ...blogsToUse.slice(0, 4 - blogsToUse.length),
+      ];
+    }
 
-      // Take only what we need (up to 4)
-      blogsToUse = blogsToUse.slice(0, Math.max(4, blogsToUse.length));
+    blogsToUse = blogsToUse.slice(0, Math.max(4, blogsToUse.length));
 
-      // Calculate priorities for all blogs
-      const prioritizedBlogs = blogsToUse.map((blog) =>
-        calculateBlogPriority(blog, currentTags, currentCountry),
-      );
+    const prioritizedBlogs = blogsToUse.map((blog) =>
+      calculateBlogPriority(blog, currentTags, currentCountry),
+    );
 
-      // Sort by score (highest first), then by random for ties
-      const dailySeed = getDailySeed();
-      prioritizedBlogs.sort((a, b) => {
-        if (a.score !== b.score) return b.score - a.score;
-        // For ties, use seeded random based on blog slug for consistency
-        const seedA = a.blog.slug
-          .split("")
-          .reduce((acc, char) => acc + char.charCodeAt(0), dailySeed);
-        const seedB = b.blog.slug
-          .split("")
-          .reduce((acc, char) => acc + char.charCodeAt(0), dailySeed);
-        return seededRandom(seedA) - seededRandom(seedB);
-      });
+    const dailySeed = getDailySeed();
+    prioritizedBlogs.sort((a, b) => {
+      if (a.score !== b.score) return b.score - a.score;
+      const seedA = a.blog.slug
+        .split("")
+        .reduce((acc, char) => acc + char.charCodeAt(0), dailySeed);
+      const seedB = b.blog.slug
+        .split("")
+        .reduce((acc, char) => acc + char.charCodeAt(0), dailySeed);
+      return seededRandom(seedA) - seededRandom(seedB);
+    });
 
-      // Return up to 4 blogs, but ensure we return exactly 4 if possible
-      const result = prioritizedBlogs.slice(0, 4).map((item) => item.blog);
-      return result.length === 4
-        ? result
-        : prioritizedBlogs
-            .slice(0, Math.min(4, prioritizedBlogs.length))
-            .map((item) => item.blog);
-    };
+    const result = prioritizedBlogs.slice(0, 4).map((item) => item.blog);
+    return result.length === 4
+      ? result
+      : prioritizedBlogs
+          .slice(0, Math.min(4, prioritizedBlogs.length))
+          .map((item) => item.blog);
+  };
 
-    const getRelatedBlogs = async () => {
-      try {
-        setIsLoading(true);
-        const blogData = await fetchLatestBlogPostsClient();
+  const mappedBlogs = allBlogs.map(mapBlogPostToCardProps);
+  const withoutCurrentBlog = mappedBlogs.filter(
+    (blog) => blog.slug !== currentBlogSlug,
+  );
+  const withoutOldestBlogs = withoutCurrentBlog.slice(0, -4);
+  const relatedBlogs = selectRelatedBlogs(
+    withoutOldestBlogs,
+    mappedBlogs,
+    currentBlogTags,
+    currentBlogCountry,
+  );
 
-        if (blogData) {
-          const mappedBlogs = blogData.map(mapBlogPostToCardProps);
+  if (relatedBlogs.length === 0) return null;
 
-          // Filter out current blog
-          const withoutCurrentBlog = mappedBlogs.filter(
-            (blog) => blog.slug !== currentBlogSlug,
-          );
-
-          // Filter out "oldest blogs" (last 4 from homepage) - keep the newest content
-          const withoutOldestBlogs = withoutCurrentBlog.slice(0, -4);
-
-          // Select related blogs with prioritization - always get 4 blogs
-          const selectedBlogs = selectRelatedBlogs(
-            withoutOldestBlogs,
-            mappedBlogs, // Pass all mapped blogs as fallback
-            currentBlogTags,
-            currentBlogCountry,
-          );
-
-          setRelatedBlogs(selectedBlogs);
-        }
-      } catch (error) {
-        console.error("Error fetching related blogs:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    getRelatedBlogs();
-  }, [currentBlogSlug, currentBlogTags, currentBlogCountry]);
-
-  // Don't render if loading or no blogs available
-  if (isLoading || relatedBlogs.length === 0) {
-    return null;
-  }
-
-  // Ensure we always have 4 cards to display (pad with duplicates if needed)
   const cardsToDisplay = [...relatedBlogs];
   while (cardsToDisplay.length < 4 && relatedBlogs.length > 0) {
-    const extraCards = relatedBlogs.slice(0, 4 - cardsToDisplay.length);
-    cardsToDisplay.push(...extraCards);
+    cardsToDisplay.push(...relatedBlogs.slice(0, 4 - cardsToDisplay.length));
   }
   const displayCards = cardsToDisplay.slice(0, 4);
 

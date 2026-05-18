@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import ChronicleContent from "@/components/chronicle-content/chronicle-content";
 import { createMetadata } from "@/app/utils/metadata";
-import PageSchemas from "../../../components/seo/PageSchemas";
-import { SITE_URL } from "../../../lib/seo/schema/utils";
+import PageSchemas from "@/components/seo/PageSchemas";
+import { SITE_URL } from "@/lib/seo/schema/utils";
 import { fetchLatestBlogPosts } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
-import SocialFollowSection from "../components/social-follow-section/social-follow-section";
+import SocialFollowSection from "@/components/social-follow-section/social-follow-section";
 
 // ISR: revalidate the blog listing page every 2 days
 export const revalidate = 172800;
