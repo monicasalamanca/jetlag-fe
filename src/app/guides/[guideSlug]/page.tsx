@@ -6,6 +6,8 @@ import PageSchemas from "@/components/seo/PageSchemas";
 import { SITE_CONFIG } from "@/lib/seo/schema/config";
 import { createMetadata } from "@/app/utils/metadata";
 
+export const revalidate = 86400; // ISR: revalidate daily, matches guides listing
+
 type Props = {
   params: Promise<{ guideSlug: string }>;
 };
