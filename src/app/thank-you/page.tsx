@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Thank you for your purchase! Your order has been confirmed. Start exploring your travel resources and guides.",
     url: `${SITE_URL}/thank-you`,
-    image: `${SITE_URL}/og/thank-you.jpg`,
+    image: `${SITE_URL}/default-og.jpg`,
   });
 }
 
@@ -28,7 +28,7 @@ const ThankYouPage = () => {
             "Thank you for your purchase! Your order has been confirmed. Start exploring your travel resources and guides.",
           lang: "en",
           image: {
-            url: `${SITE_URL}/og/thank-you.jpg`,
+            url: `${SITE_URL}/default-og.jpg`,
             width: 1200,
             height: 630,
             alt: "Thank You - The Jet Lag Chronicles",
