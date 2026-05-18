@@ -37,21 +37,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .replace(/-/g, " ")
     .replace(/\b\w/g, (l) => l.toUpperCase());
 
-  // Clean, concise title with country prefix for better GA tracking
   const baseTitle =
     post.title ||
     blogSlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
 
-  const cleanTitle = `${countryName}: ${baseTitle}`;
-
-  const description =
-    post.description ||
+  const metaTitle = post.seoTitle || `${countryName}: ${baseTitle}`;
+  const metaDescription =
+    post.seoDescription ||
+    post.description?.slice(0, 160) ||
     post.content?.slice(0, 160) ||
     `Read this authentic travel story from The Jet Lag Chronicles about ${categorySlug.replace(/-/g, " ")}.`;
 
   return createMetadata({
-    title: cleanTitle,
-    description,
+    title: metaTitle,
+    description: metaDescription,
     url: `${SITE_CONFIG.url}/${categorySlug}/${blogSlug}`,
     image: post.imageUrl || `${SITE_CONFIG.url}/country-og.jpg`,
     type: "article",
@@ -89,7 +88,8 @@ const BlogPostPage = async ({ params }: Props) => {
     slug: blogSlug,
     title: baseTitle,
     description:
-      post.description ||
+      post.seoDescription ||
+      post.description?.slice(0, 160) ||
       post.content?.slice(0, 160) ||
       `Read this authentic travel story from The Jet Lag Chronicles about ${categorySlug.replace(/-/g, " ")}.`,
     cover: {

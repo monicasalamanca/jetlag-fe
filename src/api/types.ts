@@ -161,6 +161,8 @@ export type BlogPostResponse = {
     updatedAt: string;
     publishedAt: string;
     tags?: Tags;
+    seoTitle?: string;
+    seoDescription?: string;
     images?: Images;
     country?: {
       data?: {
@@ -201,6 +203,8 @@ export type Post = {
   imageWidth?: number;
   imageHeight?: number;
   tags?: string[];
+  seoTitle?: string;
+  seoDescription?: string;
 };
 
 export type Destination = {
