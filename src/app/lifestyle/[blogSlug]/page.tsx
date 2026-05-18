@@ -46,6 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     image: post.imageUrl || `https://thejetlagchronicles.com/lifestyle-og.jpg`,
     type: "article",
     publishedTime: post.publishedAt,
+    modifiedTime: post.updatedAt || post.publishedAt,
     authors: ["The Jet Lag Chronicles"],
     tags: ["lifestyle", "digital nomad"],
   });
@@ -84,7 +85,8 @@ const BlogPostPage = async ({ params }: Props) => {
     readingTimeMins: Math.ceil(toWordCount(post.content) / 200),
     wordCount: toWordCount(post.content),
     datePublished: post.publishedAt || new Date().toISOString(),
-    dateModified: post.publishedAt || new Date().toISOString(),
+    dateModified:
+      post.updatedAt || post.publishedAt || new Date().toISOString(),
     author: {
       name: SITE_CONFIG.defaultAuthor.name,
       url: `${SITE_CONFIG.url}/about-us`,
