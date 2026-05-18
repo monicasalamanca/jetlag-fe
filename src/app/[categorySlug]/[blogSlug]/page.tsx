@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     publishedTime: post.publishedAt,
     modifiedTime: post.updatedAt || post.publishedAt,
     authors: ["The Jet Lag Chronicles"],
-    tags: [categorySlug.replace(/-/g, " ")],
+    tags: post.tags?.length ? post.tags : [categorySlug.replace(/-/g, " ")],
   });
 }
 
@@ -98,7 +98,7 @@ const BlogPostPage = async ({ params }: Props) => {
       height: 630,
       alt: baseTitle,
     },
-    tags: [categorySlug.replace(/-/g, " ")],
+    tags: post.tags?.length ? post.tags : [categorySlug.replace(/-/g, " ")],
     categories: [countryName],
     readingTimeMins: Math.ceil(toWordCount(post.content) / 200), // ~200 words per minute
     wordCount: toWordCount(post.content),
@@ -148,7 +148,9 @@ const BlogPostPage = async ({ params }: Props) => {
 
       <YouMightAlsoLike
         currentBlogSlug={blogSlug}
-        currentBlogTags={[categorySlug.replace(/-/g, " ")]}
+        currentBlogTags={
+          post.tags?.length ? post.tags : [categorySlug.replace(/-/g, " ")]
+        }
         currentBlogCountry={countryName}
         allBlogs={allBlogs ?? []}
       />

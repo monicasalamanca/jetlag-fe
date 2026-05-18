@@ -198,6 +198,7 @@ export type Post = {
   updatedAt: string;
   views: number;
   imageUrl?: string;
+  tags?: string[];
 };
 
 export type Destination = {

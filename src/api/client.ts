@@ -106,7 +106,7 @@ export const fetchBlogPostFromLifestyle = async (
   const token =
     process.env.STRAPI_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
-  const url = `${baseUrl}/api/blogs?filters[lifestyle]=true&filters[slug][$eq]=${slug}&populate[images]=*`;
+  const url = `${baseUrl}/api/blogs?filters[lifestyle]=true&filters[slug][$eq]=${slug}&populate[images]=*&populate[tags]=*`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
@@ -145,6 +145,8 @@ export const fetchBlogPostFromLifestyle = async (
           item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
+        tags:
+          item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
       };
     });
   } catch (error) {
@@ -164,7 +166,7 @@ export const fetchBlogPost = async (
     process.env.STRAPI_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
   // Fetch by slug only, then filter by country
-  const url = `${baseUrl}/api/blogs?filters[slug][$eq]=${slug}&populate[images]=*&populate[country]=*`;
+  const url = `${baseUrl}/api/blogs?filters[slug][$eq]=${slug}&populate[images]=*&populate[country]=*&populate[tags]=*`;
   try {
     // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
@@ -221,6 +223,8 @@ export const fetchBlogPost = async (
           item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
+        tags:
+          item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
       };
     });
   } catch (error) {
