@@ -31,9 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     });
   }
 
-  const firstSamplePage = guide.samplePages?.[0];
-  const imageUrl =
-    firstSamplePage?.attributes?.url || `${SITE_CONFIG.url}/country-og.jpg`;
+  const imageUrl = guide.coverImage?.url || `${SITE_CONFIG.url}/country-og.jpg`;
 
   return createMetadata({
     title: guide.title,
@@ -66,12 +64,10 @@ const SpecificGuideLanderPage = async ({ params }: Props) => {
   const guideTitle = guide.title;
   const guideDescription = guide.description;
 
-  // Use first sample page image if available, otherwise use default
-  const firstSamplePage = guide.samplePages?.[0];
   const guideImage =
-    firstSamplePage?.attributes?.url || `${SITE_CONFIG.url}/country-og.jpg`;
-  const guideImageWidth = firstSamplePage?.attributes?.width || 1200;
-  const guideImageHeight = firstSamplePage?.attributes?.height || 630;
+    guide.coverImage?.url || `${SITE_CONFIG.url}/country-og.jpg`;
+  const guideImageWidth = guide.coverImage?.width || 1200;
+  const guideImageHeight = guide.coverImage?.height || 630;
 
   return (
     <>
@@ -86,7 +82,7 @@ const SpecificGuideLanderPage = async ({ params }: Props) => {
             url: guideImage,
             width: guideImageWidth,
             height: guideImageHeight,
-            alt: guideTitle,
+            alt: guide.coverImage?.alternativeText || guideTitle,
           },
         }}
         breadcrumbs={[
