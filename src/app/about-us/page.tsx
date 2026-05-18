@@ -49,13 +49,11 @@ export default function About() {
 
       <Hero
         srcImage="/aboutus-hero_vpxp49.jpg"
-        headline={"Which Thai Island Makes Sense In 2026?"}
-        shortDescription={
-          "What it really costs to live on Thailand’s islands. Rent, food, transport, visas, and the hidden expenses that drain newcomers fast."
-        }
+        headline="Meet The Jet Lag Chronicles Team"
+        shortDescription="We are expats, digital nomads, and slow travelers sharing honest guides on visas, cost of living, taxes, and remote work abroad."
         ctaProps={{
           buttonText: "Download the Free Guide",
-          tags: ["free guide", "thailand"],
+          tags: ["free guide", "digital nomad"],
         }}
       />
       <AboutUsContent />
