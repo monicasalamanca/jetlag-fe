@@ -40,7 +40,7 @@ export async function GET() {
       .map(
         (path) => `
 <url>
-  <loc>${baseUrl}/${path}</loc>
+  <loc>${path ? `${baseUrl}/${path}` : baseUrl}</loc>
   <lastmod>${new Date().toISOString()}</lastmod>
   <priority>0.9</priority>
   <changefreq>weekly</changefreq>
