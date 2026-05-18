@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { fetchCountry } from "@/api/client";
+import { fetchCountry, fetchBlogsByCountryServer } from "@/api/client";
 import CountryLander from "@/components/country-lander/country-lander";
 import { createMetadata } from "@/app/utils/metadata";
 import PageSchemas from "../../../components/seo/PageSchemas";
@@ -43,11 +43,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const BlogPostPage = async ({ params }: Props) => {
   const { categorySlug } = await params;
-  const country = await fetchCountry(categorySlug);
-  // In here we either return the data based on country or other category
-  // So first we will have a list of other categories
-  // and we will check if the category exists in the list
-  // If it does exist we will return the page for that specific category
+  const [country, blogData] = await Promise.all([
+    fetchCountry(categorySlug),
+    fetchBlogsByCountryServer(categorySlug),
+  ]);
+
   if (!country) return notFound();
 
   const countryData = country[0];
@@ -81,7 +81,7 @@ const BlogPostPage = async ({ params }: Props) => {
         ]}
       />
 
-      <CountryLander country={countryData} />
+      <CountryLander country={countryData} blogData={blogData ?? []} />
     </>
   );
 };

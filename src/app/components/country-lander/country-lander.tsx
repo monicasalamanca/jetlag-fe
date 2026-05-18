@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useMemo, useState, useEffect } from "react";
+import { FC, useMemo } from "react";
 // import CountryInfo from "../country-info/country-info";
 // import TravelResources from "../travel-resources/travel-resources";
 import { notFound } from "next/navigation";
@@ -10,7 +10,6 @@ import InfoCard from "../country-facts-card/info-card/info-card";
 import ComingSoonSection from "../coming-soon-section/coming-soon-section";
 import CardThree from "../cards/card-three/card-three";
 import { Country, BlogPost } from "@/api/types";
-import { fetchBlogsByCountry } from "@/api/client";
 
 import s from "./country-lander.module.scss";
 
@@ -39,45 +38,11 @@ const getColour = (index: number, seed: string = "") => {
   return colourStyle[colourIndex];
 };
 
-const CountryLander: FC<{ country: Country }> = ({ country }) => {
-  const [blogData, setBlogData] = useState<BlogPost[]>([]);
-  const [isLoadingBlogs, setIsLoadingBlogs] = useState(false);
-  const [showComingSoon, setShowComingSoon] = useState(false);
-
-  // Fetch blog data for the country with fallback logic
-  useEffect(() => {
-    if (!country) return;
-
-    const fetchBlogs = async () => {
-      setIsLoadingBlogs(true);
-      setShowComingSoon(false);
-
-      try {
-        // First, try to fetch blogs for the current country
-        const countrySlug = country.slug;
-
-        const blogs = await fetchBlogsByCountry(countrySlug);
-
-        if (blogs && blogs.length > 0) {
-          // Found blogs for this country
-          setBlogData(blogs);
-          setShowComingSoon(false);
-        } else {
-          // No blogs found for this country
-          setBlogData([]); // Don't show any blog cards in masonry grid
-          setShowComingSoon(true); // Show ComingSoonSection (which handles Thailand fallback internally)
-        }
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-        setBlogData([]);
-        setShowComingSoon(true);
-      } finally {
-        setIsLoadingBlogs(false);
-      }
-    };
-
-    fetchBlogs();
-  }, [country]);
+const CountryLander: FC<{ country: Country; blogData: BlogPost[] }> = ({
+  country,
+  blogData,
+}) => {
+  const showComingSoon = blogData.length === 0;
 
   if (!country) {
     return notFound();
@@ -256,11 +221,6 @@ const CountryLander: FC<{ country: Country }> = ({ country }) => {
       {showComingSoon && <ComingSoonSection countryName={name} />}
       <section className={s.countryIntro}>
         <p>{intro}</p>
-        {isLoadingBlogs && (
-          <p style={{ fontStyle: "italic", color: "#666" }}>
-            Loading travel stories...
-          </p>
-        )}
       </section>
       <section className={s.masonryGridSection}>
         {/* {filteredCards.map((card: any) => card.component)} */}

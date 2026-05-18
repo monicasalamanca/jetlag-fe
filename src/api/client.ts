@@ -588,6 +588,56 @@ export const fetchBlogsByCountry = async (
   }
 };
 
+// Server-safe version — calls Strapi directly, safe to use in server components and generateStaticParams
+export const fetchBlogsByCountryServer = async (
+  countrySlug: string,
+): Promise<BlogPost[] | null> => {
+  const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token =
+    process.env.STRAPI_TOKEN ||
+    process.env.STRAPI_READ_API_TOKEN ||
+    process.env.STRAPI_API_READ_TOKEN ||
+    process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  const url = `${baseUrl}/api/blogs?filters[country][slug][$eq]=${countrySlug}&sort=publishedAt:desc&populate[images]=*&populate[country]=*&populate[tags]=*&pagination[pageSize]=100`;
+
+  try {
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}` },
+      next: { revalidate: 21600 },
+    });
+
+    if (!res.ok) {
+      console.error(
+        `Failed to fetch blogs for ${countrySlug}:`,
+        res.statusText,
+      );
+      return null;
+    }
+
+    const data = await res.json();
+    return data.data.map((item: BlogPostResponse) => ({
+      id: item.id,
+      title: item.attributes.title,
+      description: item.attributes.description,
+      content: item.attributes.content,
+      publishedAt: item.attributes.publishedAt,
+      slug: item.attributes.slug,
+      imageUrl:
+        item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
+          ?.url ||
+        item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
+        item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
+      country: item.attributes.country?.data?.attributes?.name,
+      tags: item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
+      lifestyle: item.attributes.lifestyle || false,
+    }));
+  } catch (error) {
+    console.error(`Error fetching blogs for ${countrySlug}:`, error);
+    return null;
+  }
+};
+
 // Client-side version to fetch all guides
 // this is used for the guides page
 export const fetchGuidesClient = async (): Promise<Guide[] | null> => {
