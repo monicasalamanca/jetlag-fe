@@ -31,17 +31,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const post = postArray[0];
-  const title =
+  const baseTitle =
     post.title ||
     blogSlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-  const description =
-    post.description ||
+
+  const metaTitle = post.seoTitle || baseTitle;
+  const metaDescription =
+    post.seoDescription ||
+    post.description?.slice(0, 160) ||
     post.content?.slice(0, 160) ||
     `Discover insights about the digital nomad lifestyle from The Jet Lag Chronicles.`;
 
   return createMetadata({
-    title,
-    description,
+    title: metaTitle,
+    description: metaDescription,
     url: `${SITE_CONFIG.url}/lifestyle/${blogSlug}`,
     image: post.imageUrl || `${SITE_CONFIG.url}/lifestyle-og.jpg`,
     type: "article",
@@ -67,7 +70,8 @@ const BlogPostPage = async ({ params }: Props) => {
     post.title ||
     blogSlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
   const description =
-    post.description ||
+    post.seoDescription ||
+    post.description?.slice(0, 160) ||
     post.content?.slice(0, 160) ||
     `Discover insights about the digital nomad lifestyle from The Jet Lag Chronicles.`;
 

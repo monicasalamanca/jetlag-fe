@@ -159,6 +159,8 @@ export const fetchBlogPostFromLifestyle = async (
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.height,
         tags:
           item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
+        seoTitle: item.attributes.seoTitle || undefined,
+        seoDescription: item.attributes.seoDescription || undefined,
       };
     });
   } catch (error) {
@@ -249,6 +251,8 @@ export const fetchBlogPost = async (
           item.attributes.images?.data?.[0]?.attributes?.formats?.small?.height,
         tags:
           item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
+        seoTitle: item.attributes.seoTitle || undefined,
+        seoDescription: item.attributes.seoDescription || undefined,
       };
     });
   } catch (error) {
