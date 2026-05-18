@@ -103,6 +103,7 @@ import {
   faMoneyBillTransfer,
   faBriefcase,
   faFileContract,
+  faPrayingHands,
 } from "@fortawesome/free-solid-svg-icons";
 
 // import { faCalendar, faCommentDots } from "@fortawesome/free-regular-svg-icons";
@@ -217,5 +218,6 @@ export const iconMap: Record<string, IconDefinition> = {
   faMoneyBillTransfer,
   faBriefcase,
   faFileContract,
+  faPrayingHands,
   // brands
 };
