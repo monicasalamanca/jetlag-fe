@@ -104,6 +104,8 @@ import {
   faBriefcase,
   faFileContract,
   faPrayingHands,
+  faBinoculars,
+  faHandFist,
 } from "@fortawesome/free-solid-svg-icons";
 
 // import { faCalendar, faCommentDots } from "@fortawesome/free-regular-svg-icons";
@@ -219,5 +221,7 @@ export const iconMap: Record<string, IconDefinition> = {
   faBriefcase,
   faFileContract,
   faPrayingHands,
+  faBinoculars,
+  faHandFist,
   // brands
 };

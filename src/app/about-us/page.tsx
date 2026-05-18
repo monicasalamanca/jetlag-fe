@@ -14,7 +14,7 @@ import { SITE_CONFIG } from "@/lib/seo/schema/config";
 export const metadata: Metadata = createMetadata({
   title: "About Us",
   description:
-    "Meet the travel enthusiasts behind The Jet Lag Chronicles. Learn about our mission to empower expats and digital nomads to find their perfect destination through authentic travel experiences.",
+    "Meet the team behind The Jet Lag Chronicles, helping digital nomads and expats navigate life, work, and relocation abroad.",
   url: `${SITE_CONFIG.url}/about-us`,
   image: `${SITE_CONFIG.url}/about-us-og.jpg`,
 });
@@ -28,7 +28,7 @@ export default function About() {
           url: `${SITE_CONFIG.url}/about-us`,
           title: "About Us",
           description:
-            "Meet the travel enthusiasts behind The Jet Lag Chronicles. Learn about our mission to empower expats and digital nomads to find their perfect destination through authentic travel experiences.",
+            "Meet the team behind The Jet Lag Chronicles, helping digital nomads and expats navigate life, work, and relocation abroad.",
           lang: "en",
           image: {
             url: `${SITE_CONFIG.url}/about-us-og.jpg`,

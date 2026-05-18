@@ -18,7 +18,7 @@ function resolveCountryMeta(countryData: Country, countryName: string) {
     title: countryData.seoTitle || `${countryName} Digital Nomad & Expat Guide`,
     description:
       countryData.seoDescription ||
-      `Explore visas, cost of living, taxes, remote work culture, and expat life in ${countryName} with practical guides for digital nomads and global professionals.`,
+      `Visas, taxes, cost of living, and remote work insights for digital nomads and expats living in ${countryName}.`,
   };
 }
 
