@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${countryName} Travel Guide`,
     description: `Discover ${countryName} through our authentic travel experiences. Find practical tips, hidden gems, cost of living insights, and essential information for your ${countryName} adventure.`,
     url: `${SITE_URL}/${categorySlug}`,
-    image: `${SITE_URL}/country-og.jpg`,
+    image: countryData.heroImage?.url || `${SITE_URL}/country-og.jpg`,
   });
 }
 
@@ -65,10 +65,12 @@ const BlogPostPage = async ({ params }: Props) => {
           description: `Discover ${countryName} through our authentic travel experiences. Find practical tips, hidden gems, cost of living insights, and essential information for your ${countryName} adventure.`,
           lang: "en",
           image: {
-            url: `${SITE_URL}/country-og.jpg`,
-            width: 1200,
-            height: 630,
-            alt: `${countryName} Travel Guide`,
+            url: countryData.heroImage?.url || `${SITE_URL}/country-og.jpg`,
+            width: countryData.heroImage?.width || 1200,
+            height: countryData.heroImage?.height || 630,
+            alt:
+              countryData.heroImage?.alternativeText ||
+              `${countryName} Travel Guide`,
           },
         }}
         breadcrumbs={[
