@@ -6,6 +6,7 @@ import {
   fetchAllBlogSlugsFromCountries,
   fetchAllCountries,
   fetchAllBlogSlugsFromLifestyle,
+  fetchAllGuideSlugs,
 } from "@/api/client";
 import {
   CountryNameFormatted,
@@ -22,6 +23,7 @@ export async function GET() {
     const postsFromCountries = await fetchAllBlogSlugsFromCountries();
     const countries = await fetchAllCountries();
     const postsFromLifestyle = await fetchAllBlogSlugsFromLifestyle();
+    const guideSlugs = await fetchAllGuideSlugs();
 
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL || "https://thejetlagchronicles.com";
@@ -30,6 +32,7 @@ export async function GET() {
       "",
       "about-us",
       "blog",
+      "guides",
       "privacy-policy",
       "terms-of-service",
     ]
@@ -97,6 +100,21 @@ export async function GET() {
             .join("")
         : "";
 
+    const dynamicGuideRoutes =
+      guideSlugs && guideSlugs.length > 0
+        ? guideSlugs
+            .map(
+              (guide) => `
+      <url>
+        <loc>${baseUrl}/guides/${guide.slug}</loc>
+        <lastmod>${new Date(guide.updatedAt).toISOString()}</lastmod>
+        <priority>0.8</priority>
+        <changefreq>monthly</changefreq>
+      </url>`,
+            )
+            .join("")
+        : "";
+
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${staticRoutes}
@@ -104,6 +122,7 @@ ${lifestyleRoute}
 ${dynamicCountryRoutes}
 ${dynamicCountryBlogsRoutes}
 ${dynamicLifestyleRoutes}
+${dynamicGuideRoutes}
 </urlset>`;
 
     return new NextResponse(sitemap, {
