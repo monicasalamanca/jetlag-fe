@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     publishedTime: post.publishedAt,
     modifiedTime: post.updatedAt || post.publishedAt,
     authors: ["The Jet Lag Chronicles"],
-    tags: ["lifestyle", "digital nomad"],
+    tags: post.tags?.length ? post.tags : ["lifestyle", "digital nomad"],
   });
 }
 
@@ -83,7 +83,7 @@ const BlogPostPage = async ({ params }: Props) => {
       height: 630,
       alt: title,
     },
-    tags: ["lifestyle", "digital nomad"],
+    tags: post.tags?.length ? post.tags : ["lifestyle", "digital nomad"],
     categories: ["Lifestyle"],
     readingTimeMins: Math.ceil(toWordCount(post.content) / 200),
     wordCount: toWordCount(post.content),
@@ -132,7 +132,9 @@ const BlogPostPage = async ({ params }: Props) => {
 
       <YouMightAlsoLike
         currentBlogSlug={blogSlug}
-        currentBlogTags={["lifestyle", "digital nomad"]}
+        currentBlogTags={
+          post.tags?.length ? post.tags : ["lifestyle", "digital nomad"]
+        }
         currentBlogCountry="Lifestyle"
         allBlogs={allBlogs ?? []}
       />
