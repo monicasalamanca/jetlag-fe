@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Comprehensive travel guides for digital nomads and slow travelers. Discover authentic destinations, practical tips, cost of living insights, and essential information for your adventures.",
     url: `${SITE_URL}/guides`,
-    image: `${SITE_URL}/og/guides.jpg`,
+    image: `${SITE_URL}/default-og.jpg`,
   });
 }
 
@@ -26,7 +26,7 @@ const GuidesPage = () => {
             "Comprehensive travel guides for digital nomads and slow travelers. Discover authentic destinations, practical tips, cost of living insights, and essential information for your adventures.",
           lang: "en",
           image: {
-            url: `${SITE_URL}/og/guides.jpg`,
+            url: `${SITE_URL}/default-og.jpg`,
             width: 1200,
             height: 630,
             alt: "Travel Guides - The Jet Lag Chronicles",
