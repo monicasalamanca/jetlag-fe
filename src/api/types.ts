@@ -191,6 +191,7 @@ export type Post = {
   description: string;
   content: string;
   publishedAt: string;
+  updatedAt: string;
   views: number;
   imageUrl?: string;
 };
