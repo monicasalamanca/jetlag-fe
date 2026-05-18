@@ -4,12 +4,15 @@ import { createMetadata } from "@/app/utils/metadata";
 import PageSchemas from "@/components/seo/PageSchemas";
 import { SITE_CONFIG } from "@/lib/seo/schema/config";
 
-export const metadata: Metadata = createMetadata({
-  title: "Subscription Confirmed",
-  description:
-    "Thank you for subscribing to The Jet Lag Chronicles! Your subscription has been confirmed. Get ready to receive authentic travel stories and destination guides.",
-  url: `${SITE_CONFIG.url}/confirm-subscription`,
-});
+export const metadata: Metadata = {
+  ...createMetadata({
+    title: "Subscription Confirmed",
+    description:
+      "Thank you for subscribing to The Jet Lag Chronicles! Your subscription has been confirmed. Get ready to receive authentic travel stories and destination guides.",
+    url: `${SITE_CONFIG.url}/confirm-subscription`,
+  }),
+  robots: { index: false, follow: false },
+};
 
 export default function ConfirmSubscription() {
   return (

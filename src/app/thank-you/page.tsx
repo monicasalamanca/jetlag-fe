@@ -10,13 +10,16 @@ import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return createMetadata({
-    title: "Thank You for Your Purchase | The Jet Lag Chronicles",
-    description:
-      "Thank you for your purchase! Your order has been confirmed. Start exploring your travel resources and guides.",
-    url: `${SITE_URL}/thank-you`,
-    image: `${SITE_URL}/default-og.jpg`,
-  });
+  return {
+    ...createMetadata({
+      title: "Thank You for Your Purchase | The Jet Lag Chronicles",
+      description:
+        "Thank you for your purchase! Your order has been confirmed. Start exploring your travel resources and guides.",
+      url: `${SITE_URL}/thank-you`,
+      image: `${SITE_URL}/default-og.jpg`,
+    }),
+    robots: { index: false, follow: false },
+  };
 }
 
 const mapToCardProps = (blogPost: BlogPost): CardProps => {
