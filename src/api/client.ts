@@ -712,6 +712,44 @@ export const fetchGuidesClient = async (): Promise<Guide[] | null> => {
   }
 };
 
+// Slim fetcher for sitemap generation — returns only slug + updatedAt
+export const fetchAllGuideSlugs = async (): Promise<
+  { slug: string; updatedAt: string }[] | null
+> => {
+  const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token =
+    process.env.STRAPI_READ_API_TOKEN ||
+    process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  const url = `${baseUrl}/api/guides?fields[0]=slug&fields[1]=updatedAt&pagination[pageSize]=100`;
+
+  try {
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}` },
+      next: { revalidate: 86400 },
+    });
+
+    if (!res.ok) {
+      console.error("Failed to fetch guide slugs for sitemap:", res.statusText);
+      return null;
+    }
+
+    const data = await res.json();
+    return data.data.map(
+      (item: {
+        id: number;
+        attributes: { slug: string; updatedAt: string };
+      }) => ({
+        slug: item.attributes.slug,
+        updatedAt: item.attributes.updatedAt,
+      }),
+    );
+  } catch (error) {
+    console.error("Error fetching guide slugs for sitemap:", error);
+    return null;
+  }
+};
+
 /**
  * Fetch a specific guide by slug and type
  * Used for the specific guide landing page
