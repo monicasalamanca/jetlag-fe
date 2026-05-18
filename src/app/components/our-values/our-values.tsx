@@ -10,7 +10,7 @@ import s from "./our-values.module.scss";
 const OurValues = () => {
   return (
     <section className={s.container}>
-      <h1>Our Values</h1>
+      <h2>Our Values</h2>
       <div className={s.wrapper}>
         <ValuesCard
           icon={faHeart}
