@@ -11,8 +11,8 @@ export const metadata: Metadata = createMetadata({
   title: "The Jet Lag Chronicles | Authentic Travel Stories and Guides",
   description:
     "Discover authentic travel experiences, destination guides, and practical tips from seasoned travelers. Your companion for meaningful travel adventures.",
-  url: "https://thejetlagchronicles.com",
-  image: "https://thejetlagchronicles.com/home-og.jpg",
+  url: SITE_CONFIG.url,
+  image: `${SITE_CONFIG.url}/home-og.jpg`,
 });
 
 const Home = async () => {
@@ -30,7 +30,7 @@ const Home = async () => {
             "Discover authentic travel experiences, destination guides, and practical tips from seasoned travelers. Your companion for meaningful travel adventures.",
           lang: "en",
           image: {
-            url: "https://thejetlagchronicles.com/home-og.jpg",
+            url: `${SITE_CONFIG.url}/home-og.jpg`,
             width: 1200,
             height: 630,
             alt: "The Jet Lag Chronicles - Travel Stories and Guides",

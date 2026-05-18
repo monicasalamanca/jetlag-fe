@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${formattedTitle} - Lifestyle Post Not Found`,
       description:
         "The lifestyle post you're looking for could not be found. Explore our other digital nomad lifestyle content and guides.",
-      url: `https://thejetlagchronicles.com/lifestyle/${blogSlug}`,
+      url: `${SITE_CONFIG.url}/lifestyle/${blogSlug}`,
     });
   }
 
@@ -42,8 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return createMetadata({
     title,
     description,
-    url: `https://thejetlagchronicles.com/lifestyle/${blogSlug}`,
-    image: post.imageUrl || `https://thejetlagchronicles.com/lifestyle-og.jpg`,
+    url: `${SITE_CONFIG.url}/lifestyle/${blogSlug}`,
+    image: post.imageUrl || `${SITE_CONFIG.url}/lifestyle-og.jpg`,
     type: "article",
     publishedTime: post.publishedAt,
     modifiedTime: post.updatedAt || post.publishedAt,

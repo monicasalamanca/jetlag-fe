@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${formattedName} Not Found`,
       description:
         "The destination you're looking for could not be found. Explore our other travel destinations and guides.",
-      url: `https://thejetlagchronicles.com/${categorySlug}`,
+      url: `${SITE_URL}/${categorySlug}`,
     });
   }
 
@@ -36,8 +36,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return createMetadata({
     title: `${countryName} Travel Guide`,
     description: `Discover ${countryName} through our authentic travel experiences. Find practical tips, hidden gems, cost of living insights, and essential information for your ${countryName} adventure.`,
-    url: `https://thejetlagchronicles.com/${categorySlug}`,
-    image: `https://thejetlagchronicles.com/country-og.jpg`,
+    url: `${SITE_URL}/${categorySlug}`,
+    image: `${SITE_URL}/country-og.jpg`,
   });
 }
 

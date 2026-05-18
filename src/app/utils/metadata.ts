@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { normalizeUrl } from "./canonicalUrl";
+import { SITE_CONFIG } from "../../../lib/seo/schema/config";
 
 interface CreateMetadataProps {
   title: string;
@@ -17,7 +18,7 @@ export function createMetadata({
   title,
   description,
   url,
-  image = "https://thejetlagchronicles.com/default-og.jpg",
+  image = `${SITE_CONFIG.url}/default-og.jpg`,
   type = "website",
   publishedTime,
   modifiedTime,
@@ -85,11 +86,11 @@ export const defaultPageMetadata: Metadata = {
     title: "Page Not Found | The Jet Lag Chronicles",
     description:
       "The page you're looking for could not be found. Explore our travel stories and destination guides.",
-    url: "https://thejetlagchronicles.com",
+    url: SITE_CONFIG.url,
     siteName: "The Jet Lag Chronicles",
     images: [
       {
-        url: "https://thejetlagchronicles.com/default-og.jpg",
+        url: `${SITE_CONFIG.url}/default-og.jpg`,
         width: 1200,
         height: 630,
         alt: "The Jet Lag Chronicles",
@@ -102,6 +103,6 @@ export const defaultPageMetadata: Metadata = {
     title: "Page Not Found | The Jet Lag Chronicles",
     description:
       "The page you're looking for could not be found. Explore our travel stories and destination guides.",
-    images: ["https://thejetlagchronicles.com/default-og.jpg"],
+    images: [`${SITE_CONFIG.url}/default-og.jpg`],
   },
 };

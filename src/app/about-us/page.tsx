@@ -15,8 +15,8 @@ export const metadata: Metadata = createMetadata({
   title: "About Us",
   description:
     "Meet the travel enthusiasts behind The Jet Lag Chronicles. Learn about our mission to empower expats and digital nomads to find their perfect destination through authentic travel experiences.",
-  url: "https://thejetlagchronicles.com/about-us",
-  image: "https://thejetlagchronicles.com/about-us-og.jpg",
+  url: `${SITE_CONFIG.url}/about-us`,
+  image: `${SITE_CONFIG.url}/about-us-og.jpg`,
 });
 
 export default function About() {
@@ -31,7 +31,7 @@ export default function About() {
             "Meet the travel enthusiasts behind The Jet Lag Chronicles. Learn about our mission to empower expats and digital nomads to find their perfect destination through authentic travel experiences.",
           lang: "en",
           image: {
-            url: "https://thejetlagchronicles.com/about-us-og.jpg",
+            url: `${SITE_CONFIG.url}/about-us-og.jpg`,
             width: 1200,
             height: 630,
             alt: "About The Jet Lag Chronicles",

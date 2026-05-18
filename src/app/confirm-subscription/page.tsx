@@ -8,7 +8,7 @@ export const metadata: Metadata = createMetadata({
   title: "Subscription Confirmed",
   description:
     "Thank you for subscribing to The Jet Lag Chronicles! Your subscription has been confirmed. Get ready to receive authentic travel stories and destination guides.",
-  url: "https://thejetlagchronicles.com/confirm-subscription",
+  url: `${SITE_CONFIG.url}/confirm-subscription`,
 });
 
 export default function ConfirmSubscription() {
