@@ -78,6 +78,8 @@ export type CountriesResponse = {
     publishedAt: string;
     tagline: string;
     intro: string;
+    seoTitle?: string;
+    seoDescription?: string;
     continent: string;
     slug: string;
     quickfacts: QuickFact[];
@@ -104,6 +106,8 @@ export type Country = {
   continent: string;
   tagline: string;
   intro: string;
+  seoTitle?: string;
+  seoDescription?: string;
   quickFacts: QuickFact[];
   deepInfo: DeepInfo[];
   heroImage?: {

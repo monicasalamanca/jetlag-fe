@@ -65,6 +65,8 @@ export const fetchCountry = async (
       name: item.attributes.name,
       tagline: item.attributes.tagline,
       intro: item.attributes.intro,
+      seoTitle: item.attributes.seoTitle || undefined,
+      seoDescription: item.attributes.seoDescription || undefined,
       continent: item.attributes.continent,
       slug: item.attributes.slug,
       quickFacts: item.attributes.quickFacts,

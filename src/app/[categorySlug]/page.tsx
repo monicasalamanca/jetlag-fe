@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { fetchCountry, fetchBlogsByCountryServer } from "@/api/client";
+import type { Country } from "@/api/types";
 import CountryLander from "@/components/country-lander/country-lander";
 import { createMetadata } from "@/app/utils/metadata";
 import PageSchemas from "@/components/seo/PageSchemas";
@@ -11,6 +12,15 @@ type Props = {
     categorySlug: string;
   }>;
 };
+
+function resolveCountryMeta(countryData: Country, countryName: string) {
+  return {
+    title: countryData.seoTitle || `${countryName} Digital Nomad & Expat Guide`,
+    description:
+      countryData.seoDescription ||
+      `Explore visas, cost of living, taxes, remote work culture, and expat life in ${countryName} with practical guides for digital nomads and global professionals.`,
+  };
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { categorySlug } = await params;
@@ -33,9 +43,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     countryData.name ||
     categorySlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
 
+  const { title: metaTitle, description: metaDescription } = resolveCountryMeta(
+    countryData,
+    countryName,
+  );
+
   return createMetadata({
-    title: `${countryName} Travel Guide`,
-    description: `Discover ${countryName} through our authentic travel experiences. Find practical tips, hidden gems, cost of living insights, and essential information for your ${countryName} adventure.`,
+    title: metaTitle,
+    description: metaDescription,
     url: `${SITE_URL}/${categorySlug}`,
     image: countryData.heroImage?.url || `${SITE_URL}/country-og.jpg`,
   });
@@ -55,14 +70,19 @@ const BlogPostPage = async ({ params }: Props) => {
     countryData.name ||
     categorySlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
 
+  const { title: metaTitle, description: metaDescription } = resolveCountryMeta(
+    countryData,
+    countryName,
+  );
+
   return (
     <>
       {/* Page-specific SEO Schemas */}
       <PageSchemas
         page={{
           url: `${SITE_URL}/${categorySlug}`,
-          title: `${countryName} Travel Guide`,
-          description: `Discover ${countryName} through our authentic travel experiences. Find practical tips, hidden gems, cost of living insights, and essential information for your ${countryName} adventure.`,
+          title: metaTitle,
+          description: metaDescription,
           lang: "en",
           image: {
             url: countryData.heroImage?.url || `${SITE_URL}/country-og.jpg`,
