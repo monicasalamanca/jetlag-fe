@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     type: "article",
     publishedTime: post.publishedAt,
     modifiedTime: post.updatedAt || post.publishedAt,
-    authors: ["The Jet Lag Chronicles"],
+    authors: [SITE_CONFIG.defaultAuthor.name],
     tags: post.tags?.length ? post.tags : [categorySlug.replace(/-/g, " ")],
   });
 }
