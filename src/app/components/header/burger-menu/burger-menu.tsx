@@ -137,16 +137,17 @@ const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
                               </li>
                             ))}
                           </ul>
-                          {countries.length > 4 && (
+                          {/* {countries.length > 4 && (
                             <Link
                               aria-label="view all countries"
                               href="/"
                               className={s.viewMore}
+                              onClick={closeMenu}
                               rel="canonical"
                             >
                               View all 20 countries
                             </Link>
-                          )}
+                          )} */}
                         </div>
                       </div>
                     </div>
