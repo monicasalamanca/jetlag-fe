@@ -3,6 +3,7 @@ import s from "./about-us-content.module.scss";
 const AboutUsContent = () => {
   return (
     <section className={s.aboutContent}>
+      <h1>About Us</h1>
       <p>
         Welcome to <b>The Jet Lag Chronicles</b>, where the world is your
         oyster, and we’re here to crack it open, spill it on our pants, and eat

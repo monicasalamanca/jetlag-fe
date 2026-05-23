@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Hero from "@/components/hero/hero";
 import AboutUsContent from "@/components/about-us-content/about-us-content";
 import WhatYouWillFind from "@/components/what-you-will-find/what-you-will-find";
 import OurMission from "@/components/our-mission/our-mission";
@@ -45,16 +44,6 @@ export default function About() {
             position: 2,
           },
         ]}
-      />
-
-      <Hero
-        srcImage="/aboutus-hero_vpxp49.jpg"
-        headline="Meet The Jet Lag Chronicles Team"
-        shortDescription="We are expats, digital nomads, and slow travelers sharing honest guides on visas, cost of living, taxes, and remote work abroad."
-        ctaProps={{
-          buttonText: "Download the Free Guide",
-          tags: ["free guide", "digital nomad"],
-        }}
       />
       <AboutUsContent />
       <WhatYouWillFind />
