@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     post.seoDescription ||
     post.description?.slice(0, 160) ||
     post.content?.slice(0, 160) ||
-    `Read this authentic travel story from The Jet Lag Chronicles about ${categorySlug.replace(/-/g, " ")}.`;
+    `Read this article from The Jet Lag Chronicles about ${categorySlug.replace(/-/g, " ")}.`;
 
   return createMetadata({
     title: metaTitle,

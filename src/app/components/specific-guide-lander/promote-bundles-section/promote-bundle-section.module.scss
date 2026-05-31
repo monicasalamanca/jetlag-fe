@@ -1,6 +1,9 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
 
 .promoteBundleSection {
+  background: $brand-neutral-200;
+  padding: $brand-space-4xl 0;
+
   .wrapper {
     height: auto;
     display: flex;
@@ -8,73 +11,88 @@
     margin: 0 auto;
     text-align: center;
     width: 100%;
-    padding: 0 $space-lg;
-    margin-bottom: $space-3xl;
+    padding: 0 $brand-space-lg;
 
-    @media only screen and (min-width: $breakpoint-tablet) {
+    @media only screen and (min-width: $brand-breakpoint-tablet) {
       width: 768px;
       margin: 0 auto;
-      margin-top: calc($space-3xl * 2);
       padding: 0;
-      margin-bottom: $space-3xl;
     }
 
     .pill {
-      border-radius: $radius-pill;
+      border-radius: $brand-radius-full;
       width: fit-content;
-      padding: $space-xs $space-md;
-      box-shadow: $shadow-sm;
-      background: $gradient-green-yellow-card;
-      font-weight: $font-weight-bold;
+      padding: $brand-space-xs $brand-space-md;
+      background: rgba($brand-blue, 0.1);
+      color: $brand-blue;
+      border: 1px solid rgba($brand-blue, 0.2);
+      font-family: var(--font-space-mono), monospace;
+      font-size: $brand-font-size-caption;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: $brand-letter-spacing-tag;
       align-items: center;
       display: flex;
-      color: $color-black;
       margin: 0 auto;
 
       .icon {
-        margin-right: $space-sm;
+        margin-right: $brand-space-sm;
+        color: $brand-blue;
       }
     }
 
     h2 {
-      padding: $space-lg 0;
+      font-family: var(--font-barlow-condensed), sans-serif;
+      font-size: $brand-font-size-section-title;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: $brand-letter-spacing-heading;
+      color: $brand-navy;
+      padding: $brand-space-lg 0 $brand-space-sm;
+      line-height: 1;
+    }
+
+    > p {
+      font-family: var(--font-barlow), sans-serif;
+      font-size: $brand-font-size-body;
+      font-weight: 400;
+      color: $brand-neutral-600;
+      line-height: $brand-line-height-body;
     }
 
     .bundlesWrapper {
       max-width: 1024px;
       margin: 0 auto;
       width: 100%;
-      margin-top: $space-xl;
+      margin-top: $brand-space-xl;
 
       .bundleScroll {
-        gap: 24px;
-        padding-bottom: 16px;
+        gap: $brand-space-xl;
+        padding-bottom: $brand-space-lg;
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
 
-        // Show scrollbar
         &::-webkit-scrollbar {
           height: 8px;
         }
 
         &::-webkit-scrollbar-track {
-          background: $color-neutral-200;
-          border-radius: 4px;
+          background: $brand-neutral-300;
+          border-radius: $brand-radius-xs;
         }
 
         &::-webkit-scrollbar-thumb {
-          background: $color-purple-bright;
-          border-radius: 4px;
+          background: $brand-blue;
+          border-radius: $brand-radius-xs;
 
           &:hover {
-            background: $color-purple-600;
+            background: $brand-interactive-hover;
           }
         }
 
-        // For Firefox
         scrollbar-width: thin;
-        scrollbar-color: $color-purple-bright $color-neutral-200;
+        scrollbar-color: $brand-blue $brand-neutral-300;
 
         .bundleCard {
           min-width: 340px;
@@ -82,25 +100,27 @@
           flex-shrink: 0;
           scroll-snap-align: start;
 
-          border: 1px solid $color-purple-bright;
-          padding: $space-xl;
-          border-radius: $radius-md;
-          box-shadow: $shadow-sm;
+          border: 1px solid $brand-neutral-300;
+          padding: $brand-space-xl;
+          border-radius: $brand-radius-lg;
+          box-shadow: $brand-shadow-card-light;
           display: flex;
           flex-direction: column;
-          gap: $space-sm;
+          gap: $brand-space-sm;
+          background: $brand-neutral-100;
 
           .bundleType {
-            background-image: $gradient-purple-pink-card;
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
+            color: $brand-blue;
+            font-family: var(--font-barlow-condensed), sans-serif;
+            font-size: $brand-font-size-body-sm;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: $brand-letter-spacing-button;
             text-align: left;
-            font-weight: $font-weight-bold;
 
             .icon {
-              color: $color-purple-bright;
-              margin-right: $space-xs;
+              color: $brand-blue;
+              margin-right: $brand-space-xs;
             }
           }
 
@@ -110,103 +130,123 @@
           }
 
           h3 {
-            color: $color-text-dark;
-            font-size: $font-size-xl-base;
-            font-weight: $font-weight-bold;
-            line-height: $line-height-loose;
+            font-family: var(--font-barlow-condensed), sans-serif;
+            color: $brand-navy;
+            font-size: $brand-font-size-card-heading;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: $brand-letter-spacing-heading;
+            line-height: 1.1;
           }
 
           p {
-            color: $color-gray-dark;
-            font-size: $font-size-base;
-            line-height: $line-height-tight;
-            font-weight: $font-weight-medium;
+            font-family: var(--font-barlow), sans-serif;
+            color: $brand-neutral-600;
+            font-size: $brand-font-size-body;
+            line-height: $brand-line-height-body;
+            font-weight: 400;
           }
 
           .includes {
-            background: $color-pink-light;
-            border: 0.5px solid $color-purple-600;
-            margin-top: $space-md;
-            border-radius: $space-sm;
-            padding: $space-sm;
+            background: $brand-neutral-200;
+            border: 1px solid $brand-neutral-300;
+            margin-top: $brand-space-md;
+            border-radius: $brand-space-sm;
+            padding: $brand-space-sm;
             flex: 1;
 
             h4 {
-              color: $color-neutral-600;
-              font-size: $font-size-sm;
-              font-weight: $font-weight-bold;
+              font-family: var(--font-space-mono), monospace;
+              color: $brand-neutral-500;
+              font-size: $brand-font-size-caption;
+              font-weight: 400;
               text-align: left;
-              padding: $space-sm $space-md;
+              padding: $brand-space-sm $brand-space-md;
               text-transform: uppercase;
+              letter-spacing: $brand-letter-spacing-tag;
             }
 
             .includesPills {
               span {
-                background-color: $color-white;
-                border: 2px solid $color-gray-light;
-                border-radius: $space-lg;
-                padding: $space-xs $space-sm;
-                margin: $space-xs;
-                font-size: $font-size-sm;
-                color: $color-text-dark;
+                background-color: $brand-neutral-100;
+                border: 1.5px solid $brand-neutral-400;
+                border-radius: $brand-radius-full;
+                padding: $brand-space-xs $brand-space-sm;
+                margin: $brand-space-xs;
+                font-family: var(--font-barlow), sans-serif;
+                font-size: $brand-font-size-body-sm;
+                color: $brand-dark;
                 display: inline-block;
               }
 
-              // Color variant classes for city pills
               .pill--purple {
-                border-color: #8b5cf6;
+                border-color: $brand-blue;
+                color: $brand-blue;
               }
 
               .pill--pink {
-                border-color: #ec4899;
+                border-color: $brand-coral;
+                color: $brand-coral;
               }
 
               .pill--orange {
-                border-color: #fa7315;
+                border-color: $brand-gold;
+                color: #c07b00;
               }
 
               .pill--teal {
-                border-color: #14b8a6;
+                border-color: $brand-visa-green;
+                color: #15803d;
               }
             }
           }
+
           .pricing {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: $brand-space-sm;
 
             .originalPrice {
-              background-image: $gradient-purple-pink-card;
-              background-clip: text;
-              -webkit-background-clip: text;
-              color: transparent;
-              font-size: $font-size-2xl;
-              font-weight: $font-weight-bold;
+              font-family: var(--font-barlow-condensed), sans-serif;
+              color: $brand-blue;
+              font-size: $brand-font-size-section-title;
+              font-weight: 800;
+              letter-spacing: $brand-letter-spacing-heading;
             }
 
             .pages {
-              color: $color-neutral-600;
+              font-family: var(--font-space-mono), monospace;
+              font-size: $brand-font-size-caption;
+              color: $brand-neutral-500;
+              text-transform: uppercase;
+              letter-spacing: $brand-letter-spacing-label;
             }
           }
 
           .ctaButton {
-            background: $gradient-purple-pink-card-horizontal;
-            color: $color-white;
+            background: $brand-blue;
+            color: $brand-neutral-100;
             border: none;
-            padding: $space-md $space-lg;
-            font-size: $font-size-base;
-            font-weight: $font-weight-bold;
-            border-radius: $space-sm;
+            padding: 14px $brand-space-lg;
+            font-family: var(--font-barlow-condensed), sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: $brand-letter-spacing-button;
+            border-radius: 10px;
             width: 100%;
             cursor: pointer;
+            box-shadow: $brand-shadow-button-primary;
+            transition: background $brand-duration-drift ease-in-out;
 
             &:hover {
-              background: $gradient-purple-pink-card-horizontal-hover;
+              background: $brand-interactive-hover;
             }
 
             .icon {
-              margin-left: $space-sm;
-              color: $color-white;
+              margin-left: $brand-space-sm;
+              color: $brand-neutral-100;
             }
           }
         }

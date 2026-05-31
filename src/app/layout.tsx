@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Roboto, Poppins, Source_Sans_3 } from "next/font/google";
+import {
+  Roboto,
+  Poppins,
+  Source_Sans_3,
+  Barlow,
+  Barlow_Condensed,
+  Space_Mono,
+} from "next/font/google";
+import { headers } from "next/headers";
 import HeaderWrapper from "@/components/headerWrapper/headerWrapper";
 import Footer from "@/components/footer/footer";
 import AnalyticsPageView from "./components/analytics-page-view";
@@ -36,6 +44,36 @@ const sourceSans3 = Source_Sans_3({
   style: ["normal", "italic"],
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
+});
+
+const barlow = Barlow({
+  adjustFontFallback: false,
+  display: "swap",
+  fallback: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-barlow",
+});
+
+const barlowCondensed = Barlow_Condensed({
+  adjustFontFallback: false,
+  display: "swap",
+  fallback: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+  style: ["normal"],
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-barlow-condensed",
+});
+
+const spaceMono = Space_Mono({
+  adjustFontFallback: false,
+  display: "swap",
+  fallback: ["Courier New", "Courier", "monospace"],
+  style: ["normal"],
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-space-mono",
 });
 
 export const metadata: Metadata = {
@@ -99,15 +137,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const showNav = headersList.get("x-show-nav") !== "false";
+
   return (
     <html lang="en">
       <body
-        className={`${roboto.className} ${poppins.className} ${sourceSans3.className}`}
+        className={`${roboto.className} ${poppins.className} ${sourceSans3.className} ${barlow.variable} ${barlowCondensed.variable} ${spaceMono.variable}`}
       >
         {/* Site-wide SEO Schemas */}
         <SiteSchemas />
@@ -122,9 +163,9 @@ export default function RootLayout({
         </ConsentGate>
         <AdsenseScript />
         <AnalyticsPageView />
-        <HeaderWrapper />
+        {showNav && <HeaderWrapper />}
         {children}
-        <Footer />
+        {showNav && <Footer />}
         <StorageBanner />
       </body>
     </html>

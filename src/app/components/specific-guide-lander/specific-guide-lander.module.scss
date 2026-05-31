@@ -1,31 +1,37 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
 
 .container {
+  background: $brand-neutral-200;
+
   .wrapper {
     width: 100%;
 
-    @media only screen and (min-width: $breakpoint-tablet) {
+    @media only screen and (min-width: $brand-breakpoint-tablet) {
       width: 768px;
       margin: 0 auto;
-      margin-top: $space-3xl;
-      margin-bottom: $space-3xl;
+      margin-top: $brand-space-3xl;
+      margin-bottom: $brand-space-3xl;
     }
   }
 
   h2 {
-    color: $color-text-dark;
-    font-size: $font-size-2xl;
-    font-weight: $font-weight-bold;
+    color: $brand-navy;
+    font-family: var(--font-barlow-condensed), sans-serif;
+    font-size: $brand-font-size-section-title;
+    font-weight: 700;
     text-align: center;
-    padding: $space-lg 0 $space-xl;
-    line-height: $line-height-heading;
+    text-transform: uppercase;
+    letter-spacing: $brand-letter-spacing-heading;
+    padding: $brand-space-lg 0 $brand-space-xl;
+    line-height: $brand-line-height-heading-3;
   }
 
   p {
-    color: $color-text;
-    font-size: $font-size-base;
-    line-height: $line-height-relaxed;
-    font-weight: $font-weight-medium;
+    color: $brand-neutral-600;
+    font-family: var(--font-barlow), sans-serif;
+    font-size: $brand-font-size-body;
+    line-height: $brand-line-height-body;
+    font-weight: 400;
     text-align: center;
   }
 }
@@ -36,13 +42,13 @@
   justify-content: center;
   align-items: center;
   min-height: 60vh;
-  padding: $space-2xl;
-  font-size: $font-size-lg;
-  color: $color-text;
+  padding: $brand-space-2xl;
+  font-size: $brand-font-size-body-lg;
+  color: $brand-neutral-600;
   text-align: center;
 }
 
 .error {
-  color: $color-red;
-  font-weight: $font-weight-bold;
+  color: $brand-error-red;
+  font-weight: $brand-font-weight-bold;
 }
