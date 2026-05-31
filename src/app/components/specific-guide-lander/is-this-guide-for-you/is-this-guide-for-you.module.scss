@@ -1,7 +1,8 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
 
 .isThisGuideForYou {
-  margin-top: $space-3xl;
+  background: $brand-neutral-200;
+  padding: $brand-space-4xl 0;
 
   .wrapper {
     display: flex;
@@ -9,67 +10,83 @@
     justify-content: space-between;
     width: 100%;
 
-    @media only screen and (min-width: $breakpoint-tablet) {
+    @media only screen and (min-width: $brand-breakpoint-tablet) {
       width: 768px;
       margin: 0 auto;
-      margin-top: $space-3xl;
-      margin-bottom: $space-3xl;
+      padding: 0;
+    }
+
+    h2 {
+      font-family: var(--font-barlow-condensed), sans-serif;
+      font-size: $brand-font-size-section-title;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: $brand-letter-spacing-heading;
+      color: $brand-navy;
+      text-align: center;
+      padding: 0 $brand-space-lg $brand-space-xl;
+
+      @media only screen and (min-width: $brand-breakpoint-tablet) {
+        padding: 0 0 $brand-space-xl;
+      }
     }
 
     .points {
       display: flex;
       flex-direction: column;
-      padding: 0 $space-lg;
-      margin-bottom: $space-2xl;
-      color: $color-text-dark;
-      gap: $space-lg;
+      padding: 0 $brand-space-lg;
+      gap: $brand-space-lg;
 
-      @media only screen and (min-width: $breakpoint-mobile) {
+      @media only screen and (min-width: $brand-breakpoint-mobile) {
         display: grid;
         grid-template-columns: 1fr 1fr;
         padding: 0;
-        margin-bottom: 0;
       }
 
+      // ── Shared card base ──────────────────────────────────
       .perfectForPoints,
       .notForPoints {
-        padding: $space-xl;
-        border-radius: $radius-md;
-        border: 3px solid $color-white;
-        box-shadow: $shadow-sm;
+        padding: $brand-space-xl;
+        border-radius: $brand-radius-lg;
+        border: 1px solid $brand-neutral-300;
+        background: $brand-neutral-100;
+        box-shadow: $brand-shadow-card-light;
 
+        // ── Tag / pill that labels the card type ──
         .title {
-          display: flex;
+          display: inline-flex;
           align-items: center;
-          margin-bottom: $space-lg;
+          width: fit-content;
+          padding: $brand-space-xs $brand-space-md;
+          border-radius: $brand-radius-full;
+          margin-bottom: $brand-space-lg;
 
           h3 {
-            font-size: $font-size-xl-base;
-            font-weight: $font-weight-bold;
+            font-family: var(--font-space-mono), monospace;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: $brand-letter-spacing-tag;
+            line-height: 1;
           }
 
           .icon {
-            height: 16px;
-            width: 16px;
-            margin-right: $space-md;
-            border-radius: $radius-pill;
-            border: none;
-            box-shadow: $shadow-sm;
-            padding: $space-md;
-            background: $color-white;
-            color: $color-bright-green;
-
-            &.notForIcon {
-              color: $color-red-bright;
-            }
+            height: 10px;
+            width: 10px;
+            margin-right: 6px;
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+            flex-shrink: 0;
           }
         }
 
+        // ── Point list ────────────────────────────────────
         .pointsList {
           div {
             display: flex;
-            align-items: center;
-            margin-bottom: $space-md;
+            align-items: flex-start;
+            margin-bottom: $brand-space-md;
 
             &:last-child {
               margin-bottom: 0;
@@ -78,44 +95,77 @@
             .icon {
               height: 10px;
               width: 10px;
-              margin-right: $space-sm;
-              border-radius: $radius-pill;
-              border: none;
-              padding: $space-xs;
-              background: $color-white;
-              color: $color-bright-green;
+              margin-right: $brand-space-sm;
+              margin-top: 5px;
+              flex-shrink: 0;
+              background: transparent;
+              border-radius: 0;
+              padding: 0;
             }
+
             p {
+              font-family: var(--font-barlow), sans-serif;
+              font-size: $brand-font-size-body;
+              font-weight: 400;
+              color: $brand-neutral-600;
               text-align: left;
+              line-height: $brand-line-height-body;
             }
           }
         }
       }
 
+      // ── "Perfect For" — Visa Green theme ──────────────────
       .perfectForPoints {
-        background: $gradient-green-yellow-card-diagonal;
+        border-top: 3px solid $brand-visa-green;
+
+        .title {
+          background: rgba($brand-visa-green, 0.08);
+          border: 1px solid rgba($brand-visa-green, 0.2);
+
+          h3 {
+            color: #15803d;
+          }
+
+          .icon {
+            color: $brand-visa-green;
+          }
+        }
 
         .pointsList {
           div {
             .icon {
-              background: $color-black;
-              color: $color-green-lighter;
+              color: $brand-visa-green;
             }
           }
         }
       }
 
+      // ── "Not For" — Nomad Coral theme ─────────────────────
       .notForPoints {
-        background: $gradient-red-orange-diagonal;
-        color: $color-white;
+        border-top: 3px solid $brand-coral;
+
+        .title {
+          background: rgba($brand-coral, 0.08);
+          border: 1px solid rgba($brand-coral, 0.2);
+
+          h3 {
+            color: $brand-coral;
+          }
+
+          .icon {
+            color: $brand-coral;
+          }
+        }
 
         .pointsList {
           div {
             .icon {
-              color: $color-red-bright;
+              color: $brand-coral;
             }
+
             p {
-              color: $color-white;
+              color: $brand-neutral-600;
             }
           }
         }

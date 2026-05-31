@@ -1,74 +1,102 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
 
 .whatsInside {
+  background: $brand-neutral-100;
+  padding: $brand-space-4xl 0;
+
   .wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
 
-    @media only screen and (min-width: $breakpoint-tablet) {
+    @media only screen and (min-width: $brand-breakpoint-tablet) {
       width: 768px;
       margin: 0 auto;
-      margin-top: $space-3xl;
-      margin-bottom: $space-3xl;
+      padding: 0;
     }
+
+    h2 {
+      font-family: var(--font-barlow-condensed), sans-serif;
+      font-size: $brand-font-size-section-title;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: $brand-letter-spacing-heading;
+      color: $brand-navy;
+      text-align: center;
+      padding: 0 $brand-space-lg $brand-space-xl;
+
+      @media only screen and (min-width: $brand-breakpoint-tablet) {
+        padding: 0 0 $brand-space-xl;
+      }
+    }
+
     .contentsGrid {
       display: grid;
-      gap: $space-lg;
-      padding: 0 $space-lg;
-      margin-bottom: $space-2xl;
+      gap: $brand-space-lg;
+      padding: 0 $brand-space-lg;
 
       @media (min-width: 768px) {
         grid-template-columns: repeat(2, 1fr);
         padding: 0;
-        margin-bottom: 0;
       }
 
       .card {
-        padding: $space-lg;
-        background-color: $color-blue-very-light;
-        border-radius: $radius-md;
-        border: 2px solid $color-blue-very-light-alt;
-        box-shadow: $shadow-sm;
+        padding: $brand-space-lg;
+        background: $brand-neutral-100;
+        border-radius: $brand-radius-lg;
+        border: 1px solid $brand-neutral-300;
+        box-shadow: $brand-shadow-card-light;
         display: flex;
         justify-content: flex-start;
-        gap: $space-lg;
+        gap: $brand-space-lg;
+        transition: box-shadow $brand-duration-drift ease-in-out;
+
+        &:hover {
+          box-shadow: 0 4px 20px rgba($brand-dark, 0.1);
+        }
 
         .imageWrapper {
-          padding: $space-md;
-          border-radius: $radius-sm;
-          background: $gradient-blue-card;
-          box-shadow: $shadow-md;
+          padding: $brand-space-md;
+          border-radius: $brand-radius-md;
+          background: $brand-blue;
           height: 40px;
           width: 40px;
+          flex-shrink: 0;
           display: flex;
           align-items: center;
           justify-content: center;
 
           .icon {
-            color: $color-black;
+            color: $brand-neutral-100;
+            height: 16px;
+            width: 16px;
           }
         }
 
         .contentWrapper {
           display: flex;
           flex-direction: column;
-          font-size: $font-size-base;
+          font-size: $brand-font-size-body;
           width: 100%;
           height: 100%;
 
           h3 {
-            font-weight: $font-weight-bold;
-            margin-bottom: $space-xs;
-            color: $color-black;
+            font-family: var(--font-barlow-condensed), sans-serif;
+            font-weight: 700;
+            font-size: $brand-font-size-body-lg;
+            text-transform: uppercase;
+            letter-spacing: $brand-letter-spacing-heading;
+            margin-bottom: $brand-space-xs;
+            color: $brand-navy;
           }
 
           .desc {
-            font-weight: $font-weight-medium;
-            font-size: $font-size-sm;
-            line-height: $line-height-tight;
-            color: $color-neutral-600;
+            font-family: var(--font-barlow), sans-serif;
+            font-weight: 400;
+            font-size: $brand-font-size-body-sm;
+            line-height: $brand-line-height-body;
+            color: $brand-neutral-600;
           }
 
           h3,

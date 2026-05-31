@@ -35,9 +35,9 @@ const Header: FC<{ destinations: Destination[] | null }> = ({
     <header className={s.header}>
       <Link href="/">
         <Image
-          src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1761689951/blog-assets/Logo_a0elnn.png`}
+          src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}/v1761689951/blog-assets/Logov3_zkunos.png`}
           width={222}
-          height={63}
+          height={77}
           alt="The Jet Lag Chronicles Logo"
           loading="lazy"
         />

@@ -1,62 +1,75 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
 
 .saleSection {
+  background: $brand-neutral-100;
+  padding: $brand-space-4xl 0;
+
   .wrapper {
     height: auto;
     display: flex;
-    gap: $space-xl;
+    gap: $brand-space-xl;
     width: 100%;
     flex-direction: column;
-    padding: 0 $space-lg;
-    margin-bottom: calc($space-3xl + $space-xl);
+    padding: 0 $brand-space-lg;
 
-    @media only screen and (min-width: $breakpoint-tablet) {
+    @media only screen and (min-width: $brand-breakpoint-tablet) {
       flex-direction: row;
       padding: 0;
       width: 768px;
-      // margin: 0 auto;
       margin-left: auto;
       margin-right: auto;
-      margin-top: calc($space-3xl + $space-xl);
     }
 
     .saleInfo {
       flex: 1;
-      padding: $space-xl;
+      padding: $brand-space-xl;
 
       h2 {
+        font-family: var(--font-barlow-condensed), sans-serif;
+        font-size: $brand-font-size-section-title;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: $brand-letter-spacing-heading;
+        color: $brand-dark;
         padding-top: 0;
-        padding-bottom: $space-md;
+        padding-bottom: $brand-space-md;
+        text-align: left;
+        line-height: 1;
       }
 
-      h2,
       p {
+        font-family: var(--font-barlow), sans-serif;
+        font-size: $brand-font-size-body;
+        font-weight: 400;
+        color: $brand-neutral-600;
         text-align: left;
+        line-height: $brand-line-height-body;
       }
 
       .guideInfoBits {
         display: flex;
         flex-direction: column;
-        gap: $space-md;
-        margin-top: $space-xl;
+        gap: $brand-space-md;
+        margin-top: $brand-space-xl;
 
         .infoBitWrapper {
           display: flex;
           flex-direction: row;
-          gap: $space-sm;
+          gap: $brand-space-sm;
 
           .iconWrapper {
-            padding: $space-md;
-            border-radius: $radius-sm;
-            background: $gradient-purple-pink-card-horizontal;
-            box-shadow: $shadow-sm;
+            padding: $brand-space-md;
+            border-radius: $brand-radius-sm;
+            background: $brand-blue;
             height: fit-content;
             width: fit-content;
             display: flex;
             align-items: center;
 
             .icon {
-              color: $color-white;
+              color: $brand-neutral-100;
+              height: 16px;
+              width: 16px;
             }
           }
 
@@ -66,36 +79,38 @@
           }
 
           .label {
-            font-size: $font-size-base;
-            font-weight: $font-weight-bold;
-            color: $color-neutral-700;
-            line-height: $line-height-base;
+            font-family: var(--font-barlow), sans-serif;
+            font-size: $brand-font-size-body;
+            font-weight: 600;
+            color: $brand-dark;
+            line-height: $brand-line-height-body;
           }
 
           .value {
-            font-size: $font-size-sm;
-            font-weight: $font-weight-medium;
-            color: $color-neutral-600;
-            line-height: $line-height-base;
+            font-family: var(--font-barlow), sans-serif;
+            font-size: $brand-font-size-body-sm;
+            font-weight: 400;
+            color: $brand-neutral-600;
+            line-height: $brand-line-height-body;
           }
         }
       }
 
       .bottom {
         display: flex;
-        margin-top: $space-md;
+        margin-top: $brand-space-lg;
+        gap: $brand-space-md;
 
         p {
-          font-size: $font-size-xs;
-          color: $color-gray-medium;
-
-          &:first-child {
-            margin-right: $space-md;
-          }
+          font-family: var(--font-space-mono), monospace;
+          font-size: $brand-font-size-caption;
+          color: $brand-neutral-500;
+          text-transform: uppercase;
+          letter-spacing: $brand-letter-spacing-label;
 
           .icon {
-            margin-right: $space-xs;
-            color: $color-blue-sky;
+            margin-right: $brand-space-xs;
+            color: $brand-blue;
           }
         }
       }
@@ -103,57 +118,67 @@
 
     .pricingCard {
       flex: 1;
-      border-radius: $radius-md;
-      box-shadow: $shadow-md;
-      padding: $space-xl;
+      border-radius: $brand-radius-lg;
+      border: 1px solid $brand-neutral-300;
+      box-shadow: $brand-shadow-card-light;
+      padding: $brand-space-xl;
 
       .priceTag {
-        background: $gradient-blue-primary;
-        padding: $space-lg;
-        border-radius: $radius-md;
+        background: $brand-blue;
+        padding: $brand-space-lg;
+        border-radius: $brand-radius-md;
 
         p,
         h3 {
-          color: $color-white;
+          color: $brand-neutral-100;
         }
 
         p {
-          font-size: $font-size-xs;
-          font-weight: $font-weight-medium;
-          line-height: $line-height-xs;
+          font-family: var(--font-space-mono), monospace;
+          font-size: $brand-font-size-caption;
+          font-weight: 400;
+          line-height: $brand-line-height-label;
+          text-transform: uppercase;
+          letter-spacing: $brand-letter-spacing-tag;
 
           &:first-child {
-            font-weight: $font-weight-bold;
+            font-weight: 700;
           }
         }
 
         h3 {
-          font-size: $font-size-3xl;
-          font-weight: $font-weight-bold;
-          line-height: $line-height-heading-loose;
+          font-family: var(--font-barlow-condensed), sans-serif;
+          font-size: $brand-font-size-price;
+          font-weight: 800;
+          line-height: $brand-line-height-heading-2;
           text-align: center;
         }
       }
 
       .whatsIncluded {
-        margin: $space-md 0;
+        margin: $brand-space-md 0;
 
         h3 {
-          font-size: $font-size-xs;
-          font-weight: $font-weight-bold;
-          color: $color-text-dark;
-          margin-bottom: $space-sm;
+          font-family: var(--font-space-mono), monospace;
+          font-size: $brand-font-size-caption;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: $brand-letter-spacing-tag;
+          color: $brand-neutral-500;
+          margin-bottom: $brand-space-sm;
         }
 
         & > p {
-          font-size: $font-size-sm;
-          line-height: $line-height-relaxed;
+          font-family: var(--font-barlow), sans-serif;
+          font-size: $brand-font-size-body-sm;
+          font-weight: 400;
+          line-height: $brand-line-height-body;
           text-align: left;
-          color: $color-gray-dark;
+          color: $brand-neutral-600;
 
           .icon {
-            margin-right: $space-sm;
-            color: $color-bright-green;
+            margin-right: $brand-space-sm;
+            color: $brand-visa-green;
           }
         }
       }
@@ -161,30 +186,39 @@
       .ctaLink {
         display: flex;
         justify-content: center;
+        align-items: center;
         width: 100%;
-        font-size: $font-size-base;
-        font-weight: $font-weight-bold;
-        background: $gradient-blue-primary;
-        padding: $space-md $space-lg;
-        border-radius: $radius-sm;
+        font-family: var(--font-barlow-condensed), sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: $brand-letter-spacing-button;
+        color: $brand-neutral-100;
+        background: $brand-blue;
+        padding: 14px $brand-space-lg;
+        border-radius: 10px;
         border: none;
         cursor: pointer;
+        box-shadow: $brand-shadow-button-primary;
+        transition: background $brand-duration-drift ease-in-out;
 
         &:hover {
-          background: $gradient-blue-hover;
+          background: $brand-interactive-hover;
         }
       }
 
       p.communityText {
-        font-size: $font-size-xs;
-        line-height: $line-height-xs;
-        color: $color-gray-medium;
-        padding: 0 $space-md;
+        font-family: var(--font-barlow), sans-serif;
+        font-size: $brand-font-size-label;
+        line-height: $brand-line-height-label;
+        color: $brand-neutral-500;
+        padding: 0 $brand-space-md;
         text-align: center;
-        margin-top: $space-md;
+        margin-top: $brand-space-md;
 
         .icon {
-          margin-right: $space-sm;
+          margin-right: $brand-space-sm;
+          color: $brand-blue;
         }
       }
     }

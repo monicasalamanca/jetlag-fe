@@ -1,0 +1,206 @@
+// ============================================
+// Brand Design Tokens — The Jet Lag Chronicles
+// ============================================
+//
+// Source: brand_assets/brand_guidelines.md (v1.0, 2026)
+//
+// Usage: Import this file at the top of any SCSS module:
+// @import "../../styles/brand-tokens";
+//
+// For SCSS variables: $brand-blue, $space-5xl, etc.
+// For CSS custom properties: var(--color-brand-blue), var(--bg), etc.
+// ============================================
+
+// ============================================
+// PRIMARY BRAND COLORS
+// ============================================
+
+$brand-blue: #119ce8; // CTAs, links, logo mark, interactive elements
+$brand-navy: #2b3a52; // Headlines, navigation, footer, logo wordmark
+$brand-dark: #1a2535; // Hero sections, dark surfaces, overlays
+$brand-sky-blue: #5dc8f5; // Hover states, highlights, dark theme text links
+
+// ============================================
+// ACCENT COLORS
+// ============================================
+
+$brand-coral: #ff5e3a; // Trending, breaking news, alerts, urgency
+$brand-gold: #f5a623; // Premium, featured content, star ratings
+$brand-visa-green: #22c55e; // Success states, valid visas, approved status
+$brand-error-red: #ef4444; // Errors, denied status, critical warnings
+
+// ============================================
+// NEUTRAL SCALE
+// ============================================
+
+$brand-neutral-100: #ffffff; // Page backgrounds, cards (light)
+$brand-neutral-200: #f4f6f9; // Page background (light)
+$brand-neutral-300: #e8ecf1; // Borders, dividers
+$brand-neutral-400: #c8d0db; // Disabled states
+$brand-neutral-500: #8a96a6; // Muted text
+$brand-neutral-600: #556070; // Secondary text
+$brand-neutral-700: #2b3a52; // Primary text / raised cards (dark)
+$brand-neutral-800: #1a2535; // Darkest surfaces / primary backgrounds (dark)
+
+// ============================================
+// DARK THEME SURFACE SCALE
+// ============================================
+
+$brand-surface-0: #0d1520; // Page background
+$brand-surface-1: #111e2e; // Navigation, header
+$brand-surface-2: #162234; // Default cards
+$brand-surface-3: #1e2f42; // Raised / elevated cards
+$brand-surface-4: #253650; // Tooltips, dropdowns
+
+// ============================================
+// INTERACTIVE STATES
+// ============================================
+
+$brand-interactive: $brand-blue;
+$brand-interactive-hover: #0d88d0;
+$brand-interactive-text-dark: $brand-sky-blue; // Text links on dark backgrounds
+
+// ============================================
+// SPACING TOKENS (4px base unit)
+// ============================================
+
+$brand-space-xs: 4px;
+$brand-space-sm: 8px;
+$brand-space-md: 12px;
+$brand-space-lg: 16px;
+$brand-space-xl: 24px;
+$brand-space-2xl: 32px;
+$brand-space-3xl: 48px;
+$brand-space-4xl: 64px;
+$brand-space-5xl: 80px; // Page gutter (desktop)
+$brand-space-6xl: 120px;
+
+// ============================================
+// TYPOGRAPHY TOKENS
+// ============================================
+
+// Font Families
+$brand-font-display:
+  "Barlow Condensed", sans-serif; // Headlines, section titles, nav, buttons
+$brand-font-body:
+  "Barlow", sans-serif; // Body text, descriptions, long-form content
+$brand-font-mono:
+  "Space Mono", monospace; // Data labels, prices, stats, metadata, badges
+
+// Type Scale — sizes
+$brand-font-size-caption: 10px; // caption — Space Mono, micro-labels
+$brand-font-size-label: 12px; // label — Space Mono, tags, prices, stats
+$brand-font-size-body-sm: 14px; // body-sm — captions, notes
+$brand-font-size-body: 16px; // body — standard body text (minimum)
+$brand-font-size-body-lg: 18px; // body-lg — lead paragraphs
+$brand-font-size-heading-4: 20px; // heading-4 — card titles (18–22px midpoint)
+$brand-font-size-heading-3: 28px; // heading-3 — sub-sections (24–32px midpoint)
+$brand-font-size-heading-2: 40px; // heading-2 — section titles (36–44px midpoint)
+$brand-font-size-heading-1: 52px; // heading-1 — article titles (48–56px midpoint)
+$brand-font-size-display-lg: 64px; // display-lg — section heroes (56–72px midpoint)
+$brand-font-size-display-xl: 88px; // display-xl — hero headlines (80–96px midpoint)
+
+// Font Weights
+$brand-font-weight-regular: 400;
+$brand-font-weight-medium: 500;
+$brand-font-weight-semibold: 600;
+$brand-font-weight-bold: 700;
+$brand-font-weight-extrabold: 800;
+
+// Line Heights
+$brand-line-height-display: 0.9; // display-xl
+$brand-line-height-hero: 0.95; // display-lg
+$brand-line-height-heading-1: 1;
+$brand-line-height-heading-2: 1;
+$brand-line-height-heading-3: 1.1;
+$brand-line-height-heading-4: 1.2;
+$brand-line-height-body: 1.7; // body, body-lg
+$brand-line-height-body-sm: 1.6; // body-sm
+$brand-line-height-label: 1.4; // label, caption
+
+// Letter Spacing
+$brand-letter-spacing-heading: -0.01em;
+$brand-letter-spacing-heading-tight: -0.02em;
+$brand-letter-spacing-label: 0.08em;
+$brand-letter-spacing-label-wide: 0.15em;
+$brand-letter-spacing-button: 0.06em;
+$brand-letter-spacing-tag: 0.1em;
+
+// ============================================
+// BORDER RADIUS TOKENS
+// ============================================
+
+$brand-radius-none: 0;
+$brand-radius-xs: 4px; // Badges, small tags, inline code
+$brand-radius-sm: 8px; // Buttons (tight), small inputs
+$brand-radius-md: 12px; // Buttons (default), dropdowns, tooltips
+$brand-radius-lg: 16px; // Cards, panels, modals
+$brand-radius-xl: 24px; // Feature cards, large containers
+$brand-radius-full: 9999px; // Pills, avatars, circular buttons
+
+// ============================================
+// SHADOW TOKENS
+// ============================================
+
+// Light theme shadows
+$brand-shadow-card-light: 0 2px 12px rgba(26, 37, 53, 0.05);
+$brand-shadow-modal-light: 0 8px 40px rgba(26, 37, 53, 0.15);
+
+// Dark theme shadows
+$brand-shadow-card-dark: 0 2px 20px rgba(0, 0, 0, 0.3);
+$brand-shadow-modal-dark: 0 8px 60px rgba(0, 0, 0, 0.5);
+
+// Glow effects (dark theme)
+$brand-glow-blue: 0 0 20px rgba(17, 156, 232, 0.3);
+$brand-glow-blue-button: 0 4px 20px rgba(17, 156, 232, 0.4);
+
+// Button shadow
+$brand-shadow-button-primary: 0 4px 16px rgba(17, 156, 232, 0.35);
+
+// ============================================
+// MOTION & ANIMATION TOKENS
+// ============================================
+
+$brand-duration-snap: 80ms; // Button clicks, toggles, instant UI
+$brand-duration-drift: 200ms; // Hover states, tooltips, micro-transitions
+$brand-duration-glide: 350ms; // Page transitions, modals, side panels
+$brand-duration-journey: 600ms; // Hero reveals, staggered page loads
+
+// Stagger interval for page load reveals
+$brand-stagger-interval: 70ms; // 60–80ms per element
+
+// ============================================
+// PHOTO OVERLAY
+// ============================================
+
+$brand-overlay-gradient: linear-gradient(
+  180deg,
+  rgba(13, 21, 32, 0) 0%,
+  rgba(13, 21, 32, 0.85) 100%
+);
+
+// ============================================
+// BREAKPOINTS
+// ============================================
+
+$brand-breakpoint-mobile: 600px;
+$brand-breakpoint-tablet: 768px;
+$brand-breakpoint-desktop: 1024px;
+
+// ============================================
+// EXTENDED TYPE SCALE — component sizes
+// ============================================
+
+$brand-font-size-card-heading: 24px; // sub-heading within card components
+$brand-font-size-section-title: 32px; // h2 section headings in landers
+$brand-font-size-price: 42px; // large price / stat display
+
+// ============================================
+// CSS CUSTOM PROPERTIES
+// ============================================
+// Import _brand-theme.scss once in globals.css to emit
+// these as :root and [data-theme] blocks. This file is
+// SCSS-variables-only so it can be @used in any module
+// without duplicating CSS output.
+//
+// globals.css: @use "@/styles/brand-theme";
