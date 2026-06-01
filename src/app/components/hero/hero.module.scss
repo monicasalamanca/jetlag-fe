@@ -1,9 +1,10 @@
+@use "@/styles/brand-tokens" as *;
 @use "@/styles/tokens" as *;
 
 .hero {
   position: relative;
   text-align: center;
-  color: $color-white;
+  color: $brand-neutral-100;
   height: 350px;
   width: 100%;
 
@@ -30,7 +31,7 @@
     top: 0;
     text-align: left;
     padding: $space-lg $space-lg $space-xl;
-    background-color: $shadow-overlay;
+    background: $brand-overlay-gradient;
 
     @media only screen and (min-width: $breakpoint-tablet) {
       justify-content: center;
@@ -56,47 +57,38 @@
       gap: $space-sm;
 
       .tag {
-        padding: $space-xs $space-lg;
-        border-radius: $radius-pill;
-        font-size: $font-size-sm;
-        font-weight: $font-weight-medium;
-        line-height: $line-height-xs;
-        text-transform: capitalize;
-
-        &:nth-child(1) {
-          background: linear-gradient(
-            to right,
-            $color-purple-600,
-            $color-pink-600
-          );
-        }
-
-        &:nth-child(2) {
-          background: linear-gradient(
-            to right,
-            $color-green-600,
-            $color-blue-600
-          );
-        }
+        padding: $brand-space-xs $brand-space-lg;
+        border-radius: $brand-radius-full;
+        font-family: $brand-font-mono;
+        font-size: $brand-font-size-label;
+        font-weight: $brand-font-weight-regular;
+        letter-spacing: $brand-letter-spacing-tag;
+        text-transform: uppercase;
+        background: rgba(17, 156, 232, 0.2);
+        color: $brand-neutral-100;
+        border: 1px solid rgba(17, 156, 232, 0.35);
       }
     }
 
     h1 {
-      font-size: $font-size-2xl;
-      font-weight: $font-weight-bolder;
-      line-height: $line-height-heading-tight;
-      text-transform: capitalize;
+      font-family: $brand-font-display;
+      font-size: $brand-font-size-heading-2;
+      font-weight: $brand-font-weight-extrabold;
+      line-height: $brand-line-height-heading-2;
+      text-transform: uppercase;
+      letter-spacing: $brand-letter-spacing-heading;
 
       @media only screen and (min-width: $breakpoint-tablet) {
-        font-size: $font-size-3xl;
-        line-height: $line-height-heading-loose;
+        font-size: $brand-font-size-heading-1;
+        line-height: $brand-line-height-heading-1;
       }
     }
 
     p {
-      font-size: $font-size-base;
-      line-height: $line-height-relaxed;
-      font-weight: $font-weight-normal;
+      font-family: $brand-font-body;
+      font-size: $brand-font-size-body;
+      line-height: $brand-line-height-body;
+      font-weight: $brand-font-weight-regular;
     }
 
     .ctaButton {
@@ -104,20 +96,23 @@
       align-items: center;
       justify-content: center;
       width: fit-content;
-      padding: $space-sm $space-xl;
-      font-size: $font-size-lg;
-      font-weight: $font-weight-medium;
-      border-radius: $radius-pill;
+      padding: 14px 28px;
+      font-family: $brand-font-display;
+      font-size: 15px;
+      font-weight: $brand-font-weight-bold;
+      letter-spacing: $brand-letter-spacing-button;
+      text-transform: uppercase;
+      border-radius: $brand-radius-md;
       border: none;
       cursor: pointer;
-      background: linear-gradient(to right, $color-blue-darker, $color-purple);
+      background: $brand-blue;
+      color: $brand-neutral-100;
+      box-shadow: $brand-shadow-button-primary;
+      text-decoration: none;
+      transition: background-color $brand-duration-drift ease-in-out;
 
       &:hover {
-        background: linear-gradient(
-          to right,
-          $color-blue-dark,
-          $color-purple-dark
-        );
+        background: $brand-interactive-hover;
       }
 
       .icon {

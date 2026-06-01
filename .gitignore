@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/test-results
 
 # next.js
 /.next/
@@ -57,3 +58,5 @@ OLDsitemap.ts
 pnpm-workspace.yaml
 CLAUDE.md
 .claude/**
+
+brand_assets

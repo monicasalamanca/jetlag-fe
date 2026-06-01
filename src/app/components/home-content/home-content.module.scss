@@ -1,6 +1,7 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
 
 .container {
-  background-color: $color-neutral-50;
-  padding-bottom: $space-3xl;
+  background-color: $brand-neutral-200;
+  // padding-bottom: $brand-space-3xl;
+  border-bottom: 0.5px solid $brand-neutral-300;
 }

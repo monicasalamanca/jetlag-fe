@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFire } from "@fortawesome/free-solid-svg-icons";
 
 import { TrendingThisWeekCard } from "@/api/types";
 import TrackTrendingClick from "./track-trending-click";
@@ -9,14 +7,10 @@ import s from "./trending-this-week-section.module.scss";
 interface TrendingCardProps {
   card: TrendingThisWeekCard;
   position: number;
+  rank: number;
 }
 
-/**
- * Server Component for an individual trending card.
- * Horizontal layout: thumbnail image on the left, white content panel on the right.
- * Content panel: fire icon + "Trending" label on top, title below.
- */
-const TrendingCard = ({ card, position }: TrendingCardProps) => {
+const TrendingCard = ({ card, position, rank }: TrendingCardProps) => {
   const destinationUrl = card.lifestyle
     ? `/lifestyle/${card.slug}`
     : `/${card.countryName?.toLowerCase().replace(/\s+/g, "-")}/${card.slug}`;
@@ -32,29 +26,40 @@ const TrendingCard = ({ card, position }: TrendingCardProps) => {
       href={destinationUrl}
       className={s.card}
     >
-      {/* Left: thumbnail image */}
       <div className={s.imageWrapper}>
         <Image
           src={card.imageUrl}
           alt={card.title}
           fill
-          sizes="(max-width: 600px) 45vw, 25vw"
+          sizes="(max-width: 600px) 160px, 220px"
           className={s.image}
           priority={position === 0}
         />
       </div>
 
-      {/* Right: white content panel */}
-      <div className={s.cardContent}>
-        <span className={s.trendingLabel}>
-          <FontAwesomeIcon
-            icon={faFire}
-            className={s.trendingIcon}
-            aria-hidden="true"
-          />
-          Trending
-        </span>
+      <div className={s.cardBody}>
+        <div className={s.rankIndicator}>
+          <span className={s.dot} aria-hidden="true" />
+          <span>#{String(rank).padStart(2, "0")} · TRENDING</span>
+        </div>
+
         <h3 className={s.cardTitle}>{card.title}</h3>
+
+        <div className={s.cardFooter}>
+          <div className={s.tags}>
+            {card.tags.map((tag) => (
+              <span
+                key={tag.label}
+                className={`${s.tag} ${s[`tag--${tag.variant}`]}`}
+              >
+                {tag.label}
+              </span>
+            ))}
+          </div>
+          {card.readTime && (
+            <span className={s.readTime}>{card.readTime} MIN READ</span>
+          )}
+        </div>
       </div>
     </TrackTrendingClick>
   );

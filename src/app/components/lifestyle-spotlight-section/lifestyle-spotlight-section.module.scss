@@ -1,63 +1,109 @@
+@use "@/styles/brand-tokens" as *;
 @use "@/styles/tokens" as *;
 
 .spotlightSection {
-  width: 100%;
-  padding-top: $space-4xl;
-  background-color: $color-neutral-50;
-  padding: $space-xl $space-lg;
-
-  @media only screen and (min-width: $breakpoint-tablet) {
-    width: 768px;
-    margin: auto;
-    padding: 0;
-    padding-top: $space-4xl;
-  }
+  background-color: $brand-neutral-200;
+  padding: 48px 0 56px;
 }
 
 .container {
-  //   max-width: 1440px;
+  max-width: 1280px;
   margin: 0 auto;
+  padding: 0 $brand-space-5xl;
+}
 
-  @media only screen and (min-width: $breakpoint-tablet) {
-    // width: 768px;
-    // margin: 48px auto;
-    // border: 1px solid red;
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: $brand-space-xl;
+}
+
+.headingGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: $brand-blue;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 1.5px;
+    background: $brand-blue;
+    vertical-align: middle;
+    margin-right: 8px;
   }
 }
 
-.grid {
-  display: grid;
-  row-gap: $space-lg;
-  grid-template-columns: 1fr;
+.heading {
+  margin: 0;
+  font-family: $brand-font-display;
+  font-weight: $brand-font-weight-extrabold;
+  font-size: 46px;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: $brand-neutral-800;
+}
 
-  @media only screen and (min-width: $breakpoint-mobile) {
-    grid-template-columns: 3fr 2fr;
-    column-gap: $space-lg;
-    row-gap: 0;
+.accentWord {
+  color: $brand-blue;
+}
+
+.allArticlesLink {
+  font-family: $brand-font-display;
+  font-weight: $brand-font-weight-bold;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $brand-blue;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
 
-.primaryCard {
-  width: 100%;
-
-  @media only screen and (min-width: $breakpoint-tablet) {
-    grid-row: 1 / span 2;
-  }
+.cardsRow {
+  display: flex;
+  gap: $brand-space-xl;
+  align-items: stretch;
 }
 
-.secondaryCards {
-  display: grid;
-  row-gap: $space-lg;
-  grid-template-columns: 1fr;
+.featuredCol {
+  flex: 0 0 490px;
+  display: flex;
+  flex-direction: column;
+}
 
-  @media only screen and (min-width: $breakpoint-tablet) {
-    grid-template-columns: 1fr 1fr;
-    column-gap: $space-lg;
+.secondaryCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-xl;
+}
+
+@media only screen and (max-width: $brand-breakpoint-tablet) {
+  .container {
+    padding: 32px 20px 40px;
   }
 
-  @media only screen and (min-width: $breakpoint-tablet) {
-    grid-template-columns: 1fr;
-    row-gap: $space-lg;
-    column-gap: 0;
+  .cardsRow {
+    flex-direction: column;
+  }
+
+  .featuredCol,
+  .secondaryCol {
+    flex: unset;
+    width: 100%;
   }
 }

@@ -1,36 +1,22 @@
 import Image from "next/image";
+import { LifestyleSpotlightCard } from "@/api/types";
 import TrackSpotlightClick from "./track-spotlight-click";
-
 import s from "./spotlight-card.module.scss";
 
 interface SpotlightCardProps {
-  blog: {
-    id: number;
-    title: string;
-    slug: string;
-    lifestyle: boolean;
-    countryName: string | null;
-    tags: string[];
-    imageUrl: string;
-  };
+  blog: LifestyleSpotlightCard;
   position: number;
-  cardType: "primary" | "secondary";
+  cardType: "featured" | "secondary";
 }
 
-/**
- * Server Component for individual spotlight card
- * Displays blog with editorial magazine-style layout
- */
 const SpotlightCard = ({ blog, position, cardType }: SpotlightCardProps) => {
-  // Generate the correct destination URL
   const destinationUrl = blog.lifestyle
     ? `/lifestyle/${blog.slug}`
     : `/${blog.countryName?.toLowerCase().replace(/\s+/g, "-")}/${blog.slug}`;
 
   const primaryTag = blog.tags.length > 0 ? blog.tags[0] : null;
-
-  // Determine heading level based on card type
-  const HeadingTag = cardType === "primary" ? "h2" : "h3";
+  const isFeatured = cardType === "featured";
+  const HeadingTag = isFeatured ? "h2" : "h3";
 
   return (
     <TrackSpotlightClick
@@ -39,31 +25,37 @@ const SpotlightCard = ({ blog, position, cardType }: SpotlightCardProps) => {
       lifestyle={blog.lifestyle}
       position={position}
       href={destinationUrl}
-      className={`${s.card} ${s[`card--${cardType}`]}`}
+      className={s.card}
     >
-      <div className={s.imageWrapper}>
+      <div className={`${s.imageArea} ${s[`imageArea--${cardType}`]}`}>
         <Image
           src={blog.imageUrl}
           alt={blog.title}
           fill
           sizes={
-            cardType === "primary"
-              ? "(max-width: 768px) 100vw, 50vw"
-              : "(max-width: 768px) 100vw, 25vw"
+            isFeatured
+              ? "(max-width: 768px) 100vw, 490px"
+              : "(max-width: 768px) 100vw, 50vw"
           }
           className={s.image}
           priority={position === 0}
         />
-        {primaryTag && (
-          <span
-            className={`${s.badge} ${cardType === "secondary" ? s[`badge--position${position}`] : ""}`}
-            aria-label={`Tag: ${primaryTag}`}
-          >
-            {primaryTag}
-          </span>
+        {primaryTag && <span className={s.categoryTag}>{primaryTag}</span>}
+      </div>
+      <div className={`${s.body} ${s[`body--${cardType}`]}`}>
+        {isFeatured && <span className={s.featuredBadge}>FEATURED</span>}
+        <HeadingTag className={`${s.title} ${s[`title--${cardType}`]}`}>
+          {blog.title}
+        </HeadingTag>
+        {blog.excerpt && (
+          <p className={`${s.excerpt} ${s[`excerpt--${cardType}`]}`}>
+            {blog.excerpt}
+          </p>
         )}
-        <div className={s.overlay} aria-hidden="true" />
-        <HeadingTag className={s.title}>{blog.title}</HeadingTag>
+        <div className={`${s.footer} ${s[`footer--${cardType}`]}`}>
+          <span className={s.meta}>By Justin</span>
+          <span className={s.readLink}>READ ›</span>
+        </div>
       </div>
     </TrackSpotlightClick>
   );

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LifestyleSpotlightCard } from "@/api/types";
 import SpotlightCard from "./spotlight-card";
 import s from "./lifestyle-spotlight-section.module.scss";
@@ -6,20 +7,9 @@ interface LifestyleSpotlightSectionProps {
   blogs: LifestyleSpotlightCard[];
 }
 
-/**
- * Server Component for Lifestyle Spotlight Section
- * Editorial-style asymmetrical grid showcasing three featured lifestyle blogs
- *
- * Layout:
- * - Mobile: Vertical stack (hero → tall card 1 → tall card 2)
- * - Desktop: Asymmetrical grid (hero left, two tall cards stacked right)
- *
- * @param blogs - Array of exactly 3 spotlight blog cards
- */
 const LifestyleSpotlightSection = ({
   blogs,
 }: LifestyleSpotlightSectionProps) => {
-  // Hide section if fewer than 3 blogs
   if (!blogs || blogs.length < 3) {
     return null;
   }
@@ -30,14 +20,23 @@ const LifestyleSpotlightSection = ({
       aria-label="Featured Lifestyle Stories"
     >
       <div className={s.container}>
-        <div className={s.grid}>
-          {/* Primary hero card (left column on desktop) */}
-          <div className={s.primaryCard}>
-            <SpotlightCard blog={blogs[0]} position={0} cardType="primary" />
+        <div className={s.sectionHeader}>
+          <div className={s.headingGroup}>
+            <p className={s.eyebrow}>EDITOR&apos;S SPOTLIGHT</p>
+            <h2 className={s.heading}>
+              WHAT&apos;S <span className={s.accentWord}>WORTH</span> READING
+            </h2>
           </div>
+          <Link href="/lifestyle" className={s.allArticlesLink}>
+            ALL ARTICLES ›
+          </Link>
+        </div>
 
-          {/* Secondary cards (right column on desktop, stacked) */}
-          <div className={s.secondaryCards}>
+        <div className={s.cardsRow}>
+          <div className={s.featuredCol}>
+            <SpotlightCard blog={blogs[0]} position={0} cardType="featured" />
+          </div>
+          <div className={s.secondaryCol}>
             <SpotlightCard blog={blogs[1]} position={1} cardType="secondary" />
             <SpotlightCard blog={blogs[2]} position={2} cardType="secondary" />
           </div>

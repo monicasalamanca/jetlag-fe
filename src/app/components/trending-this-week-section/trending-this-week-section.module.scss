@@ -1,158 +1,286 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
+
+// ── Section ──────────────────────────────────────────────────────────────────
 
 .trendingSection {
-  width: 100%;
-  padding: $space-xl $space-lg 0;
-  background-color: $color-neutral-50;
-
-  @media only screen and (min-width: $breakpoint-tablet) {
-    width: 768px;
-    margin: auto;
-    padding: $space-4xl 0 0;
-  }
+  background-color: $brand-neutral-100;
+  border-top: 1px solid $brand-neutral-300;
+  border-bottom: 1px solid $brand-neutral-300;
+  padding: 60px 0;
 }
 
-// ── Section Header ──────────────────────────────────────────────────────────
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 $brand-space-5xl;
+}
 
-.header {
+// ── Section Header ───────────────────────────────────────────────────────────
+
+.sectionHeader {
   display: flex;
-  align-items: center;
-  gap: $space-sm;
-  margin-bottom: $space-xl;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: $brand-space-xl;
 }
 
-.fireIcon {
-  color: $color-orange-bright;
-  font-size: $font-size-xl;
-  width: $font-size-xl !important;
-  height: $font-size-xl !important;
-  overflow: visible;
-}
-
-.sectionTitle {
-  margin: 0;
-  font-family: $font-family-primary;
-  font-size: $font-size-xl-base;
-  font-weight: $font-weight-bold;
-  color: $color-neutral-900;
-  line-height: 1.2;
-}
-
-// ── Grid Layout ─────────────────────────────────────────────────────────────
-
-.grid {
+.headingGroup {
   display: flex;
   flex-direction: column;
-  gap: $space-lg;
+}
 
-  @media only screen and (min-width: $breakpoint-mobile) {
-    flex-direction: row;
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px;
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: $brand-blue;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 1.5px;
+    background: $brand-blue;
+    vertical-align: middle;
+    flex-shrink: 0;
   }
+}
+
+.eyebrowDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $brand-coral;
+  flex-shrink: 0;
+}
+
+.heading {
+  margin: 0;
+  font-family: $brand-font-display;
+  font-weight: $brand-font-weight-extrabold;
+  font-size: 46px;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: $brand-neutral-800;
+}
+
+.accentWord {
+  color: $brand-blue;
+}
+
+.timestamp {
+  margin: 0;
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $brand-neutral-500;
+  align-self: flex-end;
+}
+
+// ── Cards Row ─────────────────────────────────────────────────────────────────
+
+.trendingCards {
+  display: flex;
+  gap: $brand-space-xl;
+  align-items: stretch;
 }
 
 // ── Card ─────────────────────────────────────────────────────────────────────
-// Horizontal layout: image thumbnail on the left, white content panel on the right.
 
 .card {
+  flex: 1;
   display: flex;
   flex-direction: row;
-  width: 100%;
+  background-color: $brand-neutral-100;
+  border-radius: $brand-radius-lg;
+  border: 1px solid $brand-neutral-300;
+  box-shadow: 0 2px 12px rgba(26, 37, 53, 0.07);
   overflow: hidden;
-  border-radius: $radius-md;
-  background-color: $color-white;
-  box-shadow: $shadow-sm;
+  min-height: 168px;
   text-decoration: none;
   color: inherit;
   transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-
-  @media only screen and (min-width: $breakpoint-mobile) {
-    flex: 1;
-  }
+    transform $brand-duration-drift ease-in-out,
+    box-shadow $brand-duration-drift ease-in-out;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: $shadow-md;
-
-    .image {
-      transform: scale(1.05);
-    }
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(26, 37, 53, 0.13);
   }
 
   &:focus-visible {
-    outline: 3px solid $color-orange-bright;
+    outline: 3px solid $brand-blue;
     outline-offset: 2px;
   }
 }
 
-// ── Image (left column) ───────────────────────────────────────────────────────
+// ── Card Image (left column) ──────────────────────────────────────────────────
 
 .imageWrapper {
+  width: 220px;
+  min-width: 220px;
+  flex-shrink: 0;
   position: relative;
-  flex: 0 0 42%;
   overflow: hidden;
-  background-color: $color-neutral-200;
-  min-height: 140px;
-
-  @media only screen and (min-width: $breakpoint-mobile) {
-    min-height: 160px;
-  }
+  background-color: $brand-neutral-300;
 }
 
 .image {
   object-fit: cover;
-  transition: transform 0.5s ease;
+  object-position: center;
 }
 
-// ── Content panel (right column) ──────────────────────────────────────────────
+// ── Card Body (right column) ──────────────────────────────────────────────────
 
-.cardContent {
+.cardBody {
   flex: 1;
+  padding: 20px 22px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: $space-sm;
-  padding: $space-lg $space-lg;
-  background-color: $color-white;
+  justify-content: space-between;
 }
 
-// ── Trending Label ────────────────────────────────────────────────────────────
+// ── Rank Indicator ────────────────────────────────────────────────────────────
 
-.trendingLabel {
-  display: inline-flex;
+.rankIndicator {
+  display: flex;
   align-items: center;
-  gap: $space-xs;
-  color: $color-orange-bright;
-  font-family: $font-family-primary;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
   text-transform: uppercase;
-  letter-spacing: 0.7px;
+  letter-spacing: 0.14em;
+  color: $brand-blue;
 }
 
-.trendingIcon {
-  font-size: 11px;
-  width: $font-size-xl !important;
-  height: $font-size-xl !important;
-  overflow: visible;
+.dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $brand-coral;
+  flex-shrink: 0;
 }
 
 // ── Card Title ────────────────────────────────────────────────────────────────
 
 .cardTitle {
-  margin: 0;
-  font-family: $font-family-primary;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-sm;
-  line-height: 1.4;
-  color: $color-neutral-900;
+  margin: 0 0 12px;
+  font-family: $brand-font-display;
+  font-weight: $brand-font-weight-bold;
+  font-size: $brand-font-size-heading-4;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: $brand-neutral-800;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 
-  @media only screen and (min-width: $breakpoint-mobile) {
-    font-size: $font-size-base;
+// ── Card Footer ───────────────────────────────────────────────────────────────
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-block;
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: $brand-radius-full;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.tag--blue {
+  background: rgba(17, 156, 232, 0.1);
+  color: $brand-blue;
+  border: 1px solid rgba(17, 156, 232, 0.22);
+}
+
+.tag--navy {
+  background: rgba(43, 58, 82, 0.08);
+  color: $brand-navy;
+  border: 1px solid rgba(43, 58, 82, 0.15);
+}
+
+.tag--green {
+  background: rgba(34, 197, 94, 0.08);
+  color: #15803d;
+  border: 1px solid rgba(34, 197, 94, 0.22);
+}
+
+.tag--coral {
+  background: rgba(255, 94, 58, 0.08);
+  color: $brand-coral;
+  border: 1px solid rgba(255, 94, 58, 0.22);
+}
+
+.readTime {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $brand-neutral-500;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media only screen and (max-width: $brand-breakpoint-tablet) {
+  .container {
+    padding: 32px 20px 40px;
   }
 
-  @media only screen and (min-width: $breakpoint-tablet) {
-    font-size: $font-size-lg;
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .timestamp {
+    align-self: flex-start;
+  }
+}
+
+@media only screen and (max-width: $brand-breakpoint-mobile) {
+  .trendingCards {
+    flex-direction: column;
+  }
+
+  .card {
+    min-height: 140px;
+  }
+
+  .imageWrapper {
+    width: 160px;
+    min-width: 160px;
   }
 }
