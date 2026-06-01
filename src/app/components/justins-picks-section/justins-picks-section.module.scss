@@ -1,51 +1,65 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
 
-// ── Section Container ─────────────────────────────────────────────────────────
+// ── Section ───────────────────────────────────────────────────────────────────
 
 .section {
   width: 100%;
-  padding: $space-3xl $space-lg;
-  background-color: $color-neutral-50;
+  background-color: $brand-neutral-200;
+  padding: 60px 0;
+}
 
-  @media only screen and (min-width: $breakpoint-tablet) {
-    width: 768px;
-    margin: auto;
-    padding: $space-4xl 0 0;
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+
+  @media only screen and (min-width: $brand-breakpoint-desktop) {
+    padding: 0 80px;
   }
 }
 
 // ── Section Header ────────────────────────────────────────────────────────────
 
 .header {
-  margin-bottom: $space-xl;
+  margin-bottom: 24px;
 }
 
 .eyebrow {
-  margin: 0 0 $space-xs;
-  font-family: $font-family-primary;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-bolder;
-  letter-spacing: 0.08em;
+  margin: 0 0 10px;
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  font-weight: $brand-font-weight-regular;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  // Blue-to-purple gradient text using design token
-  background: $gradient-purple-card;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  // Fallback for browsers that don't support background-clip: text
-  color: $color-purple;
+  color: $brand-blue;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: "——";
+    color: $brand-blue;
+    font-size: 10px;
+    letter-spacing: -0.05em;
+  }
 }
 
-.subtitle {
+.heading {
   margin: 0;
-  font-family: $font-family-primary;
-  font-size: $font-size-xl-base;
-  font-weight: $font-weight-bold;
-  color: $color-neutral-900;
-  line-height: 1.2;
+  font-family: $brand-font-display;
+  font-size: 46px;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: $brand-neutral-800;
 }
 
-// ── Card List ─────────────────────────────────────────────────────────────────
+.headingHighlight {
+  color: $brand-blue;
+}
+
+// ── Picks List ────────────────────────────────────────────────────────────────
 
 .list {
   list-style: none;
@@ -53,5 +67,5 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: $space-lg;
+  gap: 14px;
 }

@@ -1,183 +1,346 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
 
-// ── Section wrapper ──────────────────────────────────────────────────────────
+// ── Section ────────────────────────────────────────────────────────────────
 
 .section {
+  background: #0d1520;
+  padding: 72px 0 80px;
+  position: relative;
+  overflow: hidden;
+
+  // Top-right radial orb
+  &::before {
+    content: "";
+    position: absolute;
+    top: -160px;
+    right: -160px;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(17, 156, 232, 0.12) 0%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+
+  // Bottom-left radial orb
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -120px;
+    left: -120px;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(93, 200, 245, 0.07) 0%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+}
+
+// ── Container ─────────────────────────────────────────────────────────────
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+
+  @media (min-width: 768px) {
+    padding: 0 48px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 0 80px;
+  }
+}
+
+// ── Two-column layout ─────────────────────────────────────────────────────
+
+.layout {
   display: flex;
   flex-direction: column;
-  gap: $space-xl;
-  width: 100%;
-  padding: $space-xl $space-lg;
+  gap: 40px;
+  align-items: flex-start;
 
-  @media only screen and (min-width: $breakpoint-tablet) {
+  @media (min-width: 1024px) {
     flex-direction: row;
+    gap: 64px;
     align-items: center;
-    gap: $space-2xl;
-    width: 768px;
-    margin: 0 auto;
-    padding: $space-4xl 0;
   }
 }
 
-// ── Left image ───────────────────────────────────────────────────────────────
+// ── Left — Copy ───────────────────────────────────────────────────────────
 
-.imageWrapper {
-  width: 100%;
-  max-width: 340px;
-  align-self: center;
-
-  @media only screen and (min-width: $breakpoint-tablet) {
-    flex: 0 0 260px;
-    max-width: 260px;
-    align-self: stretch;
-  }
+.copy {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 2;
 }
 
-.image {
-  width: 100%;
-  height: auto;
-  border-radius: $radius-md;
-  object-fit: cover;
-  display: block;
-
-  @media only screen and (min-width: $breakpoint-tablet) {
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-// ── Right content ────────────────────────────────────────────────────────────
-
-.content {
+.eyebrow {
   display: flex;
-  flex-direction: column;
-  gap: $space-lg;
+  align-items: center;
+  gap: 10px;
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $brand-sky-blue;
+  margin: 0 0 12px;
 
-  @media only screen and (min-width: $breakpoint-tablet) {
-    flex: 1;
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: $brand-sky-blue;
+    flex-shrink: 0;
   }
 }
 
-.title {
-  margin: 0;
-  font-family: $font-family-primary;
-  font-size: $font-size-xl-base;
-  font-weight: $font-weight-bold;
-  color: $color-neutral-900;
-  line-height: 1.25;
+.heading {
+  font-family: $brand-font-display;
+  font-weight: 800;
+  font-size: clamp(40px, 5vw, 56px);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.97;
+  color: #f0f4fa;
+  margin: 0 0 20px;
 }
 
-.text {
-  margin: 0;
-  font-family: $font-family-secondary;
-  font-size: $font-size-base;
-  font-weight: $font-weight-normal;
-  color: $color-neutral-700;
-  line-height: 1.6;
+.accent {
+  color: $brand-sky-blue;
 }
 
-// ── CTAs ─────────────────────────────────────────────────────────────────────
+.description {
+  font-family: $brand-font-body;
+  font-size: 15.5px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #8da4be;
+  max-width: 440px;
+  margin: 0 0 28px;
+}
 
-.ctas {
+// ── CTAs ──────────────────────────────────────────────────────────────────
+
+.ctaRow {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: $space-md;
+  gap: 12px;
 }
 
-.ctaLink {
+.ctaPrimary {
+  font-family: $brand-font-display;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: $brand-blue;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 14px 28px;
+  box-shadow: 0 4px 20px rgba(17, 156, 232, 0.4);
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
-  padding: $space-sm $space-xl;
-  border-radius: $radius-pill;
-  border: 2px solid $color-blue !important;
-  background-color: $color-blue;
-  color: $color-white;
-  font-family: $font-family-primary;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  text-decoration: none;
   transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+    background $brand-duration-drift ease-in-out,
+    transform $brand-duration-drift ease-in-out;
 
   &:hover,
   &:focus-visible {
-    background-color: $color-blue-dark;
+    background: $brand-interactive-hover;
     transform: translateY(-1px);
   }
 
   &:focus-visible {
-    outline: 2px solid $color-blue;
+    outline: 2px solid $brand-sky-blue;
     outline-offset: 2px;
   }
 }
 
-// ── Social icons ─────────────────────────────────────────────────────────────
-
-.socials {
-  display: flex;
-  gap: $space-md;
-  align-items: center;
-}
-
-.socialLink {
+.ctaGhost {
+  font-family: $brand-font-display;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: transparent;
+  color: #f0f4fa;
+  border-radius: 10px;
+  padding: 14px 28px;
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-  text-decoration: none;
+    background $brand-duration-drift ease-in-out,
+    border-color $brand-duration-drift ease-in-out,
+    transform $brand-duration-drift ease-in-out;
 
   &:hover,
   &:focus-visible {
-    opacity: 0.75;
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
   }
 
   &:focus-visible {
-    outline: 2px solid $color-blue;
-    outline-offset: 3px;
-    border-radius: $radius-sm;
+    outline: 2px solid $brand-sky-blue;
+    outline-offset: 2px;
   }
 }
 
-.socialIcon {
-  width: 20px !important;
-  height: 20px !important;
-  overflow: visible;
-}
-
-// ── ContactForm button override (light background context) ─────────────────
-
+// ContactForm button override — matches ctaGhost style
 .workWithUsBtn {
-  display: inline-flex;
-  align-items: center;
-  padding: $space-sm $space-xl;
-  border-radius: $radius-pill;
-  background-color: transparent;
-  border: 2px solid $color-blue !important;
-  color: $color-blue !important;
-  font-family: $font-family-primary;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
+  font-family: $brand-font-display !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  background: transparent !important;
+  color: #f0f4fa !important;
+  border-radius: 10px !important;
+  padding: 14px 28px !important;
+  border: 2px solid rgba(255, 255, 255, 0.14) !important;
   opacity: 1 !important;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+    background $brand-duration-drift ease-in-out,
+    border-color $brand-duration-drift ease-in-out,
+    transform $brand-duration-drift ease-in-out;
 
   &:hover,
   &:focus-visible {
-    background-color: $color-blue;
-    color: $color-white !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+    color: #f0f4fa !important;
     transform: translateY(-1px);
   }
 
   &:focus-visible {
-    outline: 2px solid $color-blue;
+    outline: 2px solid $brand-sky-blue;
     outline-offset: 2px;
   }
+}
+
+// ── Tagline ───────────────────────────────────────────────────────────────
+
+.taglineWrapper {
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 24px;
+}
+
+.tagline {
+  font-family: $brand-font-mono;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4e6480;
+  line-height: 1.7;
+  margin: 0;
+}
+
+// ── Right — Panel ─────────────────────────────────────────────────────────
+
+.panel {
+  width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+
+  @media (min-width: 1024px) {
+    width: 540px;
+  }
+}
+
+// ── Photo frame ───────────────────────────────────────────────────────────
+
+.photoFrame {
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  height: 260px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  @media (min-width: 1024px) {
+    height: 360px;
+  }
+}
+
+.photo {
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.9;
+}
+
+.photoCaption {
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240, 244, 250, 0.45);
+  pointer-events: none;
+}
+
+// ── Platform buttons ──────────────────────────────────────────────────────
+
+.platforms {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.platformBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: $brand-font-display;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #8da4be;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  text-decoration: none;
+  transition:
+    color $brand-duration-drift ease-in-out,
+    border-color $brand-duration-drift ease-in-out,
+    background $brand-duration-drift ease-in-out;
+
+  &:hover,
+  &:focus-visible {
+    color: #f0f4fa;
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $brand-sky-blue;
+    outline-offset: 2px;
+  }
+}
+
+.platformIcon {
+  width: 16px !important;
+  height: 16px !important;
+  flex-shrink: 0;
 }

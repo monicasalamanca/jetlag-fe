@@ -1,6 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFire } from "@fortawesome/free-solid-svg-icons";
-
 import { TrendingThisWeekCard } from "@/api/types";
 import TrendingCard from "./trending-card";
 import s from "./trending-this-week-section.module.scss";
@@ -9,18 +6,20 @@ interface TrendingThisWeekSectionProps {
   trendingThisWeekCards: TrendingThisWeekCard[];
 }
 
-/**
- * Server Component for Trending This Week Section.
- * Displays exactly two wide, energetic cards for trending blog posts.
- *
- * Layout:
- * - Mobile: Vertical stack
- * - Tablet / Desktop: Two cards side by side
- *
- * Hidden automatically when fewer than 2 cards are provided.
- *
- * @param trendingThisWeekCards - Array of exactly 2 trending blog cards
- */
+function getWeekLabel(): string {
+  const now = new Date();
+  const day = now.getDay();
+  const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+  const monday = new Date(now.setDate(diff));
+  return monday
+    .toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    })
+    .toUpperCase();
+}
+
 const TrendingThisWeekSection = ({
   trendingThisWeekCards,
 }: TrendingThisWeekSectionProps) => {
@@ -30,18 +29,24 @@ const TrendingThisWeekSection = ({
 
   return (
     <section className={s.trendingSection} aria-label="Trending This Week">
-      <div className={s.header}>
-        <FontAwesomeIcon
-          icon={faFire}
-          className={s.fireIcon}
-          aria-hidden="true"
-        />
-        <h2 className={s.sectionTitle}>Trending This Week</h2>
-      </div>
+      <div className={s.container}>
+        <div className={s.sectionHeader}>
+          <div className={s.headingGroup}>
+            <p className={s.eyebrow}>
+              <span className={s.eyebrowDot} aria-hidden="true" />
+              TRENDING THIS WEEK
+            </p>
+            <h2 className={s.heading}>
+              WHAT <span className={s.accentWord}>EVERYONE&apos;S</span> READING
+            </h2>
+          </div>
+          <p className={s.timestamp}>UPDATED · WEEK OF {getWeekLabel()}</p>
+        </div>
 
-      <div className={s.grid}>
-        <TrendingCard card={trendingThisWeekCards[0]} position={0} />
-        <TrendingCard card={trendingThisWeekCards[1]} position={1} />
+        <div className={s.trendingCards}>
+          <TrendingCard card={trendingThisWeekCards[0]} position={0} rank={1} />
+          <TrendingCard card={trendingThisWeekCards[1]} position={1} rank={2} />
+        </div>
       </div>
     </section>
   );

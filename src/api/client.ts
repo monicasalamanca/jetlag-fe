@@ -18,6 +18,7 @@ import {
   LifestyleSpotlightCard,
   LifestyleSpotlightResponse,
   TrendingThisWeekCard,
+  TrendingTag,
   TheJetLaggersPickCard,
 } from "./types";
 import {
@@ -965,7 +966,7 @@ export const fetchHomePageSections =
       throw new Error("STRAPI_URL is not defined");
     }
 
-    const url = `${baseUrl}/api/home-pages?populate[lifestyleSpotlight][fields][0]=title&populate[lifestyleSpotlight][fields][1]=slug&populate[lifestyleSpotlight][fields][2]=lifestyle&populate[lifestyleSpotlight][populate][country][fields][0]=name&populate[lifestyleSpotlight][populate][tags][fields][0]=name&populate[lifestyleSpotlight][populate][images]=*&populate[trendingThisWeek][fields][0]=title&populate[trendingThisWeek][fields][1]=slug&populate[trendingThisWeek][fields][2]=lifestyle&populate[trendingThisWeek][populate][country][fields][0]=name&populate[trendingThisWeek][populate][images]=*&populate[theJetLaggersPicks][fields][0]=title&populate[theJetLaggersPicks][fields][1]=slug&populate[theJetLaggersPicks][fields][2]=description&populate[theJetLaggersPicks][fields][3]=lifestyle&populate[theJetLaggersPicks][populate][country][fields][0]=name&populate[theJetLaggersPicks][populate][images][fields][0]=url&populate[theJetLaggersPicks][populate][images][fields][1]=formats`;
+    const url = `${baseUrl}/api/home-pages?populate[lifestyleSpotlight][fields][0]=title&populate[lifestyleSpotlight][fields][1]=slug&populate[lifestyleSpotlight][fields][2]=lifestyle&populate[lifestyleSpotlight][fields][3]=description&populate[lifestyleSpotlight][populate][country][fields][0]=name&populate[lifestyleSpotlight][populate][tags][fields][0]=name&populate[lifestyleSpotlight][populate][images]=*&populate[trendingThisWeek][fields][0]=title&populate[trendingThisWeek][fields][1]=slug&populate[trendingThisWeek][fields][2]=lifestyle&populate[trendingThisWeek][populate][country][fields][0]=name&populate[trendingThisWeek][populate][tags][fields][0]=name&populate[trendingThisWeek][populate][images]=*&populate[theJetLaggersPicks][fields][0]=title&populate[theJetLaggersPicks][fields][1]=slug&populate[theJetLaggersPicks][fields][2]=description&populate[theJetLaggersPicks][fields][3]=lifestyle&populate[theJetLaggersPicks][populate][country][fields][0]=name&populate[theJetLaggersPicks][populate][tags][fields][0]=name&populate[theJetLaggersPicks][populate][images][fields][0]=url&populate[theJetLaggersPicks][populate][images][fields][1]=formats`;
 
     try {
       const res = await fetch(url, {
@@ -1009,38 +1010,75 @@ export const fetchHomePageSections =
               ?.url ||
             blog.attributes.images?.data?.[0]?.attributes?.url ||
             "/placeholder-image.jpg",
+          excerpt: blog.attributes.description || "",
         }),
       );
 
       const trendingThisWeek: TrendingThisWeekCard[] = trendingBlogs.map(
-        (blog) => ({
-          id: blog.id,
-          title: blog.attributes.title,
-          slug: blog.attributes.slug,
-          lifestyle: blog.attributes.lifestyle,
-          countryName: blog.attributes.country?.data?.attributes?.name || null,
-          imageUrl:
-            blog.attributes.images?.data?.[0]?.attributes?.formats?.small
-              ?.url ||
-            blog.attributes.images?.data?.[0]?.attributes?.formats?.medium
-              ?.url ||
-            blog.attributes.images?.data?.[0]?.attributes?.url ||
-            "/placeholder-image.jpg",
-        }),
+        (blog) => {
+          const rawTags =
+            blog.attributes.tags?.data?.map(
+              (t: { attributes: { name: string } }) => t.attributes.name,
+            ) || [];
+          const tags: TrendingTag[] = [];
+          const countryName =
+            blog.attributes.country?.data?.attributes?.name || null;
+          if (countryName) {
+            tags.push({ label: countryName, variant: "blue" });
+          }
+          if (rawTags[0]) {
+            tags.push({ label: rawTags[0], variant: "navy" });
+          }
+          return {
+            id: blog.id,
+            title: blog.attributes.title,
+            slug: blog.attributes.slug,
+            lifestyle: blog.attributes.lifestyle,
+            countryName,
+            imageUrl:
+              blog.attributes.images?.data?.[0]?.attributes?.formats?.small
+                ?.url ||
+              blog.attributes.images?.data?.[0]?.attributes?.formats?.medium
+                ?.url ||
+              blog.attributes.images?.data?.[0]?.attributes?.url ||
+              "/placeholder-image.jpg",
+            tags,
+          };
+        },
       );
 
       const theJetLaggersPicks: TheJetLaggersPickCard[] = picksBlogs.map(
-        (blog) => ({
-          id: blog.id,
-          title: blog.attributes.title,
-          slug: blog.attributes.slug,
-          description: blog.attributes.description,
-          lifestyle: blog.attributes.lifestyle,
-          countryName: blog.attributes.country?.data?.attributes?.name || null,
-          imageUrl:
-            blog.attributes.images?.data?.[0]?.attributes?.formats?.small
-              ?.url || "/placeholder-image.jpg",
-        }),
+        (blog) => {
+          const countryName =
+            blog.attributes.country?.data?.attributes?.name || null;
+          const rawTags =
+            blog.attributes.tags?.data?.map(
+              (t: { attributes: { name: string } }) => t.attributes.name,
+            ) || [];
+          const tags: TrendingTag[] = [];
+          if (countryName) {
+            tags.push({ label: countryName, variant: "blue" });
+          }
+          if (rawTags[0]) {
+            tags.push({ label: rawTags[0], variant: "navy" });
+          }
+          return {
+            id: blog.id,
+            title: blog.attributes.title,
+            slug: blog.attributes.slug,
+            description: blog.attributes.description,
+            lifestyle: blog.attributes.lifestyle,
+            countryName,
+            imageUrl:
+              blog.attributes.images?.data?.[0]?.attributes?.formats?.small
+                ?.url ||
+              blog.attributes.images?.data?.[0]?.attributes?.formats?.medium
+                ?.url ||
+              blog.attributes.images?.data?.[0]?.attributes?.url ||
+              "/placeholder-image.jpg",
+            tags,
+          };
+        },
       );
 
       return { lifestyleSpotlight, trendingThisWeek, theJetLaggersPicks };

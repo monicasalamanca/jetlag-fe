@@ -9,10 +9,6 @@ interface JustinsPickCardProps {
   position: number;
 }
 
-/**
- * Server Component for an individual Justin's Pick card.
- * Horizontal layout: two-digit number, thumbnail, then title + description.
- */
 const JustinsPickCard = ({ card, position }: JustinsPickCardProps) => {
   const destinationUrl = card.lifestyle
     ? `/lifestyle/${card.slug}`
@@ -42,19 +38,41 @@ const JustinsPickCard = ({ card, position }: JustinsPickCardProps) => {
           src={card.imageUrl}
           alt={card.title}
           fill
-          sizes="(max-width: 600px) 80px, 120px"
+          sizes="(max-width: 600px) 96px, 168px"
           className={s.image}
           priority={position === 0}
         />
       </div>
 
-      {/* Title + Description */}
+      {/* Body */}
       <div className={s.cardContent}>
         <h3 className={s.cardTitle}>{card.title}</h3>
         {card.description && (
           <p className={s.cardDescription}>{card.description}</p>
         )}
+        <div className={s.cardFooter}>
+          {card.tags.length > 0 && (
+            <div className={s.tags}>
+              {card.tags.slice(0, 2).map((tag) => (
+                <span
+                  key={tag.label}
+                  className={`${s.tag} ${s[`tag--${tag.variant}`]}`}
+                >
+                  {tag.label}
+                </span>
+              ))}
+            </div>
+          )}
+          {card.readTime && (
+            <span className={s.readTime}>{card.readTime} MIN READ</span>
+          )}
+        </div>
       </div>
+
+      {/* Arrow */}
+      <span className={s.cardArrow} aria-hidden="true">
+        ›
+      </span>
     </TrackJustinsPickClick>
   );
 };

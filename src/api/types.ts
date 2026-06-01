@@ -515,6 +515,7 @@ export type LifestyleSpotlightBlogResponse = {
     title: string;
     slug: string;
     lifestyle: boolean;
+    description?: string;
     country: {
       data: {
         id: number;
@@ -565,6 +566,12 @@ export type TrendingThisWeekBlogResponse = {
         };
       } | null;
     };
+    tags?: {
+      data: Array<{
+        id: number;
+        attributes: { name: string };
+      }>;
+    };
     images?: {
       data?: Array<{
         id: number;
@@ -585,6 +592,11 @@ export type TrendingThisWeekBlogResponse = {
   };
 };
 
+export type TrendingTag = {
+  label: string;
+  variant: "blue" | "navy" | "green" | "coral" | "gold";
+};
+
 export type TrendingThisWeekCard = {
   id: number;
   title: string;
@@ -592,6 +604,8 @@ export type TrendingThisWeekCard = {
   lifestyle: boolean;
   countryName: string | null;
   imageUrl: string;
+  tags: TrendingTag[];
+  readTime?: number;
 };
 
 export type TheJetLaggersPickBlogResponse = {
@@ -608,6 +622,12 @@ export type TheJetLaggersPickBlogResponse = {
           name: string;
         };
       } | null;
+    };
+    tags?: {
+      data: Array<{
+        id: number;
+        attributes: { name: string };
+      }>;
     };
     images?: {
       data?: Array<{
@@ -637,6 +657,8 @@ export type TheJetLaggersPickCard = {
   lifestyle: boolean;
   countryName: string | null;
   imageUrl: string;
+  tags: TrendingTag[];
+  readTime?: number;
 };
 
 export type LifestyleSpotlightResponse = {
@@ -667,6 +689,7 @@ export type LifestyleSpotlightCard = {
   countryName: string | null;
   tags: string[];
   imageUrl: string;
+  excerpt: string;
 };
 
 export type HomePageSpotlightData = {

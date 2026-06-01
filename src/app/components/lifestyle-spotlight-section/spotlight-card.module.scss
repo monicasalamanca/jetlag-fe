@@ -1,139 +1,191 @@
+@use "@/styles/brand-tokens" as *;
 @use "@/styles/tokens" as *;
 
 .card {
-  display: block;
-  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
+  background-color: $brand-neutral-100;
+  border-radius: $brand-radius-lg;
+  border: 1px solid $brand-neutral-300;
+  box-shadow: 0 2px 12px rgba(26, 37, 53, 0.07);
   overflow: hidden;
-  border-radius: $radius-md;
-  background-color: $color-white;
-  box-shadow: $shadow-sm;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
   text-decoration: none;
   color: inherit;
+  transition:
+    transform $brand-duration-drift ease-in-out,
+    box-shadow $brand-duration-drift ease-in-out;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(26, 37, 53, 0.13);
   }
 
   &:focus-visible {
-    outline: 3px solid $color-blue;
+    outline: 3px solid $brand-blue;
     outline-offset: 2px;
   }
 }
 
-.imageWrapper {
+.imageArea {
   position: relative;
-  width: 100%;
   overflow: hidden;
-  background-color: $color-neutral-100;
+  background-color: $brand-neutral-300;
+  flex-shrink: 0;
 
-  .overlay {
+  &::after {
+    content: "";
     position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: $space-lg $space-lg $space-xl;
-    background-color: $shadow-overlay;
-    text-align: left;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(13, 21, 32, 0) 35%,
+      rgba(13, 21, 32, 0.72) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
   }
 }
 
-.card--primary .imageWrapper {
-  height: 209px;
-
-  @media only screen and (min-width: $breakpoint-mobile) {
-    height: 100%;
-  }
-
-  @media only screen and (min-width: $breakpoint-tablet) {
-    height: 434px;
-  }
-
-  .badge {
-    background-color: $color-purple;
-  }
+.imageArea--featured {
+  height: 260px;
 }
 
-.card--secondary .imageWrapper {
-  //   height: 300px;
-  height: 209px;
-
-  @media only screen and (min-width: $breakpoint-tablet) {
-    height: 209px;
-  }
+.imageArea--secondary {
+  height: 155px;
 }
 
 .image {
   object-fit: cover;
-  transition: transform 0.5s ease;
-
-  .card:hover & {
-    transform: scale(1.05);
-  }
 }
 
-.badge {
+.categoryTag {
   position: absolute;
-  top: $space-lg;
-  left: $space-lg;
-  padding: $space-sm $space-lg;
-  color: $color-white;
-  font-family: $font-family-primary;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
-  text-transform: capitalize;
-  letter-spacing: 0.5px;
-  border-radius: $radius-pill;
-  box-shadow: $shadow-sm;
-  z-index: $z-index-dropdown;
-
-  @media only screen and (min-width: $breakpoint-tablet) {
-    padding: $space-xs $space-sm;
-    top: $space-lg;
-    left: $space-lg;
-  }
+  bottom: 12px;
+  left: 12px;
+  z-index: 2;
+  display: inline-block;
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: $brand-radius-full;
+  background: rgba(17, 156, 232, 0.1);
+  color: $brand-blue;
+  border: 1px solid rgba(17, 156, 232, 0.22);
+  line-height: 1.3;
+  white-space: nowrap;
 }
 
-// Secondary card badge colors based on position
-.badge--position1 {
-  background-color: $color-green;
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.badge--position2 {
-  background-color: $color-orange;
+.body--featured {
+  padding: 22px 22px 20px;
+}
+
+.body--secondary {
+  padding: 20px 22px 18px;
+}
+
+.featuredBadge {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: $brand-radius-full;
+  background: rgba(245, 166, 35, 0.1);
+  color: #b07a00;
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  margin-bottom: 10px;
+  line-height: 1.3;
 }
 
 .title {
-  position: absolute;
-  bottom: $space-lg;
-  left: $space-lg;
   margin: 0;
-  font-family: $font-family-primary;
-  font-weight: $font-weight-bold;
-  line-height: 1.2;
-  color: $color-white;
+  font-family: $brand-font-display;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: $brand-neutral-800;
+}
 
-  .card--primary & {
-    font-size: $font-size-xl;
+.title--featured {
+  font-size: 24px;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
 
-    @media only screen and (min-width: $breakpoint-tablet) {
-      font-size: $font-size-xl-base;
-      width: calc(100% - 32px);
-    }
-  }
+.title--secondary {
+  font-size: 18px;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
 
-  .card--secondary & {
-    font-size: $font-size-lg;
+.excerpt {
+  margin: 0;
+  font-family: $brand-font-body;
+  font-weight: $brand-font-weight-regular;
+  color: $brand-neutral-600;
+}
 
-    @media only screen and (min-width: $breakpoint-tablet) {
-      font-size: $font-size-xl;
-    }
-  }
+.excerpt--featured {
+  font-size: $brand-font-size-body-sm;
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.excerpt--secondary {
+  font-size: 13px;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  border-top: 1px solid $brand-neutral-300;
+}
+
+.footer--featured {
+  padding-top: 14px;
+}
+
+.footer--secondary {
+  padding-top: 12px;
+}
+
+.meta {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $brand-neutral-500;
+}
+
+.readLink {
+  font-family: $brand-font-display;
+  font-weight: $brand-font-weight-bold;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $brand-blue;
 }
