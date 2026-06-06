@@ -1,25 +1,29 @@
 import {
   BlogPost,
-  BlogPostResponse,
+  BlogPostResponseV5,
   ContactUsInfo,
   Country,
-  CountryName,
+  CountryResponseV5,
   CountryNameFormatted,
+  CountrySlimV5,
+  BlogSlugResponseV5,
+  DeepInfoV5,
   Destination,
   Post,
   SlugForLifestyle,
   SlugWithCountry,
-  SlugsResponseForLifestyle,
   Guide,
-  GuideResponse,
+  GuideResponseV5,
   DetailedGuide,
-  DetailedGuideResponse,
+  DetailedGuideResponseV5,
+  GuideSamplePage,
   HomePageSpotlightData,
+  HomePageResponseV5,
   LifestyleSpotlightCard,
-  LifestyleSpotlightResponse,
   TrendingThisWeekCard,
   TrendingTag,
   TheJetLaggersPickCard,
+  ImageV5,
 } from "./types";
 import {
   sanitizeInternalUrls,
@@ -40,13 +44,15 @@ export const fetchCountry = async (
     "filters[slug][$eq]": countryName,
     "populate[quickFacts]": "*",
     "populate[deepInfo][populate]": "image",
-    "populate[heroImage]": "*",
+    "populate[heroImage][fields][0]": "url",
+    "populate[heroImage][fields][1]": "formats",
+    "populate[heroImage][fields][2]": "alternativeText",
+    "populate[heroImage][fields][3]": "width",
+    "populate[heroImage][fields][4]": "height",
   }).toString();
-  // const url = `http://localhost:1337/api/countries?filters[slug][$eq]=${countryName}&populate[quickFacts]=*&populate[deepInfo][populate]=image`;
   const url = `${baseUrl}/api/countries?${query}`;
 
   try {
-    // const res = await fetch(url, { next: { revalidate: 604800 } }); // its cached for a week
     const res = await fetch(url, {
       cache: "no-store",
       headers: {
@@ -60,35 +66,31 @@ export const fetchCountry = async (
     }
 
     const data = await res.json();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return data.data.map((item: any) => ({
+    return data.data.map((item: CountryResponseV5) => ({
       id: item.id,
-      name: item.attributes.name,
-      tagline: item.attributes.tagline,
-      intro: item.attributes.intro,
-      seoTitle: item.attributes.seoTitle || undefined,
-      seoDescription: item.attributes.seoDescription || undefined,
-      continent: item.attributes.continent,
-      slug: item.attributes.slug,
-      quickFacts: item.attributes.quickFacts,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      deepInfo: item.attributes.deepInfo.map((deepInfo: any) => ({
+      name: item.name,
+      tagline: item.tagline,
+      intro: item.intro,
+      seoTitle: item.seoTitle || undefined,
+      seoDescription: item.seoDescription || undefined,
+      continent: item.continent,
+      slug: item.slug,
+      quickFacts: item.quickFacts,
+      deepInfo: item.deepInfo.map((deepInfo: DeepInfoV5) => ({
         id: deepInfo.id,
         name: deepInfo.name,
         icon: deepInfo.icon,
         description: deepInfo.description,
         keywords: deepInfo.keywords,
-        image: deepInfo.image.data.attributes.url,
+        image: deepInfo.image?.url ?? "",
       })),
-      heroImage: item.attributes.heroImage?.data
+      heroImage: item.heroImage
         ? {
             url:
-              item.attributes.heroImage.data.attributes.formats?.large?.url ||
-              item.attributes.heroImage.data.attributes.url,
-            alternativeText:
-              item.attributes.heroImage.data.attributes.alternativeText,
-            width: item.attributes.heroImage.data.attributes.width,
-            height: item.attributes.heroImage.data.attributes.height,
+              item.heroImage.formats?.large?.url || item.heroImage.url,
+            alternativeText: item.heroImage.alternativeText,
+            width: item.heroImage.width,
+            height: item.heroImage.height,
           }
         : null,
     }));
@@ -107,9 +109,8 @@ export const fetchBlogPostFromLifestyle = async (
   const token =
     process.env.STRAPI_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
-  const url = `${baseUrl}/api/blogs?filters[lifestyle]=true&filters[slug][$eq]=${slug}&populate[images]=*&populate[tags]=*`;
+  const url = `${baseUrl}/api/blogs?filters[lifestyle]=true&filters[slug][$eq]=${slug}&populate[images][fields][0]=url&populate[images][fields][1]=formats&populate[images][fields][2]=alternativeText&populate[images][fields][3]=width&populate[images][fields][4]=height&populate[tags][fields][0]=name`;
   try {
-    // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
       cache: "no-store",
       headers: {
@@ -121,47 +122,37 @@ export const fetchBlogPostFromLifestyle = async (
       return null;
     }
     const data = await res.json();
-    return data.data.map((item: BlogPostResponse) => {
-      const content = sanitizeInternalUrls(item.attributes.content || "");
-      const description = sanitizeInternalUrls(
-        item.attributes.description || "",
-      );
+    return data.data.map((item: BlogPostResponseV5) => {
+      const content = sanitizeInternalUrls(item.content || "");
+      const description = sanitizeInternalUrls(item.description || "");
 
       // Log any www URLs found in development
-      logNonCanonicalUrls(
-        item.attributes.content || "",
-        `Blog post: ${item.attributes.title}`,
-      );
+      logNonCanonicalUrls(item.content || "", `Blog post: ${item.title}`);
 
       return {
         id: item.id,
-        title: item.attributes.title,
-        slug: item.attributes.slug,
+        title: item.title,
+        slug: item.slug,
         description,
         content,
-        publishedAt: item.attributes.publishedAt,
-        updatedAt: item.attributes.updatedAt,
-        views: item.attributes.views,
+        publishedAt: item.publishedAt,
+        updatedAt: item.updatedAt,
+        views: item.views,
         imageUrl:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
+          item.images?.[0]?.formats?.large?.url ||
+          item.images?.[0]?.formats?.medium?.url ||
+          item.images?.[0]?.formats?.small?.url,
         imageWidth:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.large
-            ?.width ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.medium
-            ?.width ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.width,
+          item.images?.[0]?.formats?.large?.width ||
+          item.images?.[0]?.formats?.medium?.width ||
+          item.images?.[0]?.formats?.small?.width,
         imageHeight:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.large
-            ?.height ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.medium
-            ?.height ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.height,
-        tags:
-          item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
-        seoTitle: item.attributes.seoTitle || undefined,
-        seoDescription: item.attributes.seoDescription || undefined,
+          item.images?.[0]?.formats?.large?.height ||
+          item.images?.[0]?.formats?.medium?.height ||
+          item.images?.[0]?.formats?.small?.height,
+        tags: item.tags?.map((tag) => tag.name) || [],
+        seoTitle: item.seoTitle || undefined,
+        seoDescription: item.seoDescription || undefined,
       };
     });
   } catch (error) {
@@ -181,9 +172,8 @@ export const fetchBlogPost = async (
     process.env.STRAPI_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
   // Fetch by slug only, then filter by country
-  const url = `${baseUrl}/api/blogs?filters[slug][$eq]=${slug}&populate[images]=*&populate[country]=*&populate[tags]=*`;
+  const url = `${baseUrl}/api/blogs?filters[slug][$eq]=${slug}&populate[images][fields][0]=url&populate[images][fields][1]=formats&populate[images][fields][2]=alternativeText&populate[images][fields][3]=width&populate[images][fields][4]=height&populate[country][fields][0]=name&populate[country][fields][1]=slug&populate[tags][fields][0]=name`;
   try {
-    // const res = await fetch(url, { next: { revalidate: 86400 } }); // its cached for a week
     const res = await fetch(url, {
       cache: "no-store",
       headers: {
@@ -199,9 +189,8 @@ export const fetchBlogPost = async (
     const data = await res.json();
 
     // Filter to match the country by slug
-    const filteredData = data.data.filter((item: BlogPostResponse) => {
-      const countrySlugFromRelation =
-        item.attributes.country?.data?.attributes?.slug;
+    const filteredData = data.data.filter((item: BlogPostResponseV5) => {
+      const countrySlugFromRelation = item.country?.slug;
       return (
         countrySlugFromRelation?.toLowerCase() === countrySlug.toLowerCase()
       );
@@ -211,49 +200,37 @@ export const fetchBlogPost = async (
       return null;
     }
 
-    const data2 = { data: filteredData };
-
-    return data2.data.map((item: BlogPostResponse) => {
-      const content = sanitizeInternalUrls(item.attributes.content || "");
-      const description = sanitizeInternalUrls(
-        item.attributes.description || "",
-      );
+    return filteredData.map((item: BlogPostResponseV5) => {
+      const content = sanitizeInternalUrls(item.content || "");
+      const description = sanitizeInternalUrls(item.description || "");
 
       // Log any www URLs found in development
-      logNonCanonicalUrls(
-        item.attributes.content || "",
-        `Blog post: ${item.attributes.title}`,
-      );
+      logNonCanonicalUrls(item.content || "", `Blog post: ${item.title}`);
 
       return {
         id: item.id,
-        title: item.attributes.title,
-        slug: item.attributes.slug,
+        title: item.title,
+        slug: item.slug,
         description,
         content,
-        publishedAt: item.attributes.publishedAt,
-        updatedAt: item.attributes.updatedAt,
-        views: item.attributes.views,
+        publishedAt: item.publishedAt,
+        updatedAt: item.updatedAt,
+        views: item.views,
         imageUrl:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
+          item.images?.[0]?.formats?.large?.url ||
+          item.images?.[0]?.formats?.medium?.url ||
+          item.images?.[0]?.formats?.small?.url,
         imageWidth:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.large
-            ?.width ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.medium
-            ?.width ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.width,
+          item.images?.[0]?.formats?.large?.width ||
+          item.images?.[0]?.formats?.medium?.width ||
+          item.images?.[0]?.formats?.small?.width,
         imageHeight:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.large
-            ?.height ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.medium
-            ?.height ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.height,
-        tags:
-          item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
-        seoTitle: item.attributes.seoTitle || undefined,
-        seoDescription: item.attributes.seoDescription || undefined,
+          item.images?.[0]?.formats?.large?.height ||
+          item.images?.[0]?.formats?.medium?.height ||
+          item.images?.[0]?.formats?.small?.height,
+        tags: item.tags?.map((tag) => tag.name) || [],
+        seoTitle: item.seoTitle || undefined,
+        seoDescription: item.seoDescription || undefined,
       };
     });
   } catch (error) {
@@ -265,7 +242,6 @@ export const fetchBlogPost = async (
 // Gets the latest blog posts — used server-side with ISR (2-day revalidation).
 // Throws on error to trigger the Next.js error boundary.
 export const fetchLatestBlogPosts = async (): Promise<BlogPost[]> => {
-  // throw new Error("fetchLatestBlogPosts is not implemented yet"); // Placeholder to prevent accidental usage before implementation
   const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
   const token =
     process.env.STRAPI_READ_API_TOKEN ||
@@ -275,7 +251,7 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[]> => {
     throw new Error("STRAPI_URL is not configured");
   }
 
-  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[country]=*&populate[tags]=*`;
+  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images][fields][0]=url&populate[images][fields][1]=formats&populate[images][fields][2]=alternativeText&populate[images][fields][3]=width&populate[images][fields][4]=height&populate[country][fields][0]=name&populate[country][fields][1]=slug&populate[tags][fields][0]=name`;
 
   try {
     const res = await fetch(url, {
@@ -297,35 +273,32 @@ export const fetchLatestBlogPosts = async (): Promise<BlogPost[]> => {
       throw new Error("Invalid response format from blog posts API");
     }
 
-    return data.data.map((item: BlogPostResponse) => {
-      const content = sanitizeInternalUrls(item.attributes.content || "");
-      const description = sanitizeInternalUrls(
-        item.attributes.description || "",
-      );
+    return data.data.map((item: BlogPostResponseV5) => {
+      const content = sanitizeInternalUrls(item.content || "");
+      const description = sanitizeInternalUrls(item.description || "");
 
       // Log any www URLs found in development
       logNonCanonicalUrls(
-        item.attributes.content || "",
-        `Latest blog post: ${item.attributes.title}`,
+        item.content || "",
+        `Latest blog post: ${item.title}`,
       );
 
       return {
         id: item.id,
-        title: item.attributes.title,
+        title: item.title,
         description,
         content,
-        publishedAt: item.attributes.publishedAt,
-        slug: item.attributes.slug,
+        publishedAt: item.publishedAt,
+        slug: item.slug,
         imageUrl:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url ||
+          item.images?.[0]?.formats?.large?.url ||
+          item.images?.[0]?.formats?.medium?.url ||
+          item.images?.[0]?.formats?.small?.url ||
           "/placeholder-image.jpg",
-        country: item.attributes.country?.data?.attributes?.name,
-        tags:
-          item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
-        views: item.attributes.views,
-        lifestyle: item.attributes.lifestyle || false,
+        country: item.country?.name,
+        tags: item.tags?.map((tag) => tag.name) || [],
+        views: item.views,
+        lifestyle: item.lifestyle || false,
       };
     });
   } catch (error) {
@@ -346,7 +319,7 @@ export const fetchLatestBlogPostsClient = async (): Promise<
     return null;
   }
 
-  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images]=*&populate[country]=*&populate[tags]=*`;
+  const url = `${baseUrl}/api/blogs?sort=publishedAt:desc&populate[images][fields][0]=url&populate[images][fields][1]=formats&populate[images][fields][2]=alternativeText&populate[images][fields][3]=width&populate[images][fields][4]=height&populate[country][fields][0]=name&populate[country][fields][1]=slug&populate[tags][fields][0]=name`;
 
   try {
     const res = await fetch(url, {
@@ -366,35 +339,32 @@ export const fetchLatestBlogPostsClient = async (): Promise<
 
     const data = await res.json();
 
-    return data.data.map((item: BlogPostResponse) => {
-      const content = sanitizeInternalUrls(item.attributes.content || "");
-      const description = sanitizeInternalUrls(
-        item.attributes.description || "",
-      );
+    return data.data.map((item: BlogPostResponseV5) => {
+      const content = sanitizeInternalUrls(item.content || "");
+      const description = sanitizeInternalUrls(item.description || "");
 
       // Log any www URLs found in development
       logNonCanonicalUrls(
-        item.attributes.content || "",
-        `Latest blog post (client): ${item.attributes.title}`,
+        item.content || "",
+        `Latest blog post (client): ${item.title}`,
       );
 
       return {
         id: item.id,
-        title: item.attributes.title,
+        title: item.title,
         description,
         content,
-        publishedAt: item.attributes.publishedAt,
-        slug: item.attributes.slug,
+        publishedAt: item.publishedAt,
+        slug: item.slug,
         imageUrl:
-          item.attributes.images?.data?.[0]?.attributes?.formats?.large?.url ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
-          item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url ||
+          item.images?.[0]?.formats?.large?.url ||
+          item.images?.[0]?.formats?.medium?.url ||
+          item.images?.[0]?.formats?.small?.url ||
           "/placeholder-image.jpg",
-        country: item.attributes.country?.data?.attributes?.name,
-        tags:
-          item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
-        views: item.attributes.views,
-        lifestyle: item.attributes.lifestyle || false,
+        country: item.country?.name,
+        tags: item.tags?.map((tag) => tag.name) || [],
+        views: item.views,
+        lifestyle: item.lifestyle || false,
       };
     });
   } catch (error) {
@@ -408,11 +378,9 @@ export const fetchLatestBlogPostsClient = async (): Promise<
 export const fetchCountriesWithContinents = async (): Promise<
   Destination[] | null
 > => {
-  const url = `${process.env.STRAPI_URL}/api/countries?filters[publishedAt][$notNull]=true&fields[0]=name&fields[1]=continent`;
+  const url = `${process.env.STRAPI_URL}/api/countries?fields[0]=name&fields[1]=continent`;
   try {
-    // const res = await fetch(url, { next: { revalidate: 604800 } }); // its cached for a week
     const res = await fetch(url, {
-      // cache: "no-store",
       next: { revalidate: 3600 },
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_READ_API_TOKEN}`,
@@ -424,11 +392,10 @@ export const fetchCountriesWithContinents = async (): Promise<
       return null;
     }
     const data = await res.json();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return data.data.map((item: any) => ({
+    return data.data.map((item: { id: number; name: string; continent: string }) => ({
       id: item.id,
-      name: item.attributes.name,
-      continent: item.attributes.continent,
+      name: item.name,
+      continent: item.continent,
     }));
   } catch (error) {
     console.error("Error fetching countries: ", error);
@@ -467,11 +434,10 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
   SlugWithCountry[] | null
 > => {
   // Populate the singular `country` relation (blogs belong to one country)
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[publishedAt][$notNull]=true&fields[0]=slug&fields[1]=updatedAt&populate[country][fields][0]=slug`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?fields[0]=slug&fields[1]=updatedAt&populate[country][fields][0]=slug`;
 
   try {
     const res = await fetch(url, {
-      // cache: "no-store",
       next: { revalidate: 3600 }, // Cache for 1 hour
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
@@ -496,26 +462,16 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
 
     // Flatten blogs by their single country relation
     const blogSlugs: SlugWithCountry[] = [];
-    data.data.forEach(
-      (item: {
-        id: number;
-        attributes: {
-          slug: string;
-          updatedAt: string;
-          country?: { data?: { attributes: { slug: string } } };
-        };
-      }) => {
-        const countryData = item.attributes.country?.data;
-        if (countryData) {
-          blogSlugs.push({
-            id: item.id,
-            slug: item.attributes.slug,
-            updatedAt: item.attributes.updatedAt,
-            countrySlug: countryData.attributes.slug,
-          });
-        }
-      },
-    );
+    data.data.forEach((item: BlogSlugResponseV5) => {
+      if (item.country) {
+        blogSlugs.push({
+          id: item.id,
+          slug: item.slug,
+          updatedAt: item.updatedAt,
+          countrySlug: item.country.slug,
+        });
+      }
+    });
 
     return blogSlugs;
   } catch (error) {
@@ -527,7 +483,7 @@ export const fetchAllBlogSlugsFromCountries = async (): Promise<
   }
 };
 
-// fetch all teh countries
+// fetch all the countries
 // this is used to generate the sitemap
 export const fetchAllCountries = async (): Promise<
   CountryNameFormatted[] | null
@@ -536,7 +492,6 @@ export const fetchAllCountries = async (): Promise<
   try {
     const res = await fetch(url, {
       cache: "no-store",
-      // next: { revalidate: 3600 },
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
@@ -546,10 +501,10 @@ export const fetchAllCountries = async (): Promise<
       return null;
     }
     const data = await res.json();
-    return data.data.map((item: CountryName) => ({
+    return data.data.map((item: CountrySlimV5) => ({
       id: item.id,
-      slug: item.attributes.slug,
-      updatedAt: item.attributes.updatedAt,
+      slug: item.slug,
+      updatedAt: item.updatedAt,
     }));
   } catch (error) {
     console.error("Error fetching the list of countries: ", error);
@@ -562,12 +517,11 @@ export const fetchAllCountries = async (): Promise<
 export const fetchAllBlogSlugsFromLifestyle = async (): Promise<
   SlugForLifestyle[] | null
 > => {
-  const url = `${process.env.STRAPI_URL}/api/blogs?filters[lifestyle][$eq]=true&filters[publishedAt][$notNull]=true&fields[0]=slug&fields[1]=updatedAt`;
+  const url = `${process.env.STRAPI_URL}/api/blogs?filters[lifestyle][$eq]=true&fields[0]=slug&fields[1]=updatedAt`;
 
   try {
     const res = await fetch(url, {
       cache: "no-store",
-      // next: { revalidate: 3600 },
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
@@ -583,10 +537,10 @@ export const fetchAllBlogSlugsFromLifestyle = async (): Promise<
 
     const data = await res.json();
 
-    return data.data.map((item: SlugsResponseForLifestyle) => ({
+    return data.data.map((item: BlogSlugResponseV5) => ({
       id: item.id,
-      slug: item.attributes.slug,
-      updatedAt: item.attributes.updatedAt,
+      slug: item.slug,
+      updatedAt: item.updatedAt,
     }));
   } catch (error) {
     console.error(
@@ -636,7 +590,7 @@ export const fetchBlogsByCountryServer = async (
     process.env.STRAPI_API_READ_TOKEN ||
     process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
-  const url = `${baseUrl}/api/blogs?filters[country][slug][$eq]=${countrySlug}&sort=publishedAt:desc&populate[images]=*&populate[country]=*&populate[tags]=*&pagination[pageSize]=100`;
+  const url = `${baseUrl}/api/blogs?filters[country][slug][$eq]=${countrySlug}&sort=publishedAt:desc&populate[images][fields][0]=url&populate[images][fields][1]=formats&populate[images][fields][2]=alternativeText&populate[images][fields][3]=width&populate[images][fields][4]=height&populate[country][fields][0]=name&populate[country][fields][1]=slug&populate[tags][fields][0]=name&pagination[pageSize]=100`;
 
   try {
     const res = await fetch(url, {
@@ -653,21 +607,21 @@ export const fetchBlogsByCountryServer = async (
     }
 
     const data = await res.json();
-    return data.data.map((item: BlogPostResponse) => ({
+    return data.data.map((item: BlogPostResponseV5) => ({
       id: item.id,
-      title: item.attributes.title,
-      description: item.attributes.description,
-      content: item.attributes.content,
-      publishedAt: item.attributes.publishedAt,
-      slug: item.attributes.slug,
+      title: item.title,
+      description: item.description,
+      content: item.content,
+      publishedAt: item.publishedAt,
+      slug: item.slug,
       imageUrl:
-        item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
-          ?.url ||
-        item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
-        item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
-      country: item.attributes.country?.data?.attributes?.name,
-      tags: item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
-      lifestyle: item.attributes.lifestyle || false,
+        item.images?.[0]?.formats?.thumbnail?.url ||
+        item.images?.[0]?.formats?.medium?.url ||
+        item.images?.[0]?.formats?.small?.url,
+      country: item.country?.name,
+      tags: item.tags?.map((tag) => tag.name) || [],
+      lifestyle: item.lifestyle || false,
+      views: item.views,
     }));
   } catch (error) {
     console.error(`Error fetching blogs for ${countrySlug}:`, error);
@@ -707,40 +661,34 @@ export const fetchGuidesClient = async (): Promise<Guide[] | null> => {
       return [];
     }
 
-    return data.data.map((item: GuideResponse) => {
-      const coverImageData = item.attributes.coverImage?.data;
-
-      return {
-        id: item.id,
-        title: item.attributes.title,
-        slug: item.attributes.slug,
-        description: item.attributes.description,
-        createdAt: item.attributes.createdAt,
-        updatedAt: item.attributes.updatedAt,
-        publishedAt: item.attributes.publishedAt,
-        type: item.attributes.type,
-        pageCount: item.attributes.pageCount,
-        priceCents: item.attributes.priceCents,
-        originalPriceCents: item.attributes.originalPriceCents,
-        currency: item.attributes.currency,
-        coverImage: coverImageData
-          ? {
-              url:
-                coverImageData.attributes.formats?.small?.url ||
-                coverImageData.attributes.formats?.medium?.url ||
-                coverImageData.attributes.url,
-              width:
-                coverImageData.attributes.formats?.small?.width ||
-                coverImageData.attributes.width,
-              height:
-                coverImageData.attributes.formats?.small?.height ||
-                coverImageData.attributes.height,
-              formats: coverImageData.attributes.formats,
-              alternativeText: coverImageData.attributes.alternativeText,
-            }
-          : null,
-      };
-    });
+    return data.data.map((item: GuideResponseV5) => ({
+      id: item.id,
+      title: item.title,
+      slug: item.slug,
+      description: item.description,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+      publishedAt: item.publishedAt,
+      type: item.type,
+      pageCount: item.pageCount,
+      priceCents: item.priceCents,
+      originalPriceCents: item.originalPriceCents,
+      currency: item.currency,
+      coverImage: item.coverImage
+        ? {
+            url:
+              item.coverImage.formats?.small?.url ||
+              item.coverImage.formats?.medium?.url ||
+              item.coverImage.url,
+            width:
+              item.coverImage.formats?.small?.width || item.coverImage.width,
+            height:
+              item.coverImage.formats?.small?.height || item.coverImage.height,
+            formats: item.coverImage.formats,
+            alternativeText: item.coverImage.alternativeText,
+          }
+        : null,
+    }));
   } catch (error) {
     console.error("Error fetching guides (client): ", error);
     return null;
@@ -771,39 +719,34 @@ export const fetchGuides = async (): Promise<Guide[] | null> => {
 
     if (!data.data || data.data.length === 0) return [];
 
-    return data.data.map((item: GuideResponse) => {
-      const coverImageData = item.attributes.coverImage?.data;
-      return {
-        id: item.id,
-        title: item.attributes.title,
-        slug: item.attributes.slug,
-        description: item.attributes.description,
-        createdAt: item.attributes.createdAt,
-        updatedAt: item.attributes.updatedAt,
-        publishedAt: item.attributes.publishedAt,
-        type: item.attributes.type,
-        pageCount: item.attributes.pageCount,
-        priceCents: item.attributes.priceCents,
-        originalPriceCents: item.attributes.originalPriceCents,
-        currency: item.attributes.currency,
-        coverImage: coverImageData
-          ? {
-              url:
-                coverImageData.attributes.formats?.small?.url ||
-                coverImageData.attributes.formats?.medium?.url ||
-                coverImageData.attributes.url,
-              width:
-                coverImageData.attributes.formats?.small?.width ||
-                coverImageData.attributes.width,
-              height:
-                coverImageData.attributes.formats?.small?.height ||
-                coverImageData.attributes.height,
-              formats: coverImageData.attributes.formats,
-              alternativeText: coverImageData.attributes.alternativeText,
-            }
-          : null,
-      };
-    });
+    return data.data.map((item: GuideResponseV5) => ({
+      id: item.id,
+      title: item.title,
+      slug: item.slug,
+      description: item.description,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+      publishedAt: item.publishedAt,
+      type: item.type,
+      pageCount: item.pageCount,
+      priceCents: item.priceCents,
+      originalPriceCents: item.originalPriceCents,
+      currency: item.currency,
+      coverImage: item.coverImage
+        ? {
+            url:
+              item.coverImage.formats?.small?.url ||
+              item.coverImage.formats?.medium?.url ||
+              item.coverImage.url,
+            width:
+              item.coverImage.formats?.small?.width || item.coverImage.width,
+            height:
+              item.coverImage.formats?.small?.height || item.coverImage.height,
+            formats: item.coverImage.formats,
+            alternativeText: item.coverImage.alternativeText,
+          }
+        : null,
+    }));
   } catch (error) {
     console.error("Error fetching guides: ", error);
     return null;
@@ -833,15 +776,10 @@ export const fetchAllGuideSlugs = async (): Promise<
     }
 
     const data = await res.json();
-    return data.data.map(
-      (item: {
-        id: number;
-        attributes: { slug: string; updatedAt: string };
-      }) => ({
-        slug: item.attributes.slug,
-        updatedAt: item.attributes.updatedAt,
-      }),
-    );
+    return data.data.map((item: CountrySlimV5) => ({
+      slug: item.slug,
+      updatedAt: item.updatedAt,
+    }));
   } catch (error) {
     console.error("Error fetching guide slugs for sitemap:", error);
     return null;
@@ -873,10 +811,10 @@ export const fetchGuideBySlugAndType = async (
   // Build the populate parameter based on type
   const typeSpecificPopulate =
     type === "single"
-      ? "populate[includedInBundles]=*"
-      : "populate[bundleIncludes]=*";
+      ? "populate[includedInBundles][fields][0]=slug&populate[includedInBundles][fields][1]=title&populate[includedInBundles][fields][2]=description&populate[includedInBundles][fields][3]=originalPriceCents&populate[includedInBundles][fields][4]=pageCount&populate[includedInBundles][fields][5]=type&populate[includedInBundles][fields][6]=currency"
+      : "populate[bundleIncludes][fields][0]=slug&populate[bundleIncludes][fields][1]=title&populate[bundleIncludes][fields][2]=description&populate[bundleIncludes][fields][3]=originalPriceCents&populate[bundleIncludes][fields][4]=pageCount&populate[bundleIncludes][fields][5]=type&populate[bundleIncludes][fields][6]=currency";
 
-  const url = `${baseUrl}/api/guides?filters[slug][$eq]=${slug}&populate[coverImage]=*&populate[format]=*&populate[whoFor]=*&populate[whoNotFor]=*&populate[whatsInside]=*&populate[samplePages]=*&${typeSpecificPopulate}`;
+  const url = `${baseUrl}/api/guides?filters[slug][$eq]=${slug}&populate[coverImage][fields][0]=url&populate[coverImage][fields][1]=formats&populate[coverImage][fields][2]=alternativeText&populate[coverImage][fields][3]=width&populate[coverImage][fields][4]=height&populate[format]=*&populate[whoFor]=*&populate[whoNotFor]=*&populate[whatsInside]=*&populate[samplePages][fields][0]=url&populate[samplePages][fields][1]=formats&populate[samplePages][fields][2]=alternativeText&populate[samplePages][fields][3]=width&populate[samplePages][fields][4]=height&populate[samplePages][fields][5]=name&populate[samplePages][fields][6]=caption&${typeSpecificPopulate}`;
 
   try {
     const res = await fetch(url, {
@@ -901,45 +839,56 @@ export const fetchGuideBySlugAndType = async (
       return null;
     }
 
-    const item: DetailedGuideResponse = data.data[0];
-    const coverImageData = item.attributes.coverImage.data;
+    const item: DetailedGuideResponseV5 = data.data[0];
 
     return {
       id: item.id,
-      title: item.attributes.title,
-      slug: item.attributes.slug,
-      description: item.attributes.description,
-      createdAt: item.attributes.createdAt,
-      updatedAt: item.attributes.updatedAt,
-      publishedAt: item.attributes.publishedAt,
-      type: item.attributes.type,
-      pageCount: item.attributes.pageCount,
-      priceCents: item.attributes.priceCents,
-      originalPriceCents: item.attributes.originalPriceCents,
-      currency: item.attributes.currency,
-      isFeatured: item.attributes.isFeatured,
-      isLifestyle: item.attributes.isLifestyle,
-      coverImage: {
-        url:
-          coverImageData.attributes.formats?.small?.url ||
-          coverImageData.attributes.formats?.medium?.url ||
-          coverImageData.attributes.url,
-        width:
-          coverImageData.attributes.formats?.small?.width ||
-          coverImageData.attributes.width,
-        height:
-          coverImageData.attributes.formats?.small?.height ||
-          coverImageData.attributes.height,
-        formats: coverImageData.attributes.formats,
-        alternativeText: coverImageData.attributes.alternativeText,
-      },
-      format: item.attributes.format || [],
-      whoFor: item.attributes.whoFor || [],
-      whoNotFor: item.attributes.whoNotFor || [],
-      whatsInside: item.attributes.whatsInside || [],
-      samplePages: item.attributes.samplePages?.data || [],
-      includedInBundles: item.attributes.includedInBundles?.data,
-      bundleIncludes: item.attributes.bundleIncludes?.data,
+      title: item.title,
+      slug: item.slug,
+      description: item.description,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+      publishedAt: item.publishedAt,
+      type: item.type,
+      pageCount: item.pageCount,
+      priceCents: item.priceCents,
+      originalPriceCents: item.originalPriceCents,
+      currency: item.currency,
+      isFeatured: item.isFeatured,
+      isLifestyle: item.isLifestyle,
+      coverImage: item.coverImage
+        ? {
+            url:
+              item.coverImage.formats?.small?.url ||
+              item.coverImage.formats?.medium?.url ||
+              item.coverImage.url,
+            width:
+              item.coverImage.formats?.small?.width || item.coverImage.width,
+            height:
+              item.coverImage.formats?.small?.height || item.coverImage.height,
+            formats: item.coverImage.formats,
+            alternativeText: item.coverImage.alternativeText,
+          }
+        : { url: "", width: 0, height: 0 },
+      format: item.format || [],
+      whoFor: item.whoFor || [],
+      whoNotFor: item.whoNotFor || [],
+      whatsInside: item.whatsInside || [],
+      samplePages: (item.samplePages || []).map(
+        (page: ImageV5): GuideSamplePage => ({
+          id: page.id,
+          documentId: page.documentId,
+          name: page.name,
+          alternativeText: page.alternativeText,
+          caption: page.caption,
+          width: page.width,
+          height: page.height,
+          url: page.url,
+          formats: page.formats as GuideSamplePage["formats"],
+        }),
+      ),
+      includedInBundles: item.includedInBundles,
+      bundleIncludes: item.bundleIncludes,
     };
   } catch (error) {
     console.error(`Error fetching guide (${slug}, ${type}): `, error);
@@ -966,7 +915,7 @@ export const fetchHomePageSections =
       throw new Error("STRAPI_URL is not defined");
     }
 
-    const url = `${baseUrl}/api/home-pages?populate[lifestyleSpotlight][fields][0]=title&populate[lifestyleSpotlight][fields][1]=slug&populate[lifestyleSpotlight][fields][2]=lifestyle&populate[lifestyleSpotlight][fields][3]=description&populate[lifestyleSpotlight][populate][country][fields][0]=name&populate[lifestyleSpotlight][populate][tags][fields][0]=name&populate[lifestyleSpotlight][populate][images]=*&populate[trendingThisWeek][fields][0]=title&populate[trendingThisWeek][fields][1]=slug&populate[trendingThisWeek][fields][2]=lifestyle&populate[trendingThisWeek][populate][country][fields][0]=name&populate[trendingThisWeek][populate][tags][fields][0]=name&populate[trendingThisWeek][populate][images]=*&populate[theJetLaggersPicks][fields][0]=title&populate[theJetLaggersPicks][fields][1]=slug&populate[theJetLaggersPicks][fields][2]=description&populate[theJetLaggersPicks][fields][3]=lifestyle&populate[theJetLaggersPicks][populate][country][fields][0]=name&populate[theJetLaggersPicks][populate][tags][fields][0]=name&populate[theJetLaggersPicks][populate][images][fields][0]=url&populate[theJetLaggersPicks][populate][images][fields][1]=formats`;
+    const url = `${baseUrl}/api/home-pages?populate[lifestyleSpotlight][populate][country][fields][0]=name&populate[lifestyleSpotlight][populate][tags][fields][0]=name&populate[lifestyleSpotlight][populate][images][fields][0]=url&populate[lifestyleSpotlight][populate][images][fields][1]=formats&populate[lifestyleSpotlight][populate][images][fields][2]=alternativeText&populate[trendingThisWeek][populate][country][fields][0]=name&populate[trendingThisWeek][populate][tags][fields][0]=name&populate[trendingThisWeek][populate][images][fields][0]=url&populate[trendingThisWeek][populate][images][fields][1]=formats&populate[trendingThisWeek][populate][images][fields][2]=alternativeText&populate[theJetLaggersPicks][populate][country][fields][0]=name&populate[theJetLaggersPicks][populate][tags][fields][0]=name&populate[theJetLaggersPicks][populate][images][fields][0]=url&populate[theJetLaggersPicks][populate][images][fields][1]=formats&populate[theJetLaggersPicks][populate][images][fields][2]=alternativeText`;
 
     try {
       const res = await fetch(url, {
@@ -982,47 +931,40 @@ export const fetchHomePageSections =
         );
       }
 
-      const data: LifestyleSpotlightResponse = await res.json();
+      const rawData = await res.json();
 
-      if (!data.data || data.data.length === 0) {
+      if (!rawData.data || rawData.data.length === 0) {
         throw new Error("No home page data found");
       }
 
-      const attrs = data.data[0].attributes;
+      const homePage: HomePageResponseV5 = rawData.data[0];
 
-      const spotlightBlogs = attrs.lifestyleSpotlight?.data || [];
-      const trendingBlogs = attrs.trendingThisWeek?.data || [];
-      const picksBlogs = (attrs.theJetLaggersPicks?.data || []).slice(0, 4);
+      const spotlightBlogs = homePage.lifestyleSpotlight || [];
+      const trendingBlogs = homePage.trendingThisWeek || [];
+      const picksBlogs = (homePage.theJetLaggersPicks || []).slice(0, 4);
 
       const lifestyleSpotlight: LifestyleSpotlightCard[] = spotlightBlogs.map(
         (blog) => ({
           id: blog.id,
-          title: blog.attributes.title,
-          slug: blog.attributes.slug,
-          lifestyle: blog.attributes.lifestyle,
-          countryName: blog.attributes.country?.data?.attributes?.name || null,
-          tags:
-            blog.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
+          title: blog.title,
+          slug: blog.slug,
+          lifestyle: blog.lifestyle ?? false,
+          countryName: blog.country?.name || null,
+          tags: blog.tags?.map((tag) => tag.name) || [],
           imageUrl:
-            blog.attributes.images?.data?.[0]?.attributes?.formats?.small
-              ?.url ||
-            blog.attributes.images?.data?.[0]?.attributes?.formats?.medium
-              ?.url ||
-            blog.attributes.images?.data?.[0]?.attributes?.url ||
+            blog.images?.[0]?.formats?.small?.url ||
+            blog.images?.[0]?.formats?.medium?.url ||
+            blog.images?.[0]?.url ||
             "/placeholder-image.jpg",
-          excerpt: blog.attributes.description || "",
+          excerpt: blog.description || "",
         }),
       );
 
       const trendingThisWeek: TrendingThisWeekCard[] = trendingBlogs.map(
         (blog) => {
-          const rawTags =
-            blog.attributes.tags?.data?.map(
-              (t: { attributes: { name: string } }) => t.attributes.name,
-            ) || [];
+          const rawTags = blog.tags?.map((t) => t.name) || [];
           const tags: TrendingTag[] = [];
-          const countryName =
-            blog.attributes.country?.data?.attributes?.name || null;
+          const countryName = blog.country?.name || null;
           if (countryName) {
             tags.push({ label: countryName, variant: "blue" });
           }
@@ -1031,16 +973,14 @@ export const fetchHomePageSections =
           }
           return {
             id: blog.id,
-            title: blog.attributes.title,
-            slug: blog.attributes.slug,
-            lifestyle: blog.attributes.lifestyle,
+            title: blog.title,
+            slug: blog.slug,
+            lifestyle: blog.lifestyle ?? false,
             countryName,
             imageUrl:
-              blog.attributes.images?.data?.[0]?.attributes?.formats?.small
-                ?.url ||
-              blog.attributes.images?.data?.[0]?.attributes?.formats?.medium
-                ?.url ||
-              blog.attributes.images?.data?.[0]?.attributes?.url ||
+              blog.images?.[0]?.formats?.small?.url ||
+              blog.images?.[0]?.formats?.medium?.url ||
+              blog.images?.[0]?.url ||
               "/placeholder-image.jpg",
             tags,
           };
@@ -1049,12 +989,8 @@ export const fetchHomePageSections =
 
       const theJetLaggersPicks: TheJetLaggersPickCard[] = picksBlogs.map(
         (blog) => {
-          const countryName =
-            blog.attributes.country?.data?.attributes?.name || null;
-          const rawTags =
-            blog.attributes.tags?.data?.map(
-              (t: { attributes: { name: string } }) => t.attributes.name,
-            ) || [];
+          const countryName = blog.country?.name || null;
+          const rawTags = blog.tags?.map((t) => t.name) || [];
           const tags: TrendingTag[] = [];
           if (countryName) {
             tags.push({ label: countryName, variant: "blue" });
@@ -1064,17 +1000,15 @@ export const fetchHomePageSections =
           }
           return {
             id: blog.id,
-            title: blog.attributes.title,
-            slug: blog.attributes.slug,
-            description: blog.attributes.description,
-            lifestyle: blog.attributes.lifestyle,
+            title: blog.title,
+            slug: blog.slug,
+            description: blog.description || "",
+            lifestyle: blog.lifestyle ?? false,
             countryName,
             imageUrl:
-              blog.attributes.images?.data?.[0]?.attributes?.formats?.small
-                ?.url ||
-              blog.attributes.images?.data?.[0]?.attributes?.formats?.medium
-                ?.url ||
-              blog.attributes.images?.data?.[0]?.attributes?.url ||
+              blog.images?.[0]?.formats?.small?.url ||
+              blog.images?.[0]?.formats?.medium?.url ||
+              blog.images?.[0]?.url ||
               "/placeholder-image.jpg",
             tags,
           };

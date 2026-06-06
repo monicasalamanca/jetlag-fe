@@ -25,13 +25,13 @@ const PreviewSamplePages = forwardRef<HTMLElement, PreviewSamplePagesProps>(
                 <div key={page.id} className={s.imageWrapper}>
                   <Image
                     className={s.image}
-                    src={page.attributes.url}
+                    src={page.url}
                     alt={
-                      page.attributes.alternativeText ||
+                      page.alternativeText ||
                       `Guide sample page ${index + 1}`
                     }
-                    width={page.attributes.width}
-                    height={page.attributes.height}
+                    width={page.width}
+                    height={page.height}
                     priority={index < 2}
                   />
                 </div>
