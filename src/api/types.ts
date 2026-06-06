@@ -1,36 +1,4 @@
-export type BlogCountryResponse = {
-  id: number;
-  attributes: {
-    name: string;
-    tagline?: string;
-    intro?: string;
-    continent: string;
-    slug: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
-};
-
-export type BlogCountriesData = {
-  data: BlogCountryResponse[];
-};
-
-export type Tag = {
-  id: number;
-  attributes: {
-    name: string;
-    slug: string;
-    group: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
-};
-
-export type Tags = {
-  data: Tag[];
-};
+// ─── Shared utility types (unchanged) ───────────────────────────────────────
 
 export type Format = {
   ext: string;
@@ -48,56 +16,177 @@ export type Format = {
     resource_type: string;
   };
 };
+
 export type Formats = {
   large?: Format;
   small?: Format;
   medium?: Format;
   thumbnail?: Format;
 };
-export type Image = {
-  id: string;
-  attributes: {
-    name: string;
-    alternativeText: string | null;
-    caption: string | null;
-    width: number;
-    height: number;
-    formats: Formats;
-  };
-};
-export type Images = {
-  data: Image[];
+
+// ─── V5 wire types (flat — no .attributes, no { data: [...] } wrappers) ─────
+
+export type ImageV5 = {
+  id: number;
+  documentId: string;
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  url: string;
+  formats: Formats;
 };
 
-export type CountriesResponse = {
+export type TagV5 = {
   id: number;
-  attributes: {
-    name: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    tagline: string;
-    intro: string;
-    seoTitle?: string;
-    seoDescription?: string;
-    continent: string;
-    slug: string;
-    quickfacts: QuickFact[];
-    deepInfo: DeepInfo[];
-    heroImage?: {
-      data: {
-        id: number;
-        attributes: {
-          url: string;
-          alternativeText: string | null;
-          width: number;
-          height: number;
-          formats: Formats;
-        };
-      } | null;
-    };
-  };
+  documentId: string;
+  name: string;
+  slug: string;
+  group: string;
 };
+
+export type CountryRefV5 = {
+  id: number;
+  documentId: string;
+  name: string;
+  slug: string;
+};
+
+export type BlogPostResponseV5 = {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  description: string;
+  content: string;
+  views: number;
+  lifestyle?: boolean;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  images?: ImageV5[];
+  country?: CountryRefV5 | null;
+  tags?: TagV5[];
+};
+
+export type DeepInfoV5 = {
+  id: number;
+  name: string;
+  icon: string;
+  description: string;
+  keywords: string;
+  image: ImageV5 | null;
+};
+
+export type CountryResponseV5 = {
+  id: number;
+  documentId: string;
+  name: string;
+  tagline: string;
+  intro: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  continent: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  quickFacts: QuickFact[];
+  deepInfo: DeepInfoV5[];
+  heroImage?: ImageV5 | null;
+};
+
+export type CountrySlimV5 = {
+  id: number;
+  documentId: string;
+  slug: string;
+  updatedAt: string;
+};
+
+export type BlogSlugResponseV5 = {
+  id: number;
+  documentId: string;
+  slug: string;
+  updatedAt: string;
+  country?: { id: number; documentId: string; slug: string } | null;
+};
+
+export type GuideResponseV5 = {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  description: string;
+  type: string;
+  pageCount: number;
+  priceCents: number | null;
+  originalPriceCents: number | null;
+  currency: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  coverImage?: ImageV5 | null;
+};
+
+export type GuideBundleOrSingleV5 = {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  description: string;
+  type: string;
+  pageCount: number;
+  priceCents: number | null;
+  originalPriceCents: number | null;
+  currency: string;
+  isFeatured: boolean;
+  isLifestyle: boolean;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
+
+export type DetailedGuideResponseV5 = {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  description: string;
+  type: "single" | "bundle";
+  pageCount: number;
+  priceCents: number | null;
+  originalPriceCents: number | null;
+  currency: string;
+  isFeatured: boolean;
+  isLifestyle: boolean;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  coverImage?: ImageV5 | null;
+  format: GuideFormat[];
+  whoFor: GuideWhoFor[];
+  whoNotFor: GuideWhoNotFor[];
+  whatsInside: GuideWhatsInside[];
+  samplePages?: ImageV5[];
+  includedInBundles?: GuideBundleOrSingleV5[];
+  bundleIncludes?: GuideBundleOrSingleV5[];
+};
+
+export type HomePageResponseV5 = {
+  id: number;
+  documentId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  lifestyleSpotlight?: BlogPostResponseV5[];
+  trendingThisWeek?: BlogPostResponseV5[];
+  theJetLaggersPicks?: BlogPostResponseV5[];
+};
+
+// ─── Domain types (consumed by components — unchanged) ───────────────────────
 
 export type Country = {
   id: number;
@@ -116,14 +205,6 @@ export type Country = {
     width?: number;
     height?: number;
   } | null;
-};
-
-export type CountryName = {
-  id: number;
-  attributes: {
-    slug: string;
-    updatedAt: string;
-  };
 };
 
 export type CountryNameFormatted = {
@@ -148,34 +229,6 @@ export type DeepInfo = {
   image: string;
 };
 
-export type BlogPostResponse = {
-  id: number;
-  attributes: {
-    title: string;
-    slug: string;
-    description: string;
-    content: string;
-    views: number;
-    lifestyle?: boolean;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    tags?: Tags;
-    seoTitle?: string;
-    seoDescription?: string;
-    images?: Images;
-    country?: {
-      data?: {
-        id: number;
-        attributes: {
-          name: string;
-          slug: string;
-        };
-      };
-    };
-  };
-};
-
 export type BlogPost = {
   id: number;
   title: string;
@@ -185,9 +238,9 @@ export type BlogPost = {
   lifestyle?: boolean;
   publishedAt: string;
   imageUrl: string;
-  country?: string; // Single country from oneToMany relationship
+  country?: string;
   slug: string;
-  tags: string[]; // Processed tag names from the relational data
+  tags: string[];
 };
 
 export type Post = {
@@ -223,35 +276,11 @@ export type ContactUsInfo = {
   message: string;
 };
 
-export type SlugsResponseWithCountry = {
-  id: number;
-  attributes: {
-    slug: string;
-    updatedAt: string;
-    country: {
-      data: {
-        id: number;
-        attributes: {
-          slug: string;
-        };
-      };
-    };
-  };
-};
-
 export type SlugWithCountry = {
   id: number;
   slug: string;
   updatedAt: string;
   countrySlug: string;
-};
-
-export type SlugsResponseForLifestyle = {
-  id: number;
-  attributes: {
-    slug: string;
-    updatedAt: string;
-  };
 };
 
 export type SlugForLifestyle = {
@@ -260,49 +289,7 @@ export type SlugForLifestyle = {
   updatedAt: string;
 };
 
-// Guide types
-export type GuideResponse = {
-  id: number;
-  attributes: {
-    title: string;
-    slug: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    type: string;
-    pageCount: number;
-    priceCents: number | null;
-    originalPriceCents: number | null;
-    currency: string;
-    coverImage: {
-      data: {
-        id: number;
-        attributes: {
-          name: string;
-          alternativeText: string | null;
-          caption: string | null;
-          width: number;
-          height: number;
-          formats: Formats;
-          hash: string;
-          ext: string;
-          mime: string;
-          size: number;
-          url: string;
-          previewUrl: string | null;
-          provider: string;
-          provider_metadata: {
-            public_id: string;
-            resource_type: string;
-          };
-          createdAt: string;
-          updatedAt: string;
-        };
-      };
-    };
-  };
-};
+// ─── Guide domain types ───────────────────────────────────────────────────────
 
 export type Guide = {
   id: number;
@@ -326,7 +313,6 @@ export type Guide = {
   };
 };
 
-// Detailed Guide types for specific guide pages
 export type GuideFormat = {
   id: number;
   type: string;
@@ -367,54 +353,38 @@ export type GuideSamplePageFormat = {
   };
 };
 
-export type GuideSamplePageAttributes = {
+export type GuideSamplePage = {
+  id: number;
+  documentId: string;
   name: string;
   alternativeText: string | null;
   caption: string | null;
   width: number;
   height: number;
+  url: string;
   formats: {
     small?: GuideSamplePageFormat;
     thumbnail?: GuideSamplePageFormat;
     [key: string]: GuideSamplePageFormat | undefined;
   };
-  hash: string;
-  ext: string;
-  mime: string;
-  size: number;
-  url: string;
-  previewUrl: string | null;
-  provider: string;
-  provider_metadata: {
-    public_id: string;
-    resource_type: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type GuideSamplePage = {
-  id: number;
-  attributes: GuideSamplePageAttributes;
 };
 
 export type GuideBundleOrSingle = {
   id: number;
-  attributes: {
-    title: string;
-    slug: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    type: string;
-    pageCount: number;
-    priceCents: number | null;
-    originalPriceCents: number | null;
-    currency: string;
-    isFeatured: boolean;
-    isLifestyle: boolean;
-  };
+  documentId: string;
+  title: string;
+  slug: string;
+  description: string;
+  type: string;
+  pageCount: number;
+  priceCents: number | null;
+  originalPriceCents: number | null;
+  currency: string;
+  isFeatured: boolean;
+  isLifestyle: boolean;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 };
 
 export type DetailedGuide = {
@@ -444,153 +414,11 @@ export type DetailedGuide = {
   whoNotFor: GuideWhoNotFor[];
   whatsInside: GuideWhatsInside[];
   samplePages: GuideSamplePage[];
-  // Only for "single" type
   includedInBundles?: GuideBundleOrSingle[];
-  // Only for "bundle" type
   bundleIncludes?: GuideBundleOrSingle[];
 };
 
-export type DetailedGuideResponse = {
-  id: number;
-  attributes: {
-    title: string;
-    slug: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    type: "single" | "bundle";
-    pageCount: number;
-    priceCents: number | null;
-    originalPriceCents: number | null;
-    currency: string;
-    isFeatured: boolean;
-    isLifestyle: boolean;
-    coverImage: {
-      data: {
-        id: number;
-        attributes: {
-          name: string;
-          alternativeText: string | null;
-          caption: string | null;
-          width: number;
-          height: number;
-          formats: Formats;
-          hash: string;
-          ext: string;
-          mime: string;
-          size: number;
-          url: string;
-          previewUrl: string | null;
-          provider: string;
-          provider_metadata: {
-            public_id: string;
-            resource_type: string;
-          };
-          createdAt: string;
-          updatedAt: string;
-        };
-      };
-    };
-    format: GuideFormat[];
-    whoFor: GuideWhoFor[];
-    whoNotFor: GuideWhoNotFor[];
-    whatsInside: GuideWhatsInside[];
-    samplePages: {
-      data: GuideSamplePage[];
-    };
-    includedInBundles?: {
-      data: GuideBundleOrSingle[];
-    };
-    bundleIncludes?: {
-      data: GuideBundleOrSingle[];
-    };
-  };
-};
-
-// Lifestyle Spotlight types for homepage
-export type LifestyleSpotlightBlogResponse = {
-  id: number;
-  attributes: {
-    title: string;
-    slug: string;
-    lifestyle: boolean;
-    description?: string;
-    country: {
-      data: {
-        id: number;
-        attributes: {
-          name: string;
-        };
-      } | null;
-    };
-    tags: {
-      data: {
-        id: number;
-        attributes: {
-          name: string;
-        };
-      }[];
-    };
-    images?: {
-      data?: Array<{
-        id: number;
-        attributes: {
-          url: string;
-          alternativeText?: string | null;
-          width?: number;
-          height?: number;
-          formats?: {
-            small?: Format;
-            medium?: Format;
-            large?: Format;
-            thumbnail?: Format;
-          };
-        };
-      }>;
-    };
-  };
-};
-
-export type TrendingThisWeekBlogResponse = {
-  id: number;
-  attributes: {
-    title: string;
-    slug: string;
-    lifestyle: boolean;
-    country: {
-      data: {
-        id: number;
-        attributes: {
-          name: string;
-        };
-      } | null;
-    };
-    tags?: {
-      data: Array<{
-        id: number;
-        attributes: { name: string };
-      }>;
-    };
-    images?: {
-      data?: Array<{
-        id: number;
-        attributes: {
-          url: string;
-          alternativeText?: string | null;
-          width?: number;
-          height?: number;
-          formats?: {
-            small?: Format;
-            medium?: Format;
-            large?: Format;
-            thumbnail?: Format;
-          };
-        };
-      }>;
-    };
-  };
-};
+// ─── Homepage card types (unchanged) ─────────────────────────────────────────
 
 export type TrendingTag = {
   label: string;
@@ -608,47 +436,6 @@ export type TrendingThisWeekCard = {
   readTime?: number;
 };
 
-export type TheJetLaggersPickBlogResponse = {
-  id: number;
-  attributes: {
-    title: string;
-    slug: string;
-    description: string;
-    lifestyle: boolean;
-    country: {
-      data: {
-        id: number;
-        attributes: {
-          name: string;
-        };
-      } | null;
-    };
-    tags?: {
-      data: Array<{
-        id: number;
-        attributes: { name: string };
-      }>;
-    };
-    images?: {
-      data?: Array<{
-        id: number;
-        attributes: {
-          url: string;
-          alternativeText?: string | null;
-          width?: number;
-          height?: number;
-          formats?: {
-            small?: Format;
-            medium?: Format;
-            large?: Format;
-            thumbnail?: Format;
-          };
-        };
-      }>;
-    };
-  };
-};
-
 export type TheJetLaggersPickCard = {
   id: number;
   title: string;
@@ -659,26 +446,6 @@ export type TheJetLaggersPickCard = {
   imageUrl: string;
   tags: TrendingTag[];
   readTime?: number;
-};
-
-export type LifestyleSpotlightResponse = {
-  data: {
-    id: number;
-    attributes: {
-      createdAt: string;
-      updatedAt: string;
-      publishedAt: string;
-      lifestyleSpotlight: {
-        data: LifestyleSpotlightBlogResponse[];
-      };
-      trendingThisWeek: {
-        data: TrendingThisWeekBlogResponse[];
-      };
-      theJetLaggersPicks: {
-        data: TheJetLaggersPickBlogResponse[];
-      };
-    };
-  }[];
 };
 
 export type LifestyleSpotlightCard = {

@@ -31,7 +31,7 @@ const PromoteBundlesSection = forwardRef<HTMLElement, PreviewSamplePagesProps>(
 
     // Extract bundle slugs for fetching city guides (memoized to prevent infinite loops)
     const bundleSlugs = useMemo(
-      () => bundles.map((bundle) => bundle.attributes.slug),
+      () => bundles.map((bundle) => bundle.slug),
       [bundles],
     );
 
@@ -45,8 +45,9 @@ const PromoteBundlesSection = forwardRef<HTMLElement, PreviewSamplePagesProps>(
 
     // Filter out bundles that failed to load city guides
     const bundlesWithCityGuides = bundles.filter((bundle) => {
-      const slug = bundle.attributes.slug;
-      return cityGuidesMap[slug] && cityGuidesMap[slug].length > 0;
+      return (
+        cityGuidesMap[bundle.slug] && cityGuidesMap[bundle.slug].length > 0
+      );
     });
 
     // If all bundles failed to load or are still loading and no cached data, show nothing
@@ -70,8 +71,14 @@ const PromoteBundlesSection = forwardRef<HTMLElement, PreviewSamplePagesProps>(
           <div className={s.bundlesWrapper}>
             <div className={s.bundleScroll}>
               {bundlesWithCityGuides.map((bundle) => {
-                const { id, attributes } = bundle;
-                const slug = attributes.slug;
+                const {
+                  id,
+                  slug,
+                  title,
+                  description,
+                  originalPriceCents,
+                  pageCount,
+                } = bundle;
                 const cityGuides = cityGuidesMap[slug] || [];
 
                 return (
@@ -80,8 +87,8 @@ const PromoteBundlesSection = forwardRef<HTMLElement, PreviewSamplePagesProps>(
                       <FontAwesomeIcon icon={faLayerGroup} className={s.icon} />
                       Bundle
                     </div>
-                    <h3>{attributes.title}</h3>
-                    <p>{attributes.description}</p>
+                    <h3>{title}</h3>
+                    <p>{description}</p>
                     <div className={s.includes}>
                       <h4>includes:</h4>
                       <div className={s.includesPills}>
@@ -98,11 +105,9 @@ const PromoteBundlesSection = forwardRef<HTMLElement, PreviewSamplePagesProps>(
                     </div>
                     <div className={s.pricing}>
                       <div className={s.originalPrice}>
-                        ${attributes.originalPriceCents}
+                        ${originalPriceCents}
                       </div>
-                      <div className={s.pages}>
-                        {attributes.pageCount} pages total
-                      </div>
+                      <div className={s.pages}>{pageCount} pages total</div>
                     </div>
                     <button className={s.ctaButton}>
                       Get the Bundle

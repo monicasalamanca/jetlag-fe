@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BlogPostResponse } from "@/api/types";
+import { BlogPostResponseV5 } from "@/api/types";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
   const baseUrl = strapiUrl || "https://jetlag-be-production.up.railway.app";
 
   // Build Strapi filter for country - filter by the country relation's slug
-  const url = `${baseUrl}/api/blogs?filters[country][slug][$eq]=${countrySlug}&sort=publishedAt:desc&populate[images]=*&populate[country]=*&populate[tags]=*&pagination[pageSize]=100`;
+  const url = `${baseUrl}/api/blogs?filters[country][slug][$eq]=${countrySlug}&sort=publishedAt:desc&populate[images][fields][0]=url&populate[images][fields][1]=formats&populate[images][fields][2]=alternativeText&populate[images][fields][3]=width&populate[images][fields][4]=height&populate[country][fields][0]=name&populate[country][fields][1]=slug&populate[tags][fields][0]=name&pagination[pageSize]=100`;
 
   try {
     // Server-side can access all environment variables
@@ -56,21 +56,20 @@ export async function GET(request: NextRequest) {
     const blogData = await res.json();
 
     // Transform the data - Strapi already filtered by country, so no need to filter again
-    const blogs = blogData.data.map((item: BlogPostResponse) => ({
+    const blogs = blogData.data.map((item: BlogPostResponseV5) => ({
       id: item.id,
-      title: item.attributes.title,
-      description: item.attributes.description,
-      content: item.attributes.content,
-      publishedAt: item.attributes.publishedAt,
-      slug: item.attributes.slug,
+      title: item.title,
+      description: item.description,
+      content: item.content,
+      publishedAt: item.publishedAt,
+      slug: item.slug,
       imageUrl:
-        item.attributes.images?.data?.[0]?.attributes?.formats?.thumbnail
-          ?.url ||
-        item.attributes.images?.data?.[0]?.attributes?.formats?.medium?.url ||
-        item.attributes.images?.data?.[0]?.attributes?.formats?.small?.url,
-      country: item.attributes.country?.data?.attributes?.name,
-      tags: item.attributes.tags?.data?.map((tag) => tag.attributes.name) || [],
-      lifestyle: item.attributes.lifestyle || false,
+        item.images?.[0]?.formats?.thumbnail?.url ||
+        item.images?.[0]?.formats?.medium?.url ||
+        item.images?.[0]?.formats?.small?.url,
+      country: item.country?.name,
+      tags: item.tags?.map((tag) => tag.name) || [],
+      lifestyle: item.lifestyle || false,
     }));
 
     return NextResponse.json(blogs);

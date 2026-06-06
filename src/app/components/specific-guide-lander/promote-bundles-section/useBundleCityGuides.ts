@@ -69,7 +69,7 @@ export const useBundleCityGuides = (bundleSlugs: string[]) => {
             const cityGuides: CityGuide[] = bundleDetails.bundleIncludes.map(
               (include) => ({
                 id: include.id,
-                name: include.attributes.title,
+                name: include.title,
               }),
             );
 
