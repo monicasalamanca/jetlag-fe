@@ -45,7 +45,9 @@ const PromoteBundlesSection = forwardRef<HTMLElement, PreviewSamplePagesProps>(
 
     // Filter out bundles that failed to load city guides
     const bundlesWithCityGuides = bundles.filter((bundle) => {
-      return cityGuidesMap[bundle.slug] && cityGuidesMap[bundle.slug].length > 0;
+      return (
+        cityGuidesMap[bundle.slug] && cityGuidesMap[bundle.slug].length > 0
+      );
     });
 
     // If all bundles failed to load or are still loading and no cached data, show nothing
@@ -69,7 +71,14 @@ const PromoteBundlesSection = forwardRef<HTMLElement, PreviewSamplePagesProps>(
           <div className={s.bundlesWrapper}>
             <div className={s.bundleScroll}>
               {bundlesWithCityGuides.map((bundle) => {
-                const { id, slug, title, description, originalPriceCents, pageCount } = bundle;
+                const {
+                  id,
+                  slug,
+                  title,
+                  description,
+                  originalPriceCents,
+                  pageCount,
+                } = bundle;
                 const cityGuides = cityGuidesMap[slug] || [];
 
                 return (
@@ -98,9 +107,7 @@ const PromoteBundlesSection = forwardRef<HTMLElement, PreviewSamplePagesProps>(
                       <div className={s.originalPrice}>
                         ${originalPriceCents}
                       </div>
-                      <div className={s.pages}>
-                        {pageCount} pages total
-                      </div>
+                      <div className={s.pages}>{pageCount} pages total</div>
                     </div>
                     <button className={s.ctaButton}>
                       Get the Bundle

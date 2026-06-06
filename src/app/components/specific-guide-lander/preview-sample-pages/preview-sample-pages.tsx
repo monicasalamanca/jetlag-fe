@@ -27,8 +27,7 @@ const PreviewSamplePages = forwardRef<HTMLElement, PreviewSamplePagesProps>(
                     className={s.image}
                     src={page.url}
                     alt={
-                      page.alternativeText ||
-                      `Guide sample page ${index + 1}`
+                      page.alternativeText || `Guide sample page ${index + 1}`
                     }
                     width={page.width}
                     height={page.height}

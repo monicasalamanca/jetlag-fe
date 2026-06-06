@@ -86,8 +86,7 @@ export const fetchCountry = async (
       })),
       heroImage: item.heroImage
         ? {
-            url:
-              item.heroImage.formats?.large?.url || item.heroImage.url,
+            url: item.heroImage.formats?.large?.url || item.heroImage.url,
             alternativeText: item.heroImage.alternativeText,
             width: item.heroImage.width,
             height: item.heroImage.height,
@@ -392,11 +391,13 @@ export const fetchCountriesWithContinents = async (): Promise<
       return null;
     }
     const data = await res.json();
-    return data.data.map((item: { id: number; name: string; continent: string }) => ({
-      id: item.id,
-      name: item.name,
-      continent: item.continent,
-    }));
+    return data.data.map(
+      (item: { id: number; name: string; continent: string }) => ({
+        id: item.id,
+        name: item.name,
+        continent: item.continent,
+      }),
+    );
   } catch (error) {
     console.error("Error fetching countries: ", error);
     return null;
