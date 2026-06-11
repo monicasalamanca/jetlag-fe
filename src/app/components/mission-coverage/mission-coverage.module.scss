@@ -1,0 +1,274 @@
+@use "@/styles/brand-tokens" as *;
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section * {
+    animation: none !important;
+  }
+}
+
+// ---- Section shell ----
+
+.section {
+  background-color: $brand-neutral-200;
+  padding: 96px $brand-space-5xl;
+}
+
+// ---- Inner container ----
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+// ---- Upper Block ----
+
+.upperBlock {
+  display: flex;
+  gap: 96px;
+  align-items: flex-start;
+  margin-bottom: 64px;
+}
+
+// ---- Mission Left ----
+
+.missionLeft {
+  flex-shrink: 0;
+  width: 540px;
+  animation: fadeUp $brand-duration-journey cubic-bezier(0.16, 1, 0.3, 1) 0.1s
+    both;
+}
+
+.eyebrow {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-label-wide;
+  color: $brand-blue;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background-color: $brand-blue;
+    flex-shrink: 0;
+  }
+}
+
+.missionHeading {
+  font-family: $brand-font-display;
+  font-size: $brand-font-size-heading-1;
+  font-weight: $brand-font-weight-extrabold;
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-heading;
+  color: $brand-neutral-800;
+  margin: 0 0 24px;
+}
+
+.accent {
+  color: $brand-blue;
+}
+
+.paragraph {
+  font-family: $brand-font-body;
+  font-size: 17px;
+  line-height: $brand-line-height-body;
+  color: $brand-neutral-600;
+  margin: 24px 0 0;
+
+  strong {
+    color: $brand-neutral-800;
+    font-weight: $brand-font-weight-semibold;
+  }
+}
+
+// ---- Disclaimer Card ----
+
+.disclaimerCard {
+  flex: 1;
+  margin-top: 72px;
+  background: $brand-neutral-100;
+  border: 1px solid $brand-neutral-300;
+  border-radius: $brand-radius-lg;
+  padding: 32px;
+  animation: fadeUp $brand-duration-glide cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+
+.disclaimerHeading {
+  font-family: $brand-font-display;
+  font-size: 18px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-heading;
+  color: $brand-neutral-800;
+  margin: 0 0 12px;
+}
+
+.disclaimerBody {
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body-sm;
+  line-height: $brand-line-height-body;
+  color: $brand-neutral-600;
+  margin: 0;
+
+  strong {
+    color: $brand-neutral-800;
+    font-weight: $brand-font-weight-semibold;
+  }
+}
+
+// ---- Coverage Block ----
+
+.coverageEyebrow {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-label-wide;
+  color: $brand-blue;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 24px;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background-color: $brand-blue;
+    flex-shrink: 0;
+  }
+}
+
+.coverageGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.coverageCard {
+  flex: 1;
+  min-width: 200px;
+  background: $brand-neutral-100;
+  border: 1px solid $brand-neutral-300;
+  border-radius: $brand-radius-md;
+  padding: 24px;
+  transition:
+    box-shadow $brand-duration-drift ease-in-out,
+    border-color $brand-duration-drift ease-in-out;
+  animation: fadeUp $brand-duration-glide cubic-bezier(0.4, 0, 0.2, 1) both;
+
+  &:nth-child(1) {
+    animation-delay: 0.3s;
+  }
+  &:nth-child(2) {
+    animation-delay: 0.37s;
+  }
+  &:nth-child(3) {
+    animation-delay: 0.44s;
+  }
+  &:nth-child(4) {
+    animation-delay: 0.51s;
+  }
+  &:nth-child(5) {
+    animation-delay: 0.58s;
+  }
+  &:nth-child(6) {
+    animation-delay: 0.65s;
+  }
+
+  &:hover {
+    box-shadow: $brand-shadow-card-light;
+    border-color: rgba(17, 156, 232, 0.3);
+  }
+}
+
+.iconContainer {
+  width: 36px;
+  height: 36px;
+  background: rgba(17, 156, 232, 0.1);
+  border-radius: $brand-radius-xs;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $brand-blue;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-family: $brand-font-display;
+  font-size: 16px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-heading;
+  color: $brand-neutral-800;
+  margin: 0 0 8px;
+}
+
+.cardDesc {
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body-sm;
+  line-height: 1.6;
+  color: $brand-neutral-500;
+  margin: 0;
+}
+
+// ---- Responsive: tablet / small desktop ----
+
+@media only screen and (max-width: $brand-breakpoint-desktop) {
+  .section {
+    padding: 64px $brand-space-xl;
+  }
+
+  .upperBlock {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .missionLeft {
+    width: 100%;
+  }
+
+  .disclaimerCard {
+    margin-top: 0;
+  }
+}
+
+// ---- Responsive: tablet (2-col coverage grid) ----
+
+@media only screen and (max-width: $brand-breakpoint-tablet) {
+  .coverageCard {
+    min-width: calc(50% - 8px);
+  }
+}
+
+// ---- Responsive: mobile ----
+
+@media only screen and (max-width: $brand-breakpoint-mobile) {
+  .section {
+    padding: 64px 16px;
+  }
+
+  .coverageCard {
+    min-width: 100%;
+  }
+}

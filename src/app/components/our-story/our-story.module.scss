@@ -1,0 +1,253 @@
+@use "@/styles/brand-tokens" as *;
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section * {
+    animation: none !important;
+  }
+}
+
+// ---- Section shell ----
+
+.section {
+  background-color: $brand-neutral-200;
+  padding: 96px $brand-space-5xl;
+}
+
+// ---- Inner layout ----
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  gap: 96px;
+  align-items: flex-start;
+}
+
+// ---- Left column ----
+
+.leftCol {
+  flex-shrink: 0;
+  width: 400px;
+}
+
+.eyebrow {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-label-wide;
+  color: $brand-blue;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 1px;
+    background-color: $brand-blue;
+    flex-shrink: 0;
+  }
+}
+
+.heading {
+  font-family: $brand-font-display;
+  font-weight: $brand-font-weight-extrabold;
+  font-size: 56px;
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-heading;
+  color: $brand-neutral-800;
+  margin-bottom: 32px;
+}
+
+.accent {
+  color: $brand-blue;
+}
+
+// ---- Stacked image component ----
+
+.imageStack {
+  position: relative;
+  width: 380px;
+  height: 460px;
+  margin-top: 32px;
+}
+
+.imageBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 360px;
+  border-radius: $brand-radius-xl;
+  overflow: hidden;
+  background: linear-gradient(135deg, $brand-navy, $brand-dark);
+}
+
+.imageFg {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 220px;
+  height: 280px;
+  border-radius: $brand-radius-xl;
+  overflow: hidden;
+  border: 3px solid $brand-neutral-100;
+  background: linear-gradient(135deg, #2a4a6b, $brand-dark);
+  z-index: 10;
+}
+
+// ---- Right column ----
+
+.rightCol {
+  flex: 1;
+  padding-top: 64px;
+  animation: fadeUp 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.para {
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body-lg;
+  line-height: 1.75;
+  color: $brand-neutral-600;
+  margin-bottom: 20px;
+
+  strong {
+    color: $brand-neutral-800;
+    font-weight: $brand-font-weight-semibold;
+  }
+
+  em {
+    font-style: italic;
+    color: $brand-neutral-700;
+  }
+}
+
+// ---- Origin callout block ----
+
+.callout {
+  background-color: $brand-neutral-100;
+  border-top: 1px solid $brand-neutral-300;
+  border-right: 1px solid $brand-neutral-300;
+  border-bottom: 1px solid $brand-neutral-300;
+  border-left: 3px solid $brand-blue;
+  border-radius: 0 $brand-radius-md $brand-radius-md 0;
+  padding: 20px 32px;
+  margin: 32px 0;
+  animation: fadeUp 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.07s both;
+
+  p {
+    font-family: $brand-font-body;
+    font-size: $brand-font-size-body;
+    line-height: 1.7;
+    color: $brand-neutral-600;
+    margin: 0;
+  }
+
+  strong {
+    color: $brand-neutral-800;
+    font-weight: $brand-font-weight-semibold;
+  }
+}
+
+// ---- Cities strip ----
+
+.cities {
+  margin-bottom: 0;
+}
+
+.citiesLabel {
+  display: block;
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: $brand-neutral-500;
+  margin-bottom: 12px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $brand-blue;
+  background-color: rgba(17, 156, 232, 0.08);
+  border: 1px solid rgba(17, 156, 232, 0.2);
+  border-radius: $brand-radius-full;
+  padding: 4px 12px;
+}
+
+.tagGold {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #c07b00;
+  background-color: rgba(245, 166, 35, 0.1);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: $brand-radius-full;
+  padding: 4px 12px;
+}
+
+// ---- Responsive ----
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 64px 24px;
+  }
+
+  .inner {
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .leftCol {
+    width: 100%;
+  }
+
+  .imageStack {
+    width: 280px;
+    height: 340px;
+  }
+
+  .imageBg {
+    width: 220px;
+    height: 280px;
+  }
+
+  .imageFg {
+    width: 175px;
+    height: 220px;
+  }
+
+  .rightCol {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .heading {
+    font-size: 44px;
+  }
+}

@@ -1,0 +1,392 @@
+@use "@/styles/brand-tokens" as *;
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section * {
+    animation: none !important;
+  }
+}
+
+// ---- Section shell ----
+
+.section {
+  background-color: $brand-neutral-100;
+  border-top: 1px solid $brand-neutral-300;
+  border-bottom: 1px solid $brand-neutral-300;
+  padding: 96px $brand-space-5xl;
+}
+
+// ---- Section header ----
+
+.sectionHeader {
+  max-width: 1280px;
+  margin: 0 auto 64px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.headerLeft {
+  max-width: 480px;
+}
+
+.eyebrow {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-label-wide;
+  color: $brand-blue;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 1px;
+    background-color: $brand-blue;
+    flex-shrink: 0;
+  }
+}
+
+.heading {
+  font-family: $brand-font-display;
+  font-size: 56px;
+  font-weight: $brand-font-weight-extrabold;
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-heading;
+  color: $brand-neutral-800;
+  margin: 0;
+}
+
+.accent {
+  color: $brand-blue;
+}
+
+.headerIntro {
+  font-family: $brand-font-body;
+  font-size: 15px;
+  line-height: $brand-line-height-body;
+  color: $brand-neutral-600;
+  max-width: 380px;
+  padding-bottom: 8px;
+  margin: 0;
+}
+
+// ---- Cards grid ----
+
+.cardsGrid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  gap: 32px;
+}
+
+// ---- Team card ----
+
+.teamCard {
+  flex: 1;
+  background-color: $brand-neutral-200;
+  border: 1px solid $brand-neutral-300;
+  border-radius: $brand-radius-xl;
+  overflow: hidden;
+  transition:
+    transform $brand-duration-glide cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow $brand-duration-glide cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeUp $brand-duration-glide cubic-bezier(0.4, 0, 0.2, 1) both;
+
+  &:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  &:nth-child(2) {
+    animation-delay: 0.17s;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $brand-shadow-modal-light;
+  }
+}
+
+.cardImage {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  background: linear-gradient(160deg, $brand-navy, $brand-dark);
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 120px;
+  background: linear-gradient(0deg, rgba(13, 21, 32, 0.7), transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.cardBody {
+  padding: 32px;
+}
+
+.cardRole {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  font-weight: $brand-font-weight-regular;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-label-wide;
+  color: $brand-blue;
+  margin: 0 0 8px;
+}
+
+.cardName {
+  font-family: $brand-font-display;
+  font-size: 32px;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-heading;
+  color: $brand-neutral-800;
+  line-height: 1;
+  margin: 0 0 16px;
+}
+
+.nameAccent {
+  color: $brand-blue;
+}
+
+.cardBio {
+  font-family: $brand-font-body;
+  font-size: 15px;
+  line-height: $brand-line-height-body;
+  color: $brand-neutral-600;
+  margin: 0 0 24px;
+}
+
+.cardStats {
+  display: flex;
+  gap: 24px;
+  padding-top: 24px;
+  border-top: 1px solid $brand-neutral-300;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.statNumber {
+  font-family: $brand-font-display;
+  font-size: 24px;
+  font-weight: $brand-font-weight-extrabold;
+  color: $brand-neutral-800;
+  line-height: 1;
+}
+
+.statSuffix {
+  color: $brand-blue;
+}
+
+.statLabel {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-tag;
+  color: $brand-neutral-500;
+  margin-top: 2px;
+}
+
+// ---- Shared column ----
+
+.sharedCol {
+  flex-shrink: 0;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// ---- Manifesto banner ----
+
+.manifestoBanner {
+  background-color: $brand-dark;
+  border-radius: $brand-radius-xl;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  animation: fadeUp $brand-duration-glide cubic-bezier(0.4, 0, 0.2, 1) 0.24s
+    both;
+}
+
+.manifestoGlow {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(17, 156, 232, 0.2), transparent);
+  pointer-events: none;
+}
+
+.manifestoTitle {
+  font-family: $brand-font-display;
+  font-size: 22px;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  color: #f0f4fa;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.manifestoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.manifestoItem {
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body-sm;
+  color: #8da4be;
+  line-height: 1.4;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.manifestoArrow {
+  color: $brand-blue;
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+// ---- Social card ----
+
+.socialCard {
+  background-color: $brand-neutral-200;
+  border: 1px solid $brand-neutral-300;
+  border-radius: $brand-radius-xl;
+  padding: 20px;
+  animation: fadeUp $brand-duration-glide cubic-bezier(0.4, 0, 0.2, 1) 0.31s
+    both;
+}
+
+.socialLabel {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: $brand-neutral-500;
+  margin: 0 0 12px;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 12px;
+}
+
+.socialLink {
+  width: 40px;
+  height: 40px;
+  border: 1px solid $brand-neutral-300;
+  border-radius: $brand-radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  color: $brand-neutral-600;
+  text-decoration: none;
+  transition:
+    background-color $brand-duration-drift ease-in-out,
+    border-color $brand-duration-drift ease-in-out,
+    color $brand-duration-drift ease-in-out;
+
+  &:hover {
+    background-color: $brand-blue;
+    border-color: $brand-blue;
+    color: $brand-neutral-100;
+  }
+}
+
+// ---- Responsive: tablet / small desktop ----
+
+@media (max-width: $brand-breakpoint-desktop) {
+  .section {
+    padding: 64px 24px;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+
+  .headerLeft,
+  .headerIntro {
+    max-width: 100%;
+  }
+
+  .cardsGrid {
+    flex-direction: column;
+  }
+
+  .sharedCol {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .manifestoBanner {
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .socialCard {
+    width: 100%;
+  }
+}
+
+// ---- Responsive: mobile ----
+
+@media (max-width: $brand-breakpoint-mobile) {
+  .heading {
+    font-size: 44px;
+  }
+
+  .sharedCol {
+    flex-direction: column;
+  }
+
+  .cardStats {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}

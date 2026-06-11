@@ -1,91 +1,253 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
+
+// ── Animations ─────────────────────────────────────────────────────────────
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section * {
+    animation: none !important;
+  }
+}
+
+// ── Section shell ──────────────────────────────────────────────────────────
 
 .section {
-  background-color: $color-white;
-  color: $color-neutral-900;
+  position: relative;
+  overflow: hidden;
+  background-color: $brand-dark;
+  padding: 96px $brand-space-5xl;
 }
 
-.container {
-  padding: 48px 16px 32px;
+.glowDecoration {
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(
+    circle,
+    rgba(17, 156, 232, 0.08),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+// ── Upper block ────────────────────────────────────────────────────────────
+
+.upper {
+  position: relative;
+  z-index: 10;
+  max-width: 1280px;
+  margin: 0 auto 64px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  @media only screen and (min-width: 768px) {
-    width: 768px;
-    margin: 0 auto;
-  }
+  gap: 96px;
+  align-items: flex-end;
+  animation: fadeUp 350ms cubic-bezier(0.4, 0, 0.2, 1) 0.05s both;
 }
 
-.content {
-  max-width: 1024px;
+.headingCol {
+  flex-shrink: 0;
+  width: 440px;
+}
+
+.heading {
+  font-family: $brand-font-display;
+  font-size: $brand-font-size-display-lg; // 64px
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-heading;
+  color: #f0f4fa;
+  line-height: 0.9;
+  margin: 0;
+}
+
+.accent {
+  color: $brand-blue;
+}
+
+.introCol {
+  flex: 1;
+}
+
+.intro {
+  font-family: $brand-font-body;
+  font-size: 17px;
+  line-height: 1.75;
+  color: #8da4be;
+  margin: 0;
+}
+
+.introStrong {
+  color: #f0f4fa;
+  font-weight: $brand-font-weight-semibold;
+}
+
+// ── Pillars band ───────────────────────────────────────────────────────────
+
+.pillarsWrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 1280px;
   margin: 0 auto;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 48px;
-
-  .iconWrapper {
-    width: 60px;
-    height: 60px;
-    background-color: $color-bright-green-light;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 24px;
-
-    .lockIcon {
-      color: $color-bright-green;
-      font-size: 28px;
-    }
-  }
-}
-
-.grid {
-  display: grid;
-  gap: 32px;
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.card {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  gap: 1px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: $brand-radius-md;
+  overflow: hidden;
+}
 
-  .checkIconWrapper {
-    width: 32px;
-    height: 32px;
-    background-color: $color-bright-green-light;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 4px;
+.pillar {
+  flex: 1;
+  background-color: rgba(17, 34, 56, 0.6);
+  padding: 32px;
+  transition: background-color $brand-duration-drift ease-in-out;
+  animation: fadeUp 350ms cubic-bezier(0.4, 0, 0.2, 1) both;
 
-    .checkIcon {
-      color: $color-dark-bright-green;
-      font-size: 16px;
-    }
+  &:hover {
+    background-color: rgba(17, 156, 232, 0.06);
   }
 
-  .cardContent {
-    h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: $color-neutral-900;
+  &:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  &:nth-child(2) {
+    animation-delay: 0.17s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 0.24s;
+  }
+
+  &:nth-child(4) {
+    animation-delay: 0.31s;
+  }
+}
+
+.pillarNumber {
+  display: block;
+  font-family: $brand-font-display;
+  font-size: 56px;
+  font-weight: $brand-font-weight-extrabold;
+  line-height: 1;
+  color: rgba(17, 156, 232, 0.2);
+  letter-spacing: $brand-letter-spacing-heading-tight;
+  margin-bottom: 16px;
+}
+
+.pillarTitle {
+  font-family: $brand-font-display;
+  font-size: 20px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  color: #f0f4fa;
+  letter-spacing: $brand-letter-spacing-heading;
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+
+.pillarDescription {
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body-sm; // 14px
+  line-height: 1.7;
+  color: #6b84a0;
+  margin: 0;
+}
+
+// ── Responsive ─────────────────────────────────────────────────────────────
+
+@media (max-width: $brand-breakpoint-desktop) {
+  .section {
+    padding: 80px $brand-space-3xl;
+  }
+
+  .upper {
+    flex-direction: column;
+    gap: 32px;
+    align-items: flex-start;
+    margin-bottom: 48px;
+  }
+
+  .headingCol {
+    width: 100%;
+  }
+
+  .heading {
+    font-size: $brand-font-size-heading-1; // 52px
+  }
+}
+
+@media (max-width: $brand-breakpoint-tablet) {
+  .section {
+    padding: 64px $brand-space-xl;
+  }
+
+  .pillarsWrapper {
+    flex-wrap: wrap;
+    gap: 0;
+    background-color: transparent;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .pillar {
+    flex: none;
+    width: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background-color: rgba(17, 34, 56, 0.6);
+    border-radius: 0;
+
+    &:nth-child(1) {
+      border-radius: $brand-radius-md 0 0 0;
     }
 
-    p {
-      color: $color-neutral-500;
-      line-height: 24px;
-      font-size: 16px;
+    &:nth-child(2) {
+      border-radius: 0 $brand-radius-md 0 0;
+    }
+
+    &:nth-child(3) {
+      border-radius: 0 0 0 $brand-radius-md;
+    }
+
+    &:nth-child(4) {
+      border-radius: 0 0 $brand-radius-md 0;
+    }
+  }
+}
+
+@media (max-width: $brand-breakpoint-mobile) {
+  .section {
+    padding: 64px $brand-space-lg;
+  }
+
+  .pillar {
+    width: 100%;
+
+    &:nth-child(1) {
+      border-radius: $brand-radius-md $brand-radius-md 0 0;
+    }
+
+    &:nth-child(2) {
+      border-radius: 0;
+    }
+
+    &:nth-child(3) {
+      border-radius: 0;
+    }
+
+    &:nth-child(4) {
+      border-radius: 0 0 $brand-radius-md $brand-radius-md;
     }
   }
 }

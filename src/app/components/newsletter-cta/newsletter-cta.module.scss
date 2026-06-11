@@ -1,0 +1,322 @@
+@use "@/styles/brand-tokens" as *;
+
+// ── Animations ─────────────────────────────────────────────────────────────
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+// ── Section shell ──────────────────────────────────────────────────────────
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background-color: $brand-navy;
+  padding: 96px $brand-space-5xl;
+}
+
+// ── Background glow decoration ─────────────────────────────────────────────
+
+.glowDecoration {
+  position: absolute;
+  bottom: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(17, 156, 232, 0.15),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+// ── Inner layout ───────────────────────────────────────────────────────────
+
+.inner {
+  position: relative;
+  z-index: 10;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  gap: $brand-space-5xl;
+  align-items: center;
+}
+
+// ── Left content column ────────────────────────────────────────────────────
+
+.content {
+  flex: 1;
+  animation: fadeUp $brand-duration-glide cubic-bezier(0.4, 0, 0.2, 1) 0.05s
+    both;
+}
+
+.eyebrow {
+  font-family: $brand-font-mono;
+  font-size: $brand-font-size-caption;
+  letter-spacing: $brand-letter-spacing-label-wide;
+  text-transform: uppercase;
+  color: rgba(93, 200, 245, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background-color: rgba(93, 200, 245, 0.5);
+    flex-shrink: 0;
+  }
+}
+
+.heading {
+  font-family: $brand-font-display;
+  font-size: 56px;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-heading;
+  color: #f0f4fa;
+  line-height: 0.95;
+  margin: 0 0 24px;
+}
+
+.accent {
+  color: $brand-blue;
+}
+
+.body {
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body;
+  line-height: $brand-line-height-body;
+  color: #8da4be;
+  max-width: 540px;
+  margin: 0;
+}
+
+.ctaRow {
+  display: flex;
+  gap: $brand-space-lg;
+  margin-top: $brand-space-3xl;
+}
+
+.ghostBtn {
+  display: inline-block;
+  background: transparent;
+  color: #f0f4fa;
+  font-family: $brand-font-display;
+  font-size: 13px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-button;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: $brand-radius-md;
+  padding: 12px 24px;
+  text-decoration: none;
+  transition:
+    border-color $brand-duration-drift ease-in-out,
+    color $brand-duration-drift ease-in-out;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+  }
+}
+
+// ── Right newsletter card ──────────────────────────────────────────────────
+
+.card {
+  flex-shrink: 0;
+  width: 420px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: $brand-radius-lg;
+  padding: $brand-space-2xl;
+  animation: fadeUp $brand-duration-glide cubic-bezier(0.4, 0, 0.2, 1) 0.15s
+    both;
+}
+
+.cardTitle {
+  font-family: $brand-font-display;
+  font-size: 20px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-heading;
+  color: #f0f4fa;
+  margin: 0 0 12px;
+}
+
+.cardDescription {
+  font-family: $brand-font-body;
+  font-size: 13px;
+  line-height: $brand-line-height-body-sm;
+  color: #8da4be;
+  margin: 0 0 24px;
+}
+
+// ── Form ───────────────────────────────────────────────────────────────────
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.emailInput {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: $brand-radius-md;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  font-family: $brand-font-body;
+  font-size: 15px;
+  color: #f0f4fa;
+  outline: none;
+  transition: border-color $brand-duration-drift ease-in-out;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: #4e6480;
+  }
+
+  &:focus {
+    border-color: $brand-blue;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.errorMsg {
+  font-family: $brand-font-body;
+  font-size: 12px;
+  color: $brand-error-red;
+  margin: 0 0 10px;
+}
+
+.submitBtn {
+  width: 100%;
+  background: $brand-blue;
+  color: #ffffff;
+  font-family: $brand-font-display;
+  font-size: 14px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-button;
+  border: none;
+  border-radius: $brand-radius-md;
+  padding: 14px;
+  cursor: pointer;
+  box-shadow: $brand-glow-blue-button;
+  transition: background-color $brand-duration-drift ease-in-out;
+
+  &:hover:not(:disabled) {
+    background-color: $brand-interactive-hover;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+// ── Success state ──────────────────────────────────────────────────────────
+
+.successMsg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: $brand-font-body;
+  font-size: 14px;
+  line-height: 1.6;
+  color: $brand-visa-green;
+  padding: 16px 0 12px;
+}
+
+.successIcon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+// ── Promise line ───────────────────────────────────────────────────────────
+
+.promiseLine {
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8da4be;
+  text-align: center;
+  margin: 12px 0 0;
+}
+
+// ── Responsive ─────────────────────────────────────────────────────────────
+
+@media (max-width: $brand-breakpoint-desktop) {
+  .section {
+    padding: 80px $brand-space-3xl;
+  }
+
+  .inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $brand-space-3xl;
+  }
+
+  .heading {
+    font-size: 44px;
+  }
+
+  .card {
+    width: 100%;
+  }
+}
+
+@media (max-width: $brand-breakpoint-tablet) {
+  .section {
+    padding: 64px $brand-space-xl;
+  }
+}
+
+@media (max-width: $brand-breakpoint-mobile) {
+  .section {
+    padding: 64px $brand-space-lg;
+  }
+
+  .ctaRow {
+    flex-direction: column;
+  }
+
+  .ghostBtn {
+    text-align: center;
+  }
+}
