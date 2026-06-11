@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import AboutUsContent from "@/components/about-us-content/about-us-content";
-import WhatYouWillFind from "@/components/what-you-will-find/what-you-will-find";
-import OurMission from "@/components/our-mission/our-mission";
-import WhoWeAre from "@/components/who-we-are/who-we-are";
+import AboutUsHero from "@/components/about-us-hero/about-us-hero";
+import OurStory from "@/components/our-story/our-story";
+import MissionCoverage from "@/components/mission-coverage/mission-coverage";
 import WhyTrustUs from "@/components/why-trust-us/why-trust-us";
-import MeetTheJetlaggers from "@/components/meet-the-jetlaggers/meet-the-jetlaggers";
+import WhatWeAreNot from "@/components/what-we-are-not/what-we-are-not";
+import MeetTheCrew from "@/components/meet-the-crew/meet-the-crew";
 import OurValues from "@/components/our-values/our-values";
+// import NewsletterCta from "@/components/newsletter-cta/newsletter-cta";
 import { createMetadata } from "@/app/utils/metadata";
 import PageSchemas from "@/components/seo/PageSchemas";
 import { SITE_CONFIG } from "@/lib/seo/schema/config";
@@ -45,13 +46,14 @@ export default function About() {
           },
         ]}
       />
-      <AboutUsContent />
-      <WhatYouWillFind />
-      <OurMission />
-      <WhoWeAre />
+      <AboutUsHero />
+      <OurStory />
+      <MeetTheCrew />
+      <MissionCoverage />
       <WhyTrustUs />
-      <MeetTheJetlaggers />
+      <WhatWeAreNot />
       <OurValues />
+      {/* <NewsletterCta /> */}
     </>
   );
 }

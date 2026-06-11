@@ -1,67 +1,66 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faCheck } from "@fortawesome/free-solid-svg-icons";
-
 import s from "./why-trust-us.module.scss";
+
+const pillars = [
+  {
+    number: "01",
+    title: "Real Experience, Not Research",
+    description:
+      "We've lived and worked across multiple countries. We know the difference between a pipedream and reality.",
+  },
+  {
+    number: "02",
+    title: "No Sugarcoating",
+    description:
+      "Just because we like a place doesn’t mean it is free from criticism. Useful information isn't always flattering. We're on your side, not the tourism board's.",
+  },
+  {
+    number: "03",
+    title: "Zero Sponsorship Bias",
+    description:
+      "We're not paid by destinations to write positive content. If we love a place, it's because we actually love it. If we don't, we'll tell you that too.",
+  },
+  {
+    number: "04",
+    title: "Written With Our Own Skin In The Game",
+    description:
+      "Every guide is researched and written with our own decisions in mind. We're not writing for you in the abstract. We're writing for people wanting the same lifestyle.",
+  },
+];
 
 const WhyTrustUs = () => {
   return (
     <section id="why-trust-us" className={s.section}>
-      <div className={s.container}>
-        <div className={s.content}>
-          <div className={s.header}>
-            <div className={s.iconWrapper}>
-              <FontAwesomeIcon icon={faLock} className={s.lockIcon} />
-            </div>
-            <h2>Why Trust Us?</h2>
-          </div>
-          <div className={s.grid}>
-            <div className={s.card}>
-              <div className={s.checkIconWrapper}>
-                <FontAwesomeIcon icon={faCheck} className={s.checkIcon} />
-              </div>
-              <div className={s.cardContent}>
-                <h3>Real experience</h3>
-                <p>
-                  We&apos;ve lived and worked across multiple countries and it
-                  only continues.
-                </p>
-              </div>
-            </div>
-            <div className={s.card}>
-              <div className={s.checkIconWrapper}>
-                <FontAwesomeIcon icon={faCheck} className={s.checkIcon} />
-              </div>
-              <div className={s.cardContent}>
-                <h3>Transparency</h3>
-                <p>
-                  No sugarcoating. We hate that! We provide information we wish
-                  someone would show us.
-                </p>
-              </div>
-            </div>
-            <div className={s.card}>
-              <div className={s.checkIconWrapper}>
-                <FontAwesomeIcon icon={faCheck} className={s.checkIcon} />
-              </div>
-              <div className={s.cardContent}>
-                <h3>Independent voices</h3>
-                <p>
-                  We&apos;re not sponsored to push destinations. If we love a
-                  place, you&apos;ll know why.
-                </p>
-              </div>
-            </div>
-            <div className={s.card}>
-              <div className={s.checkIconWrapper}>
-                <FontAwesomeIcon icon={faCheck} className={s.checkIcon} />
-              </div>
-              <div className={s.cardContent}>
-                <h3>Community-driven</h3>
-                <p>Quizzes and guides shaped by expats and nomads worldwide.</p>
-              </div>
-            </div>
-          </div>
+      <div className={s.glowDecoration} aria-hidden="true" />
+
+      <div className={s.upper}>
+        <div className={s.headingCol}>
+          <h2 className={s.heading}>
+            WHY <span className={s.accent}>TRUST</span>
+            <br />
+            THIS?
+          </h2>
         </div>
+        <div className={s.introCol}>
+          <p className={s.intro}>
+            We aren’t relocation gurus handing down flawless wisdom from a
+            mountain, but we have been around the block. Honestly, we’re out
+            here experiencing, learning how to make this lifestyle a success.
+            Signing the leases, navigating the immigration desks, and figuring
+            out the banking systems so we can all map out where to go and why.
+          </p>
+        </div>
+      </div>
+
+      <div className={s.pillarsWrapper}>
+        {pillars.map((pillar) => (
+          <div key={pillar.number} className={s.pillar}>
+            <span className={s.pillarNumber} aria-hidden="true">
+              {pillar.number}
+            </span>
+            <h3 className={s.pillarTitle}>{pillar.title}</h3>
+            <p className={s.pillarDescription}>{pillar.description}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
