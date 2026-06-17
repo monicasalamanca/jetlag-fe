@@ -1,0 +1,364 @@
+@use "@/styles/brand-tokens" as *;
+
+// ============================================================
+// Outer wrapper — light bg
+// ============================================================
+
+.wrapper {
+  background: $brand-neutral-200;
+  padding: $brand-space-5xl;
+}
+
+// ============================================================
+// Inner card — two-panel grid
+// ============================================================
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 380px;
+  border-radius: $brand-radius-xl; // 24px
+  border: 1px solid $brand-neutral-300;
+  background: $brand-neutral-100;
+  overflow: hidden;
+  box-shadow: $brand-shadow-card-light;
+}
+
+// ============================================================
+// Left panel — dark island
+// ============================================================
+
+.left {
+  background: $brand-dark;
+  position: relative;
+  overflow: hidden;
+  padding: 56px 48px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.glowDecor {
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    rgba(17, 156, 232, 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ghostText {
+  position: absolute;
+  top: -10px;
+  right: -20px;
+  font-family: $brand-font-display;
+  font-size: 112px;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.04);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.leftContent {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: $brand-space-md;
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $brand-blue;
+  margin-bottom: $brand-space-lg;
+}
+
+.eyebrowRule {
+  width: 20px;
+  height: 1px;
+  background: $brand-blue;
+  flex-shrink: 0;
+  display: block;
+}
+
+.title {
+  font-family: $brand-font-display;
+  font-size: 52px;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  line-height: 0.92;
+  color: #f0f4fa;
+  margin: 0 0 $brand-space-xl;
+}
+
+.titleAccent {
+  color: $brand-blue;
+}
+
+.desc {
+  font-family: $brand-font-body;
+  font-size: 14px;
+  color: #8da4be;
+  line-height: $brand-line-height-body;
+  margin: 0;
+  max-width: 360px;
+}
+
+.descStrong {
+  display: block;
+  font-style: normal;
+  font-weight: $brand-font-weight-semibold;
+  color: #f0f4fa;
+  margin-top: $brand-space-sm;
+}
+
+// ============================================================
+// Right panel — form
+// ============================================================
+
+.right {
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: $brand-space-xl;
+}
+
+.readerLabel {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $brand-neutral-500;
+  margin: 0;
+}
+
+// ============================================================
+// Form
+// ============================================================
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-md;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-xs;
+}
+
+.label {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $brand-neutral-600;
+}
+
+.input {
+  width: 100%;
+  border: 1.5px solid $brand-neutral-400;
+  border-radius: $brand-radius-sm;
+  padding: 11px 14px;
+  font-family: $brand-font-body;
+  font-size: 14px;
+  color: $brand-neutral-800;
+  background: $brand-neutral-100;
+  outline: none;
+  transition:
+    border-color $brand-duration-drift ease,
+    box-shadow $brand-duration-drift ease;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: $brand-neutral-500;
+  }
+
+  &:focus {
+    border-color: $brand-blue;
+    box-shadow: 0 0 0 3px rgba(17, 156, 232, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.submitBtn {
+  width: 100%;
+  background: $brand-blue;
+  color: #fff;
+  border: none;
+  border-radius: $brand-radius-sm;
+  padding: 13px 20px;
+  font-family: $brand-font-display;
+  font-size: 13px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-button;
+  cursor: pointer;
+  box-shadow: $brand-shadow-button-primary;
+  transition: background-color $brand-duration-drift ease;
+  box-sizing: border-box;
+
+  &:hover:not(:disabled) {
+    background: $brand-interactive-hover;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// ============================================================
+// Perks list
+// ============================================================
+
+.perks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-sm;
+}
+
+.perk {
+  display: flex;
+  align-items: center;
+  gap: $brand-space-sm;
+  font-family: $brand-font-body;
+  font-size: 13px;
+  color: $brand-neutral-700;
+  line-height: $brand-line-height-body-sm;
+}
+
+.checkBadge {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.1);
+  color: #15803d;
+  font-size: 9px;
+  font-weight: $brand-font-weight-bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+// ============================================================
+// Fine print
+// ============================================================
+
+.finePrint {
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $brand-neutral-500;
+  margin: 0;
+}
+
+// ============================================================
+// Success state
+// ============================================================
+
+.successState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $brand-space-md;
+  justify-content: center;
+  height: 100%;
+}
+
+.successIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.12);
+  color: #15803d;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.successTitle {
+  font-family: $brand-font-display;
+  font-size: 24px;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  color: $brand-neutral-800;
+  margin: 0;
+}
+
+.successMsg {
+  font-family: $brand-font-body;
+  font-size: 14px;
+  color: $brand-neutral-600;
+  margin: 0;
+  line-height: $brand-line-height-body;
+  max-width: 300px;
+}
+
+// ============================================================
+// Responsive
+// ============================================================
+
+@media (max-width: 1200px) {
+  .wrapper {
+    padding: $brand-space-5xl $brand-space-4xl;
+  }
+}
+
+@media (max-width: 900px) {
+  .wrapper {
+    padding: $brand-space-3xl $brand-space-xl;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+
+  .left {
+    padding: $brand-space-3xl $brand-space-xl;
+    min-height: 260px;
+    align-items: flex-start;
+  }
+
+  .right {
+    padding: $brand-space-2xl $brand-space-xl;
+    padding-top: 32px;
+  }
+
+  .title {
+    font-size: 40px;
+  }
+}

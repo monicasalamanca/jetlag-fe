@@ -1,0 +1,161 @@
+@use "@/styles/brand-tokens" as *;
+
+.card {
+  background: $brand-neutral-100;
+  border-radius: $brand-radius-lg;
+  border: 1px solid $brand-neutral-300;
+  box-shadow: $brand-shadow-card-light;
+  overflow: hidden;
+  height: 100%;
+  transition:
+    transform $brand-duration-drift cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow $brand-duration-drift cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26, 37, 53, 0.12);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+      box-shadow: $brand-shadow-card-light;
+    }
+  }
+}
+
+.cardLink {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+// ============================================================
+// Image area
+// ============================================================
+
+.cardImg {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.cardImgInner {
+  position: absolute;
+  inset: 0;
+}
+
+.cardImgOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 21, 32, 0) 30%,
+    rgba(13, 21, 32, 0.7) 100%
+  );
+}
+
+.categoryBadge {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: $brand-blue;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: $brand-radius-full;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+// ============================================================
+// Body
+// ============================================================
+
+.cardBody {
+  padding: $brand-space-lg $brand-space-lg $brand-space-md;
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-sm;
+  flex: 1;
+}
+
+.tags {
+  display: flex;
+  gap: $brand-space-xs;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(43, 58, 82, 0.06);
+  color: $brand-neutral-500;
+  border: 1px solid $brand-neutral-300;
+  border-radius: $brand-radius-xs;
+  padding: 2px 8px;
+}
+
+.title {
+  font-family: $brand-font-display;
+  font-size: 18px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  line-height: 1.15;
+  color: $brand-neutral-800;
+  margin: 0;
+}
+
+.description {
+  font-family: $brand-font-body;
+  font-size: 13px;
+  color: $brand-neutral-600;
+  line-height: $brand-line-height-body-sm;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ============================================================
+// Footer
+// ============================================================
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $brand-space-sm;
+  padding-top: $brand-space-sm;
+  border-top: 1px solid $brand-neutral-300;
+  margin-top: auto;
+}
+
+.meta {
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $brand-neutral-500;
+}
+
+.readLink {
+  font-family: $brand-font-display;
+  font-size: 12px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  color: $brand-blue;
+  white-space: nowrap;
+  flex-shrink: 0;
+}

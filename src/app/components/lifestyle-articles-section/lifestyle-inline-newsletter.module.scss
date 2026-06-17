@@ -1,0 +1,189 @@
+@use "@/styles/brand-tokens" as *;
+
+.newsletter {
+  grid-column: 1 / -1;
+  background: $brand-dark;
+  border-radius: $brand-radius-lg;
+  border: 1px solid rgba(17, 156, 232, 0.15);
+  padding: $brand-space-2xl $brand-space-3xl;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.glowDecor {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(
+    circle,
+    rgba(17, 156, 232, 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.iconWrap {
+  font-size: 22px;
+  color: $brand-blue;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-xs;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $brand-sky-blue;
+  margin: 0;
+}
+
+.title {
+  font-family: $brand-font-display;
+  font-size: 20px;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  color: #f0f4fa;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.desc {
+  font-family: $brand-font-body;
+  font-size: 13px;
+  color: #8da4be;
+  margin: 0;
+  line-height: $brand-line-height-body;
+  max-width: 480px;
+}
+
+// ============================================================
+// Form
+// ============================================================
+
+.formWrap {
+  flex-shrink: 0;
+  width: 280px;
+  position: relative;
+  z-index: 1;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-sm;
+}
+
+.input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: $brand-radius-sm;
+  padding: 10px 14px;
+  font-family: $brand-font-body;
+  font-size: 14px;
+  color: #f0f4fa;
+  outline: none;
+  transition: border-color $brand-duration-drift ease;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: #4e6480;
+  }
+
+  &:focus {
+    border-color: $brand-blue;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.btn {
+  width: 100%;
+  background: $brand-blue;
+  color: #fff;
+  border: none;
+  border-radius: $brand-radius-sm;
+  padding: 11px 20px;
+  font-family: $brand-font-display;
+  font-size: 13px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-button;
+  cursor: pointer;
+  box-shadow: $brand-shadow-button-primary;
+  transition: background-color $brand-duration-drift ease;
+  box-sizing: border-box;
+
+  &:hover:not(:disabled) {
+    background: $brand-interactive-hover;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.successMsg {
+  font-family: $brand-font-mono;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $brand-visa-green;
+  margin: 0;
+}
+
+// ============================================================
+// Responsive
+// ============================================================
+
+@media (max-width: $brand-breakpoint-desktop) {
+  .newsletter {
+    gap: $brand-space-2xl;
+  }
+
+  .formWrap {
+    width: 240px;
+  }
+}
+
+@media (max-width: 900px) {
+  .newsletter {
+    flex-direction: column;
+    gap: $brand-space-xl;
+    padding: $brand-space-xl;
+    align-items: flex-start;
+  }
+
+  .formWrap {
+    width: 100%;
+  }
+
+  .desc {
+    max-width: 100%;
+  }
+}

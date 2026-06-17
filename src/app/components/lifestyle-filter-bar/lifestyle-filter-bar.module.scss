@@ -1,0 +1,237 @@
+@use "@/styles/brand-tokens" as *;
+
+.filterBar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: $brand-neutral-100;
+  box-shadow: 0 2px 16px rgba(26, 37, 53, 0.06);
+}
+
+// ============================================================
+// Top section — Row 1 + secondary row
+// ============================================================
+
+.topSection {
+  border-bottom: 1px solid $brand-neutral-300;
+}
+
+.row1 {
+  display: flex;
+  align-items: center;
+  gap: $brand-space-xl;
+  padding: $brand-space-md $brand-space-5xl;
+}
+
+.filterLabel {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $brand-neutral-500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pills {
+  display: flex;
+  align-items: center;
+  gap: $brand-space-sm;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ============================================================
+// Pills
+// ============================================================
+
+.pill {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: $brand-letter-spacing-tag;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: $brand-radius-full;
+  border: 1px solid $brand-neutral-400;
+  background: transparent;
+  color: $brand-neutral-600;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1;
+  transition:
+    border-color $brand-duration-drift ease,
+    color $brand-duration-drift ease,
+    background-color $brand-duration-drift ease;
+
+  &:hover {
+    border-color: $brand-blue;
+    color: $brand-blue;
+    background: rgba(17, 156, 232, 0.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $brand-blue;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.pillActive {
+  background: $brand-blue;
+  border-color: $brand-blue;
+  color: #fff;
+
+  &:hover {
+    background: $brand-interactive-hover;
+    border-color: $brand-interactive-hover;
+    color: #fff;
+  }
+}
+
+.pillMore {
+  border-style: dashed;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chevron {
+  font-size: 8px;
+  transition: transform $brand-duration-drift ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.chevronExpanded {
+  transform: rotate(180deg);
+}
+
+// ============================================================
+// Secondary row — hidden by default, expands smoothly
+// ============================================================
+
+.secondaryRowWrapper {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height $brand-duration-glide cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.secondaryRowWrapperExpanded {
+  max-height: 80px;
+}
+
+.secondaryRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $brand-space-sm;
+  padding: $brand-space-sm $brand-space-5xl $brand-space-md;
+}
+
+// ============================================================
+// Row 2 — content type tabs + result count
+// ============================================================
+
+.row2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $brand-space-sm $brand-space-5xl;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+}
+
+.tab {
+  font-family: $brand-font-display;
+  font-size: $brand-font-size-label;
+  font-weight: $brand-font-weight-bold;
+  letter-spacing: $brand-letter-spacing-button;
+  text-transform: uppercase;
+  padding: $brand-space-sm $brand-space-md;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: $brand-neutral-500;
+  cursor: pointer;
+  line-height: 1;
+  transition:
+    color $brand-duration-drift ease,
+    border-color $brand-duration-drift ease;
+
+  &:hover {
+    color: $brand-blue;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $brand-blue;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.tabActive {
+  color: $brand-blue;
+  border-bottom-color: $brand-blue;
+}
+
+.resultCount {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: $brand-letter-spacing-tag;
+  text-transform: uppercase;
+  color: $brand-neutral-500;
+}
+
+// ============================================================
+// Responsive
+// ============================================================
+
+@media (max-width: 1200px) {
+  .row1,
+  .row2 {
+    padding-left: $brand-space-4xl;
+    padding-right: $brand-space-4xl;
+  }
+
+  .secondaryRow {
+    padding-left: $brand-space-4xl;
+    padding-right: $brand-space-4xl;
+  }
+}
+
+@media (max-width: $brand-breakpoint-tablet) {
+  .row1 {
+    padding: $brand-space-sm $brand-space-xl;
+    gap: $brand-space-md;
+  }
+
+  .row2 {
+    padding: $brand-space-sm $brand-space-xl;
+  }
+
+  .secondaryRow {
+    padding-left: $brand-space-xl;
+    padding-right: $brand-space-xl;
+  }
+}
