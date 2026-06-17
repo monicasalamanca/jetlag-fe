@@ -73,8 +73,8 @@ export default function LifestyleArticlesSection({
         </h2>
         <p className={s.subtitle}>
           First-hand accounts, hard-won lessons, and honest takes on the
-          realities of building a life abroad — written by people actually
-          living it.
+          realities of building a life abroad, written by people actually living
+          it.
         </p>
       </div>
 

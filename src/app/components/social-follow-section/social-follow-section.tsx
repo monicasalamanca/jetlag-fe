@@ -62,7 +62,7 @@ const SocialFollowSection: FC<SocialFollowSectionProps> = ({
               With Us
             </h2>
             <p className={s.description}>
-              The Jet Lag Chronicles breaks down the real side of life abroad —
+              The Jet Lag Chronicles breaks down the real side of life abroad,
               cost of living, tax arbitrage, visas, strategy, mistakes, and the
               daily reality of building a life across borders. Meet the team and
               follow the journey.

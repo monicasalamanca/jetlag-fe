@@ -1133,6 +1133,7 @@ export const fetchLifestyleGuides = async (): Promise<LifestyleGuide[]> => {
         title: item.title,
         slug: item.slug,
         description: item.description || "",
+        type: item.type || "single",
         priceCents: item.priceCents,
         currency: item.currency || "USD",
         coverImageUrl:

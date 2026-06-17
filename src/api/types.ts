@@ -138,6 +138,7 @@ export type LifestyleGuideV5 = {
   title: string;
   slug: string;
   description: string;
+  type: string;
   priceCents: number | null;
   currency: string;
   createdAt: string;
@@ -157,6 +158,7 @@ export type LifestyleGuide = {
   title: string;
   slug: string;
   description: string;
+  type: string;
   priceCents: number | null;
   currency: string;
   coverImageUrl?: string;

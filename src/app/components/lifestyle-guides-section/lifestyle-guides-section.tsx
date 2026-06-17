@@ -10,7 +10,7 @@ const GUIDE_GRADIENTS: { from: string; to: string }[] = [
   { from: "#3d1a0c", to: "#8b3513" },
 ];
 
-// Static guide cards from the spec — shown when the API returns no lifestyle guides yet.
+// Static guide cards from the spec — shown when the API returns no guides yet.
 const STATIC_GUIDES: LifestyleGuide[] = [
   {
     id: 1,
@@ -18,6 +18,7 @@ const STATIC_GUIDES: LifestyleGuide[] = [
     slug: "thailand",
     description:
       "The complete playbook for relocating to Thailand in 2026. Digital Nomad Visa process, the Bangkok vs Chiang Mai decision, neighborhood deep-dives, and a cost calculator to model your actual monthly budget.",
+    type: "single",
     priceCents: 2900,
     currency: "USD",
     whatsInside: [
@@ -33,6 +34,7 @@ const STATIC_GUIDES: LifestyleGuide[] = [
     slug: "vietnam",
     description:
       "A field guide for making Vietnam your base. E-visa process, Ho Chi Minh City vs Hanoi vs Da Nang breakdown, local banking for foreigners, and practical rental tips from people who've signed the leases.",
+    type: "single",
     priceCents: 2900,
     currency: "USD",
     whatsInside: [
@@ -48,6 +50,7 @@ const STATIC_GUIDES: LifestyleGuide[] = [
     slug: "cambodia",
     description:
       "Everything you need to set up in Cambodia long-term. Long-stay visa options, Phnom Penh and Siem Reap neighborhood guides, expat cost tables, and the honest trade-offs most relocation content skips.",
+    type: "single",
     priceCents: 2900,
     currency: "USD",
     whatsInside: [
@@ -79,8 +82,13 @@ function deriveCountryBadge(title: string): string {
   return "";
 }
 
-function formatPrice(priceCents: number | null, currency: string): string {
-  if (priceCents === null) return "Free";
+function formatPrice(
+  type: string,
+  priceCents: number | null,
+  currency: string,
+): string | null {
+  if (type === "free") return "Free";
+  if (priceCents === null) return null;
   const amount = priceCents / 100;
   if (currency === "USD" || !currency) return `$${amount}`;
   return `${currency} ${amount}`;
@@ -94,7 +102,7 @@ interface GuideCardProps {
 function GuideCard({ guide, index }: GuideCardProps) {
   const countryBadge = deriveCountryBadge(guide.title);
   const includedTags = guide.whatsInside.slice(0, 4).map((w) => w.title);
-  const price = formatPrice(guide.priceCents, guide.currency);
+  const price = formatPrice(guide.type, guide.priceCents, guide.currency);
   const gradient = GUIDE_GRADIENTS[index % GUIDE_GRADIENTS.length];
 
   return (
@@ -117,7 +125,7 @@ function GuideCard({ guide, index }: GuideCardProps) {
           />
         )}
         <div className={s.cardImgOverlay} />
-        <span className={s.priceBadge}>{price}</span>
+        {price && <span className={s.priceBadge}>{price}</span>}
         {countryBadge && <span className={s.countryBadge}>{countryBadge}</span>}
       </div>
 
@@ -168,7 +176,7 @@ export default function LifestyleGuidesSection({
             Move <span className={s.titleAccent}>Smarter</span>
           </h2>
           <p className={s.subtitle}>
-            Step-by-step relocation playbooks built from first-hand experience —
+            Step-by-step relocation playbooks built from first-hand experience,
             visa processes, cost breakdowns, neighborhood guides, and everything
             else we wish we&apos;d had before we moved.
           </p>
