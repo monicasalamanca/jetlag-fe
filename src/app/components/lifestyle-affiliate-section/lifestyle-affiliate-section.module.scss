@@ -1,0 +1,291 @@
+@use "@/styles/brand-tokens" as *;
+
+.section {
+  background: $brand-neutral-100;
+  border-top: 1px solid $brand-neutral-300;
+  border-bottom: 1px solid $brand-neutral-300;
+  padding: 56px $brand-space-5xl;
+}
+
+// ============================================================
+// Intro row
+// ============================================================
+
+.introRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $brand-space-3xl;
+  margin-bottom: $brand-space-3xl;
+}
+
+.introLeft {
+  max-width: 520px;
+}
+
+.eyebrow {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $brand-blue;
+  margin: 0 0 $brand-space-sm;
+}
+
+.title {
+  font-family: $brand-font-display;
+  font-size: $brand-font-size-heading-2;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  color: $brand-neutral-800;
+  line-height: $brand-line-height-heading-2;
+  margin: 0 0 $brand-space-md;
+}
+
+.titleAccent {
+  color: $brand-blue;
+}
+
+.subtitle {
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body;
+  color: $brand-neutral-600;
+  line-height: $brand-line-height-body;
+  margin: 0;
+}
+
+.disclosureBadge {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: $brand-neutral-200;
+  border: 1px solid $brand-neutral-300;
+  border-radius: $brand-radius-sm;
+  padding: 8px 14px;
+  color: $brand-neutral-600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+// ============================================================
+// Partner grid
+// ============================================================
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+// ============================================================
+// Affiliate card
+// ============================================================
+
+.card {
+  background: $brand-neutral-200;
+  border: 1px solid $brand-neutral-300;
+  border-radius: $brand-radius-lg;
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-lg;
+  transition:
+    border-color $brand-duration-drift ease,
+    box-shadow $brand-duration-drift ease;
+
+  &:hover {
+    border-color: $brand-blue;
+    box-shadow: 0 4px 20px rgba(17, 156, 232, 0.12);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $brand-space-md;
+}
+
+.logoArea {
+  display: flex;
+  align-items: center;
+  gap: $brand-space-md;
+}
+
+.logoBox {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    font-family: $brand-font-display;
+    font-size: 18px;
+    font-weight: $brand-font-weight-extrabold;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+}
+
+.logoName {
+  font-family: $brand-font-display;
+  font-size: $brand-font-size-body-sm;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $brand-neutral-800;
+  margin: 0 0 2px;
+}
+
+.logoCategory {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $brand-neutral-500;
+  margin: 0;
+}
+
+.usedBadge {
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(34, 197, 94, 0.1);
+  color: #15803d;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: $brand-radius-full;
+  padding: 4px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.desc {
+  font-family: $brand-font-body;
+  font-size: 13px;
+  color: $brand-neutral-600;
+  line-height: $brand-line-height-body;
+  margin: 0;
+}
+
+// ============================================================
+// Perks list
+// ============================================================
+
+.perks {
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-sm;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.perk {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: $brand-font-body;
+  font-size: 13px;
+  color: $brand-neutral-700;
+  line-height: $brand-line-height-body-sm;
+}
+
+.perkDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $brand-blue;
+  flex-shrink: 0;
+}
+
+// ============================================================
+// CTA row
+// ============================================================
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $brand-space-md;
+  border-top: 1px solid $brand-neutral-300;
+  padding-top: 16px;
+  margin-top: auto;
+}
+
+.ctaLink {
+  font-family: $brand-font-display;
+  font-size: 12px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-button;
+  background: $brand-blue;
+  color: #fff;
+  border-radius: $brand-radius-sm;
+  padding: 8px 16px;
+  text-decoration: none;
+  box-shadow: $brand-shadow-button-primary;
+  white-space: nowrap;
+  transition: background-color $brand-duration-drift ease;
+
+  &:hover {
+    background: $brand-interactive-hover;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.ctaNote {
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $brand-neutral-500;
+  text-align: right;
+  line-height: $brand-line-height-label;
+}
+
+// ============================================================
+// Responsive
+// ============================================================
+
+@media (max-width: 1200px) {
+  .section {
+    padding: 56px $brand-space-4xl;
+  }
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: $brand-space-3xl $brand-space-xl;
+  }
+
+  .introRow {
+    flex-direction: column;
+    gap: $brand-space-lg;
+  }
+
+  .introLeft {
+    max-width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

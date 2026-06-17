@@ -1,0 +1,272 @@
+@use "@/styles/brand-tokens" as *;
+
+// ============================================================
+// Section wrapper — white surface, light theme
+// ============================================================
+
+.section {
+  background: $brand-neutral-100;
+  border-top: 1px solid $brand-neutral-300;
+  padding: $brand-space-4xl $brand-space-5xl;
+}
+
+// ============================================================
+// Two-column inner grid
+// ============================================================
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+// ============================================================
+// Left column — editorial copy
+// ============================================================
+
+.teamText {
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-xl;
+}
+
+.eyebrow {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $brand-blue;
+  margin: 0;
+}
+
+.title {
+  font-family: $brand-font-display;
+  font-size: $brand-font-size-heading-2;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  line-height: $brand-line-height-heading-2;
+  color: $brand-neutral-800;
+  margin: 0;
+}
+
+.titleAccent {
+  color: $brand-blue;
+}
+
+.subtitle {
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body;
+  color: $brand-neutral-600;
+  line-height: $brand-line-height-body;
+  margin: 0;
+  max-width: 480px;
+}
+
+// ============================================================
+// Blockquote
+// ============================================================
+
+.blockquote {
+  border-left: 3px solid $brand-blue;
+  padding-left: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-sm;
+}
+
+.quoteText {
+  font-family: $brand-font-display;
+  font-size: 22px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: $brand-neutral-800;
+  margin: 0;
+}
+
+.quoteAttribution {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $brand-neutral-500;
+}
+
+// ============================================================
+// Story link
+// ============================================================
+
+.storyLink {
+  font-family: $brand-font-display;
+  font-size: 14px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-button;
+  color: $brand-blue;
+  text-decoration: underline;
+  align-self: flex-start;
+  transition: color $brand-duration-drift ease;
+
+  &:hover {
+    color: $brand-sky-blue;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// ============================================================
+// Right column — profile cards grid
+// ============================================================
+
+.teamProfiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $brand-space-lg;
+}
+
+// ============================================================
+// Profile card
+// ============================================================
+
+.profileCard {
+  background: $brand-neutral-200;
+  border: 1px solid $brand-neutral-300;
+  border-radius: $brand-radius-lg;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $brand-space-sm;
+  text-align: center;
+  transition: border-color $brand-duration-drift ease;
+
+  &:hover {
+    border-color: rgba(17, 156, 232, 0.3);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// ============================================================
+// Avatar circle
+// ============================================================
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: $brand-radius-full;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $brand-font-display;
+  font-size: 22px;
+  font-weight: $brand-font-weight-extrabold;
+  color: #fff;
+  flex-shrink: 0;
+  margin-bottom: $brand-space-xs;
+}
+
+// ============================================================
+// Profile text
+// ============================================================
+
+.profileName {
+  font-family: $brand-font-display;
+  font-size: 18px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  color: $brand-neutral-800;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.profileRole {
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $brand-neutral-500;
+  margin: 0;
+}
+
+.profileLoc {
+  font-family: $brand-font-body;
+  font-size: 13px;
+  color: $brand-neutral-600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: $brand-space-xs;
+}
+
+.pinIcon {
+  font-size: 11px;
+}
+
+// ============================================================
+// Country chips
+// ============================================================
+
+.countryChips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $brand-space-xs;
+  margin-top: $brand-space-xs;
+}
+
+.countryChip {
+  font-family: $brand-font-mono;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(17, 156, 232, 0.08);
+  border: 1px solid rgba(17, 156, 232, 0.2);
+  color: $brand-blue;
+  padding: 3px 8px;
+  border-radius: $brand-radius-full;
+  white-space: nowrap;
+}
+
+// ============================================================
+// Responsive
+// ============================================================
+
+@media (max-width: 1200px) {
+  .section {
+    padding: $brand-space-4xl $brand-space-4xl;
+  }
+
+  .inner {
+    gap: $brand-space-3xl;
+  }
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: $brand-space-3xl $brand-space-xl;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    gap: $brand-space-3xl;
+  }
+
+  .subtitle {
+    max-width: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .teamProfiles {
+    grid-template-columns: 1fr;
+  }
+}

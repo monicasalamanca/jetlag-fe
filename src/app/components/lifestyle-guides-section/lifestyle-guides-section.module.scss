@@ -1,0 +1,345 @@
+@use "@/styles/brand-tokens" as *;
+
+// ============================================================
+// Section — dark island
+// ============================================================
+
+.section {
+  background: $brand-dark;
+  padding: 72px $brand-space-5xl;
+  position: relative;
+  overflow: hidden;
+}
+
+.glowDecor {
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    circle,
+    rgba(17, 156, 232, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+// ============================================================
+// Section header
+// ============================================================
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: $brand-space-2xl;
+  margin-bottom: $brand-space-3xl;
+  position: relative;
+  z-index: 1;
+}
+
+.headerLeft {
+  max-width: 560px;
+}
+
+.eyebrow {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $brand-sky-blue;
+  margin: 0 0 $brand-space-sm;
+}
+
+.title {
+  font-family: $brand-font-display;
+  font-size: $brand-font-size-heading-2;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  color: #f0f4fa;
+  line-height: $brand-line-height-heading-2;
+  margin: 0 0 $brand-space-md;
+}
+
+.titleAccent {
+  color: $brand-blue;
+}
+
+.subtitle {
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body;
+  color: #8da4be;
+  line-height: $brand-line-height-body;
+  margin: 0;
+}
+
+.allGuidesLink {
+  font-family: $brand-font-display;
+  font-size: 13px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-button;
+  color: $brand-blue;
+  text-decoration: underline;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color $brand-duration-drift ease;
+
+  &:hover {
+    color: $brand-sky-blue;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// ============================================================
+// Guide grid
+// ============================================================
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+// ============================================================
+// Guide card
+// ============================================================
+
+.card {
+  background: rgba(22, 34, 52, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: $brand-radius-lg;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform $brand-duration-drift cubic-bezier(0.4, 0, 0.2, 1),
+    border-color $brand-duration-drift ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba(17, 156, 232, 0.3);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+// ============================================================
+// Card image area
+// ============================================================
+
+.cardImg {
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.cardImgInner {
+  position: absolute;
+  inset: 0;
+}
+
+.cardImgOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 21, 32, 0) 30%,
+    rgba(13, 21, 32, 0.7) 100%
+  );
+}
+
+.priceBadge {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-family: $brand-font-mono;
+  font-size: 12px;
+  font-weight: $brand-font-weight-bold;
+  letter-spacing: 0.06em;
+  background: $brand-blue;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: $brand-radius-full;
+  box-shadow: $brand-glow-blue-button;
+  z-index: 1;
+}
+
+.countryBadge {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: $brand-radius-full;
+  z-index: 1;
+}
+
+// ============================================================
+// Card body
+// ============================================================
+
+.cardBody {
+  padding: $brand-space-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-md;
+  flex: 1;
+}
+
+.cardTitle {
+  font-family: $brand-font-display;
+  font-size: 16px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  color: #f0f4fa;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.cardDesc {
+  font-family: $brand-font-body;
+  font-size: 13px;
+  color: #8da4be;
+  line-height: $brand-line-height-body-sm;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ============================================================
+// Includes tags
+// ============================================================
+
+.includedTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $brand-space-xs;
+}
+
+.includeTag {
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.06);
+  color: #8da4be;
+  padding: 3px 8px;
+  border-radius: $brand-radius-xs;
+  white-space: nowrap;
+}
+
+// ============================================================
+// Card footer
+// ============================================================
+
+.cardFooter {
+  display: flex;
+  gap: $brand-space-sm;
+  margin-top: auto;
+}
+
+.btnPrimary {
+  flex: 1;
+  text-align: center;
+  font-family: $brand-font-display;
+  font-size: 12px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-button;
+  background: $brand-blue;
+  color: #fff;
+  border-radius: $brand-radius-sm;
+  padding: 10px 16px;
+  text-decoration: none;
+  transition: background-color $brand-duration-drift ease;
+
+  &:hover {
+    background: $brand-interactive-hover;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.btnPreview {
+  font-family: $brand-font-display;
+  font-size: 12px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-button;
+  color: $brand-sky-blue;
+  border: 1px solid rgba(93, 200, 245, 0.3);
+  border-radius: $brand-radius-sm;
+  padding: 10px 16px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color $brand-duration-drift ease;
+
+  &:hover {
+    border-color: $brand-sky-blue;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// ============================================================
+// Responsive
+// ============================================================
+
+@media (max-width: 1200px) {
+  .section {
+    padding: 72px $brand-space-4xl;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: $brand-space-3xl $brand-space-xl;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $brand-space-md;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: $brand-breakpoint-mobile) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

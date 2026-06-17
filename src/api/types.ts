@@ -125,10 +125,55 @@ export type GuideResponseV5 = {
   priceCents: number | null;
   originalPriceCents: number | null;
   currency: string;
+  isLifestyle: boolean;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
   coverImage?: ImageV5 | null;
+};
+
+export type LifestyleGuideV5 = {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  description: string;
+  type: string;
+  priceCents: number | null;
+  currency: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  coverImage?: ImageV5 | null;
+  whatsInside?: {
+    id: number;
+    title: string;
+    description: string;
+    icon: string;
+  }[];
+};
+
+export type LifestyleGuide = {
+  id: number;
+  title: string;
+  slug: string;
+  description: string;
+  type: string;
+  priceCents: number | null;
+  currency: string;
+  coverImageUrl?: string;
+  coverImageAlt?: string | null;
+  whatsInside: { id: number; title: string }[];
+};
+
+export type LifestyleArticle = {
+  id: number;
+  title: string;
+  slug: string;
+  description: string;
+  publishedAt: string;
+  imageUrl?: string;
+  tags: string[];
 };
 
 export type GuideBundleOrSingleV5 = {

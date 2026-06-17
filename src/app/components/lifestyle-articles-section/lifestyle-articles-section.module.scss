@@ -1,0 +1,92 @@
+@use "@/styles/brand-tokens" as *;
+
+.section {
+  background: $brand-neutral-200;
+  padding: $brand-space-4xl $brand-space-5xl;
+}
+
+// ============================================================
+// Section header
+// ============================================================
+
+.header {
+  margin-bottom: $brand-space-3xl;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: $brand-space-md;
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $brand-blue;
+  margin-bottom: $brand-space-md;
+}
+
+.eyebrowRule {
+  width: 20px;
+  height: 1px;
+  background: $brand-blue;
+  flex-shrink: 0;
+  display: block;
+}
+
+.title {
+  font-family: $brand-font-display;
+  font-size: $brand-font-size-heading-2;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  color: $brand-neutral-800;
+  line-height: $brand-line-height-heading-2;
+  margin: 0 0 $brand-space-md;
+}
+
+.titleAccent {
+  color: $brand-blue;
+}
+
+.subtitle {
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body;
+  color: $brand-neutral-600;
+  max-width: 560px;
+  margin: 0;
+  line-height: $brand-line-height-body;
+}
+
+// ============================================================
+// Article grid
+// ============================================================
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+// ============================================================
+// Responsive
+// ============================================================
+
+@media (max-width: 1200px) {
+  .section {
+    padding: $brand-space-4xl $brand-space-4xl;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: $brand-space-3xl $brand-space-xl;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

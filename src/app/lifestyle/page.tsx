@@ -3,9 +3,7 @@ import LifestyleLander from "@/components/lifestyle-lander/lifestyle-lander";
 import { createMetadata } from "@/app/utils/metadata";
 import PageSchemas from "@/components/seo/PageSchemas";
 import { SITE_URL } from "@/lib/seo/schema/utils";
-import { fetchLatestBlogPosts } from "@/api/client";
-import { BlogPost } from "@/api/types";
-import { CardProps } from "@/app/components/cards/card.types";
+import { fetchLifestyleArticles, fetchLifestyleGuides } from "@/api/client";
 import SocialFollowSection from "@/components/social-follow-section/social-follow-section";
 
 // ISR: revalidate the lifestyle listing page every 2 days
@@ -19,34 +17,11 @@ export const metadata: Metadata = createMetadata({
   image: `${SITE_URL}/lifestyle-og.jpg`,
 });
 
-const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
-  const tagsToUse =
-    blogPost.tags.length > 0 ? blogPost.tags : ["travel", "blog"];
-
-  const url = `/lifestyle/${blogPost.slug}`;
-
-  return {
-    title: blogPost.title,
-    description: blogPost.description,
-    thumbnail: blogPost.imageUrl || "/placeholder-image.jpg",
-    tags: tagsToUse,
-    date: new Date(blogPost.publishedAt).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }),
-    country: "lifestyle",
-    readTime: "5 mins",
-    slug: blogPost.slug,
-    url,
-  };
-};
-
 export default async function LifestylePage() {
-  const allPosts = await fetchLatestBlogPosts();
-  const blogs: CardProps[] = allPosts
-    .filter((post) => post.lifestyle === true)
-    .map(mapBlogPostToCardProps);
+  const [articles, guides] = await Promise.all([
+    fetchLifestyleArticles(),
+    fetchLifestyleGuides(),
+  ]);
 
   return (
     <>
@@ -71,7 +46,7 @@ export default async function LifestylePage() {
         ]}
       />
 
-      <LifestyleLander blogs={blogs} />
+      <LifestyleLander articles={articles} guides={guides} />
 
       {/* Social Follow Section */}
       <SocialFollowSection />

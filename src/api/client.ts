@@ -24,6 +24,9 @@ import {
   TrendingTag,
   TheJetLaggersPickCard,
   ImageV5,
+  LifestyleArticle,
+  LifestyleGuide,
+  LifestyleGuideV5,
 } from "./types";
 import {
   sanitizeInternalUrls,
@@ -1022,3 +1025,130 @@ export const fetchHomePageSections =
       throw error; // Re-throw to trigger Next.js error boundary
     }
   };
+
+// Fetch lifestyle blog posts for the lifestyle page articles section.
+// ISR: 2-day revalidation (matches the lifestyle page itself).
+export const fetchLifestyleArticles = async (): Promise<LifestyleArticle[]> => {
+  const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token =
+    process.env.STRAPI_READ_API_TOKEN ||
+    process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  if (!baseUrl) {
+    throw new Error("STRAPI_URL is not configured");
+  }
+
+  const url =
+    `${baseUrl}/api/blogs` +
+    `?filters[lifestyle][$eq]=true` +
+    `&sort=publishedAt:desc` +
+    `&populate[images][fields][0]=url` +
+    `&populate[images][fields][1]=formats` +
+    `&populate[images][fields][2]=alternativeText` +
+    `&populate[tags][fields][0]=name` +
+    `&pagination[pageSize]=20`;
+
+  try {
+    const res = await fetch(url, {
+      next: { revalidate: 172800 },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!res.ok) {
+      throw new Error(
+        `Failed to fetch lifestyle articles: ${res.status} ${res.statusText}`,
+      );
+    }
+
+    const data = await res.json();
+
+    if (!data.data || !Array.isArray(data.data)) {
+      throw new Error("Invalid response format from lifestyle articles API");
+    }
+
+    return data.data.map(
+      (item: BlogPostResponseV5): LifestyleArticle => ({
+        id: item.id,
+        title: item.title,
+        slug: item.slug,
+        description: item.description || "",
+        publishedAt: item.publishedAt,
+        imageUrl:
+          item.images?.[0]?.formats?.medium?.url ||
+          item.images?.[0]?.formats?.small?.url ||
+          item.images?.[0]?.url,
+        tags: item.tags?.map((tag) => tag.name) || [],
+      }),
+    );
+  } catch (error) {
+    console.error("Error fetching lifestyle articles:", error);
+    throw error;
+  }
+};
+
+// Fetch all guides with cover image and whatsInside tags, for the lifestyle guides section.
+// ISR: 1-day revalidation.
+export const fetchLifestyleGuides = async (): Promise<LifestyleGuide[]> => {
+  const baseUrl = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+  const token =
+    process.env.STRAPI_READ_API_TOKEN ||
+    process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+
+  if (!baseUrl) {
+    throw new Error("STRAPI_URL is not configured");
+  }
+
+  const url =
+    `${baseUrl}/api/guides` +
+    `?sort=publishedAt:desc` +
+    `&populate[coverImage][fields][0]=url` +
+    `&populate[coverImage][fields][1]=formats` +
+    `&populate[coverImage][fields][2]=alternativeText` +
+    `&populate[coverImage][fields][3]=width` +
+    `&populate[coverImage][fields][4]=height` +
+    `&populate[whatsInside]=*` +
+    `&pagination[pageSize]=10`;
+
+  try {
+    const res = await fetch(url, {
+      next: { revalidate: 86400 },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!res.ok) {
+      throw new Error(
+        `Failed to fetch lifestyle guides: ${res.status} ${res.statusText}`,
+      );
+    }
+
+    const data = await res.json();
+
+    if (!data.data || !Array.isArray(data.data)) {
+      throw new Error("Invalid response format from lifestyle guides API");
+    }
+
+    return data.data.map(
+      (item: LifestyleGuideV5): LifestyleGuide => ({
+        id: item.id,
+        title: item.title,
+        slug: item.slug,
+        description: item.description || "",
+        type: item.type || "single",
+        priceCents: item.priceCents,
+        currency: item.currency || "USD",
+        coverImageUrl:
+          item.coverImage?.formats?.medium?.url ||
+          item.coverImage?.formats?.small?.url ||
+          item.coverImage?.url,
+        coverImageAlt: item.coverImage?.alternativeText ?? null,
+        whatsInside: (item.whatsInside || []).map((w) => ({
+          id: w.id,
+          title: w.title,
+        })),
+      }),
+    );
+  } catch (error) {
+    console.error("Error fetching lifestyle guides:", error);
+    throw error;
+  }
+};
