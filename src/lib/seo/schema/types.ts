@@ -210,4 +210,3 @@ export interface FAQPage {
     };
   }>;
 }
-

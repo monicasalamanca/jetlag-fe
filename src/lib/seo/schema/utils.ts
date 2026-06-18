@@ -87,4 +87,3 @@ export function toWordCount(text?: string): number {
     .split(/\s+/)
     .filter((word) => word.length > 0).length;
 }
-

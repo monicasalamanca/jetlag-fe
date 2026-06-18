@@ -198,4 +198,3 @@ export function buildFAQPage(faq: FAQItem[]): FAQPage {
     })),
   });
 }
-
