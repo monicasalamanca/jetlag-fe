@@ -28,30 +28,6 @@ export function sanitizeInternalUrls(content: string): string {
 }
 
 /**
- * Ensure URL uses canonical domain (no www)
- */
-export function getCanonicalDomain(url: string): string {
-  if (!url) return url;
-
-  return url.replace(
-    /https?:\/\/www\.thejetlagchronicles\.com/g,
-    CANONICAL_URL,
-  );
-}
-
-/**
- * Validate if URL is internal and canonical
- */
-export function isCanonicalInternalUrl(url: string): boolean {
-  if (!url) return false;
-
-  const isInternal = url.includes("thejetlagchronicles.com");
-  const hasWww = url.includes("www.thejetlagchronicles.com");
-
-  return isInternal && !hasWww;
-}
-
-/**
  * Log non-canonical URLs in development
  */
 export function logNonCanonicalUrls(

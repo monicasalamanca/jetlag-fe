@@ -108,14 +108,6 @@ import {
   faHandFist,
 } from "@fortawesome/free-solid-svg-icons";
 
-// import { faCalendar, faCommentDots } from "@fortawesome/free-regular-svg-icons";
-
-// import {
-//   faFacebook,
-//   faInstagram,
-//   faTwitter,
-// } from "@fortawesome/free-brands-svg-icons";
-
 export const iconMap: Record<string, IconDefinition> = {
   // solid
   faLanguage,

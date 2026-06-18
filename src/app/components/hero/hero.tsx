@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-// import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-// import SubscribeForm from "../subscribe-form/subscribe-form";
 import { trackLinkClick } from "@/app/utils/analytics";
 
 import s from "./hero.module.scss";
@@ -99,26 +97,6 @@ const Hero = ({
             >
               {ctaProps.buttonText}
             </Link>
-            // <div className={s.ctaButton}>
-            //   <SubscribeForm
-            //     buttonName={ctaProps.buttonText}
-            //     showName={true}
-            //     showIcon={true}
-            //     trackEventName="hero-download-guide"
-            //     variant="link-style"
-            //     config={
-            //       ctaProps.subscribeConfig || {
-            //         apiEndpoint: "/api/subscribe-to-download",
-            //         modal: {
-            //           title: "Get Your Free Guide",
-            //           description:
-            //             "Enter your email to download your Thailand Island guide instantly",
-            //         },
-            //       }
-            //     }
-            //     customIcon={ctaProps.customIcon || faDownload}
-            //   />
-            // </div>
           )}
         </div>
       </div>

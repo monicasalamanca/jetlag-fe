@@ -8,7 +8,6 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { CardProps } from "@/components/cards/card.types";
 
 import s from "./tiny-blog-card.module.scss";
-// import Link from "next/dist/client/link";
 
 interface TinyBlogCardProps {
   blog: CardProps;
