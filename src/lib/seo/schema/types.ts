@@ -211,14 +211,3 @@ export interface FAQPage {
   }>;
 }
 
-export interface VideoObject {
-  "@context": "https://schema.org";
-  "@type": "VideoObject";
-  name: string;
-  description: string;
-  thumbnailUrl: string;
-  uploadDate: string;
-  duration: string;
-  contentUrl?: string;
-  embedUrl?: string;
-}

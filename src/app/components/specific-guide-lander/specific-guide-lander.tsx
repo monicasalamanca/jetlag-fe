@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { DetailedGuide } from "@/api/types";
 import { trackButtonClick } from "@/app/utils/analytics";
-// import FAQ from "./faq/faq";
 import IsThisGuideForYou from "./is-this-guide-for-you/is-this-guide-for-you";
 import WhatsInside from "./whats-inside/whats-inside";
 import PreviewSamplePages from "./preview-sample-pages/preview-sample-pages";
@@ -74,7 +73,6 @@ const SpecificGuidesLander = ({ guide }: SpecificGuidesLanderProps) => {
       {guide.type === "single" && (
         <PromoteBundlesSection guide={guide} ref={promoteBundlesSectionRef} />
       )}
-      {/* <FAQ /> */}
     </main>
   );
 };

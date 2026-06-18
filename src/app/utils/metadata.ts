@@ -76,33 +76,3 @@ export function createMetadata({
     },
   };
 }
-
-// Default metadata for pages that can't generate their own
-export const defaultPageMetadata: Metadata = {
-  title: "Page Not Found | The Jet Lag Chronicles",
-  description:
-    "The page you're looking for could not be found. Explore our travel stories and destination guides.",
-  openGraph: {
-    title: "Page Not Found | The Jet Lag Chronicles",
-    description:
-      "The page you're looking for could not be found. Explore our travel stories and destination guides.",
-    url: SITE_CONFIG.url,
-    siteName: "The Jet Lag Chronicles",
-    images: [
-      {
-        url: `${SITE_CONFIG.url}/default-og.jpg`,
-        width: 1200,
-        height: 630,
-        alt: "The Jet Lag Chronicles",
-      },
-    ],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Page Not Found | The Jet Lag Chronicles",
-    description:
-      "The page you're looking for could not be found. Explore our travel stories and destination guides.",
-    images: [`${SITE_CONFIG.url}/default-og.jpg`],
-  },
-};

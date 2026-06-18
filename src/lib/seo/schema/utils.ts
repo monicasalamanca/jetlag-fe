@@ -4,37 +4,7 @@
 
 import { SITE_CONFIG, SCHEMA_CONFIG } from "./config";
 
-// Legacy exports for backward compatibility
 export const SITE_URL = SITE_CONFIG.url;
-export const SITE_NAME = SITE_CONFIG.name;
-export const ORG_LOGO_URL = `${SITE_CONFIG.url}${SITE_CONFIG.logo.url}`;
-export const ORG_SAME_AS = [
-  SITE_CONFIG.social.twitter,
-  SITE_CONFIG.social.youtube,
-  SITE_CONFIG.social.instagram,
-];
-
-/**
- * Safely serialize object to JSON-LD string with error handling
- */
-export function jsonLd<T>(obj: T): string {
-  try {
-    const cleaned = clean(obj);
-    if (
-      SCHEMA_CONFIG.enableValidation &&
-      cleaned &&
-      typeof cleaned === "object"
-    ) {
-      validateSchema(cleaned as Record<string, unknown>);
-    }
-    return JSON.stringify(cleaned);
-  } catch (error) {
-    if (SCHEMA_CONFIG.enableDebugLogs) {
-      console.error("Error serializing JSON-LD:", error);
-    }
-    return "{}"; // Fallback to empty object
-  }
-}
 
 /**
  * Deep clean object by removing null, undefined, empty strings, and empty arrays/objects
@@ -118,68 +88,3 @@ export function toWordCount(text?: string): number {
     .filter((word) => word.length > 0).length;
 }
 
-/**
- * Validate schema structure (development only)
- */
-export function validateSchema(schema: Record<string, unknown>): boolean {
-  if (!SCHEMA_CONFIG.enableValidation) return true;
-
-  try {
-    // Basic required fields check
-    if (!schema["@context"] || !schema["@type"]) {
-      console.warn("Schema missing required @context or @type:", schema);
-      return false;
-    }
-
-    // URL validation
-    for (const [key, value] of Object.entries(schema)) {
-      if (
-        typeof value === "string" &&
-        (key.includes("url") || key.includes("Url"))
-      ) {
-        if (!isValidUrl(value)) {
-          console.warn(`Invalid URL in schema: ${key} = ${value}`);
-          return false;
-        }
-      }
-    }
-
-    return true;
-  } catch (error) {
-    console.error("Schema validation error:", error);
-    return false;
-  }
-}
-
-/**
- * Validate URL format
- */
-export function isValidUrl(url: string): boolean {
-  try {
-    new URL(url);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/**
- * Safe property access with fallback
- */
-export function safeGet<T>(
-  obj: Record<string, unknown> | null | undefined,
-  path: string,
-  fallback: T,
-): T {
-  try {
-    const keys = path.split(".");
-    let current: unknown = obj;
-    for (const key of keys) {
-      if (current === null || current === undefined) return fallback;
-      current = (current as Record<string, unknown>)[key];
-    }
-    return current !== undefined ? (current as T) : fallback;
-  } catch {
-    return fallback;
-  }
-}

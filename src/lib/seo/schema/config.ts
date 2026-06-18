@@ -7,7 +7,6 @@ import type { OrgConfig, SiteConfig } from "./types";
 
 // Environment-based configuration
 const isDev = process.env.NODE_ENV === "development";
-const isProduction = process.env.NODE_ENV === "production";
 
 // Site configuration (should come from env vars in production)
 export const SITE_CONFIG = {
@@ -74,26 +73,6 @@ export const SCHEMA_CONFIG = {
   enableValidation: isDev,
   searchEndpoint: "/search",
 } as const;
-
-// Validation helpers
-export function validateConfig() {
-  const requiredEnvVars = ["NEXT_PUBLIC_SITE_URL"];
-  const missing = requiredEnvVars.filter((varName) => !process.env[varName]);
-
-  if (missing.length > 0 && isProduction) {
-    console.warn(
-      `Missing required environment variables: ${missing.join(", ")}`,
-    );
-  }
-
-  return missing.length === 0;
-}
-
-// Type-safe config access
-export function getSiteConfig() {
-  validateConfig();
-  return SITE_CONFIG;
-}
 
 export function getOrgConfig(overrides?: Partial<OrgConfig>): OrgConfig {
   return { ...DEFAULT_ORG_CONFIG, ...overrides };

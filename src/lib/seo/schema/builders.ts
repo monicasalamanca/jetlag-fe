@@ -9,14 +9,12 @@ import type {
   BreadcrumbItem,
   FAQItem,
   ImageMeta,
-  VideoMeta,
   Organization,
   WebSite,
   WebPage,
   BlogPosting,
   BreadcrumbList,
   FAQPage,
-  VideoObject,
 } from "./types";
 import { clean, absUrl, iso } from "./utils";
 import { SITE_CONFIG } from "./config";
@@ -201,19 +199,3 @@ export function buildFAQPage(faq: FAQItem[]): FAQPage {
   });
 }
 
-/**
- * Build VideoObject schema
- */
-export function buildVideoObject(video: VideoMeta): VideoObject {
-  return clean({
-    "@context": "https://schema.org" as const,
-    "@type": "VideoObject" as const,
-    name: video.name,
-    description: video.description,
-    thumbnailUrl: absUrl(video.thumbnailUrl),
-    uploadDate: iso(video.uploadDate),
-    duration: video.durationISO,
-    contentUrl: video.contentUrl ? absUrl(video.contentUrl) : undefined,
-    embedUrl: video.embedUrl ? absUrl(video.embedUrl) : undefined,
-  });
-}

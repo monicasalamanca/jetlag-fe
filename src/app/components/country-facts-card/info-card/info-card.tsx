@@ -5,8 +5,6 @@ import IconImporter from "../iconImporter";
 
 import s from "./info-card.module.scss";
 
-// const contrastColor = "#ECFCF4"; // This should be dynamically set based on the image
-
 const InfoCard: FC<{
   name: string;
   icon: string;
@@ -15,12 +13,6 @@ const InfoCard: FC<{
   image: string;
   imageAltText: string;
 }> = ({ name, icon, description, keywords, image, imageAltText }) => {
-  // const getClassName = () => {
-  // if (contrastColor === "#EEF6FF") return s.lightBlueBgList;
-  // if (contrastColor === "#FFFFFF") return s.lightTealBgList;
-  // if (contrastColor === "#ECFCF4") return s.lightGreenBgList;
-  // if (contrastColor === "#FEFBEB") return s.lightYellowBgList;
-  // };
   return (
     <div className={s.container}>
       <div className={s.title}>

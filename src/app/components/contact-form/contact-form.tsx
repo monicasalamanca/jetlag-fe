@@ -120,35 +120,6 @@ const ContactForm: FC<{
               to you faster than you can say
             </p>
             <form onSubmit={handleSubmit} className={s.formContainer}>
-              {/* <div className={s.header}>
-              <div className={s.headerItem}>
-                <div className={`${s.imgWrapper} ${s.worldIconWrapper}`}>
-                  <FontAwesomeIcon
-                    icon={faGlobe}
-                    className={`${s.icon} ${s.worldIcon}`}
-                  />
-                </div>
-                <h3>Travel Tips</h3>
-              </div>
-              <div className={s.headerItem}>
-                <div className={`${s.imgWrapper} ${s.laptopIconWrapper}`}>
-                  <FontAwesomeIcon
-                    icon={faLaptop}
-                    className={`${s.icon} ${s.laptopIcon}`}
-                  />
-                </div>
-                <h3>Remote Work</h3>
-              </div>
-              <div className={s.headerItem}>
-                <div className={`${s.imgWrapper} ${s.handShakeIconWrapper}`}>
-                  <FontAwesomeIcon
-                    icon={faHandshakeSimple}
-                    className={`${s.icon} ${s.handShakeIcon}`}
-                  />
-                </div>
-                <h3>Colaborate</h3>
-              </div>
-            </div> */}
               <div className={s.inputWrapper}>
                 <input
                   type="text"

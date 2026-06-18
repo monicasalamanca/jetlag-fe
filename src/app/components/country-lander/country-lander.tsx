@@ -1,8 +1,6 @@
 "use client";
 
 import { FC, useMemo } from "react";
-// import CountryInfo from "../country-info/country-info";
-// import TravelResources from "../travel-resources/travel-resources";
 import { notFound } from "next/navigation";
 import Hero from "../hero/hero";
 import QuickFactCard from "../country-facts-card/card/card";
@@ -223,7 +221,6 @@ const CountryLander: FC<{ country: Country; blogData: BlogPost[] }> = ({
         <p>{intro}</p>
       </section>
       <section className={s.masonryGridSection}>
-        {/* {filteredCards.map((card: any) => card.component)} */}
         <div className={s.column}>
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {firstHalf.map((card: any, index: number) => (
