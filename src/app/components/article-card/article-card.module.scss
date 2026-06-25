@@ -1,0 +1,167 @@
+@use "@/styles/brand-tokens" as *;
+
+.cardLink {
+  text-decoration: none;
+  display: block;
+  height: 100%;
+}
+
+.card {
+  background: $brand-neutral-100;
+  border: 1px solid $brand-neutral-300;
+  border-radius: $brand-radius-lg;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition:
+    box-shadow $brand-duration-drift ease,
+    transform $brand-duration-drift ease;
+
+  &:hover {
+    box-shadow: 0 6px 24px rgba(26, 37, 53, 0.1);
+    transform: translateY(-2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+// ── Image area ────────────────────────────────────────────────────────────────
+
+.cardImg {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.cardImgEl {
+  object-fit: cover;
+}
+
+.cardImgOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 12px;
+  background: linear-gradient(0deg, rgba(13, 21, 32, 0.8) 0%, transparent 100%);
+}
+
+// ── Body ──────────────────────────────────────────────────────────────────────
+
+.cardBody {
+  padding: 16px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardPills {
+  margin-bottom: 6px;
+  min-height: 20px;
+}
+
+.cardTitle {
+  font-family: $brand-font-display;
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: $brand-neutral-800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 7px;
+}
+
+.cardDesc {
+  font-family: $brand-font-body;
+  font-size: 13px;
+  color: $brand-neutral-600;
+  line-height: 1.56;
+  margin-bottom: 13px;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────────
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid $brand-neutral-200;
+  margin-top: auto;
+}
+
+.dateMeta {
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $brand-neutral-500;
+}
+
+.readLink {
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $brand-blue;
+  flex-shrink: 0;
+}
+
+// ── Category pill variants ────────────────────────────────────────────────────
+
+.catPill {
+  display: inline-block;
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: $brand-radius-xs;
+  background: rgba(17, 156, 232, 0.1);
+  color: $brand-blue;
+  border: 1px solid rgba(17, 156, 232, 0.2);
+}
+
+.catPillCoral {
+  background: rgba(255, 94, 58, 0.1);
+  color: #ff5e3a;
+  border-color: rgba(255, 94, 58, 0.22);
+}
+
+.catPillGold {
+  background: rgba(245, 166, 35, 0.1);
+  color: #c07b00;
+  border-color: rgba(245, 166, 35, 0.28);
+}
+
+.catPillGreen {
+  background: rgba(34, 197, 94, 0.08);
+  color: #15803d;
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+.catPillNavy {
+  background: rgba(43, 58, 82, 0.07);
+  color: #2b3a52;
+  border-color: rgba(43, 58, 82, 0.14);
+}
+
+.catPillSky {
+  background: rgba(93, 200, 245, 0.12);
+  color: #0d7ba8;
+  border-color: rgba(93, 200, 245, 0.25);
+}

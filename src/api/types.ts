@@ -140,6 +140,7 @@ export type LifestyleGuideV5 = {
   description: string;
   type: string;
   priceCents: number | null;
+  originalPriceCents: number | null;
   currency: string;
   createdAt: string;
   updatedAt: string;
@@ -160,10 +161,12 @@ export type LifestyleGuide = {
   description: string;
   type: string;
   priceCents: number | null;
+  originalPriceCents: number | null;
   currency: string;
   coverImageUrl?: string;
   coverImageAlt?: string | null;
   whatsInside: { id: number; title: string }[];
+  updatedAt?: string;
 };
 
 export type LifestyleArticle = {

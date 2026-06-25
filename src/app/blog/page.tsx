@@ -3,7 +3,7 @@ import ChronicleContent from "@/components/chronicle-content/chronicle-content";
 import { createMetadata } from "@/app/utils/metadata";
 import PageSchemas from "@/components/seo/PageSchemas";
 import { SITE_URL } from "@/lib/seo/schema/utils";
-import { fetchLatestBlogPosts } from "@/api/client";
+import { fetchLatestBlogPosts, fetchLifestyleGuides } from "@/api/client";
 import { BlogPost } from "@/api/types";
 import { CardProps } from "@/components/cards/card.types";
 import SocialFollowSection from "@/components/social-follow-section/social-follow-section";
@@ -54,7 +54,10 @@ const mapBlogPostToCardProps = (blogPost: BlogPost): CardProps => {
 };
 
 export default async function Blog() {
-  const blogData = await fetchLatestBlogPosts();
+  const [blogData, guides] = await Promise.all([
+    fetchLatestBlogPosts(),
+    fetchLifestyleGuides().catch(() => []),
+  ]);
   const blogs: CardProps[] = blogData.map(mapBlogPostToCardProps);
 
   return (
@@ -80,7 +83,7 @@ export default async function Blog() {
         ]}
       />
 
-      <ChronicleContent blogs={blogs} />
+      <ChronicleContent blogs={blogs} guides={guides} />
 
       {/* Social Follow Section */}
       <SocialFollowSection />

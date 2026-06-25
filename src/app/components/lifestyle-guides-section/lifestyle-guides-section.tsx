@@ -20,6 +20,7 @@ const STATIC_GUIDES: LifestyleGuide[] = [
       "The complete playbook for relocating to Thailand in 2026. Digital Nomad Visa process, the Bangkok vs Chiang Mai decision, neighborhood deep-dives, and a cost calculator to model your actual monthly budget.",
     type: "single",
     priceCents: 2900,
+    originalPriceCents: 2900,
     currency: "USD",
     whatsInside: [
       { id: 1, title: "DTV Visa" },
@@ -36,6 +37,7 @@ const STATIC_GUIDES: LifestyleGuide[] = [
       "A field guide for making Vietnam your base. E-visa process, Ho Chi Minh City vs Hanoi vs Da Nang breakdown, local banking for foreigners, and practical rental tips from people who've signed the leases.",
     type: "single",
     priceCents: 2900,
+    originalPriceCents: 2900,
     currency: "USD",
     whatsInside: [
       { id: 1, title: "E-Visa Process" },
@@ -52,6 +54,7 @@ const STATIC_GUIDES: LifestyleGuide[] = [
       "Everything you need to set up in Cambodia long-term. Long-stay visa options, Phnom Penh and Siem Reap neighborhood guides, expat cost tables, and the honest trade-offs most relocation content skips.",
     type: "single",
     priceCents: 2900,
+    originalPriceCents: 2900,
     currency: "USD",
     whatsInside: [
       { id: 1, title: "Long-Stay Visa" },
