@@ -140,6 +140,7 @@ export type LifestyleGuideV5 = {
   description: string;
   type: string;
   priceCents: number | null;
+  originalPriceCents: number | null;
   currency: string;
   createdAt: string;
   updatedAt: string;
