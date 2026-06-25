@@ -1,0 +1,333 @@
+@use "@/styles/brand-tokens" as *;
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+// ============================================================
+// Hero shell
+// ============================================================
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  background: $brand-dark;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 65% 90% at 100% 0%,
+      rgba(17, 156, 232, 0.16) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// ============================================================
+// Two-column content grid
+// ============================================================
+
+.heroContent {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: $brand-space-4xl;
+  align-items: end;
+  padding: 56px $brand-space-5xl 0;
+  position: relative;
+  z-index: 1;
+}
+
+// ============================================================
+// Left column
+// ============================================================
+
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  animation: fadeUp $brand-duration-journey cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.eyebrow {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $brand-blue;
+  margin-bottom: $brand-space-xl;
+}
+
+.headline {
+  font-family: $brand-font-display;
+  font-size: 96px;
+  font-weight: $brand-font-weight-extrabold;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: #f0f4fa;
+  margin-bottom: $brand-space-xl;
+}
+
+.accent {
+  color: $brand-blue;
+}
+
+.description {
+  font-family: $brand-font-body;
+  font-size: 17px;
+  color: #8da4be;
+  max-width: 540px;
+  line-height: 1.65;
+  margin-bottom: $brand-space-4xl;
+}
+
+.statsRow {
+  display: flex;
+  align-items: center;
+  gap: $brand-space-2xl;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-xs;
+}
+
+.statNumber {
+  font-family: $brand-font-display;
+  font-size: 36px;
+  font-weight: $brand-font-weight-extrabold;
+  color: #f0f4fa;
+  line-height: 1;
+}
+
+.statLabel {
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #4e6480;
+}
+
+.statDivider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.07);
+  flex-shrink: 0;
+}
+
+// ============================================================
+// Right column — decorative, hidden on mobile
+// ============================================================
+
+.heroRight {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: $brand-space-3xl;
+  z-index: 1;
+
+  &::after {
+    content: "BLOG";
+    font-family: $brand-font-display;
+    font-size: 280px;
+    font-weight: $brand-font-weight-extrabold;
+    color: rgba(255, 255, 255, 0.025);
+    position: absolute;
+    right: -12px;
+    top: -24px;
+    text-transform: uppercase;
+    pointer-events: none;
+    line-height: 1;
+    z-index: 0;
+    user-select: none;
+  }
+}
+
+.miniCards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.miniCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(22, 34, 52, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: $brand-radius-md;
+  padding: 14px 16px;
+  text-decoration: none;
+  backdrop-filter: blur(4px);
+  transition: border-color $brand-duration-drift ease;
+
+  &:hover {
+    border-color: rgba(17, 156, 232, 0.3);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.miniThumb {
+  width: 96px;
+  height: 72px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #0d1f35 0%, #0d5797 100%);
+}
+
+.miniContent {
+  display: flex;
+  flex-direction: column;
+  gap: $brand-space-sm;
+  flex: 1;
+  min-width: 0;
+}
+
+.categoryPill {
+  display: inline-block;
+  font-family: $brand-font-mono;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(93, 200, 245, 0.1);
+  border: 1px solid rgba(93, 200, 245, 0.25);
+  color: $brand-sky-blue;
+  padding: 3px 8px;
+  border-radius: $brand-radius-full;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+
+.miniTitle {
+  font-family: $brand-font-display;
+  font-size: 13px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  color: #f0f4fa;
+  line-height: 1.2;
+  // clamp to 2 lines
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.miniMeta {
+  font-family: $brand-font-mono;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4e6480;
+}
+
+// ============================================================
+// Ticker tape
+// ============================================================
+
+.ticker {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  margin-top: $brand-space-3xl;
+}
+
+.tickerTrack {
+  display: inline-flex;
+  gap: $brand-space-2xl;
+  animation: scroll 28s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.tickerItem {
+  font-family: $brand-font-mono;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4e6480;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tickerArrow {
+  color: $brand-blue;
+  margin-right: $brand-space-sm;
+}
+
+// ============================================================
+// Responsive
+// ============================================================
+
+@media (max-width: 1200px) {
+  .heroContent {
+    padding: 48px 48px 0;
+    gap: $brand-space-2xl;
+  }
+
+  .headline {
+    font-size: 72px;
+  }
+}
+
+@media (max-width: 900px) {
+  .heroContent {
+    grid-template-columns: 1fr;
+    padding: 40px 24px 0;
+  }
+
+  .heroRight {
+    display: none;
+  }
+
+  .headline {
+    font-size: 56px;
+  }
+}
+
+@media (max-width: 640px) {
+  .headline {
+    font-size: 48px;
+  }
+
+  .statsRow {
+    gap: $brand-space-lg;
+  }
+}

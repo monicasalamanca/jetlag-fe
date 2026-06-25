@@ -1,4 +1,15 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
 .backdrop {
   position: fixed;
@@ -9,77 +20,50 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $shadow-overlay;
-  backdrop-filter: blur(4px);
+  background: rgba($brand-surface-0, 0.88);
+  backdrop-filter: blur(6px);
   z-index: 50;
+}
 
-  .modalContent {
-    position: relative;
-    background-color: $color-neutral-50;
-    padding: $space-4xl $space-2xl $space-lg;
-    border-radius: $radius-sm;
-    box-shadow:
-      0 4px 6px rgba(0, 0, 0, 0.1),
-      0 1px 3px rgba(0, 0, 0, 0.06);
-    width: 100%;
-    max-width: 450px;
-    transition: transform 0.3s ease;
-    transform: scale(0.95);
-    animation: fadeIn 0.3s ease-in-out;
-    z-index: 1;
+.modalContent {
+  position: relative;
+  background: $brand-surface-2;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: $brand-space-4xl $brand-space-2xl $brand-space-xl;
+  border-radius: $brand-radius-lg;
+  box-shadow: $brand-shadow-modal-dark;
+  width: calc(100% - #{$brand-space-2xl});
+  max-width: 440px;
+  animation: fadeIn $brand-duration-glide cubic-bezier(0.16, 1, 0.3, 1) both;
+  z-index: 1;
 
-    .closeButton {
-      position: absolute;
-      top: $space-lg;
-      right: $space-lg;
-      cursor: pointer;
-      background-color: transparent;
-      color: $color-black;
-      border: 0;
-
-      .closeIcon {
-        width: 20px;
-        height: 20px;
-      }
-    }
-
-    .modalHeader {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: $space-lg;
-
-      h2 {
-        font-size: $font-size-xl;
-        font-weight: 600;
-      }
-    }
-
-    .modalBody {
-      margin-bottom: $space-lg;
-
-      p {
-        font-size: $font-size-base;
-        line-height: $line-height-relaxed;
-        font-weight: $font-weight-normal;
-      }
-    }
-
-    .modalFooter {
-      display: flex;
-      justify-content: flex-end;
-      gap: $space-lg;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
+.closeButton {
+  position: absolute;
+  top: $brand-space-lg;
+  right: $brand-space-lg;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  color: $brand-dark-text-muted;
+  padding: $brand-space-xs;
+  transition: color $brand-duration-drift ease;
+
+  &:hover {
+    color: $brand-dark-text-primary;
   }
-  to {
-    opacity: 1;
-    transform: scale(0.95);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
+}
+
+.closeIcon {
+  width: 18px;
+  height: 18px;
+  display: block;
 }

@@ -1003,6 +1003,7 @@ export const fetchLifestyleGuides = async (): Promise<LifestyleGuide[]> => {
         description: item.description || "",
         type: item.type || "single",
         priceCents: item.priceCents,
+        originalPriceCents: item.originalPriceCents,
         currency: item.currency || "USD",
         coverImageUrl:
           item.coverImage?.formats?.medium?.url ||
@@ -1013,6 +1014,7 @@ export const fetchLifestyleGuides = async (): Promise<LifestyleGuide[]> => {
           id: w.id,
           title: w.title,
         })),
+        updatedAt: item.updatedAt,
       }),
     );
   } catch (error) {

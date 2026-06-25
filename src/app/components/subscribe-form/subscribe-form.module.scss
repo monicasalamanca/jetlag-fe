@@ -1,115 +1,116 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
 
-// Base button class with shared properties
+// ── Trigger buttons (rendered outside the modal) ──────────────────────────────
+
 .baseButton {
   border: none;
   cursor: pointer;
+  background: transparent;
   transition:
-    color 0.2s ease-in-out,
-    opacity 0.2s ease-in-out,
-    background-color 0.2s ease-in-out,
-    transform 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out;
-  text-align: left;
+    color $brand-duration-drift ease,
+    background $brand-duration-drift ease,
+    opacity $brand-duration-drift ease;
 
   .icon {
-    width: $font-size-sm;
-    height: $font-size-sm;
-    margin-left: $space-sm;
+    width: 14px;
+    height: 14px;
+    margin-left: $brand-space-sm;
   }
 }
 
+// Footer nav / default context — text link on dark background
 .contactUsButton {
   @extend .baseButton;
-  background-color: transparent;
-  font-size: $font-size-sm;
-  color: $color-blue-business;
-  opacity: 0.8;
+  font-family: $brand-font-body;
+  font-size: 14px;
+  color: $brand-dark-text-secondary;
+  padding: 0;
+  text-align: left;
 
   &:hover {
-    color: $color-blue-light;
-    opacity: 1;
+    color: $brand-sky-blue;
   }
 }
 
-.downloadGuideButton {
+// Legacy alias
+.ctaTypeAButton {
+  @extend .contactUsButton;
+}
+
+// Mobile footer / inline text context
+.linkStyleButton {
   @extend .baseButton;
-  background: $color-blue;
-  color: $color-white;
-  padding: $space-md $space-xl;
-  border-radius: $radius-sm;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-bold;
-  display: inline-flex;
-  align-items: center;
-  gap: $space-sm;
-  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.15);
-  text-align: center; // Override base for this variant
+  font-family: $brand-font-body;
+  font-size: 14px;
+  color: $brand-dark-text-secondary;
+  line-height: 1.5;
+  text-decoration: none;
 
   &:hover {
-    background: $color-blue-dark;
-    // transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.25);
+    color: $brand-sky-blue;
+  }
+}
+
+// Solid CTA — used in blog strip and similar dark-surface placements
+.downloadGuideButton {
+  @extend .baseButton;
+  font-family: $brand-font-display;
+  font-size: 13px;
+  font-weight: $brand-font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-button;
+  background: $brand-blue;
+  color: $brand-neutral-100;
+  padding: 10px $brand-space-xl;
+  border-radius: $brand-radius-sm;
+  display: inline-flex;
+  align-items: center;
+  gap: $brand-space-sm;
+  box-shadow: $brand-shadow-button-primary;
+  white-space: nowrap;
+
+  &:hover {
+    background: $brand-interactive-hover;
   }
 
-  &:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.15);
-  }
-
-  &:focus {
-    outline: 2px solid $color-blue;
+  &:focus-visible {
+    outline: 2px solid $brand-blue;
     outline-offset: 2px;
   }
 
-  @media only screen and (max-width: $breakpoint-tablet) {
-    padding: $space-md $space-xl;
-    font-size: $font-size-xs;
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 
-.linkStyleButton {
-  @extend .baseButton;
-  background-color: transparent;
-  font-size: $font-size-base;
-  font-weight: $font-weight-medium;
-  line-height: $line-height-relaxed;
-  color: $color-white;
-  text-decoration: none;
-  // opacity: 0.8;
-
-  // &:hover {
-  //   color: $color-blue-medium;
-  //   opacity: 1;
-  // }
-}
-
-// Legacy class name for backward compatibility
-.ctaTypeAButton {
-  @extend .linkStyleButton;
-}
+// ── Modal interior ────────────────────────────────────────────────────────────
 
 .contactFormTitle {
-  font-size: $font-size-base;
-  font-weight: $font-weight-bold;
+  font-family: $brand-font-display;
+  font-size: 26px;
+  font-weight: $brand-font-weight-extrabold;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: $brand-dark-text-primary;
   text-align: center;
-  color: $color-neutral-900;
+  margin-bottom: $brand-space-xs;
 }
 
 .contactFormDescription {
-  color: $color-neutral-900;
+  font-family: $brand-font-body;
+  font-size: 14px;
+  color: $brand-dark-text-secondary;
   text-align: center;
-  font-size: $font-size-base;
-  line-height: $line-height-xs;
-  padding: 0 $line-height-base;
-  // margin: $space-sm 0 $space-lg;
+  line-height: 1.6;
+  padding: 0 $brand-space-md;
+  margin-bottom: $brand-space-sm;
 }
 
 .formContainer {
   display: flex;
   flex-direction: column;
-  gap: $space-lg;
-  padding: 0 $space-lg;
+  gap: $brand-space-md;
+  padding: 0 $brand-space-sm;
 
   .inputWrapper {
     position: relative;
@@ -118,177 +119,137 @@
 
     .formInput {
       width: 100%;
-      padding: $space-sm $space-sm $space-sm 40px;
-      border: 1px solid $color-neutral-400;
-      border-radius: $radius-sm;
-      background-color: $color-white;
-      font-size: $font-size-base;
-      color: $color-neutral-900;
+      padding: 12px 12px 12px 40px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: $brand-radius-md;
+      background: $brand-surface-3;
+      font-family: $brand-font-body;
+      font-size: 14px;
+      color: $brand-dark-text-primary;
       outline: none;
       transition:
-        box-shadow 0.2s ease-in-out,
-        border-color 0.2s ease-in-out;
-      line-height: $line-height-base;
+        border-color $brand-duration-drift ease,
+        box-shadow $brand-duration-drift ease;
+
+      &::placeholder {
+        color: $brand-dark-text-muted;
+      }
 
       &:focus {
-        border-color: $color-blue;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        border-color: rgba($brand-blue, 0.5);
+        box-shadow: 0 0 0 3px rgba($brand-blue, 0.12);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
       }
     }
 
     .icon {
       position: absolute;
-      top: $space-md;
-      left: $space-lg;
-      width: $space-lg;
-      height: $space-lg;
-      color: $color-blue-medium;
+      top: 50%;
+      left: $brand-space-md;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: $brand-dark-text-muted;
+      pointer-events: none;
     }
   }
 
   .submitButton {
     width: 100%;
-    color: $color-white;
-    padding: $space-md;
+    font-family: $brand-font-display;
+    font-size: 15px;
+    font-weight: $brand-font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: $brand-letter-spacing-button;
+    color: $brand-neutral-100;
+    padding: 13px $brand-space-md;
     border: none;
-    border-radius: $radius-sm;
-    transition:
-      background-color 0.2s ease-in-out,
-      transform 0.2s ease-in-out,
-      box-shadow 0.2s ease-in-out;
+    border-radius: $brand-radius-md;
     cursor: pointer;
-    font-size: $font-size-base;
-    font-weight: $font-weight-medium;
-    background: $color-blue-medium;
-    background: $gradient-blue-primary;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.15);
+    background: $brand-blue;
+    box-shadow: $brand-shadow-button-primary;
+    transition:
+      background $brand-duration-drift ease,
+      box-shadow $brand-duration-drift ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $brand-space-sm;
 
     &:hover {
-      background: $color-blue-dark;
-      background: $gradient-blue-hover;
-      box-shadow: 0 4px 8px rgba(59, 130, 246, 0.25);
+      background: $brand-interactive-hover;
     }
 
-    &:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(59, 130, 246, 0.15);
-    }
-
-    &:focus {
-      outline: 2px solid $color-blue;
+    &:focus-visible {
+      outline: 2px solid $brand-blue;
       outline-offset: 2px;
     }
 
-    .icon {
-      margin-left: $space-sm;
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
-  }
 
-  .header {
-    display: flex;
-    justify-content: center;
-    gap: $space-lg;
-    padding: $space-lg;
-    display: none;
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
 
-    .headerItem {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: $space-sm;
-
-      .imgWrapper {
-        border-radius: 50%;
-        cursor: pointer;
-        padding: $space-md;
-        display: flex;
-        justify-content: center;
-
-        &.worldIconWrapper {
-          background-color: $color-blue-bg;
-        }
-
-        &.laptopIconWrapper {
-          background-color: $color-blue-bg;
-          background-color: $color-teal-bg;
-        }
-
-        &.handShakeIconWrapper {
-          background-color: $color-blue-bg;
-          background-color: $color-bright-green-bg;
-        }
-
-        .icon {
-          width: $font-size-xl;
-          height: $font-size-xl;
-
-          &.worldIcon {
-            color: $color-blue;
-          }
-
-          &.laptopIcon {
-            color: $color-blue-light;
-          }
-
-          &.handShakeIcon {
-            color: $color-bright-green;
-          }
-        }
-      }
-
-      h3 {
-        font-size: $font-size-sm;
-        font-weight: $font-weight-medium;
-        color: $color-neutral-600;
-      }
+    .icon {
+      width: 14px;
+      height: 14px;
+      margin-left: $brand-space-xs;
     }
   }
 
   .footer {
     display: flex;
     flex-direction: column;
-    gap: $space-sm;
-    margin-top: $space-sm;
+    gap: $brand-space-sm;
+    margin-top: $brand-space-xs;
+    padding-top: $brand-space-md;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 
     p {
-      font-size: $font-size-sm;
-      font-weight: $font-weight-medium;
-      color: $color-neutral-600;
-      width: 100%;
+      font-family: $brand-font-mono;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: $brand-dark-text-muted;
       text-align: center;
     }
 
     .socialMediaWrapper {
       display: flex;
-      flex-direction: row;
       justify-content: center;
-      gap: $space-sm;
+      gap: $brand-space-sm;
 
       .link {
-        border-radius: 50%;
-        cursor: pointer;
-        padding: $space-md;
+        width: 36px;
+        height: 36px;
+        border-radius: $brand-radius-full;
         display: flex;
+        align-items: center;
         justify-content: center;
-        background-color: $color-blue-bg;
-        transition:
-          background-color 0.2s ease-in-out,
-          transform 0.2s ease-in-out;
+        background: $brand-surface-3;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        transition: background $brand-duration-drift ease;
 
         &:hover {
-          background-color: rgba(130, 184, 255, 0.3);
-          // transform: translateY(-1px);
+          background: $brand-surface-4;
         }
 
-        &:active {
-          transform: translateY(0);
+        @media (prefers-reduced-motion: reduce) {
+          transition: none;
         }
 
         .icon {
-          color: $color-blue;
-          width: $font-size-xl;
-          height: $font-size-xl;
-          transition: color 0.2s ease-in-out;
+          color: $brand-dark-text-secondary;
+          width: 14px;
+          height: 14px;
+          margin-left: 0;
         }
       }
     }

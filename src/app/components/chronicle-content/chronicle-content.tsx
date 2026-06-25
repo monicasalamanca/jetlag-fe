@@ -1,49 +1,24 @@
 import { CardProps } from "@/components/cards/card.types";
-import Hero from "../hero/hero";
-import CardThree from "../cards/card-three/card-three";
+import { LifestyleGuide } from "@/api/types";
+import BlogHero from "../blog-hero/blog-hero";
+import EditorsBrief from "../editors-brief/editors-brief";
+import BlogFilterBar from "../blog-filter-bar/blog-filter-bar";
+import BlogGuidesBand from "../blog-guides-band/blog-guides-band";
 
 import s from "./chronicle-content.module.scss";
 
 interface ChronicleContentProps {
   blogs: CardProps[];
+  guides: LifestyleGuide[];
 }
 
-const ChronicleContent = ({ blogs }: ChronicleContentProps) => {
-  const colors = ["blue", "green", "purple", "orange"];
-
+const ChronicleContent = ({ blogs, guides }: ChronicleContentProps) => {
   return (
     <main className={s.container}>
-      <Hero
-        srcImage="/grocerytime_ihgtnt.jpg"
-        headline={"Which Thai Island Makes Sense In 2026?"}
-        shortDescription={
-          "What it really costs to live on Thailand’s islands. Rent, food, transport, visas, and the hidden expenses that drain newcomers fast."
-        }
-        ctaProps={{
-          buttonText: "Download the Free Guide",
-          tags: ["free guide", "thailand"],
-        }}
-      />
-      <section className={s.latestChronicles}>
-        <div className={s.wrapper}>
-          <h2>Latest Stories</h2>
-          {blogs.length === 0 ? (
-            <div className={s.emptyState}>
-              <p>No stories found. Please check back soon.</p>
-            </div>
-          ) : (
-            <div className={s.cardWrapper}>
-              {blogs.slice(0, 8).map((blog, index) => (
-                <CardThree
-                  key={blog.slug}
-                  blog={blog}
-                  color={colors[index % colors.length]}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+      <BlogHero blogs={blogs} />
+      <EditorsBrief articles={blogs.slice(0, 5)} />
+      <BlogFilterBar articles={blogs} />
+      <BlogGuidesBand guides={guides} />
     </main>
   );
 };
