@@ -37,7 +37,7 @@ const Modal: FC<{
   if (!mounted || !isOpen) return null;
 
   return createPortal(
-    <div className={s.backdrop}>
+    <div className={s.backdrop} data-modal-portal="true">
       <div className={s.modalContent}>
         <button
           type="button"

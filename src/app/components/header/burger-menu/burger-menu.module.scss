@@ -1,267 +1,318 @@
-@use "@/styles/tokens" as *;
+// Brand tokens (local)
+$brand-navy: #2b3a52;
+$brand-blue: #119ce8;
+$brand-blue-hover: #0d88d0;
+$sky-blue: #5dc8f5;
+$header-text: #f0f4fa;
+$panel-border: rgba(255, 255, 255, 0.08);
 
-.noScroll {
-  overflow: hidden !important;
-  height: 100vh;
+// ─────────────────────────────────────────────
+// Burger icon (AnimatedBurgerIcon reads these)
+// ─────────────────────────────────────────────
+
+.burgerIcon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 22px;
+  height: 16px;
+  pointer-events: none;
 }
 
-.burgerMenu {
+.burgerLine {
   display: block;
-  // Creates a stacking context so the button always sits above the backdrop overlay
-  position: relative;
-  z-index: $z-index-modal;
+  width: 100%;
+  height: 2px;
+  background-color: $header-text;
+  border-radius: 2px;
+  transform-origin: center;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
 
-  @media only screen and (min-width: 768px) {
-    display: none;
+.burgerIconOpen {
+  .burgerLine:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
   }
 
-  .burgerButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: $space-xl;
-    width: 30px;
-    padding: 0;
-    position: relative;
-    z-index: $z-index-modal;
-
-    &:focus-visible {
-      outline: 2px solid $color-blue;
-      outline-offset: 4px;
-      border-radius: $radius-sm;
-    }
+  .burgerLine:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
   }
 
-  // Animated three-bar icon that morphs into an X
-  .burgerIcon {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 24px;
-    height: 18px;
-    pointer-events: none;
+  .burgerLine:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
   }
+}
 
+@media (prefers-reduced-motion: reduce) {
   .burgerLine {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: $color-black;
-    border-radius: 2px;
-    transform-origin: center;
-    transition:
-      transform 0.3s ease,
-      opacity 0.3s ease;
+    transition: none;
   }
+}
 
-  .burgerIconOpen {
-    .burgerLine:nth-child(1) {
-      transform: translateY(8px) rotate(45deg);
-    }
+// ─────────────────────────────────────────────
+// Mobile slide-down panel
+// ─────────────────────────────────────────────
 
-    .burgerLine:nth-child(2) {
-      opacity: 0;
-      transform: scaleX(0);
-    }
+.panel {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $brand-navy;
+  overflow-y: auto;
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px) scale(0.98);
+  // Closing: fast ease-in so dismiss feels snappy
+  transition:
+    opacity 180ms ease-in,
+    visibility 180ms ease,
+    transform 180ms ease-in;
 
-    .burgerLine:nth-child(3) {
-      transform: translateY(-8px) rotate(-45deg);
-    }
+  // Never show on desktop — hard CSS guard against orientation-change edge cases
+  @media (min-width: 861px) {
+    display: none !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .burgerLine,
-    .backdrop,
-    .menuWrapper {
-      transition: none;
+    transition: none;
+  }
+}
+
+.panelOpen {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  // Opening: spring settle — transform overshoots slightly then lands
+  transition:
+    opacity 280ms ease-out,
+    visibility 0ms,
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.panelInner {
+  padding: 8px 20px 32px;
+}
+
+// ─────────────────────────────────────────────
+// Nav list
+// ─────────────────────────────────────────────
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $panel-border;
+
+  a,
+  button {
+    flex: 1;
+    padding: 16px 4px;
+    font-family: var(--font-barlow-condensed);
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $header-text;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    opacity: 1;
+
+    &:hover {
+      color: #fff;
     }
   }
 
-  .backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  &.active a,
+  &.active button {
+    color: $sky-blue;
+  }
+
+  &.noBorder {
+    border-bottom: none;
+  }
+}
+
+.chevron {
+  width: 14px;
+  height: 14px;
+  opacity: 0.45;
+  color: $header-text;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+// ─────────────────────────────────────────────
+// Destinations accordion
+// ─────────────────────────────────────────────
+
+.destinationSection {
+  border-bottom: 1px solid $panel-border;
+}
+
+.destinationHeader {
+  display: flex;
+  align-items: center;
+  padding: 16px 4px;
+  font-family: var(--font-barlow-condensed);
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: $header-text;
+  letter-spacing: 0.02em;
+}
+
+.continentBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 4px 10px 20px;
+  font-family: var(--font-barlow-condensed);
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: $brand-blue;
+  letter-spacing: 0.03em;
+}
+
+.caret {
+  font-size: 11px;
+  flex-shrink: 0;
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+  color: $brand-blue;
+
+  &.caretOpen {
+    transform: rotate(180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.countriesList {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.3s ease,
+    opacity 0.25s ease;
+
+  &.countriesListOpen {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.countriesInner {
+  overflow: hidden;
+  min-height: 0;
+
+  ul {
+    list-style: none;
+    padding: 4px 4px 12px 20px;
+    margin: 0;
     display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: $color-neutral-900;
-    backdrop-filter: blur(0);
-    // Use opacity + visibility so both open and close can animate
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition:
-      opacity 0.3s ease,
-      visibility 0.3s ease,
-      backdrop-filter 0.3s ease;
-    z-index: 50;
-    overflow-y: hidden;
-
-    &.open {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      backdrop-filter: blur(4px);
-    }
-
-    .menuWrapper {
-      background-color: $color-white;
-      height: 100%;
-      width: 310px;
-      position: fixed;
-      top: 0;
-      transform: translateX(100%);
-      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: -2px 0 16px rgba(0, 0, 0, 0.08);
-      z-index: $z-index-modal;
-
-      &.open {
-        transform: translateX(0);
-        overflow-y: auto;
-      }
-
-      ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: 0 auto;
-        padding: calc($space-4xl + $space-sm) $space-lg $space-2xl $space-xl;
-        gap: 20px;
-
-        li {
-          display: flex;
-          width: 100%;
-          padding: 4px 0;
-
-          &.destinationSection {
-            flex-direction: column;
-
-            .destinationsWrapper {
-              display: flex;
-              flex-direction: row;
-              padding-bottom: $space-xs;
-            }
-          }
-
-          svg {
-            margin-right: $space-sm;
-          }
-
-          &.subscribe {
-            color: $color-blue;
-
-            button {
-              color: $color-blue;
-            }
-          }
-
-          a,
-          h2,
-          button {
-            font-size: $font-size-base;
-            line-height: 18px;
-            font-weight: $font-weight-normal;
-            color: $color-neutral-900;
-            opacity: 1;
-          }
-
-          .continent {
-            padding-top: $space-sm;
-            padding-left: $space-xl;
-            padding-right: $space-md;
-
-            .continentBtn {
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              width: 100%;
-              background: none;
-              border: none;
-              cursor: pointer;
-              padding: $space-sm 0;
-              text-align: left;
-              font-size: $font-size-base;
-              line-height: 18px;
-              font-weight: 600;
-              color: $color-blue;
-            }
-
-            .caret {
-              font-size: $font-size-xs;
-              margin-right: 0 !important;
-              margin-left: $space-sm;
-              flex-shrink: 0;
-              transition: transform 0.3s ease;
-
-              &.caretOpen {
-                transform: rotate(180deg);
-              }
-            }
-
-            .countriesList {
-              display: grid;
-              grid-template-rows: 0fr;
-              opacity: 0;
-              transition:
-                grid-template-rows 0.3s ease,
-                opacity 0.25s ease;
-
-              &.countriesListOpen {
-                grid-template-rows: 1fr;
-                opacity: 1;
-              }
-
-              .countriesInner {
-                overflow: hidden;
-                min-height: 0;
-              }
-
-              ul {
-                display: flex;
-                flex-wrap: wrap;
-                flex-direction: row;
-                padding: 6px 0 $space-sm 0;
-                gap: 6px $space-md;
-              }
-
-              a.viewMore {
-                color: $color-blue;
-                display: block;
-                font-size: $font-size-sm;
-                padding: $space-xs 0;
-              }
-            }
-          }
-        }
-      }
-    }
+    flex-wrap: wrap;
+    gap: 6px 12px;
   }
 
-  footer {
-    .followUsLinks {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: $space-lg 0;
+  a {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(240, 244, 250, 0.7);
+    text-decoration: none;
 
-      a {
-        color: $color-blue-business;
+    &:hover {
+      color: $header-text;
+    }
+  }
+}
 
-        svg {
-          width: $space-xl;
-          height: $space-xl;
-        }
-      }
+// ─────────────────────────────────────────────
+// Debrief CTA (full-width in panel)
+// ─────────────────────────────────────────────
+
+.panelDebrief {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: $brand-blue;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 16px rgba(17, 156, 232, 0.35);
+  cursor: pointer;
+  color: #fff;
+
+  &:hover {
+    background: $brand-blue-hover;
+  }
+}
+
+.debriefMain {
+  font-family: var(--font-barlow-condensed);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+// ─────────────────────────────────────────────
+// Contact Us — nav-style button trigger
+// ─────────────────────────────────────────────
+
+.navContactBtn {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+// ─────────────────────────────────────────────
+// Social links
+// ─────────────────────────────────────────────
+
+.socialLinks {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 0 4px;
+  margin-top: 20px;
+  border-top: 1px solid $panel-border;
+
+  a {
+    color: rgba(240, 244, 250, 0.6);
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      color: $header-text;
     }
   }
 }

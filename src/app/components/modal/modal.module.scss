@@ -22,7 +22,7 @@
   align-items: center;
   background: rgba($brand-surface-0, 0.88);
   backdrop-filter: blur(6px);
-  z-index: 50;
+  z-index: 1000;
 }
 
 .modalContent {
