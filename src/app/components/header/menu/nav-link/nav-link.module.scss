@@ -1,16 +1,74 @@
-@use "@/styles/tokens" as *;
+// Brand tokens (local)
+$brand-blue: #119ce8;
+$header-text: #f0f4fa;
+
+a.defaultLink,
+a.activeLink {
+  display: inline-block;
+  position: relative;
+  font-family: var(--font-barlow-condensed);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  white-space: nowrap;
+  transition:
+    background 200ms ease-in-out,
+    color 200ms ease-in-out;
+
+  // Tighten horizontal padding at narrow desktop to prevent nav overflow
+  @media (min-width: 861px) and (max-width: 1082px) {
+    padding: 10px 10px;
+  }
+
+  // Animated underline
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 4px;
+    left: 18px;
+    right: 18px;
+    height: 2px;
+    background: $brand-blue;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    @media (min-width: 861px) and (max-width: 1082px) {
+      left: 10px;
+      right: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &::after {
+      transition: none;
+    }
+  }
+}
 
 a.defaultLink {
-  color: $color-text-dark;
+  color: $header-text;
 
   &:hover {
-    color: $color-text-gray;
-    color: $color-blue-bright;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+
+    &::after {
+      transform: scaleX(1);
+    }
   }
 }
 
 a.activeLink {
-  color: $color-blue-medium;
-  font-weight: $font-weight-medium;
-  border-bottom: 2px solid $color-blue-medium;
+  color: #fff;
+
+  &::after {
+    transform: scaleX(1);
+  }
 }

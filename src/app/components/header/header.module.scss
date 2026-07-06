@@ -1,16 +1,197 @@
-@use "@/styles/tokens" as *;
+// Brand tokens (local)
+$brand-navy: #2b3a52;
+$brand-blue: #119ce8;
+$brand-blue-hover: #0d88d0;
+$sky-blue: #5dc8f5;
+$header-text: #f0f4fa;
+$header-border: rgba(255, 255, 255, 0.08);
+
+// ─────────────────────────────────────────────
+// Header shell
+// ─────────────────────────────────────────────
 
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: $brand-navy;
+  border-bottom: 1px solid $header-border;
+}
+
+// Inner bar (76px desktop / 64px mobile)
+.inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: $space-lg;
-  background-color: $color-white;
-  border-bottom: 1px solid $color-gray-border-light;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 76px;
+  gap: 32px;
 
-  @media only screen and (min-width: $breakpoint-tablet) {
-    width: 768px;
-    margin: 0 auto;
-    align-items: flex-end;
+  // Tight-desktop: reduce padding + gap so 5 nav items fit without overflow
+  @media (min-width: 861px) and (max-width: 1082px) {
+    padding: 0 20px;
+    gap: 12px;
+  }
+
+  @media (max-width: 860px) {
+    height: 64px;
+    padding: 0 16px;
+    gap: 8px;
+  }
+}
+
+// ─────────────────────────────────────────────
+// Logo
+// ─────────────────────────────────────────────
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+
+  &:focus-visible {
+    outline: 2px solid $sky-blue;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+.logoImage {
+  height: 48px;
+  width: auto;
+
+  @media (max-width: 860px) {
+    height: 38px;
+  }
+}
+
+// ─────────────────────────────────────────────
+// Desktop Debrief CTA (hidden on mobile)
+// ─────────────────────────────────────────────
+
+.debriefCta {
+  display: none;
+
+  @media (min-width: 861px) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: $brand-blue;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    box-shadow: 0 4px 16px rgba(17, 156, 232, 0.35);
+    cursor: pointer;
+    white-space: nowrap;
+    color: #fff;
+    flex-shrink: 0;
+    transition:
+      background 200ms ease-in-out,
+      transform 80ms ease-out;
+
+    &:hover {
+      background: $brand-blue-hover;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $sky-blue;
+      outline-offset: 2px;
+    }
+  }
+
+  // Icon-only at tight desktop — same footprint as the mobile icon button
+  @media (min-width: 861px) and (max-width: 1082px) {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    gap: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.debriefMain {
+  font-family: var(--font-barlow-condensed);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+
+  // Hide label at tight desktop — icon only
+  @media (min-width: 861px) and (max-width: 1082px) {
+    display: none;
+  }
+}
+
+// ─────────────────────────────────────────────
+// Mobile controls (hidden on desktop)
+// ─────────────────────────────────────────────
+
+.mobileControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @media (min-width: 861px) {
+    display: none;
+  }
+}
+
+// Mobile Debrief icon-only button (40×40)
+.mobileDebriefIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: $brand-blue;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(17, 156, 232, 0.35);
+  cursor: pointer;
+  color: #fff;
+  flex-shrink: 0;
+
+  &:hover {
+    background: $brand-blue-hover;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $sky-blue;
+    outline-offset: 2px;
+  }
+}
+
+// Hamburger button (40×40)
+.hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $sky-blue;
+    outline-offset: 2px;
   }
 }

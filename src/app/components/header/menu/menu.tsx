@@ -1,10 +1,11 @@
+"use client";
+
 import { FC, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import NavLink from "./nav-link/nav-link";
-import SubscribeForm from "../../subscribe-form/subscribe-form";
 import { GroupedCountries } from "@/api/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 import s from "./menu.module.scss";
 
@@ -12,33 +13,28 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
   destinations,
 }) => {
   const [isDestinationsMenuOpen, setIsDestinationsMenuOpen] = useState(false);
-  const [hasAlreadySubscribed, setHasAlreadySubscribed] = useState(false);
+  const [openContinent, setOpenContinent] = useState<string | null>(null);
   const menuRef = useRef<HTMLLIElement>(null);
+
   const capitalize = (country: string) => {
     if (!country) return "";
     return country.charAt(0).toUpperCase() + country.slice(1).toLowerCase();
   };
 
-  // Check subscription status from localStorage on component mount
-  useEffect(() => {
-    try {
-      const subscriptionStatus = localStorage.getItem(
-        "hasSubscribedToDownload",
-      );
-      if (subscriptionStatus === "true") {
-        setHasAlreadySubscribed(true);
-      }
-    } catch (error) {
-      console.warn("Failed to check subscription status:", error);
-    }
-  }, []);
+  const toggleContinent = (continent: string) => {
+    setOpenContinent((prev) => (prev === continent ? null : continent));
+  };
+
+  const closeAll = () => {
+    setIsDestinationsMenuOpen(false);
+    setOpenContinent(null);
+  };
 
   useEffect(() => {
     if (!isDestinationsMenuOpen) return;
-
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsDestinationsMenuOpen(false);
+        closeAll();
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -46,54 +42,85 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
   }, [isDestinationsMenuOpen]);
 
   return (
-    <nav className={s.container}>
+    <nav className={s.container} aria-label="Primary navigation">
       <ul>
-        <li
-          ref={menuRef}
-          className={s.dropdown}
-          onClick={() => setIsDestinationsMenuOpen((prev) => !prev)}
-          tabIndex={0}
-        >
-          <div className={s.menuItem}>
+        <li ref={menuRef} className={s.dropdown} tabIndex={0}>
+          {/* Trigger */}
+          <div
+            className={s.menuItem}
+            onClick={() => {
+              if (isDestinationsMenuOpen) closeAll();
+              else setIsDestinationsMenuOpen(true);
+            }}
+          >
             Destinations
             <FontAwesomeIcon
-              icon={isDestinationsMenuOpen ? faChevronUp : faChevronDown}
-              className={s.icon}
+              icon={faChevronDown}
+              className={`${s.icon} ${isDestinationsMenuOpen ? s.iconOpen : ""}`}
+              aria-hidden="true"
             />
-            {isDestinationsMenuOpen && (
-              <div className={s.destinations}>
-                <div className={s.destinationsWrapper}>
-                  {destinations &&
-                    Object.entries(destinations).map(
-                      ([continent, countries]) => (
-                        <div className={s.continent} key={continent}>
-                          <div className={s.wrapper}>
-                            <h3>
-                              {continent.charAt(0).toUpperCase() +
-                                continent.slice(1).toLowerCase()}
-                            </h3>
-                            <ul>
-                              {countries.map((country) => (
-                                <li key={country}>
-                                  <Link
-                                    aria-label={`Read more about ${country}`}
-                                    href={`/${country.replace(/ /g, "-").toLowerCase()}`}
-                                    rel="canonical"
-                                  >
-                                    {capitalize(country)}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      ),
-                    )}
-                </div>
-              </div>
-            )}
           </div>
+
+          {/* Dropdown panel — accordion, same pattern as burger menu */}
+          {isDestinationsMenuOpen && destinations && (
+            <div className={s.destinations}>
+              {Object.entries(destinations).map(([continent, countries]) => {
+                if (countries.length === 0) return null;
+                const isExpanded = openContinent === continent;
+                const continentId = `desktop-continent-${continent}`;
+                const countriesId = `desktop-countries-${continent}`;
+                return (
+                  <div key={continent}>
+                    <button
+                      id={continentId}
+                      type="button"
+                      className={s.continentBtn}
+                      aria-expanded={isExpanded}
+                      aria-controls={countriesId}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleContinent(continent);
+                      }}
+                    >
+                      <span>
+                        {continent.charAt(0).toUpperCase() +
+                          continent.slice(1).toLowerCase()}
+                      </span>
+                      <FontAwesomeIcon
+                        icon={faChevronDown}
+                        className={`${s.caret} ${isExpanded ? s.caretOpen : ""}`}
+                        aria-hidden="true"
+                      />
+                    </button>
+                    <div
+                      id={countriesId}
+                      role="region"
+                      aria-labelledby={continentId}
+                      className={`${s.countriesList} ${isExpanded ? s.countriesListOpen : ""}`}
+                    >
+                      <div className={s.countriesInner}>
+                        <ul>
+                          {countries.map((country) => (
+                            <li key={country}>
+                              <Link
+                                href={`/${country.replace(/ /g, "-").toLowerCase()}`}
+                                onClick={closeAll}
+                                aria-label={`Go to ${country} page`}
+                              >
+                                {capitalize(country)}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </li>
+
         <li>
           <NavLink href="/guides" name="guides">
             Guides
@@ -114,16 +141,6 @@ const Menu: FC<{ destinations: GroupedCountries | null }> = ({
             About Us
           </NavLink>
         </li>
-        {!hasAlreadySubscribed && (
-          <li className={s.subscribe}>
-            <SubscribeForm
-              buttonName="Subscribe"
-              showName={false}
-              showIcon={true}
-              trackEventName="desktopMenu"
-            />
-          </li>
-        )}
       </ul>
     </nav>
   );

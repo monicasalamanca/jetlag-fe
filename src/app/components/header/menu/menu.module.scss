@@ -1,129 +1,208 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
+
+// Local aliases matching burger-menu tokens for visual parity
+$panel-border: rgba(255, 255, 255, 0.08);
+$header-text: #f0f4fa;
+
+// ─── Nav container (desktop only) ────────────────────────────────────────────
 
 .container {
   display: none;
 
-  @media only screen and (min-width: 768px) {
+  @media (min-width: 861px) {
     display: flex;
-    justify-content: flex-end;
-    width: 768px;
-    margin: 0 auto;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
   }
+
   ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 16px;
+    gap: 0;
+  }
+}
 
-    li {
-      &.subscribe {
-        button {
-          display: flex;
-          font-size: 16px;
-          opacity: 1;
-          color: $color-blue-business;
+// ─── Destinations dropdown ────────────────────────────────────────────────────
 
-          svg {
-            width: 20px;
-            height: 20px;
-            margin: 0;
-          }
-        }
+.dropdown {
+  position: relative;
+  list-style: none;
+
+  // Trigger button — same style as other nav links
+  .menuItem {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-barlow-condensed);
+    font-weight: $brand-font-weight-bold;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $header-text;
+    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: $brand-radius-sm;
+    user-select: none;
+    white-space: nowrap;
+    transition:
+      background $brand-duration-drift ease-in-out,
+      color $brand-duration-drift ease-in-out;
+
+    @media (min-width: 861px) and (max-width: 1082px) {
+      padding: 10px 10px;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  // Trigger chevron — rotates when open
+  .icon {
+    font-size: 10px;
+    margin-left: 2px;
+    transition: transform $brand-duration-drift ease;
+
+    &.iconOpen {
+      transform: rotate(180deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  // ─── Dropdown panel — dark to match Brand Navy header ──────────────────────
+
+  .destinations {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 260px;
+    max-width: min(320px, calc(100vw - 40px));
+    max-height: 65vh;
+    overflow-y: auto;
+    background: $brand-navy;
+    border: 1px solid $panel-border;
+    border-radius: $brand-radius-md;
+    box-shadow: $brand-shadow-modal-dark;
+    padding: 8px 0;
+    z-index: 200;
+    animation: dropdownIn $brand-duration-drift ease-out both;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  // ─── Continent accordion button (identical to burger-menu .continentBtn) ───
+
+  .continentBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 16px 10px 20px;
+    font-family: var(--font-barlow-condensed);
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: $brand-blue;
+    letter-spacing: 0.03em;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+  }
+
+  // Accordion chevron
+  .caret {
+    font-size: 11px;
+    flex-shrink: 0;
+    margin-left: 8px;
+    color: $brand-blue;
+    transition: transform 0.3s ease;
+
+    &.caretOpen {
+      transform: rotate(180deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  // ─── Country list — grid-template-rows animation (same as burger-menu) ─────
+
+  .countriesList {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 0.3s ease,
+      opacity 0.25s ease;
+
+    &.countriesListOpen {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  .countriesInner {
+    overflow: hidden;
+    min-height: 0;
+
+    ul {
+      list-style: none;
+      padding: 4px 16px 12px 20px;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+    }
+
+    a {
+      font-family: var(--font-barlow);
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(240, 244, 250, 0.7);
+      text-decoration: none;
+      transition: color $brand-duration-drift ease;
+
+      &:hover {
+        color: $header-text;
       }
 
-      .menuItem {
-        position: relative;
-        font-size: 16px;
-        font-weight: 400;
-        color: $color-neutral-900;
-        cursor: pointer;
-        padding: 8px 0;
-        border-radius: 6px;
-
-        .icon {
-          margin-left: 4px;
-          margin-bottom: 1px;
-          font-size: 12px;
-        }
-
-        &:hover {
-          color: $color-blue;
-        }
-      }
-
-      .destinations {
-        flex-direction: column;
-        position: absolute;
-        right: 0;
-        min-width: 250px;
-        width: auto;
-        height: auto;
-        border-top: 1px solid $color-gray-border-lighter;
-        padding: 16px;
-        border-radius: 8px;
-        background-color: $color-white;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        z-index: 1;
-
-        .destinationsWrapper {
-          display: flex;
-          flex-direction: column;
-
-          ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-
-            li {
-              display: flex;
-              width: 100%;
-            }
-          }
-
-          .continent {
-            width: 100%;
-            padding-top: 16px;
-            margin-right: 8px;
-
-            .wrapper {
-              h3 {
-                font-size: 18px;
-                line-height: 18px;
-                font-weight: 600;
-                color: $color-blue;
-
-                .icon {
-                  margin-right: 4px;
-                }
-              }
-
-              ul {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                padding: 16px 0;
-
-                li {
-                  color: $color-neutral-900;
-                  font-weight: 500;
-                  display: flex;
-                  align-items: center;
-
-                  &:hover {
-                    color: $color-blue-medium;
-                  }
-                }
-              }
-            }
-          }
-        }
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
       }
     }
+  }
+}
+
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

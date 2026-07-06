@@ -1,18 +1,10 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBookOpen,
-  faChevronDown,
-  faEnvelope,
-  faGlobe,
-  faHeartPulse,
-  faInbox,
-  faPaperPlane,
-  faUsers,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebookF,
   faInstagram,
@@ -21,236 +13,180 @@ import {
 import { GroupedCountries } from "@/api/types";
 import ContactForm from "@/components/contact-form/contact-form";
 import SubscribeForm from "../../subscribe-form/subscribe-form";
-import AnimatedBurgerIcon from "./animated-burger-icon";
 
 import s from "./burger-menu.module.scss";
 
-const BurgerMenu: FC<{ destinations: GroupedCountries | null }> = ({
-  destinations,
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [hasAlreadySubscribed, setHasAlreadySubscribed] = useState(false);
+interface BurgerMenuProps {
+  destinations: GroupedCountries | null;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const navLinks = [
+  { href: "/guides", label: "Guides" },
+  { href: "/blog", label: "Chronicles" },
+  { href: "/lifestyle", label: "Lifestyle" },
+  { href: "/about-us", label: "About Us" },
+];
+
+const BurgerMenu: FC<BurgerMenuProps> = ({ destinations, isOpen, onClose }) => {
   const [openContinent, setOpenContinent] = useState<string | null>(null);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  // Check subscription status from localStorage on component mount
-  useEffect(() => {
-    try {
-      const subscriptionStatus = localStorage.getItem(
-        "hasSubscribedToDownload",
-      );
-      if (subscriptionStatus === "true") {
-        setHasAlreadySubscribed(true);
-      }
-    } catch (error) {
-      console.warn("Failed to check subscription status:", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add(s.noScroll);
-    } else {
-      document.body.classList.remove(s.noScroll);
-    }
-  }, [isOpen]);
-
-  const closeMenu = () => {
-    setIsOpen(false);
-    setOpenContinent(null);
-  };
+  const pathname = usePathname();
 
   const toggleContinent = (continent: string) => {
     setOpenContinent((prev) => (prev === continent ? null : continent));
   };
 
   return (
-    <div className={s.burgerMenu}>
-      <button
-        type="button"
-        aria-label={isOpen ? "close menu" : "open menu"}
-        aria-expanded={isOpen}
-        className={s.burgerButton}
-        onClick={toggleMenu}
-      >
-        <AnimatedBurgerIcon isOpen={isOpen} />
-      </button>
-      <nav
-        className={`${s.backdrop} ${isOpen ? s.open : ""}`}
-        aria-hidden={!isOpen}
-      >
-        <div className={`${s.menuWrapper} ${isOpen ? s.open : ""}`}>
-          <ul>
+    <nav
+      id="mobilePanel"
+      aria-label="Mobile navigation"
+      aria-hidden={!isOpen}
+      className={`${s.panel} ${isOpen ? s.panelOpen : ""}`}
+    >
+      <div className={s.panelInner}>
+        <ul className={s.navList}>
+          {/* Destinations with continent accordion */}
+          {destinations && (
             <li className={s.destinationSection}>
-              <div className={s.destinationsWrapper}>
-                <FontAwesomeIcon icon={faGlobe} className={s.icon} />
-                <h2>Destinations</h2>
+              <div className={s.destinationHeader}>
+                <span>Destinations</span>
               </div>
-              {destinations &&
-                Object.entries(destinations).map(([continent, countries]) => {
-                  if (countries.length === 0) return null;
-                  const continentId = `continent-${continent}`;
-                  const countriesId = `countries-${continent}`;
-                  const isExpanded = openContinent === continent;
-                  return (
-                    <div className={s.continent} key={continent}>
-                      <button
-                        id={continentId}
-                        type="button"
-                        className={s.continentBtn}
-                        aria-expanded={isExpanded}
-                        aria-controls={countriesId}
-                        onClick={() => toggleContinent(continent)}
-                      >
-                        <span>
-                          {continent.charAt(0).toUpperCase() +
-                            continent.slice(1).toLowerCase()}
-                        </span>
-                        <FontAwesomeIcon
-                          icon={faChevronDown}
-                          className={`${s.caret} ${isExpanded ? s.caretOpen : ""}`}
-                          aria-hidden="true"
-                        />
-                      </button>
-                      <div
-                        id={countriesId}
-                        role="region"
-                        aria-labelledby={continentId}
-                        className={`${s.countriesList} ${isExpanded ? s.countriesListOpen : ""}`}
-                      >
-                        <div className={s.countriesInner}>
-                          <ul>
-                            {countries.map((country) => (
-                              <li key={country}>
-                                <Link
-                                  aria-label={`Go to ${country} page`}
-                                  href={`/${country.replace(/ /g, "-").toLowerCase()}`}
-                                  onClick={closeMenu}
-                                  rel="canonical"
-                                >
-                                  {country.charAt(0).toUpperCase() +
-                                    country.slice(1)}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                          {/* {countries.length > 4 && (
-                            <Link
-                              aria-label="view all countries"
-                              href="/"
-                              className={s.viewMore}
-                              onClick={closeMenu}
-                              rel="canonical"
-                            >
-                              View all 20 countries
-                            </Link>
-                          )} */}
-                        </div>
+              {Object.entries(destinations).map(([continent, countries]) => {
+                if (countries.length === 0) return null;
+                const isExpanded = openContinent === continent;
+                const continentId = `panel-continent-${continent}`;
+                const countriesId = `panel-countries-${continent}`;
+                return (
+                  <div key={continent}>
+                    <button
+                      id={continentId}
+                      type="button"
+                      className={s.continentBtn}
+                      aria-expanded={isExpanded}
+                      aria-controls={countriesId}
+                      onClick={() => toggleContinent(continent)}
+                    >
+                      <span>
+                        {continent.charAt(0).toUpperCase() +
+                          continent.slice(1).toLowerCase()}
+                      </span>
+                      <FontAwesomeIcon
+                        icon={faChevronDown}
+                        className={`${s.caret} ${isExpanded ? s.caretOpen : ""}`}
+                        aria-hidden="true"
+                      />
+                    </button>
+                    <div
+                      id={countriesId}
+                      role="region"
+                      aria-labelledby={continentId}
+                      className={`${s.countriesList} ${isExpanded ? s.countriesListOpen : ""}`}
+                    >
+                      <div className={s.countriesInner}>
+                        <ul>
+                          {countries.map((country) => (
+                            <li key={country}>
+                              <Link
+                                href={`/${country.replace(/ /g, "-").toLowerCase()}`}
+                                onClick={onClose}
+                                aria-label={`Go to ${country} page`}
+                              >
+                                {country.charAt(0).toUpperCase() +
+                                  country.slice(1)}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
-                  );
-                })}
+                  </div>
+                );
+              })}
             </li>
-            <li>
-              <FontAwesomeIcon icon={faBookOpen} className={s.icon} />
-              <Link
-                aria-label="Access all our guides"
-                href="/guides"
-                rel="canonical"
-                onClick={closeMenu}
-              >
-                Guides
+          )}
+
+          {/* Regular nav links */}
+          {navLinks.map((link) => (
+            <li
+              key={link.href}
+              className={[s.navItem, pathname === link.href ? s.active : ""]
+                .filter(Boolean)
+                .join(" ")}
+            >
+              <Link href={link.href} onClick={onClose} rel="canonical">
+                {link.label}
               </Link>
             </li>
-            <li>
-              <FontAwesomeIcon icon={faPaperPlane} className={s.icon} />
-              <Link
-                aria-label="Read all our chronicles"
-                href="/blog"
-                rel="canonical"
-                onClick={closeMenu}
-              >
-                Chronicles
-              </Link>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faHeartPulse} className={s.icon} />
-              <Link
-                aria-label="Read all our lifestyle articles"
-                href="/lifestyle"
-                rel="canonical"
-                onClick={closeMenu}
-              >
-                Lifestyle
-              </Link>
-            </li>
-            <li>
-              <FontAwesomeIcon icon={faUsers} className={s.icon} />
-              <Link
-                aria-label="Read more about us"
-                href="/about-us"
-                rel="canonical"
-                onClick={closeMenu}
-              >
-                About Us
-              </Link>
-            </li>
-            {!hasAlreadySubscribed && (
-              <li className={s.subscribe}>
-                <FontAwesomeIcon icon={faInbox} className={s.icon} />
-                <SubscribeForm
-                  buttonName="Subscribe"
-                  showName={true}
-                  showIcon={false}
-                  trackEventName="mobileMenu"
-                />
-              </li>
-            )}
-            <li>
-              <FontAwesomeIcon icon={faEnvelope} className={s.icon} />
-              <ContactForm buttonName="Contact Us" showIcon={false} />
-            </li>
-          </ul>
-          <footer>
-            <div className={s.followUsLinks}>
-              <a
-                aria-label="Follow us on x"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={s.followLink}
-                href="https://x.com/thejetLaggers_X"
-                onClick={closeMenu}
-              >
-                <FontAwesomeIcon icon={faXTwitter} className={s.icon} />
-              </a>
-              <a
-                aria-label="Follow us on Facebook"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={s.followLink}
-                href="https://www.facebook.com/thejetlaggersfb"
-                onClick={closeMenu}
-              >
-                <FontAwesomeIcon icon={faFacebookF} className={s.icon} />
-              </a>
-              <a
-                aria-label="Follow us on Instagram"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={s.followLink}
-                href="https://www.instagram.com/thejetlaggers_ig"
-                onClick={closeMenu}
-              >
-                <FontAwesomeIcon icon={faInstagram} className={s.icon} />
-              </a>
-            </div>
-          </footer>
+          ))}
+
+          {/* Contact Us — opens modal, styled like a nav item */}
+          <li className={`${s.navItem} ${s.noBorder}`}>
+            <ContactForm
+              buttonName="Contact Us"
+              showIcon={false}
+              className={s.navContactBtn}
+            />
+          </li>
+        </ul>
+
+        {/* Debrief CTA */}
+        <SubscribeForm
+          buttonName="Get The Debrief"
+          showName={false}
+          showIcon={false}
+          trackEventName="debriefMobilePanel"
+          buttonClassName={s.panelDebrief}
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="M2 7l10 7 10-7" />
+          </svg>
+          <span className={s.debriefMain}>GET THE DEBRIEF</span>
+        </SubscribeForm>
+
+        {/* Social links */}
+        <div className={s.socialLinks}>
+          <a
+            aria-label="Follow us on X"
+            href="https://x.com/thejetLaggers_X"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+          >
+            <FontAwesomeIcon icon={faXTwitter} />
+          </a>
+          <a
+            aria-label="Follow us on Facebook"
+            href="https://www.facebook.com/thejetlaggersfb"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+          >
+            <FontAwesomeIcon icon={faFacebookF} />
+          </a>
+          <a
+            aria-label="Follow us on Instagram"
+            href="https://www.instagram.com/thejetlaggers_ig"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+          >
+            <FontAwesomeIcon icon={faInstagram} />
+          </a>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 };
 

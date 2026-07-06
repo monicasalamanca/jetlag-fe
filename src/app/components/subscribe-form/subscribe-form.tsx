@@ -130,6 +130,10 @@ interface SubscribeFormProps {
   config?: SubscribeFormConfig;
   onSubscriptionSuccess?: SubscriptionSuccessCallback;
   customIcon?: IconDefinition;
+  /** Custom content rendered inside the trigger button (overrides showName/showIcon) */
+  children?: ReactNode;
+  /** Custom CSS class applied to the trigger button (overrides variant-based class) */
+  buttonClassName?: string;
 
   // Legacy props (deprecated but maintained for backward compatibility)
   /** @deprecated Use variant="link-style" instead */
@@ -156,6 +160,8 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
     config,
     onSubscriptionSuccess,
     customIcon,
+    children,
+    buttonClassName,
     // Legacy props
 
     useCtaTypeAStyling = false,
@@ -365,14 +371,18 @@ const SubscribeForm: FC<SubscribeFormProps> = memo(
         <button
           aria-label="subscribe to our newsletter"
           onClick={openModal}
-          className={buttonClass}
+          className={buttonClassName ?? buttonClass}
         >
-          {showName && buttonName}
-          {showIcon && (
-            <FontAwesomeIcon
-              icon={customIcon || faEnvelope}
-              className={s.icon}
-            />
+          {children ?? (
+            <>
+              {showName && buttonName}
+              {showIcon && (
+                <FontAwesomeIcon
+                  icon={customIcon ?? faEnvelope}
+                  className={s.icon}
+                />
+              )}
+            </>
           )}
         </button>
 

@@ -1,107 +1,92 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
 
 .container {
-  padding: 0 16px;
+  padding: 0 $brand-space-sm;
+  text-align: center;
 
   .iconWrapper {
-    border-radius: 50%;
-    cursor: pointer;
-    padding: 10px;
+    width: 72px;
+    height: 72px;
+    border-radius: $brand-radius-full;
+    background: rgba(239, 68, 68, 0.12);
     display: flex;
+    align-items: center;
     justify-content: center;
-    background-color: $color-red-error-bg;
-    margin: 16px auto;
-    width: 80px;
-    height: 80px;
-    padding-top: 24px;
+    margin: $brand-space-xl auto;
 
     .icon {
-      color: $color-blue;
-      width: 40px;
-      height: 40px;
-      animation: bounce 1s ease-in-out infinite;
+      color: $brand-error-red;
+      width: 28px;
+      height: 28px;
     }
   }
 
   h2.title {
-    font-size: 24px;
-    font-weight: 700;
-    text-align: center;
-    background: linear-gradient(
-      90deg,
-      rgba(57, 121, 253, 1) 0%,
-      rgba(27, 196, 244, 1) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
+    font-family: $brand-font-display;
+    font-weight: $brand-font-weight-bold;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: $brand-letter-spacing-heading;
+    line-height: 1.1;
+    color: $brand-dark-text-primary;
 
-    .circletIcon {
-      // color: rgba(57, 121, 253, 1);
-      color: $color-blue-medium;
-      margin-left: 8px;
+    .circleIcon {
+      color: $brand-error-red;
+      margin-left: $brand-space-sm;
+      font-size: 14px;
     }
   }
 
   .headline {
-    color: $color-neutral-900;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 0 22px;
-    margin: 16px 0 24px;
-
-    .catIcon {
-      margin-left: 8px;
-    }
+    font-family: $brand-font-body;
+    font-size: $brand-font-size-body;
+    line-height: $brand-line-height-body;
+    color: $brand-dark-text-secondary;
+    padding: 0 $brand-space-xl;
+    margin: $brand-space-lg 0 $brand-space-xl;
   }
 
   .description {
-    color: $color-neutral-900;
-    text-align: center;
-    font-size: 14px;
-    padding: 0 22px;
-    margin: 16px 0 24px;
+    font-family: $brand-font-body;
+    font-size: $brand-font-size-body;
+    line-height: $brand-line-height-body;
+    color: $brand-dark-text-muted;
+    padding: 0 $brand-space-xl;
+    margin-bottom: $brand-space-xl;
   }
 
   .closeNowButton {
     width: 100%;
-    color: $color-white;
-    padding: 12px;
+    background: $brand-blue;
+    color: #fff;
     border: none;
-    border-radius: 8px;
-    transition: background-color 0.2s ease-in-out;
+    border-radius: 10px;
+    padding: 14px $brand-space-2xl;
+    font-family: $brand-font-display;
+    font-weight: $brand-font-weight-bold;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: $brand-letter-spacing-button;
+    box-shadow: $brand-shadow-button-primary;
     cursor: pointer;
-    background: $gradient-blue-primary;
-    background: linear-gradient(
-      90deg,
-      rgba(57, 121, 253, 1) 0%,
-      rgba(27, 196, 244, 1) 100%
-    );
+    transition:
+      background $brand-duration-drift ease,
+      transform $brand-duration-snap ease-out;
 
     &:hover {
-      background: $color-blue-dark;
-      background: linear-gradient(
-        180deg,
-        rgba(57, 121, 253, 1) 0%,
-        rgba(27, 196, 244, 1) 100%
-      );
+      background: $brand-interactive-hover;
+    }
+
+    &:active {
+      transform: scale(0.98);
     }
 
     .icon {
-      margin-left: 8px;
+      margin-left: $brand-space-sm;
     }
-  }
-}
 
-/* Keyframes for the bounce animation */
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0); /* Start and end at the original position */
-  }
-  50% {
-    transform: translateY(-10px); /* Move up by 10px */
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 }

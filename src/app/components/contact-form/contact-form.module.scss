@@ -1,207 +1,182 @@
-@use "@/styles/tokens" as *;
+@use "@/styles/brand-tokens" as *;
+
+// ─── Trigger button (used in footer, nav panel, etc.) ───────────────────────
 
 .contactUsButton {
-  background-color: transparent;
+  background: transparent;
   border: none;
-  font-size: 14px;
-  color: $color-white;
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body;
+  color: $brand-dark-text-primary;
   opacity: 0.8;
-  transition:
-    color 0.2s ease-in-out,
-    opacity 0.2s ease-in-out;
   cursor: pointer;
   text-align: left;
+  transition:
+    color $brand-duration-drift ease,
+    opacity $brand-duration-drift ease;
 
   &:hover {
-    color: $color-blue-light;
+    color: $brand-sky-blue;
     opacity: 1;
-  }
-
-  .icon {
-    width: 14px;
-    height: 14px;
-    margin-left: 8px;
   }
 }
 
+// ─── Modal content ───────────────────────────────────────────────────────────
+
 .contactFormTitle {
-  font-size: 16px;
-  font-weight: 700;
+  font-family: $brand-font-display;
+  font-weight: $brand-font-weight-bold;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: $brand-letter-spacing-heading;
+  line-height: 1.1;
+  color: $brand-dark-text-primary;
   text-align: center;
-  color: $color-neutral-900;
 }
 
 .contactFormDescription {
-  color: $color-neutral-900;
+  font-family: $brand-font-body;
+  font-size: $brand-font-size-body;
+  line-height: $brand-line-height-body;
+  color: $brand-dark-text-secondary;
   text-align: center;
-  font-size: 14px;
-  padding: 0 22px;
-  margin: 16px 0 24px;
+  padding: 0 $brand-space-xl;
+  margin: $brand-space-lg 0 $brand-space-xl;
 }
 
 .formContainer {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 0 16px;
+  gap: $brand-space-lg;
+  padding: 0 $brand-space-sm;
 
   .inputWrapper {
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 
     .formInput,
     .formTextArea {
       width: 100%;
-      padding: 8px 8px 8px 40px;
-      border: 1px solid $color-gray-border;
-      border-radius: 0.375rem;
-      background-color: $color-white;
-      font-size: 16px;
-      color: $color-neutral-900;
+      padding: 12px $brand-space-lg 12px 44px;
+      background: $brand-surface-3;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      font-family: $brand-font-body;
+      font-size: $brand-font-size-body;
+      line-height: $brand-line-height-body-sm;
+      color: $brand-dark-text-primary;
       outline: none;
-      transition: box-shadow 0.2s ease-in-out;
-      font-size: 16px;
-      line-height: 22px;
+      transition:
+        border-color $brand-duration-drift ease,
+        box-shadow $brand-duration-drift ease;
+
+      &::placeholder {
+        color: $brand-dark-text-muted;
+      }
+
+      &:focus {
+        border-color: $brand-blue;
+        box-shadow: 0 0 0 3px rgba(17, 156, 232, 0.15);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
     }
 
     .formTextArea {
       resize: none;
       overflow-y: auto;
-      height: 82px; // 66 = 3 rows each line height 22px plus 16 px of padding
+      height: 88px;
     }
 
     .icon {
       position: absolute;
-      top: 12px;
-      left: 16px;
+      top: 14px;
+      left: $brand-space-lg;
       width: 16px;
       height: 16px;
-      color: $color-blue-medium;
+      color: $brand-sky-blue;
+      pointer-events: none;
     }
   }
 
   .submitButton {
     width: 100%;
-    color: $color-white;
-    padding: 12px;
+    background: $brand-blue;
+    color: #fff;
     border: none;
-    border-radius: 8px;
-    transition: background-color 0.2s ease-in-out;
+    border-radius: 10px;
+    padding: 14px $brand-space-2xl;
+    font-family: $brand-font-display;
+    font-weight: $brand-font-weight-bold;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: $brand-letter-spacing-button;
+    box-shadow: $brand-shadow-button-primary;
     cursor: pointer;
-    background: $gradient-blue-primary;
-    background: linear-gradient(
-      90deg,
-      rgba(57, 121, 253, 1) 0%,
-      rgba(27, 196, 244, 1) 100%
-    );
+    transition:
+      background $brand-duration-drift ease,
+      transform $brand-duration-snap ease-out;
 
     &:hover {
-      background: $color-blue-dark;
-      background: linear-gradient(
-        180deg,
-        rgba(57, 121, 253, 1) 0%,
-        rgba(27, 196, 244, 1) 100%
-      );
+      background: $brand-interactive-hover;
+    }
+
+    &:active {
+      transform: scale(0.98);
     }
 
     .icon {
-      margin-left: 8px;
+      margin-left: $brand-space-sm;
     }
-  }
 
-  .header {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    padding: 16px;
-    display: none;
-
-    .headerItem {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-
-      .imgWrapper {
-        border-radius: 50%;
-        cursor: pointer;
-        padding: 10px;
-        display: flex;
-        justify-content: center;
-
-        &.worldIconWrapper {
-          background-color: $color-blue-bg;
-        }
-
-        &.laptopIconWrapper {
-          background-color: $color-blue-bg;
-          background-color: $color-teal-bg;
-        }
-
-        &.handShakeIconWrapper {
-          background-color: $color-blue-bg;
-          background-color: $color-bright-green-bg;
-        }
-
-        .icon {
-          width: 20px;
-          height: 20px;
-
-          &.worldIcon {
-            color: $color-blue;
-          }
-
-          &.laptopIcon {
-            color: $color-blue-light;
-          }
-
-          &.handShakeIcon {
-            color: $color-bright-green;
-          }
-        }
-      }
-
-      h3 {
-        font-size: 14px;
-        font-weight: 500;
-        color: $color-neutral-600;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
   }
 
   .footer {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
+    gap: $brand-space-sm;
+    margin-top: $brand-space-sm;
+    padding-top: $brand-space-lg;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 
     p {
-      font-size: 12px;
-      font-weight: 500;
-      color: $color-neutral-600;
-      width: 100%;
+      font-family: $brand-font-mono;
+      font-size: $brand-font-size-label;
+      letter-spacing: $brand-letter-spacing-label;
+      text-transform: uppercase;
+      color: $brand-dark-text-muted;
       text-align: center;
     }
 
     .socialMediaWrapper {
       display: flex;
-      flex-direction: row;
       justify-content: center;
-      gap: $space-sm;
+      gap: $brand-space-md;
 
       .link {
-        border-radius: 50%;
-        cursor: pointer;
-        padding: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: $brand-radius-full;
+        background: $brand-surface-3;
         display: flex;
+        align-items: center;
         justify-content: center;
-        background-color: $color-blue-bg;
+        transition: background $brand-duration-drift ease;
+
+        &:hover {
+          background: $brand-surface-4;
+        }
 
         .icon {
-          color: $color-blue;
-          width: 20px;
-          height: 20px;
+          color: $brand-blue;
+          width: 16px;
+          height: 16px;
         }
       }
     }

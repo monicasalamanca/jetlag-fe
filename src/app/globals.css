@@ -28,6 +28,11 @@ body {
   cursor: auto !important;
 }
 
+/* Applied by header when mobile nav panel is open */
+body.nav-open {
+  overflow: hidden;
+}
+
 body {
   background-color: #ffffff;
 }
