@@ -5,6 +5,7 @@ import {
   FC,
   FormEvent,
   useState,
+  useEffect,
   ReactNode,
   useCallback,
   useMemo,
@@ -90,6 +91,17 @@ const InlineSubscribeForm: FC<InlineSubscribeFormProps> = memo(
     const [isError, setIsError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
 
+    useEffect(() => {
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+      if (siteKey && !document.getElementById("recaptcha-script")) {
+        const script = document.createElement("script");
+        script.id = "recaptcha-script";
+        script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+        script.async = true;
+        document.head.appendChild(script);
+      }
+    }, []);
+
     // Memoized default configuration
     const defaultConfig: InlineSubscribeFormConfig = useMemo(
       () => ({
@@ -145,6 +157,19 @@ const InlineSubscribeForm: FC<InlineSubscribeFormProps> = memo(
           const formData = new FormData(event.currentTarget);
           const botFieldValue = formData.get("name") as string;
 
+          const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+          let recaptchaToken: string | undefined;
+          if (siteKey && window.grecaptcha) {
+            recaptchaToken = await new Promise<string>((resolve) => {
+              window.grecaptcha.ready(async () => {
+                const token = await window.grecaptcha.execute(siteKey, {
+                  action: "subscribe",
+                });
+                resolve(token);
+              });
+            });
+          }
+
           const response = await fetch(activeConfig.apiEndpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -153,6 +178,7 @@ const InlineSubscribeForm: FC<InlineSubscribeFormProps> = memo(
               email: form.email,
               botField: botFieldValue,
               timestamp: form.timestamp || Date.now(),
+              recaptchaToken,
             }),
           });
 
