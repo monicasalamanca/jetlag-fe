@@ -1,12 +1,21 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { checkBotProtection } from "../bot-protection";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const { email, botField = "JetLagNewsletter" } = await req.json();
+    const {
+      email,
+      botField = "",
+      timestamp = 0,
+      recaptchaToken,
+    } = await req.json();
 
-    if (botField) {
-      return NextResponse.json({ error: "Bot detected" }, { status: 400 });
-    }
+    const botCheck = await checkBotProtection(req, {
+      botField,
+      timestamp,
+      recaptchaToken,
+    });
+    if (botCheck) return botCheck;
 
     if (!email) {
       return NextResponse.json({ error: "Missing email" }, { status: 400 });
